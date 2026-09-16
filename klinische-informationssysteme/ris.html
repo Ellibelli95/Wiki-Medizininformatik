@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RIS – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  table { width:100%; border-collapse:collapse; margin:1.2em 0 1.8em; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 3px 12px rgba(16,42,67,.05); }
+  th, td { border:1px solid #d9e2ea; padding:10px 12px; text-align:left; vertical-align:top; }
+  thead th { background:#1a5276; color:#fff; border-color:#1a5276; font-weight:700; }
+  tbody tr:nth-child(even) { background:#eaf4f8; }
+  tbody tr:hover { background:#dcedf5; }
+  .toc-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:14px; margin:1.2em 0 2em; }
+  .toc-card { display:flex; flex-direction:column; align-items:flex-start; gap:4px; background:#fff; border:1px solid #d9e2ea; border-radius:10px; padding:14px 14px 16px; text-decoration:none; color:inherit; box-shadow:0 2px 8px rgba(16,42,67,.05); transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+  .toc-card:hover { transform:translateY(-3px); box-shadow:0 8px 18px rgba(16,42,67,.14); border-color:#1a5276; }
+  .toc-card svg { width:44px; height:44px; stroke:#1a5276; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; margin-bottom:4px; }
+  .toc-card svg .fill { fill:#1a5276; stroke:none; }
+  .toc-card .toc-num { font-size:.72em; font-weight:700; letter-spacing:.06em; color:#6a93ac; }
+  .toc-card .toc-title { font-weight:700; color:#17324a; line-height:1.25; }
+  .toc-card .toc-desc { font-size:.85em; color:#5b7080; }
+  .diagram-box { background:#fff; border:1px solid #d9e2ea; border-radius:10px; box-shadow:0 3px 12px rgba(16,42,67,.05); padding:18px; margin:1.2em 0 1.8em; overflow-x:auto; }
+  .diagram-box svg { display:block; margin:0 auto; }
+  .diagram-box .cap { text-align:center; font-size:.85em; color:#5b7080; margin-top:8px; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../klinische-informationssysteme/index.html">Klinische Informationssysteme</a> /
+  RIS
+</div>
+
+<div class="hero">
+  <h2>RIS</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Radiologieinformationssystem – steuert Terminierung, Auftrags- und Befundworkflow der radiologischen Abteilung</td></tr>
+      <tr><td>Prinzip</td><td>Verwaltet Untersuchungsaufträge und Termine, steuert die Modalitäten über die Modality Worklist und begleitet die Befundung</td></tr>
+      <tr><td>Nutzen</td><td>Effiziente Terminplanung, korrekte Patientenzuordnung an der Modalität, strukturierte Befundabläufe</td></tr>
+      <tr><td>Bezug</td><td>Arbeitet eng mit dem PACS zusammen (siehe Kapitel „PACS“) und den Modalitäten aus Kapitel „Bildgebung“</td></tr>
+      <tr><td>Hersteller</td><td>U. a. Siemens Healthineers, Agfa HealthCare, Sectra, medavis, Dedalus</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist eine technische und medizininformatische Dokumentation und orientiert sich an
+    öffentlich verfügbaren Herstellerinformationen. Quellenangaben finden sich am Ende der Seite.
+  </div>
+</div>
+
+<h3>Inhaltsverzeichnis</h3>
+<p>Klicken Sie auf eine Karte, um direkt zum jeweiligen Abschnitt zu springen.</p>
+<div class="toc-grid">
+  <a class="toc-card" href="#sec1"><svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="20" rx="2"/><path d="M16 36 L24 30 L32 36"/><circle cx="24" cy="18" r="4"/><path d="M18 25 a6 8 0 0 1 12 0"/></svg><span class="toc-num">01</span><span class="toc-title">Was ist ein RIS?</span><span class="toc-desc">Definition und Prinzip</span></a>
+  <a class="toc-card" href="#sec2"><svg viewBox="0 0 48 48"><line x1="6" y1="24" x2="42" y2="24"/><circle cx="10" cy="24" r="3" class="fill"/><circle cx="20" cy="24" r="3" class="fill"/><circle cx="30" cy="24" r="3" class="fill"/><circle cx="40" cy="24" r="3" class="fill"/></svg><span class="toc-num">02</span><span class="toc-title">Historische Entwicklung</span><span class="toc-desc">Vom Terminbuch zum RIS</span></a>
+  <a class="toc-card" href="#sec3"><svg viewBox="0 0 48 48"><rect x="10" y="8" width="28" height="10" rx="2"/><rect x="10" y="22" width="28" height="10" rx="2"/><rect x="10" y="34" width="28" height="6" rx="2"/></svg><span class="toc-num">03</span><span class="toc-title">Funktionsbereiche</span><span class="toc-desc">Terminierung, Worklist, Befundung</span></a>
+  <a class="toc-card" href="#sec4"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="12" height="12" rx="2"/><path d="M18 24 H30"/><rect x="30" y="18" width="12" height="12" rx="2"/></svg><span class="toc-num">04</span><span class="toc-title">Architektur</span><span class="toc-desc">RIS, PACS und Modalitäten</span></a>
+  <a class="toc-card" href="#sec5"><svg viewBox="0 0 48 48"><circle cx="24" cy="12" r="4"/><circle cx="10" cy="34" r="4"/><circle cx="38" cy="34" r="4"/><line x1="24" y1="16" x2="12" y2="31"/><line x1="24" y1="16" x2="36" y2="31"/></svg><span class="toc-num">05</span><span class="toc-title">Datenmodell</span><span class="toc-desc">Auftrag, Studie, Befund</span></a>
+  <a class="toc-card" href="#sec6"><svg viewBox="0 0 48 48"><rect x="8" y="10" width="32" height="8" rx="2"/><rect x="8" y="22" width="32" height="8" rx="2"/><rect x="8" y="34" width="16" height="6" rx="2"/></svg><span class="toc-num">06</span><span class="toc-title">Schnittstellen &amp; Standards</span><span class="toc-desc">HL7, MWL/MPPS, DICOM</span></a>
+  <a class="toc-card" href="#sec7"><svg viewBox="0 0 48 48"><path d="M10 24 H24 M24 24 L18 18 M24 24 L18 30"/><path d="M38 24 H24" stroke-dasharray="4 3"/></svg><span class="toc-num">07</span><span class="toc-title">Typischer Datenfluss</span><span class="toc-desc">Von der Anmeldung zum Befund</span></a>
+  <a class="toc-card" href="#sec8"><svg viewBox="0 0 48 48"><path d="M24 6 L40 12 V24 C40 34 33 40 24 42 C15 40 8 34 8 24 V12 Z"/><path d="M17 24 L22 29 L32 18"/></svg><span class="toc-num">08</span><span class="toc-title">Nutzen eines RIS</span><span class="toc-desc">Was es konkret bringt</span></a>
+  <a class="toc-card" href="#sec9"><svg viewBox="0 0 48 48"><rect x="12" y="22" width="24" height="18" rx="2"/><path d="M17 22 V15 a7 7 0 0 1 14 0 v7"/><circle cx="24" cy="30" r="2.4" class="fill"/></svg><span class="toc-num">09</span><span class="toc-title">Sicherheit &amp; Qualität</span><span class="toc-desc">Zugriffsschutz, Prozessqualität</span></a>
+  <a class="toc-card" href="#sec10"><svg viewBox="0 0 48 48"><line x1="24" y1="6" x2="24" y2="42"/><line x1="10" y1="14" x2="38" y2="14"/><path d="M10 14 L4 26 H16 Z"/><path d="M38 14 L32 26 H44 Z"/></svg><span class="toc-num">10</span><span class="toc-title">Vergleichskriterien</span><span class="toc-desc">Worauf bei der Auswahl geachtet wird</span></a>
+  <a class="toc-card" href="#sec11"><svg viewBox="0 0 48 48"><path d="M6 40 V20 L16 14 V40 M16 40 V10 L26 4 V40 M26 40 V16 L38 22 V40 Z"/><line x1="4" y1="40" x2="44" y2="40"/></svg><span class="toc-num">11</span><span class="toc-title">Bekannte RIS-Hersteller</span><span class="toc-desc">Siemens, Agfa, Sectra, medavis</span></a>
+  <a class="toc-card" href="#sec12"><svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/></svg><span class="toc-num">12</span><span class="toc-title">Begriffe &amp; Quellen</span><span class="toc-desc">Glossar und Literatur</span></a>
+</div>
+
+<h3 id="sec1">1. Was ist ein RIS?</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Definition</td><td>Ein Radiologieinformationssystem (RIS) ist das fachspezifische Informationssystem der Radiologie zur Verwaltung von Terminen, Untersuchungsaufträgen, Modalitätensteuerung und Befundworkflow.</td></tr>
+<tr><td>Grundprinzip</td><td>Das RIS koordiniert, welcher Patient wann an welcher Modalität untersucht wird, übergibt die notwendigen Auftragsdaten an die Geräte und begleitet den Prozess bis zur ärztlichen Befundung.</td></tr>
+<tr><td>Abgrenzung zum PACS</td><td>Während das RIS den organisatorischen Workflow steuert, übernimmt das PACS die Speicherung und Anzeige der eigentlichen Bilddaten (siehe Kapitel „PACS“).</td></tr>
+</tbody></table>
+
+<h3 id="sec2">2. Historische Entwicklung</h3>
+<table><thead><tr><th>Phase</th><th>Merkmal</th></tr></thead><tbody>
+<tr><td>Terminbuch und Karteikarte</td><td>Manuelle Terminvergabe und papierbasierte Anforderungsscheine.</td></tr>
+<tr><td>Erste RIS-Systeme</td><td>Elektronische Terminplanung und Auftragsverwaltung, noch ohne durchgängige Gerätekopplung.</td></tr>
+<tr><td>Integriertes RIS/PACS</td><td>Enge Kopplung von RIS und PACS über HL7 und DICOM, automatisierte Modalitätensteuerung.</td></tr>
+<tr><td>Cloudfähige, KI-gestützte Systeme</td><td>Aktuelle Plattformen integrieren Spracherkennung, strukturierte Befundung und KI-gestützte Befundunterstützung.</td></tr>
+</tbody></table>
+
+<h3 id="sec3">3. Funktionsbereiche eines RIS</h3>
+<table><thead><tr><th>Bereich</th><th>Typische Funktionen</th></tr></thead><tbody>
+<tr><td>Terminplanung</td><td>Koordination von Untersuchungsterminen unter Berücksichtigung von Geräteverfügbarkeit und Dringlichkeit.</td></tr>
+<tr><td>Voranmeldung/Auftragserfassung</td><td>Übernahme von Untersuchungsaufträgen aus dem KIS inklusive klinischer Fragestellung.</td></tr>
+<tr><td>Modalitätensteuerung</td><td>Bereitstellung der Patienten- und Auftragsdaten an der Modalität über die Modality Worklist (siehe Kapitel „Bildgebung“, Abschnitt 9).</td></tr>
+<tr><td>Diktat/Spracherkennung</td><td>Unterstützung der Befunderstellung durch integrierte Spracherkennungssysteme.</td></tr>
+<tr><td>Befundfreigabe</td><td>Ärztliche Validierung und elektronische Übermittlung des Befunds an das KIS.</td></tr>
+</tbody></table>
+
+<h3 id="sec4">4. Architektur: RIS, PACS und Modalitäten</h3>
+<div class="diagram-box">
+<svg viewBox="0 0 820 160" width="100%" style="max-width:780px">
+  <g stroke="#1a5276" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="20" y="55" width="130" height="50" rx="6"/>
+    <rect x="200" y="55" width="130" height="50" rx="6" fill="#eaf4f8"/>
+    <rect x="380" y="55" width="130" height="50" rx="6"/>
+    <rect x="560" y="55" width="150" height="50" rx="6"/>
+    <path d="M150 80 H200"/>
+    <path d="M330 80 H380"/>
+    <path d="M330 65 H560 V80" stroke-dasharray="4 3"/>
+    <path d="M510 80 H560"/>
+  </g>
+  <text x="85" y="85" font-size="10" text-anchor="middle" fill="#17324a">KIS</text>
+  <text x="265" y="85" font-size="10" text-anchor="middle" fill="#17324a">RIS</text>
+  <text x="445" y="85" font-size="10" text-anchor="middle" fill="#17324a">Modalität</text>
+  <text x="635" y="85" font-size="10" text-anchor="middle" fill="#17324a">PACS</text>
+</svg>
+<div class="cap">Das RIS übernimmt Aufträge aus dem KIS, steuert die Modalität über die Modality Worklist und übergibt Bilddaten sowie Status an das PACS (siehe Kapitel „Bildgebung“, Abschnitt 9).</div>
+</div>
+
+<h3 id="sec5">5. Datenmodell</h3>
+<table><thead><tr><th>Entität</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Untersuchungsauftrag</td><td>Anforderung einer bildgebenden Untersuchung mit klinischer Fragestellung.</td></tr>
+<tr><td>Termin</td><td>Zeitliche und geräteseitige Zuordnung eines Auftrags.</td></tr>
+<tr><td>Studie</td><td>Die an der Modalität tatsächlich durchgeführte Untersuchung (DICOM-Study, siehe Kapitel „PACS“, Abschnitt 5).</td></tr>
+<tr><td>Befund</td><td>Ärztlich validierter, freigegebener Text zur durchgeführten Untersuchung.</td></tr>
+</tbody></table>
+
+<h3 id="sec6">6. Schnittstellen und Standards</h3>
+<table><thead><tr><th>Standard</th><th>Einsatzbereich</th></tr></thead><tbody>
+<tr><td>HL7</td><td>Austausch von Auftrags-, Termin- und Befunddaten zwischen KIS und RIS.</td></tr>
+<tr><td>Modality Worklist (MWL)</td><td>Bereitstellung der Auftrags- und Patientendaten an der Modalität (siehe Kapitel „Bildgebung“, Abschnitt 9).</td></tr>
+<tr><td>MPPS</td><td>Rückmeldung des Untersuchungsstatus von der Modalität an das RIS.</td></tr>
+<tr><td>DICOM</td><td>Austausch der eigentlichen Bilddaten zwischen Modalität, PACS und RIS-Viewer.</td></tr>
+</tbody></table>
+
+<h3 id="sec7">7. Typischer Datenfluss</h3>
+<div class="flow">Anmeldung/Auftrag im KIS → Terminierung im RIS → Modality Worklist an die Modalität → Untersuchung &amp; MPPS-Rückmeldung → Bilddaten an PACS → Befundung im RIS/PACS-Viewer → Befund an KIS</div>
+
+<h3 id="sec8">8. Nutzen eines RIS</h3>
+<table><thead><tr><th>Nutzenaspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Effiziente Terminplanung</td><td>Transparente Übersicht über Geräteauslastung und Dringlichkeiten reduziert Leerlaufzeiten und Wartezeiten.</td></tr>
+<tr><td>Korrekte Patientenzuordnung</td><td>Automatische Übergabe der Patientendaten an die Modalität vermeidet Verwechslungen und manuelle Eingabefehler.</td></tr>
+<tr><td>Strukturierter Befundworkflow</td><td>Klare Nachverfolgung von Auftrag bis Befundfreigabe unterstützt die Einhaltung von Bearbeitungszeiten.</td></tr>
+<tr><td>Integration von Spracherkennung</td><td>Beschleunigt die Befunderstellung gegenüber klassischem Diktat mit manueller Schreibkraft.</td></tr>
+</tbody></table>
+
+<h3 id="sec9">9. Sicherheit und Prozessqualität</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Zugriffskontrolle</td><td>Rollenbasierte Rechte für Anmeldung, Befundung und administrative Funktionen.</td></tr>
+<tr><td>Nachvollziehbarkeit</td><td>Protokollierung von Statusänderungen entlang des gesamten Untersuchungsworkflows.</td></tr>
+<tr><td>Strahlenschutzbezug</td><td>Enge Verzahnung mit Dosisdokumentation und rechtfertigender Indikation (siehe Kapitel „Bildgebung“, Abschnitt 10).</td></tr>
+</tbody></table>
+
+<h3 id="sec10">10. Technische Vergleichskriterien für eine RIS-Auswahl</h3>
+<table><thead><tr><th>Kriterium</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>PACS-Integration</td><td>Wie eng arbeiten RIS und PACS zusammen – aus einer Hand oder herstellerübergreifend?</td></tr>
+<tr><td>Spracherkennung</td><td>Integrierte oder anzubindende Diktat-/Spracherkennungslösung.</td></tr>
+<tr><td>Modalitätsunterstützung</td><td>Kompatibilität mit den im Haus eingesetzten Modalitäten (siehe Kapitel „Bildgebung“).</td></tr>
+<tr><td>Mandantenfähigkeit</td><td>Eignung für mehrere Standorte oder Fachbereiche unter einer Installation.</td></tr>
+</tbody></table>
+
+<h3 id="sec11">11. Bekannte RIS-Hersteller</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Produkt</th><th>Besonderheit</th></tr></thead>
+<tbody>
+<tr><td><strong>Siemens Healthineers</strong></td><td>syngo.via / syngo-Plattform</td><td>Integrierte RIS-, PACS- und Postprocessing-Funktionalität auf einer gemeinsamen Plattform.</td></tr>
+<tr><td><strong>Agfa HealthCare</strong></td><td>Enterprise Imaging</td><td>Kombiniert RIS, PACS und Vendor Neutral Archive (VNA) in einer Plattform.</td></tr>
+<tr><td><strong>Sectra</strong></td><td>Sectra Radiology Suite</td><td>Skalierbare RIS/PACS-Lösung, verbreitet auch für standortübergreifende Radiologieverbünde.</td></tr>
+<tr><td><strong>medavis</strong></td><td>medavis RIS</td><td>In Deutschland verbreiteter, spezialisierter RIS-Anbieter mit Anbindung an zahlreiche Dritt-PACS-Systeme.</td></tr>
+<tr><td><strong>Dedalus</strong></td><td>RIS-Module innerhalb ORBIS</td><td>Radiologie-Workflow als integrierter Bestandteil des KIS ORBIS (siehe Kapitel „KIS“, Abschnitt 11).</td></tr>
+</tbody>
+</table>
+
+<h3 id="sec12">12. Begriffe und Quellen</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>MWL</td><td>Modality Worklist; elektronische Auftragsliste an der Modalität.</td></tr>
+<tr><td>MPPS</td><td>Modality Performed Procedure Step; Statusrückmeldung der Modalität.</td></tr>
+<tr><td>VNA</td><td>Vendor Neutral Archive; herstellerunabhängiges Bildarchiv (siehe Kapitel „PACS“).</td></tr>
+</tbody></table>
+
+<div class="note">
+<strong>Quellen:</strong>
+<ul>
+<li>Siemens Healthineers: <a href="https://www.siemens-healthineers.com" target="_blank" rel="noopener">syngo-Plattform</a></li>
+<li>Studiengang: <a href="https://www.bht-berlin.de/medi" target="_blank" rel="noopener">Fernstudium Medizinische Informatik – Berliner Hochschule für Technik (BHT)</a></li>
+<li>Wikipedia: <a href="https://de.wikipedia.org/wiki/Radiologieinformationssystem" target="_blank" rel="noopener">Radiologieinformationssystem</a></li>
+</ul>
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

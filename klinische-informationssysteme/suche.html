@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Suche – MedizinInformatik Wiki</title>
+
+<style>
+
+:root {
+  --navy:#07335f;
+  --blue:#0b6ebc;
+  --line:#dfe6ec;
+  --text:#18232d;
+  --muted:#5f6b75;
+  --bg:#f5f8fb;
+}
+
+* {
+  box-sizing:border-box;
+}
+
+body {
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+}
+
+.header {
+  background:linear-gradient(135deg,#062a4f,#0a3e70);
+  color:#fff;
+  padding:25px;
+}
+
+.header-inner {
+  max-width:1200px;
+  margin:auto;
+}
+
+.header a {
+  color:white;
+  text-decoration:none;
+}
+
+main {
+  max-width:1000px;
+  margin:auto;
+  padding:40px 20px;
+}
+
+h1 {
+  color:var(--navy);
+}
+
+.search-box {
+  display:flex;
+  gap:8px;
+  margin:25px 0;
+}
+
+.search-box input {
+  flex:1;
+  padding:13px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  font-size:16px;
+}
+
+.search-box button {
+  padding:13px 20px;
+  border:none;
+  border-radius:8px;
+  background:var(--navy);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.search-box button:hover {
+  background:var(--blue);
+}
+
+.result {
+  background:white;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:20px;
+  margin-bottom:15px;
+}
+
+.result h2 {
+  margin-top:0;
+  color:var(--navy);
+}
+
+.result a {
+  color:var(--blue);
+  font-weight:bold;
+}
+
+.no-results {
+  background:white;
+  border-left:4px solid var(--blue);
+  padding:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+  <div class="header-inner">
+
+    <a href="index.html">
+      ← Zurück zur Startseite
+    </a>
+
+    <h1>MedizinInformatik Wiki – Suche</h1>
+
+  </div>
+
+</header>
+
+
+<main>
+
+  <h1>Wiki durchsuchen</h1>
+
+  <form class="search-box" onsubmit="searchWiki(event)">
+
+    <input
+      type="search"
+      id="searchInput"
+      placeholder="Suchbegriff eingeben..."
+      aria-label="Suchbegriff"
+    >
+
+    <button type="submit">
+      🔍 Suchen
+    </button>
+
+  </form>
+
+
+  <div id="results"></div>
+
+</main>
+
+
+<script>
+
+function searchWiki(event) {
+
+  event.preventDefault();
+
+  const searchTerm =
+    document.getElementById("searchInput").value.trim();
+
+  if (searchTerm === "") {
+    return;
+  }
+
+  /*
+   * Hier kommen später die Wiki-Seiten hinein.
+   */
+
+  const pages = [
+
+    {
+      title: "Medizintechnik",
+      description:
+        "Medizinische Geräte und Systeme – von Patientenmonitoring bis zu Bildgebung und Laborgeräten.",
+      url: "medizintechnik/index.html"
+    },
+
+    {
+      title: "Vernetzung der Geräte",
+      description:
+        "Anbindung, Netzwerke, VLAN, DHCP, NAC, Gateways und Monitoring medizinischer Geräte.",
+      url: "vernetzung/index.html"
+    },
+
+    {
+      title: "Krankenhaus-IT-Infrastruktur",
+      description:
+        "Rechenzentrum, Netzwerk, Server, Storage, Virtualisierung, Backup und Security.",
+      url: "krankenhaus-it/index.html"
+    },
+
+    {
+      title: "Klinische Informationssysteme",
+      description:
+        "KIS, PDMS, LIS, RIS, PACS, EMR/EPA und weitere Systeme.",
+      url: "klinische-informationssysteme/index.html"
+    },
+
+    {
+      title: "Datenflüsse",
+      description:
+        "Datenübertragung von medizinischen Geräten über Gateways und Server bis zu Applikationen und Datenbanken.",
+      url: "datenfluesse/index.html"
+    },
+
+    {
+      title: "Schnittstellen & Standards",
+      description:
+        "HL7, FHIR, DICOM, IHE, CDA, LOINC, SNOMED CT und ICD.",
+      url: "schnittstellen-standards/index.html"
+    },
+
+    {
+      title: "Server & Backend",
+      description:
+        "Geräteserver, Kommunikationsserver, Applikationsserver, Datenbanken und Webserver.",
+      url: "server-backend/index.html"
+    },
+
+    {
+      title: "Cybersecurity",
+      description:
+        "Netzwerksegmentierung, NAC, Firewall, IAM, Zertifikate, Verschlüsselung, Logging und SIEM.",
+      url: "cybersecurity/index.html"
+    },
+
+    {
+      title: "Web Engineering",
+      description:
+        "HTML, CSS, JavaScript, APIs, REST, JSON, Datenbanken und Web Security.",
+      url: "web-engineering/index.html"
+    },
+
+    {
+      title: "Praxis / Fallbeispiele",
+      description:
+        "Beispiele aus Intensivstation, OP, Radiologie, Notaufnahme und Labor.",
+      url: "praxis/index.html"
+    }
+
+  ];
+
+
+  const term = searchTerm.toLowerCase();
+
+
+  const results = pages.filter(page =>
+
+    page.title.toLowerCase().includes(term) ||
+    page.description.toLowerCase().includes(term)
+
+  );
+
+
+  const resultsContainer =
+    document.getElementById("results");
+
+
+  if (results.length === 0) {
+
+    resultsContainer.innerHTML = `
+      <div class="no-results">
+        Keine Ergebnisse für
+        <strong>"${searchTerm}"</strong>
+        gefunden.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  resultsContainer.innerHTML = `
+
+    <p>
+      <strong>${results.length}</strong>
+      Ergebnis${results.length !== 1 ? "se" : ""}
+      für "<strong>${searchTerm}</strong>"
+    </p>
+
+    ${results.map(page => `
+
+      <div class="result">
+
+        <h2>${page.title}</h2>
+
+        <p>${page.description}</p>
+
+        <a href="${page.url}">
+          Seite öffnen →
+        </a>
+
+      </div>
+
+    `).join("")}
+
+  `;
+
+}
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REST – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  table { width:100%; border-collapse:collapse; margin:1.2em 0 1.8em; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 3px 12px rgba(16,42,67,.05); }
+  th, td { border:1px solid #d9e2ea; padding:10px 12px; text-align:left; vertical-align:top; }
+  thead th { background:#1a5276; color:#fff; border-color:#1a5276; font-weight:700; }
+  tbody tr:nth-child(even) { background:#eaf4f8; }
+  tbody tr:hover { background:#dcedf5; }
+  .toc-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:14px; margin:1.2em 0 2em; }
+  .toc-card { display:flex; flex-direction:column; align-items:flex-start; gap:4px; background:#fff; border:1px solid #d9e2ea; border-radius:10px; padding:14px 14px 16px; text-decoration:none; color:inherit; box-shadow:0 2px 8px rgba(16,42,67,.05); transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+  .toc-card:hover { transform:translateY(-3px); box-shadow:0 8px 18px rgba(16,42,67,.14); border-color:#1a5276; }
+  .toc-card svg { width:44px; height:44px; stroke:#1a5276; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; margin-bottom:4px; }
+  .toc-card svg .fill { fill:#1a5276; stroke:none; }
+  .toc-card .toc-num { font-size:.72em; font-weight:700; letter-spacing:.06em; color:#6a93ac; }
+  .toc-card .toc-title { font-weight:700; color:#17324a; line-height:1.25; }
+  .toc-card .toc-desc { font-size:.85em; color:#5b7080; }
+  .diagram-box { background:#fff; border:1px solid #d9e2ea; border-radius:10px; box-shadow:0 3px 12px rgba(16,42,67,.05); padding:18px; margin:1.2em 0 1.8em; overflow-x:auto; }
+  .diagram-box svg { display:block; margin:0 auto; }
+  .diagram-box .cap { text-align:center; font-size:.85em; color:#5b7080; margin-top:8px; }
+  .quellen-list { font-size:.92em; }
+  .quellen-list li { margin-bottom:6px; }
+  code { background:#eaf4f8; padding:1px 5px; border-radius:4px; font-size:.92em; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../web-engineering/index.html">Web Engineering</a> /
+  REST
+</div>
+
+<div class="hero">
+  <h2>REST</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Architekturstil für zustandslose, ressourcenorientierte Web-APIs auf Basis von HTTP</td></tr>
+      <tr><td>Kernprinzipien</td><td>Zustandslosigkeit, einheitliche Schnittstelle, Client-Server-Trennung, Cacheability</td></tr>
+      <tr><td>HTTP-Methoden</td><td>GET, POST, PUT, PATCH, DELETE als CRUD-Operationen auf Ressourcen</td></tr>
+      <tr><td>Praxisbeispiel</td><td>Routing in Node.js/Express als Teil des MEAN-Stacks</td></tr>
+      <tr><td>Bezug Medizin-IT</td><td>HL7 FHIR als RESTful-API-Standard für Gesundheitsdaten</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite orientiert sich inhaltlich am Lehrmodul „Web-Engineering“ des Fernstudiengangs
+    Medizinische Informatik. Quellenangaben finden sich am Ende der Seite.
+  </div>
+</div>
+
+<h3>Inhaltsverzeichnis</h3>
+<p>Klicken Sie auf eine Karte, um direkt zum jeweiligen Abschnitt zu springen.</p>
+<div class="toc-grid">
+  <a class="toc-card" href="#sec1"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="14" height="12" rx="2"/><path d="M20 24 H28"/><rect x="28" y="18" width="14" height="12" rx="2"/></svg><span class="toc-num">01</span><span class="toc-title">Was ist REST?</span><span class="toc-desc">Definition und Zweck</span></a>
+  <a class="toc-card" href="#sec2"><svg viewBox="0 0 48 48"><rect x="10" y="8" width="28" height="10" rx="2"/><rect x="10" y="22" width="28" height="10" rx="2"/><rect x="10" y="34" width="28" height="6" rx="2"/></svg><span class="toc-num">02</span><span class="toc-title">REST-Prinzipien</span><span class="toc-desc">Zustandslos, einheitlich, cacheable</span></a>
+  <a class="toc-card" href="#sec3"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><text x="24" y="29" font-size="12" text-anchor="middle" fill="#1a5276" stroke="none">URI</text></svg><span class="toc-num">03</span><span class="toc-title">Ressourcen und URIs</span><span class="toc-desc">Adressierung von Daten</span></a>
+  <a class="toc-card" href="#sec4"><svg viewBox="0 0 48 48"><rect x="6" y="10" width="36" height="28" rx="2"/><line x1="6" y1="18" x2="42" y2="18"/><line x1="6" y1="26" x2="42" y2="26"/><line x1="6" y1="32" x2="42" y2="32"/></svg><span class="toc-num">04</span><span class="toc-title">HTTP-Methoden</span><span class="toc-desc">GET, POST, PUT, PATCH, DELETE</span></a>
+  <a class="toc-card" href="#sec5"><svg viewBox="0 0 48 48"><path d="M24 6 L40 12 V24 C40 34 33 40 24 42 C15 40 8 34 8 24 V12 Z"/><path d="M17 24 L22 29 L32 18"/></svg><span class="toc-num">05</span><span class="toc-title">HTTP-Statuscodes</span><span class="toc-desc">2xx, 3xx, 4xx, 5xx</span></a>
+  <a class="toc-card" href="#sec6"><svg viewBox="0 0 48 48"><path d="M10 10 H30 L38 18 V38 H10 Z"/><path d="M30 10 V18 H38"/><line x1="15" y1="24" x2="33" y2="24"/><line x1="15" y1="30" x2="33" y2="30"/></svg><span class="toc-num">06</span><span class="toc-title">Repräsentationen</span><span class="toc-desc">JSON vs. XML</span></a>
+  <a class="toc-card" href="#sec7"><svg viewBox="0 0 48 48"><line x1="24" y1="6" x2="24" y2="42"/><line x1="10" y1="14" x2="38" y2="14"/><path d="M10 14 L4 26 H16 Z"/><path d="M38 14 L32 26 H44 Z"/></svg><span class="toc-num">07</span><span class="toc-title">Richardson-Reifegradmodell</span><span class="toc-desc">Level 0 bis 3</span></a>
+  <a class="toc-card" href="#sec8"><svg viewBox="0 0 48 48"><circle cx="14" cy="24" r="8"/><circle cx="34" cy="24" r="8"/><path d="M22 24 H26"/></svg><span class="toc-num">08</span><span class="toc-title">REST vs. SOAP</span><span class="toc-desc">Zwei Architekturansätze</span></a>
+  <a class="toc-card" href="#sec9"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="12" height="12" rx="2"/><path d="M18 24 H30"/><rect x="30" y="18" width="12" height="12" rx="2"/></svg><span class="toc-num">09</span><span class="toc-title">REST mit Node/Express</span><span class="toc-desc">Routing-Beispiel</span></a>
+  <a class="toc-card" href="#sec10"><svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="20" rx="2"/><path d="M16 36 L24 30 L32 36"/><circle cx="24" cy="18" r="4"/><path d="M18 25 a6 8 0 0 1 12 0"/></svg><span class="toc-num">10</span><span class="toc-title">REST in der Medizin-IT</span><span class="toc-desc">HL7 FHIR</span></a>
+  <a class="toc-card" href="#sec11"><svg viewBox="0 0 48 48"><rect x="12" y="22" width="24" height="18" rx="2"/><path d="M17 22 V15 a7 7 0 0 1 14 0 v7"/><circle cx="24" cy="30" r="2.4" class="fill"/></svg><span class="toc-num">11</span><span class="toc-title">Sicherheit von REST-APIs</span><span class="toc-desc">HTTPS, JWT</span></a>
+  <a class="toc-card" href="#sec12"><svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/></svg><span class="toc-num">12</span><span class="toc-title">Begriffe &amp; Quellen</span><span class="toc-desc">Glossar und Literatur</span></a>
+</div>
+
+<h3 id="sec1">1. Was ist REST?</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Definition</td><td>REST (Representational State Transfer) ist ein von Roy Fielding beschriebener Architekturstil für verteilte Systeme, der insbesondere für Web-APIs auf Basis von HTTP verbreitet ist.</td></tr>
+<tr><td>Grundidee</td><td>Daten werden als adressierbare Ressourcen modelliert, auf die über eine einheitliche Schnittstelle mit Standard-HTTP-Methoden zugegriffen wird.</td></tr>
+<tr><td>Abgrenzung</td><td>REST ist kein Protokoll und kein Standard im engeren Sinne, sondern eine Sammlung von Architekturprinzipien, an denen sich eine API orientieren kann.</td></tr>
+</tbody></table>
+
+<h3 id="sec2">2. REST-Prinzipien</h3>
+<table><thead><tr><th>Prinzip</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Zustandslosigkeit (Stateless)</td><td>Jede Anfrage enthält alle für ihre Bearbeitung notwendigen Informationen; der Server hält keinen Sitzungszustand zwischen Anfragen vor.</td></tr>
+<tr><td>Einheitliche Schnittstelle</td><td>Ressourcen werden über URIs adressiert und mit einer festen Menge an HTTP-Methoden einheitlich manipuliert.</td></tr>
+<tr><td>Client-Server-Trennung</td><td>Client und Server sind unabhängig voneinander entwickelbar, solange die Schnittstelle stabil bleibt.</td></tr>
+<tr><td>Cacheability</td><td>Antworten können als cachebar oder nicht cachebar gekennzeichnet werden, um Performance zu verbessern.</td></tr>
+<tr><td>Layered System</td><td>Zwischen Client und eigentlichem Server können weitere Schichten (z. B. Load Balancer, Gateway) eingefügt werden, ohne dass der Client dies bemerkt.</td></tr>
+</tbody></table>
+
+<h3 id="sec3">3. Ressourcen und URIs</h3>
+<table><thead><tr><th>Aspekt</th><th>Beispiel</th></tr></thead><tbody>
+<tr><td>Ressource</td><td>Ein Patient, eine Messung, ein Termin – jede fachliche Entität wird als Ressource betrachtet.</td></tr>
+<tr><td>Kollektions-URI</td><td><code>/patienten</code> adressiert die Gesamtheit aller Patienten.</td></tr>
+<tr><td>Einzel-Ressourcen-URI</td><td><code>/patienten/123</code> adressiert genau einen Patienten mit der ID 123.</td></tr>
+<tr><td>Namenskonvention</td><td>URIs sollten Substantive statt Verben verwenden, da die Aktion bereits durch die HTTP-Methode ausgedrückt wird.</td></tr>
+</tbody></table>
+
+<h3 id="sec4">4. HTTP-Methoden</h3>
+<table><thead><tr><th>Methode</th><th>CRUD-Bedeutung</th><th>Eigenschaft</th></tr></thead><tbody>
+<tr><td>GET</td><td>Read (Lesen)</td><td>Sicher (verändert keinen Zustand) und idempotent</td></tr>
+<tr><td>POST</td><td>Create (Erzeugen)</td><td>Nicht idempotent; wiederholtes Senden kann mehrfach Ressourcen anlegen</td></tr>
+<tr><td>PUT</td><td>Update/Replace (vollständiges Ersetzen)</td><td>Idempotent; mehrfaches Senden derselben Anfrage führt zum selben Endzustand</td></tr>
+<tr><td>PATCH</td><td>Update (Teilaktualisierung)</td><td>Verändert nur die übergebenen Felder einer Ressource</td></tr>
+<tr><td>DELETE</td><td>Delete (Löschen)</td><td>Idempotent; wiederholtes Löschen einer bereits gelöschten Ressource ändert nichts weiter</td></tr>
+</tbody></table>
+
+<h3 id="sec5">5. HTTP-Statuscodes</h3>
+<table><thead><tr><th>Klasse</th><th>Bedeutung</th><th>Beispiel</th></tr></thead><tbody>
+<tr><td>2xx</td><td>Erfolgreiche Verarbeitung</td><td>200 OK, 201 Created, 204 No Content</td></tr>
+<tr><td>3xx</td><td>Weiterleitung</td><td>301 Moved Permanently, 304 Not Modified</td></tr>
+<tr><td>4xx</td><td>Client-Fehler</td><td>400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found</td></tr>
+<tr><td>5xx</td><td>Server-Fehler</td><td>500 Internal Server Error, 503 Service Unavailable</td></tr>
+</tbody></table>
+
+<h3 id="sec6">6. Repräsentationen: JSON versus XML</h3>
+<table><thead><tr><th>Format</th><th>Merkmal</th></tr></thead><tbody>
+<tr><td>JSON</td><td>Kompaktes, leicht lesbares Textformat (siehe Kapitel „JSON“); heutiger De-facto-Standard für REST-APIs.</td></tr>
+<tr><td>XML</td><td>Ausführlicheres, strenger strukturiertes Format mit Schemavalidierung; historisch bei SOAP-Diensten dominant, in modernen REST-APIs seltener.</td></tr>
+<tr><td>Content-Negotiation</td><td>Über den HTTP-Header <code>Accept</code> kann der Client das gewünschte Antwortformat anfragen.</td></tr>
+</tbody></table>
+
+<h3 id="sec7">7. Richardson-Reifegradmodell</h3>
+<table><thead><tr><th>Level</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Level 0</td><td>Ein einziger Endpunkt, über den alle Operationen per POST abgewickelt werden (RPC-artig, kaum REST-Prinzipien).</td></tr>
+<tr><td>Level 1</td><td>Einführung mehrerer Ressourcen-URIs, aber weiterhin überwiegend einheitliche HTTP-Methode.</td></tr>
+<tr><td>Level 2</td><td>Konsequente Nutzung der passenden HTTP-Methoden (GET/POST/PUT/DELETE) und Statuscodes je Ressource – in der Praxis am häufigsten anzutreffen.</td></tr>
+<tr><td>Level 3</td><td>Zusätzlich Hypermedia-Steuerung (HATEOAS): Antworten enthalten Links auf mögliche Folgeaktionen.</td></tr>
+</tbody></table>
+
+<h3 id="sec8">8. REST versus SOAP</h3>
+<table><thead><tr><th>Aspekt</th><th>REST</th><th>SOAP</th></tr></thead><tbody>
+<tr><td>Grundprinzip</td><td>Architekturstil auf Basis von HTTP und Ressourcen</td><td>Protokoll mit striktem XML-Nachrichtenformat</td></tr>
+<tr><td>Format</td><td>Meist JSON, auch XML möglich</td><td>Ausschließlich XML nach festem Envelope-Schema</td></tr>
+<tr><td>Komplexität</td><td>Geringer, leichter verständlich</td><td>Höher, mit umfangreichen Zusatzstandards (WS-*)</td></tr>
+<tr><td>Typischer Einsatz</td><td>Moderne Web- und Mobile-APIs</td><td>Ältere Enterprise-Integrationen mit hohen Transaktionsanforderungen</td></tr>
+</tbody></table>
+
+<h3 id="sec9">9. REST in Node.js und Express</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Node.js</td><td>JavaScript-Laufzeitumgebung außerhalb des Browsers, häufig für performante, ereignisgesteuerte Server eingesetzt.</td></tr>
+<tr><td>Express.js</td><td>Schlankes Webframework für Node.js zur Definition von Routen und Middleware.</td></tr>
+<tr><td>Routing</td><td>Endpunkte werden über Kombinationen aus HTTP-Methode und Pfad definiert, z. B. <code>app.get('/patienten/:id', handler)</code>.</td></tr>
+<tr><td>Einordnung</td><td>Node.js, Express und eine Dokumentendatenbank (z. B. MongoDB) bilden zusammen mit einem Frontend-Framework wie Angular den sogenannten MEAN-Stack.</td></tr>
+</tbody></table>
+
+<h3 id="sec10">10. REST in der Medizin-IT</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>HL7 FHIR</td><td>Definiert Gesundheitsdaten als RESTful-Ressourcen (z. B. <code>Patient</code>, <code>Observation</code>) mit standardisierten Operationen.</td></tr>
+<tr><td>Integration heterogener Systeme</td><td>RESTful-Schnittstellen erleichtern die Anbindung unterschiedlicher Hersteller-Systeme an KIS/PDMS (siehe Kapitel „Gerätevernetzung“).</td></tr>
+<tr><td>Skalierbarkeit</td><td>Die Zustandslosigkeit von REST erleichtert die horizontale Skalierung von Applikationsservern im Rechenzentrum.</td></tr>
+</tbody></table>
+
+<h3 id="sec11">11. Sicherheit von REST-APIs</h3>
+<table><thead><tr><th>Maßnahme</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>HTTPS/TLS</td><td>Verschlüsselte Übertragung zum Schutz vor Abhören und Manipulation.</td></tr>
+<tr><td>Token-Authentifizierung (JWT)</td><td>Da REST-APIs zustandslos sind, wird die Authentifizierung meist über ein bei jeder Anfrage mitgesendetes Token realisiert (siehe Kapitel „APIs“, Abschnitt 7, und „Web Security“).</td></tr>
+<tr><td>Rate Limiting</td><td>Begrenzung der Anfragehäufigkeit pro Client zum Schutz vor Missbrauch und Überlastung.</td></tr>
+<tr><td>Eingabevalidierung</td><td>Serverseitige Prüfung aller übermittelten Daten, unabhängig von einer eventuell bereits erfolgten clientseitigen Validierung.</td></tr>
+</tbody></table>
+
+<h3 id="sec12">12. Begriffe und Quellen</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>Ressource</td><td>Über eine URI adressierbare fachliche Entität.</td></tr>
+<tr><td>Idempotenz</td><td>Eigenschaft, bei der mehrfache identische Anfragen denselben Endzustand erzeugen wie eine einzelne.</td></tr>
+<tr><td>HATEOAS</td><td>Hypermedia as the Engine of Application State; Einbettung von Navigationslinks in API-Antworten.</td></tr>
+<tr><td>Content-Negotiation</td><td>Aushandlung des Antwortformats zwischen Client und Server.</td></tr>
+</tbody></table>
+
+<div class="note">
+<strong>Quellen:</strong>
+<ul class="quellen-list">
+<li>Pavlista, T.: <em>Web-Engineering</em> – Modul 12.1 Projektarbeit, Fernstudium Medizinische Informatik, Berliner Hochschule für Technik (BHT), Fernstudieninstitut, 5. Auflage, 09/2021 (interne Studienunterlage, Kapitel MEAN-Apps/REST).</li>
+<li>Studiengang: <a href="https://www.bht-berlin.de/medi" target="_blank" rel="noopener">Fernstudium Medizinische Informatik – Berliner Hochschule für Technik (BHT)</a></li>
+<li>Wikipedia: <a href="https://de.wikipedia.org/wiki/Representational_State_Transfer" target="_blank" rel="noopener">Representational State Transfer</a></li>
+</ul>
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

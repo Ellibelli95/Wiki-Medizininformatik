@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDMS – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  table { width:100%; border-collapse:collapse; margin:1.2em 0 1.8em; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 3px 12px rgba(16,42,67,.05); }
+  th, td { border:1px solid #d9e2ea; padding:10px 12px; text-align:left; vertical-align:top; }
+  thead th { background:#1a5276; color:#fff; border-color:#1a5276; font-weight:700; }
+  tbody tr:nth-child(even) { background:#eaf4f8; }
+  tbody tr:hover { background:#dcedf5; }
+  .toc-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:14px; margin:1.2em 0 2em; }
+  .toc-card { display:flex; flex-direction:column; align-items:flex-start; gap:4px; background:#fff; border:1px solid #d9e2ea; border-radius:10px; padding:14px 14px 16px; text-decoration:none; color:inherit; box-shadow:0 2px 8px rgba(16,42,67,.05); transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+  .toc-card:hover { transform:translateY(-3px); box-shadow:0 8px 18px rgba(16,42,67,.14); border-color:#1a5276; }
+  .toc-card svg { width:44px; height:44px; stroke:#1a5276; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; margin-bottom:4px; }
+  .toc-card svg .fill { fill:#1a5276; stroke:none; }
+  .toc-card .toc-num { font-size:.72em; font-weight:700; letter-spacing:.06em; color:#6a93ac; }
+  .toc-card .toc-title { font-weight:700; color:#17324a; line-height:1.25; }
+  .toc-card .toc-desc { font-size:.85em; color:#5b7080; }
+  .diagram-box { background:#fff; border:1px solid #d9e2ea; border-radius:10px; box-shadow:0 3px 12px rgba(16,42,67,.05); padding:18px; margin:1.2em 0 1.8em; overflow-x:auto; }
+  .diagram-box svg { display:block; margin:0 auto; }
+  .diagram-box .cap { text-align:center; font-size:.85em; color:#5b7080; margin-top:8px; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../klinische-informationssysteme/index.html">Klinische Informationssysteme</a> /
+  PDMS
+</div>
+
+<div class="hero">
+  <h2>PDMS</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Patientendatenmanagementsystem – automatisierte, lückenlose Dokumentation auf Intensivstation, Anästhesie und in weiteren hochfrequenten Bereichen</td></tr>
+      <tr><td>Prinzip</td><td>Kontinuierliche automatische Übernahme von Geräte- und Vitaldaten statt manueller Kurvenblatt-Führung</td></tr>
+      <tr><td>Nutzen</td><td>Zeitersparnis für das Personal, höhere Dokumentationsqualität und automatisierte Scores</td></tr>
+      <tr><td>Abgrenzung</td><td>Ergänzt das KIS um eine hochfrequente, geräteintegrierte Dokumentationsebene (siehe Kapitel „KIS“)</td></tr>
+      <tr><td>Hersteller</td><td>U. a. COPRA System, Dräger (Innovian), iMDsoft (MetaVision), Meierhofer (M-PDMS)</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist eine technische und medizininformatische Dokumentation und orientiert sich an
+    öffentlich verfügbaren Herstellerinformationen. Quellenangaben finden sich am Ende der Seite.
+  </div>
+</div>
+
+<h3>Inhaltsverzeichnis</h3>
+<p>Klicken Sie auf eine Karte, um direkt zum jeweiligen Abschnitt zu springen.</p>
+<div class="toc-grid">
+  <a class="toc-card" href="#sec1"><svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="20" rx="2"/><path d="M16 36 L24 30 L32 36"/><circle cx="24" cy="18" r="4"/><path d="M18 25 a6 8 0 0 1 12 0"/></svg><span class="toc-num">01</span><span class="toc-title">Was ist ein PDMS?</span><span class="toc-desc">Definition und Prinzip</span></a>
+  <a class="toc-card" href="#sec2"><svg viewBox="0 0 48 48"><circle cx="14" cy="24" r="8"/><circle cx="34" cy="24" r="8"/><path d="M22 24 H26"/></svg><span class="toc-num">02</span><span class="toc-title">PDMS versus KIS</span><span class="toc-desc">Abgrenzung der Systeme</span></a>
+  <a class="toc-card" href="#sec3"><svg viewBox="0 0 48 48"><path d="M24 6 L40 12 V24 C40 34 33 40 24 42 C15 40 8 34 8 24 V12 Z"/><path d="M17 24 L22 29 L32 18"/></svg><span class="toc-num">03</span><span class="toc-title">Einsatzbereiche</span><span class="toc-desc">Intensiv, Anästhesie, Notaufnahme</span></a>
+  <a class="toc-card" href="#sec4"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="12" height="12" rx="2"/><path d="M18 24 H30"/><rect x="30" y="18" width="12" height="12" rx="2"/></svg><span class="toc-num">04</span><span class="toc-title">Funktionsweise &amp; Architektur</span><span class="toc-desc">Vom Gerät bis zur Datenbank</span></a>
+  <a class="toc-card" href="#sec5"><svg viewBox="0 0 48 48"><rect x="8" y="10" width="32" height="8" rx="2"/><rect x="8" y="22" width="32" height="8" rx="2"/><rect x="8" y="34" width="16" height="6" rx="2"/></svg><span class="toc-num">05</span><span class="toc-title">Kernfunktionen</span><span class="toc-desc">Kurvenblatt, Bilanzierung, Scores</span></a>
+  <a class="toc-card" href="#sec6"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M24 14 V24 L31 29"/></svg><span class="toc-num">06</span><span class="toc-title">Datenmodell</span><span class="toc-desc">Zeitreihen und Ereignisse</span></a>
+  <a class="toc-card" href="#sec7"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="14" height="12" rx="2"/><path d="M20 24 H28"/><rect x="28" y="18" width="14" height="12" rx="2"/></svg><span class="toc-num">07</span><span class="toc-title">Schnittstellen</span><span class="toc-desc">Zu KIS, Labor, Bildgebung</span></a>
+  <a class="toc-card" href="#sec8"><svg viewBox="0 0 48 48"><path d="M24 6 L40 12 V24 C40 34 33 40 24 42 C15 40 8 34 8 24 V12 Z"/><path d="M17 24 L22 29 L32 18"/></svg><span class="toc-num">08</span><span class="toc-title">Nutzen eines PDMS</span><span class="toc-desc">Was es konkret bringt</span></a>
+  <a class="toc-card" href="#sec9"><svg viewBox="0 0 48 48"><rect x="12" y="22" width="24" height="18" rx="2"/><path d="M17 22 V15 a7 7 0 0 1 14 0 v7"/><circle cx="24" cy="30" r="2.4" class="fill"/></svg><span class="toc-num">09</span><span class="toc-title">Sicherheit &amp; Rechtliches</span><span class="toc-desc">Medizinprodukt, MDR-Klasse IIa</span></a>
+  <a class="toc-card" href="#sec10"><svg viewBox="0 0 48 48"><path d="M6 40 V20 L16 14 V40 M16 40 V10 L26 4 V40 M26 40 V16 L38 22 V40 Z"/><line x1="4" y1="40" x2="44" y2="40"/></svg><span class="toc-num">10</span><span class="toc-title">Bekannte PDMS-Hersteller</span><span class="toc-desc">COPRA, Innovian, MetaVision u. a.</span></a>
+  <a class="toc-card" href="#sec11"><svg viewBox="0 0 48 48"><line x1="24" y1="6" x2="24" y2="42"/><line x1="10" y1="14" x2="38" y2="14"/><path d="M10 14 L4 26 H16 Z"/><path d="M38 14 L32 26 H44 Z"/></svg><span class="toc-num">11</span><span class="toc-title">Vergleich KIS/PDMS</span><span class="toc-desc">Zusammenfassende Gegenüberstellung</span></a>
+  <a class="toc-card" href="#sec12"><svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/></svg><span class="toc-num">12</span><span class="toc-title">Begriffe &amp; Quellen</span><span class="toc-desc">Glossar und Literatur</span></a>
+</div>
+
+<h3 id="sec1">1. Was ist ein PDMS?</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Definition</td><td>Ein Patientendatenmanagementsystem (PDMS) ist ein spezialisiertes klinisches Informationssystem, das in Bereichen mit hoher Datendichte – vor allem Intensivstation und Anästhesie – Vitaldaten, Geräteparameter und pflegerisch-ärztliche Dokumentation kontinuierlich und weitgehend automatisiert erfasst.</td></tr>
+<tr><td>Grundprinzip</td><td>Statt Messwerte manuell von Monitor oder Beatmungsgerät in ein Papier-Kurvenblatt zu übertragen, übernimmt das PDMS die Daten automatisch über die im Kapitel „Gerätevernetzung“ beschriebene Geräteanbindung.</td></tr>
+<tr><td>Historischer Auslöser</td><td>Klassische Papier-Kurvenblätter auf Intensivstationen sind bei der heutigen Gerätedichte und Messfrequenz kaum noch vollständig und fehlerfrei von Hand zu führen – das PDMS löst dieses Problem durch Automatisierung.</td></tr>
+</tbody></table>
+
+<h3 id="sec2">2. PDMS versus KIS</h3>
+<table><thead><tr><th>Aspekt</th><th>KIS</th><th>PDMS</th></tr></thead><tbody>
+<tr><td>Fokus</td><td>Krankenhausweite administrative und klinische Gesamtdokumentation</td><td>Hochfrequente, geräteintegrierte Dokumentation in Intensiv-/Anästhesiebereichen</td></tr>
+<tr><td>Datenfrequenz</td><td>Eher ereignisbasiert (Aufnahme, Befund, Arztbrief)</td><td>Kontinuierlich, oft im Sekunden- bis Minutentakt (Vitaldaten)</td></tr>
+<tr><td>Typische Nutzer</td><td>Alle Berufsgruppen im gesamten Haus</td><td>Ärzte und Pflegekräfte auf Intensivstation, Anästhesie, Notaufnahme</td></tr>
+<tr><td>Integration</td><td>Bindet Subsysteme inkl. PDMS über eine Interface Engine ein (siehe Kapitel „KIS“, Abschnitt 4)</td><td>Bindet direkt Medizingeräte über Gateways/Geräteserver an (siehe Kapitel „Gerätevernetzung“)</td></tr>
+</tbody></table>
+
+<h3 id="sec3">3. Einsatzbereiche</h3>
+<table><thead><tr><th>Bereich</th><th>Typischer Nutzen</th></tr></thead><tbody>
+<tr><td>Intensivstation</td><td>Automatische Erfassung von Vitaldaten, Beatmungs- und Perfusorparametern; Grundlage für die tägliche Verlaufsdokumentation.</td></tr>
+<tr><td>Anästhesie</td><td>Lückenlose intraoperative Dokumentation von Narkoseverlauf und Vitalparametern.</td></tr>
+<tr><td>Notaufnahme (ZNA)</td><td>Schnelle, strukturierte Ersterfassung und Verlaufsdokumentation kritisch kranker Patienten.</td></tr>
+<tr><td>Stroke Unit</td><td>Engmaschige neurologische und vitalparametrische Überwachung nach Schlaganfall.</td></tr>
+<tr><td>Neonatologie</td><td>Automatisierte Dokumentation bei besonders kleinteiligen, sensiblen Messwerten von Früh- und Neugeborenen.</td></tr>
+</tbody></table>
+
+<h3 id="sec4">4. Funktionsweise und Architektur</h3>
+<div class="flow">Medizingerät → Gateway/Geräteserver → PDMS-Applikationsserver → Datenbankserver → PDMS-Client (Kurvenblatt, Verlaufsdokumentation)</div>
+<table><thead><tr><th>Komponente</th><th>Aufgabe</th></tr></thead><tbody>
+<tr><td>Medizingeräte</td><td>Monitore, Beatmungs- und Narkosegeräte, Perfusoren als Datenquellen (siehe Kapitel „EKG“, „Gerätevernetzung“).</td></tr>
+<tr><td>Gateway/Geräteserver</td><td>Sammelt und standardisiert die Rohdaten der angeschlossenen Geräte (siehe Kapitel „Serielle Anbindung“, Abschnitt 9).</td></tr>
+<tr><td>PDMS-Applikationsserver</td><td>Verarbeitet die Daten fachlich, berechnet u. a. Bilanzen und Scores.</td></tr>
+<tr><td>Datenbankserver</td><td>Speichert die kontinuierlichen Zeitreihen sowie die ärztliche und pflegerische Dokumentation dauerhaft.</td></tr>
+<tr><td>PDMS-Client</td><td>Stellt elektronisches Kurvenblatt, Verlaufsübersicht und Dokumentationsmasken am Bett bzw. Arbeitsplatz bereit.</td></tr>
+</tbody></table>
+
+<h3 id="sec5">5. Kernfunktionen</h3>
+<table><thead><tr><th>Funktion</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Automatische Vitaldatenerfassung</td><td>Kontinuierliche Übernahme von Herzfrequenz, Blutdruck, Sättigung, Beatmungsparametern u. a. direkt vom Gerät.</td></tr>
+<tr><td>Elektronisches Kurvenblatt</td><td>Digitale, automatisch aktualisierte Verlaufskurve als Ersatz des Papier-Kurvenblatts.</td></tr>
+<tr><td>Bilanzierung</td><td>Automatische Berechnung der Flüssigkeitsbilanz aus Infusions-, Ausscheidungs- und weiteren Mengenangaben.</td></tr>
+<tr><td>Medikation</td><td>Dokumentation und teils Closed-Loop-Anbindung von Medikamentengaben und Perfusoreinstellungen.</td></tr>
+<tr><td>Pflegedokumentation</td><td>Strukturierte Erfassung pflegerischer Maßnahmen und Beobachtungen.</td></tr>
+<tr><td>Automatisiertes Scoring</td><td>Berechnung klinischer Scores (z. B. SOFA, APACHE, TISS) aus bereits erfassten Parametern ohne doppelte manuelle Eingabe.</td></tr>
+</tbody></table>
+
+<h3 id="sec6">6. Datenmodell</h3>
+<table><thead><tr><th>Datentyp</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Zeitreihen</td><td>Kontinuierliche, zeitgestempelte Messwertfolgen (z. B. Herzfrequenz im Minutentakt).</td></tr>
+<tr><td>Ereignisse</td><td>Punktuelle Einträge wie Medikamentengaben, Lagerungswechsel oder ärztliche Anordnungen.</td></tr>
+<tr><td>Bilanzen</td><td>Aggregierte Größen (z. B. Tagesbilanz Ein-/Ausfuhr), berechnet aus zugrunde liegenden Einzelwerten.</td></tr>
+<tr><td>Score-Werte</td><td>Abgeleitete, zu definierten Zeitpunkten berechnete klinische Kennzahlen.</td></tr>
+</tbody></table>
+
+<h3 id="sec7">7. Schnittstellen</h3>
+<table><thead><tr><th>Zielsystem</th><th>Ausgetauschte Daten</th></tr></thead><tbody>
+<tr><td>KIS</td><td>Patienten-/Fallstammdaten vom KIS an das PDMS, zusammenfassende Verlaufsdokumentation zurück an das KIS (siehe Kapitel „KIS“, Abschnitt 6).</td></tr>
+<tr><td>Laborsystem</td><td>Laboranforderungen aus dem PDMS, Befundrückmeldung in die Verlaufsdokumentation.</td></tr>
+<tr><td>Bildgebung (RIS/PACS)</td><td>Anforderung bildgebender Diagnostik und Rückmeldung von Befunden (siehe Kapitel „Bildgebung“).</td></tr>
+<tr><td>Medizingeräte</td><td>Kontinuierlicher Datenstrom über Gateways (siehe Kapitel „Gerätevernetzung“).</td></tr>
+</tbody></table>
+
+<h3 id="sec8">8. Nutzen eines PDMS</h3>
+<table><thead><tr><th>Nutzenaspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Zeitersparnis</td><td>Durch den Wegfall manueller Übertragung von Geräteanzeigen in Papierkurven wird die Dokumentationszeit spürbar reduziert; Anwenderstudien zu etablierten Systemen berichten von Einsparungen in der Größenordnung von rund der Hälfte der bisherigen Dokumentationszeit.</td></tr>
+<tr><td>Höhere Datenqualität</td><td>Automatische Übernahme reduziert Übertragungsfehler gegenüber der handschriftlichen Erfassung.</td></tr>
+<tr><td>Lückenlose Dokumentation</td><td>Kontinuierliche, zeitgestempelte Erfassung erleichtert die Rekonstruktion des Behandlungsverlaufs, auch im Nachhinein.</td></tr>
+<tr><td>Automatisierte Scores</td><td>Klinische Scores werden ohne doppelte Dateneingabe berechnet und stehen zeitnah zur Verfügung.</td></tr>
+<tr><td>Mehr Zeit am Patienten</td><td>Weniger Dokumentationsaufwand schafft mehr Zeit für die unmittelbare Patientenversorgung.</td></tr>
+</tbody></table>
+
+<h3 id="sec9">9. Sicherheit und Rechtliches</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Medizinprodukt-Status</td><td>PDMS-Software wird je nach Funktionsumfang als Medizinprodukt eingestuft (z. B. Klasse IIa nach der EU-Medizinprodukteverordnung/MDR) und unterliegt entsprechenden regulatorischen Anforderungen.</td></tr>
+<tr><td>Rückverfolgbarkeit</td><td>Änderungen an Dokumentationseinträgen müssen nachvollziehbar protokolliert werden (Audit Trail).</td></tr>
+<tr><td>Ausfallsicherheit</td><td>Da das PDMS in kritischen Bereichen wie der Intensivstation eingesetzt wird, sind redundante Server- und Netzwerkkonzepte (siehe Kapitel „DHCP“, Abschnitt 12) besonders wichtig.</td></tr>
+<tr><td>Zugriffskontrolle</td><td>Rollenbasierte Berechtigungen analog zum KIS (siehe Kapitel „KIS“, Abschnitt 9).</td></tr>
+</tbody></table>
+
+<h3 id="sec10">10. Bekannte PDMS-Hersteller</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Produkt</th><th>Besonderheit</th></tr></thead>
+<tbody>
+<tr><td><strong>COPRA System GmbH</strong></td><td>COPRA6 / COPRA6 RM</td><td>Deutscher Hersteller aus Berlin; stark individualisierbares PDMS für Intensivmedizin, Anästhesie, Normalstation und Neonatologie, zertifiziert als Medizinprodukt Klasse IIa nach MDR.</td></tr>
+<tr><td><strong>Dräger</strong></td><td>Innovian</td><td>Eng mit Dräger-Beatmungs- und Anästhesiegeräten integriertes PDMS, verbreitet in Anästhesie und Intensivmedizin.</td></tr>
+<tr><td><strong>iMDsoft</strong></td><td>MetaVision</td><td>International eingesetztes PDMS für Intensivstation, OP und Notaufnahme.</td></tr>
+<tr><td><strong>Meierhofer AG</strong></td><td>M-PDMS</td><td>Häufig gemeinsam mit dem hauseigenen KIS M-KIS im deutschsprachigen Raum im Einsatz (siehe Kapitel „KIS“, Abschnitt 11).</td></tr>
+<tr><td><strong>GE HealthCare</strong></td><td>Mural Virtual Care Solution</td><td>Schwerpunkt auf zentraler Überwachung und Frühwarnung, ergänzend zu klassischen PDMS-Funktionen (siehe Kapitel „Gerätevernetzung“, Abschnitt 19).</td></tr>
+</tbody>
+</table>
+
+<h3 id="sec11">11. Vergleich KIS und PDMS im Überblick</h3>
+<table><thead><tr><th>Merkmal</th><th>KIS</th><th>PDMS</th></tr></thead><tbody>
+<tr><td>Reichweite</td><td>Gesamtes Krankenhaus</td><td>Hochfrequente Spezialbereiche</td></tr>
+<tr><td>Datenherkunft</td><td>Überwiegend manuelle Eingabe und Subsystem-Befunde</td><td>Überwiegend automatische Geräteübernahme</td></tr>
+<tr><td>Zusammenspiel</td><td>Zentrale Klammer, empfängt zusammenfassende PDMS-Daten</td><td>Liefert detaillierte Verlaufsdaten an das KIS</td></tr>
+</tbody></table>
+
+<h3 id="sec12">12. Begriffe und Quellen</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>Kurvenblatt</td><td>Chronologische Dokumentation von Vitalwerten und Maßnahmen, heute meist elektronisch geführt.</td></tr>
+<tr><td>Bilanzierung</td><td>Gegenüberstellung von Flüssigkeitszufuhr und -ausfuhr eines Patienten.</td></tr>
+<tr><td>Score (z. B. SOFA, APACHE)</td><td>Standardisierter klinischer Punktwert zur Einschätzung des Schweregrads einer Erkrankung.</td></tr>
+<tr><td>Closed Loop</td><td>Direkte, softwaregestützte Kopplung von Anordnung und Ausführung, z. B. bei der Medikamentengabe.</td></tr>
+</tbody></table>
+
+<div class="note">
+<strong>Quellen:</strong>
+<ul>
+<li>COPRA System GmbH: <a href="https://copra-system.de/produkt/" target="_blank" rel="noopener">COPRA PDMS – Produktinformation</a></li>
+<li>Studiengang: <a href="https://www.bht-berlin.de/medi" target="_blank" rel="noopener">Fernstudium Medizinische Informatik – Berliner Hochschule für Technik (BHT)</a></li>
+<li>Wikipedia: <a href="https://de.wikipedia.org/wiki/Patientendatenmanagementsystem" target="_blank" rel="noopener">Patientendatenmanagementsystem</a></li>
+</ul>
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

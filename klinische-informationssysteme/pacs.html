@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PACS – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  table { width:100%; border-collapse:collapse; margin:1.2em 0 1.8em; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 3px 12px rgba(16,42,67,.05); }
+  th, td { border:1px solid #d9e2ea; padding:10px 12px; text-align:left; vertical-align:top; }
+  thead th { background:#1a5276; color:#fff; border-color:#1a5276; font-weight:700; }
+  tbody tr:nth-child(even) { background:#eaf4f8; }
+  tbody tr:hover { background:#dcedf5; }
+  .toc-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:14px; margin:1.2em 0 2em; }
+  .toc-card { display:flex; flex-direction:column; align-items:flex-start; gap:4px; background:#fff; border:1px solid #d9e2ea; border-radius:10px; padding:14px 14px 16px; text-decoration:none; color:inherit; box-shadow:0 2px 8px rgba(16,42,67,.05); transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+  .toc-card:hover { transform:translateY(-3px); box-shadow:0 8px 18px rgba(16,42,67,.14); border-color:#1a5276; }
+  .toc-card svg { width:44px; height:44px; stroke:#1a5276; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; margin-bottom:4px; }
+  .toc-card svg .fill { fill:#1a5276; stroke:none; }
+  .toc-card .toc-num { font-size:.72em; font-weight:700; letter-spacing:.06em; color:#6a93ac; }
+  .toc-card .toc-title { font-weight:700; color:#17324a; line-height:1.25; }
+  .toc-card .toc-desc { font-size:.85em; color:#5b7080; }
+  .diagram-box { background:#fff; border:1px solid #d9e2ea; border-radius:10px; box-shadow:0 3px 12px rgba(16,42,67,.05); padding:18px; margin:1.2em 0 1.8em; overflow-x:auto; }
+  .diagram-box svg { display:block; margin:0 auto; }
+  .diagram-box .cap { text-align:center; font-size:.85em; color:#5b7080; margin-top:8px; }
+  code { background:#eaf4f8; padding:1px 5px; border-radius:4px; font-size:.92em; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../klinische-informationssysteme/index.html">Klinische Informationssysteme</a> /
+  PACS
+</div>
+
+<div class="hero">
+  <h2>PACS</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Picture Archiving and Communication System – Archivierung, Übertragung und Anzeige medizinischer Bilddaten</td></tr>
+      <tr><td>Technische Basis</td><td>DICOM-Kommunikationsdienste (C-STORE, C-FIND, C-MOVE, C-GET) und die Datenhierarchie Patient–Study–Series–Instance</td></tr>
+      <tr><td>PACS-Viewer</td><td>Diagnostische Workstation, Web-/Zero-Footprint-Viewer und mobile Viewer mit Fensterung, MPR, 3D und Hanging Protocols</td></tr>
+      <tr><td>Unterstützte Geräte</td><td>Alle DICOM-fähigen Modalitäten: Röntgen, CT, MRT, Angiographie, Ultraschall, Nuklearmedizin (siehe Kapitel „Bildgebung“)</td></tr>
+      <tr><td>Hersteller</td><td>U. a. Siemens Healthineers, Agfa HealthCare, Sectra, Visus, Philips (Carestream Vue PACS), GE HealthCare</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist als vertiefende, vorlesungsartige technische Dokumentation aufgebaut und
+    orientiert sich an öffentlich verfügbaren Herstellerinformationen und dem DICOM-Standard. Quellenangaben am Seitenende.
+  </div>
+</div>
+
+<h3>Inhaltsverzeichnis</h3>
+<p>Klicken Sie auf eine Karte, um direkt zum jeweiligen Abschnitt zu springen.</p>
+<div class="toc-grid">
+  <a class="toc-card" href="#sec1"><svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="20" rx="2"/><path d="M16 36 L24 30 L32 36"/><circle cx="24" cy="18" r="4"/><path d="M18 25 a6 8 0 0 1 12 0"/></svg><span class="toc-num">01</span><span class="toc-title">Was ist PACS?</span><span class="toc-desc">Definition und Prinzip</span></a>
+  <a class="toc-card" href="#sec2"><svg viewBox="0 0 48 48"><line x1="6" y1="24" x2="42" y2="24"/><circle cx="10" cy="24" r="3" class="fill"/><circle cx="20" cy="24" r="3" class="fill"/><circle cx="30" cy="24" r="3" class="fill"/><circle cx="40" cy="24" r="3" class="fill"/></svg><span class="toc-num">02</span><span class="toc-title">Historische Entwicklung</span><span class="toc-desc">Vom Film zum digitalen Archiv</span></a>
+  <a class="toc-card" href="#sec3"><svg viewBox="0 0 48 48"><rect x="10" y="8" width="28" height="10" rx="2"/><rect x="10" y="22" width="28" height="10" rx="2"/><rect x="10" y="34" width="28" height="6" rx="2"/></svg><span class="toc-num">03</span><span class="toc-title">Kernaufgaben</span><span class="toc-desc">Archivierung, Kommunikation, Anzeige</span></a>
+  <a class="toc-card" href="#sec4"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="12" height="12" rx="2"/><path d="M18 24 H30"/><rect x="30" y="18" width="12" height="12" rx="2"/></svg><span class="toc-num">04</span><span class="toc-title">Technische Architektur</span><span class="toc-desc">Modalität, Server, Archiv, Viewer</span></a>
+  <a class="toc-card" href="#sec5"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="12" height="12" rx="2"/><path d="M18 24 H30" /><path d="M27 21 L30 24 L27 27"/><rect x="30" y="18" width="12" height="12" rx="2"/></svg><span class="toc-num">05</span><span class="toc-title">DICOM-Kommunikationsdienste</span><span class="toc-desc">C-STORE, C-FIND, C-MOVE, C-GET</span></a>
+  <a class="toc-card" href="#sec6"><svg viewBox="0 0 48 48"><rect x="8" y="10" width="32" height="8" rx="2"/><rect x="8" y="22" width="32" height="8" rx="2"/><rect x="8" y="34" width="16" height="6" rx="2"/></svg><span class="toc-num">06</span><span class="toc-title">Datenhierarchie</span><span class="toc-desc">Patient, Study, Series, Instance</span></a>
+  <a class="toc-card" href="#sec7"><svg viewBox="0 0 48 48"><rect x="6" y="16" width="14" height="16" rx="2"/><rect x="28" y="16" width="14" height="16" rx="2"/><path d="M20 24 H28" stroke-dasharray="3 3"/></svg><span class="toc-num">07</span><span class="toc-title">Speicherarchitektur</span><span class="toc-desc">Online-, Nearline-, Langzeitarchiv</span></a>
+  <a class="toc-card" href="#sec8"><svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/></svg><span class="toc-num">08</span><span class="toc-title">Vendor Neutral Archive</span><span class="toc-desc">Herstellerunabhängige Archivierung</span></a>
+  <a class="toc-card" href="#sec9"><svg viewBox="0 0 48 48"><rect x="8" y="12" width="32" height="24" rx="3"/><path d="M14 30 L22 18 L28 26 L34 16"/></svg><span class="toc-num">09</span><span class="toc-title">Der PACS-Viewer im Detail</span><span class="toc-desc">Fensterung, MPR, 3D, Hanging Protocols</span></a>
+  <a class="toc-card" href="#sec10"><svg viewBox="0 0 48 48"><rect x="8" y="8" width="14" height="10" rx="2"/><rect x="26" y="8" width="14" height="10" rx="2"/><rect x="8" y="26" width="14" height="10" rx="2"/><rect x="26" y="26" width="14" height="10" rx="2"/></svg><span class="toc-num">10</span><span class="toc-title">Arten von Viewern</span><span class="toc-desc">Diagnostisch, Web, mobil</span></a>
+  <a class="toc-card" href="#sec11"><svg viewBox="0 0 48 48"><circle cx="24" cy="12" r="5"/><circle cx="10" cy="30" r="5"/><circle cx="38" cy="30" r="5"/><path d="M24 17 L12 27 M24 17 L36 27"/><circle cx="24" cy="38" r="4"/></svg><span class="toc-num">11</span><span class="toc-title">Unterstützte Geräte/Modalitäten</span><span class="toc-desc">Röntgen, CT, MRT, Angio, US, NM</span></a>
+  <a class="toc-card" href="#sec12"><svg viewBox="0 0 48 48"><path d="M10 24 H24 M24 24 L18 18 M24 24 L18 30"/><path d="M38 24 H24" stroke-dasharray="4 3"/></svg><span class="toc-num">12</span><span class="toc-title">Technischer Datenweg</span><span class="toc-desc">Von der Akquisition zum Befund</span></a>
+  <a class="toc-card" href="#sec13"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="14" height="12" rx="2"/><path d="M20 24 H28"/><rect x="28" y="18" width="14" height="12" rx="2"/></svg><span class="toc-num">13</span><span class="toc-title">Integration mit RIS und KIS</span><span class="toc-desc">Zusammenspiel der Systeme</span></a>
+  <a class="toc-card" href="#sec14"><svg viewBox="0 0 48 48"><rect x="12" y="22" width="24" height="18" rx="2"/><path d="M17 22 V15 a7 7 0 0 1 14 0 v7"/><circle cx="24" cy="30" r="2.4" class="fill"/></svg><span class="toc-num">14</span><span class="toc-title">Sicherheit &amp; Aufbewahrung</span><span class="toc-desc">Zugriffsschutz, Fristen</span></a>
+  <a class="toc-card" href="#sec15"><svg viewBox="0 0 48 48"><line x1="24" y1="6" x2="24" y2="42"/><line x1="10" y1="14" x2="38" y2="14"/><path d="M10 14 L4 26 H16 Z"/><path d="M38 14 L32 26 H44 Z"/></svg><span class="toc-num">15</span><span class="toc-title">Vergleichskriterien</span><span class="toc-desc">Worauf bei der Auswahl geachtet wird</span></a>
+  <a class="toc-card" href="#sec16"><svg viewBox="0 0 48 48"><path d="M6 40 V20 L16 14 V40 M16 40 V10 L26 4 V40 M26 40 V16 L38 22 V40 Z"/><line x1="4" y1="40" x2="44" y2="40"/></svg><span class="toc-num">16</span><span class="toc-title">Bekannte PACS-Hersteller</span><span class="toc-desc">Siemens, Agfa, Sectra, Visus u. a.</span></a>
+  <a class="toc-card" href="#sec17"><svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/></svg><span class="toc-num">17</span><span class="toc-title">Begriffe &amp; Quellen</span><span class="toc-desc">Glossar und Literatur</span></a>
+</div>
+
+<h3 id="sec1">1. Was ist PACS?</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Definition</td><td>Ein PACS (Picture Archiving and Communication System) ist das zentrale System zur digitalen Archivierung, Übertragung und Anzeige medizinischer Bilddaten aller radiologischen und bildgebenden Modalitäten.</td></tr>
+<tr><td>Grundprinzip</td><td>Jede Modalität sendet ihre Bilddaten unmittelbar nach der Akquisition über das Netzwerk an das PACS, das sie dauerhaft archiviert und für die Befundung sowie spätere Vergleichsuntersuchungen jederzeit verfügbar macht.</td></tr>
+<tr><td>Abgrenzung zum RIS</td><td>Während das RIS den organisatorischen Workflow (Termine, Aufträge, Befundtext) steuert, ist das PACS ausschließlich für die Bilddaten selbst zuständig (siehe Kapitel „RIS“).</td></tr>
+<tr><td>Zentrale Norm</td><td>PACS-Systeme basieren technisch auf dem DICOM-Standard (Digital Imaging and Communications in Medicine), der Bildformat und Kommunikationsprotokoll gleichermaßen festlegt.</td></tr>
+</tbody></table>
+
+<h3 id="sec2">2. Historische Entwicklung</h3>
+<table><thead><tr><th>Phase</th><th>Merkmal</th></tr></thead><tbody>
+<tr><td>Röntgenfilm</td><td>Physische Filmarchive, Befundung am Lichtkasten, Transport der Filme zwischen Abteilungen.</td></tr>
+<tr><td>Digitalisierung der Modalitäten</td><td>CT und MRT erzeugen von Beginn an digitale Bilddaten; Röntgen folgt mit digitalen Detektoren (siehe Kapitel „Bildgebung“).</td></tr>
+<tr><td>Einführung von DICOM (ab 1993)</td><td>Herstellerübergreifender Standard schafft die Grundlage für ein einheitliches, digitales Bildarchiv.</td></tr>
+<tr><td>Filmloses Krankenhaus</td><td>Vollständiger Ersatz des Röntgenfilms durch digitale Archivierung und Bildschirmbefundung.</td></tr>
+<tr><td>Cloud- und KI-gestützte PACS</td><td>Aktuelle Systeme integrieren Cloud-Archivierung, Vendor Neutral Archives (siehe Abschnitt 8) und KI-gestützte Befundunterstützung.</td></tr>
+</tbody></table>
+
+<h3 id="sec3">3. Kernaufgaben eines PACS</h3>
+<table><thead><tr><th>Aufgabe</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Archivierung</td><td>Dauerhafte, revisionssichere Speicherung aller Bilddaten über die gesetzlich vorgeschriebenen Aufbewahrungsfristen hinweg.</td></tr>
+<tr><td>Kommunikation</td><td>Standardisierter Empfang von Bilddaten der Modalitäten sowie Verteilung an Viewer, Befundarbeitsplätze und externe Systeme.</td></tr>
+<tr><td>Anzeige</td><td>Bereitstellung diagnostisch verwertbarer Darstellung über den PACS-Viewer (siehe Abschnitt 9).</td></tr>
+<tr><td>Vorbefund-Vergleich</td><td>Automatisches Zusammenführen aktueller und früherer Untersuchungen desselben Patienten zur Verlaufsbeurteilung.</td></tr>
+</tbody></table>
+
+<h3 id="sec4">4. Technische Architektur</h3>
+<div class="diagram-box">
+<svg viewBox="0 0 860 180" width="100%" style="max-width:820px">
+  <g stroke="#1a5276" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="20" y="65" width="130" height="50" rx="6"/>
+    <rect x="200" y="65" width="150" height="50" rx="6" fill="#eaf4f8"/>
+    <rect x="400" y="20" width="140" height="45" rx="6"/>
+    <rect x="400" y="110" width="140" height="45" rx="6"/>
+    <rect x="600" y="65" width="130" height="50" rx="6"/>
+    <rect x="760" y="65" width="80" height="50" rx="6"/>
+    <path d="M150 90 H200"/>
+    <path d="M350 80 H400 V42"/>
+    <path d="M350 100 H400 V132"/>
+    <path d="M540 42 H600 V90"/>
+    <path d="M540 132 H600 V90"/>
+    <path d="M730 90 H760"/>
+  </g>
+  <text x="85" y="95" font-size="10" text-anchor="middle" fill="#17324a">Modalität</text>
+  <text x="275" y="88" font-size="10" text-anchor="middle" fill="#17324a">PACS-Server /</text>
+  <text x="275" y="102" font-size="10" text-anchor="middle" fill="#17324a">DICOM-Empfang</text>
+  <text x="470" y="47" font-size="10" text-anchor="middle" fill="#17324a">Kurzzeitarchiv</text>
+  <text x="470" y="137" font-size="10" text-anchor="middle" fill="#17324a">Langzeitarchiv</text>
+  <text x="665" y="95" font-size="10" text-anchor="middle" fill="#17324a">PACS-Viewer</text>
+  <text x="800" y="95" font-size="10" text-anchor="middle" fill="#17324a">Befund</text>
+</svg>
+<div class="cap">Die Modalität sendet Bilddaten an den PACS-Server, der sie in Kurz- und Langzeitarchiv ablegt und über den PACS-Viewer für die Befundung bereitstellt.</div>
+</div>
+<table><thead><tr><th>Komponente</th><th>Aufgabe</th></tr></thead><tbody>
+<tr><td>Modalität</td><td>Erzeugt die DICOM-Bilddaten (siehe Kapitel „Bildgebung“).</td></tr>
+<tr><td>PACS-Server</td><td>Empfängt, validiert und verteilt die Bilddaten; steuert Archivierung und Anfragen.</td></tr>
+<tr><td>Archiv</td><td>Physische bzw. Cloud-Speicherinfrastruktur (siehe Abschnitt 7).</td></tr>
+<tr><td>Viewer/Workstation</td><td>Client-Anwendung zur diagnostischen Betrachtung (siehe Abschnitte 9–10).</td></tr>
+</tbody></table>
+
+<h3 id="sec5">5. DICOM-Kommunikationsdienste</h3>
+<table><thead><tr><th>Dienst</th><th>Funktion</th></tr></thead><tbody>
+<tr><td>C-STORE</td><td>Überträgt ein Bildobjekt von der Modalität zum PACS-Server bzw. zwischen Systemen.</td></tr>
+<tr><td>C-FIND</td><td>Sucht nach vorhandenen Studien/Serien anhand von Suchkriterien (z. B. Patienten-ID, Datum) – Grundlage der Vorbefund-Suche.</td></tr>
+<tr><td>C-MOVE</td><td>Weist den PACS-Server an, gefundene Bilddaten an ein drittes System zu übertragen.</td></tr>
+<tr><td>C-GET</td><td>Fordert Bilddaten direkt zum anfragenden System an, ohne Umweg über ein drittes Ziel.</td></tr>
+<tr><td>Assoziation</td><td>Vor jedem Datenaustausch wird zwischen zwei DICOM-Anwendungen (Application Entities) eine Verbindung mit ausgehandelten unterstützten Diensten und Bildformaten aufgebaut.</td></tr>
+</tbody></table>
+
+<h3 id="sec6">6. Datenhierarchie</h3>
+<table><thead><tr><th>Ebene</th><th>Beispiel</th></tr></thead><tbody>
+<tr><td>Patient</td><td>Eindeutige Patientenkennung, unter der alle Untersuchungen zusammengeführt werden.</td></tr>
+<tr><td>Study (Untersuchung)</td><td>Eine einzelne, an einem Termin durchgeführte Untersuchung, z. B. ein CT-Thorax.</td></tr>
+<tr><td>Series (Serie)</td><td>Eine Gruppe zusammengehöriger Bilder innerhalb einer Studie, z. B. eine bestimmte CT-Rekonstruktion.</td></tr>
+<tr><td>Instance (Bild)</td><td>Das einzelne DICOM-Bildobjekt innerhalb einer Serie.</td></tr>
+</tbody></table>
+
+<h3 id="sec7">7. Speicherarchitektur</h3>
+<table><thead><tr><th>Ebene</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Online-/Kurzzeitarchiv</td><td>Schneller Speicher (z. B. RAID-System) für aktuelle, häufig abgerufene Untersuchungen; ermöglicht verzögerungsfreien Zugriff bei der Befundung.</td></tr>
+<tr><td>Nearline-Archiv</td><td>Etwas langsamerer, aber kostengünstigerer Speicher für weniger häufig benötigte, aber noch relevante Studien.</td></tr>
+<tr><td>Offline-/Langzeitarchiv</td><td>Kostenoptimierte Speicherung zur Erfüllung gesetzlicher Aufbewahrungsfristen, häufig auf Band, Objektspeicher oder in der Cloud.</td></tr>
+<tr><td>Redundanz</td><td>Gespiegelte Speicherung an mindestens zwei räumlich getrennten Standorten zur Ausfallsicherheit.</td></tr>
+</tbody></table>
+
+<h3 id="sec8">8. Vendor Neutral Archive (VNA)</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Grundidee</td><td>Ein VNA speichert Bilddaten herstellerunabhängig in standardisiertem Format, sodass ein PACS-Wechsel künftig ohne aufwändige Datenmigration möglich ist.</td></tr>
+<tr><td>Abgrenzung zum klassischen PACS-Archiv</td><td>Klassische PACS-Archive sind oft eng an das jeweilige PACS-System gebunden; ein VNA entkoppelt Archivierung von der Viewer-/Workflow-Software.</td></tr>
+<tr><td>Erweiterung auf weitere Bilddaten</td><td>Moderne VNA-Konzepte archivieren zunehmend auch nicht-radiologische Bilddaten, z. B. aus Endoskopie, Dermatologie oder Pathologie („Enterprise Imaging“).</td></tr>
+<tr><td>Beispiel</td><td>Agfa HealthCare bietet mit ORBITaf ein VNA als Bestandteil seiner Enterprise-Imaging-Plattform an (siehe Abschnitt 16).</td></tr>
+</tbody></table>
+
+<h3 id="sec9">9. Der PACS-Viewer im Detail</h3>
+<table><thead><tr><th>Funktion</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Fensterung (Windowing)</td><td>Anpassung von Helligkeit (Window Level) und Kontrast (Window Width) zur optimalen Darstellung bestimmter Gewebearten, z. B. Lungen- oder Knochenfenster in der CT.</td></tr>
+<tr><td>Zoom/Pan</td><td>Vergrößerung und Verschiebung des Bildausschnitts für die Detailbeurteilung.</td></tr>
+<tr><td>Multiplanare Rekonstruktion (MPR)</td><td>Berechnung beliebiger Schnittebenen (axial, koronar, sagittal) aus einem 3D-Volumendatensatz, z. B. bei CT/MRT.</td></tr>
+<tr><td>3D-Rekonstruktion</td><td>Volumen- oder Oberflächendarstellung zur räumlichen Beurteilung komplexer anatomischer Strukturen.</td></tr>
+<tr><td>Hanging Protocols</td><td>Vordefinierte, modalitäts- und fragestellungsabhängige Anordnung mehrerer Bildserien auf dem Bildschirm, um wiederkehrende manuelle Anordnung zu vermeiden.</td></tr>
+<tr><td>Vorbefund-Vergleich</td><td>Automatisches Nebeneinanderstellen aktueller und früherer Untersuchungen desselben Patienten zur Verlaufsbeurteilung.</td></tr>
+<tr><td>Messwerkzeuge</td><td>Distanz-, Winkel- und Dichtemessung (z. B. Hounsfield-Einheiten in der CT) direkt im Bild.</td></tr>
+<tr><td>Strukturierte Befundung</td><td>Integration von Diktat/Spracherkennung und Befundvorlagen (siehe Kapitel „RIS“, Abschnitt 3).</td></tr>
+</tbody></table>
+
+<h3 id="sec10">10. Arten von Viewern</h3>
+<table><thead><tr><th>Viewer-Typ</th><th>Beschreibung</th><th>Typischer Einsatz</th></tr></thead><tbody>
+<tr><td>Diagnostische Workstation</td><td>Spezialisierte Hochleistungs-Arbeitsstation mit kalibrierten Befundmonitoren (siehe Kapitel „Bildgebung“, Abschnitt 26) und vollem Funktionsumfang.</td></tr>
+<tr><td>Web-/Zero-Footprint-Viewer</td><td>Browserbasierter Viewer ohne lokale Installation, der Bilddaten direkt vom Server streamt.</td><td>Zuweiser, Stationsarbeitsplätze, externe Kliniken</td></tr>
+<tr><td>Mobile Viewer</td><td>Für Tablet/Smartphone optimierte Anwendung mit eingeschränktem, aber für die Übersicht ausreichendem Funktionsumfang.</td><td>Ärztliche Rufbereitschaft, Visite</td></tr>
+</tbody></table>
+
+<h3 id="sec11">11. Für welche Geräte/Modalitäten gilt PACS?</h3>
+<table><thead><tr><th>Modalität</th><th>Bezug</th></tr></thead><tbody>
+<tr><td>Konventionelles Röntgen</td><td>Digitale Projektionsaufnahmen (siehe Kapitel „Bildgebung“, Abschnitt 15)</td></tr>
+<tr><td>Computertomographie (CT)</td><td>Umfangreiche Schnittbilddatensätze, hoher Speicherbedarf (siehe Kapitel „Bildgebung“, Abschnitt 16)</td></tr>
+<tr><td>Angiographie</td><td>Einzelbilder und Bildserien aus interventionellen Eingriffen (siehe Kapitel „Bildgebung“, Abschnitt 17)</td></tr>
+<tr><td>Magnetresonanztomographie (MRT)</td><td>Multisequenzielle Schnittbilddaten (siehe Kapitel „Bildgebung“, Abschnitt 18)</td></tr>
+<tr><td>Nuklearmedizin (SPECT/PET)</td><td>Funktionelle Bilddaten, häufig als Hybridaufnahme mit CT (siehe Kapitel „Bildgebung“, Abschnitt 20)</td></tr>
+<tr><td>Ultraschall</td><td>Einzelbilder und Videosequenzen, zunehmend ebenfalls DICOM-konform archiviert (siehe Kapitel „Bildgebung“, Abschnitt 21)</td></tr>
+<tr><td>Linearbeschleuniger (bildgestützte Lagerung)</td><td>Cone-Beam-CT-Kontrollaufnahmen können ebenfalls über PACS/VNA archiviert werden (siehe Kapitel „Bildgebung“, Abschnitt 19)</td></tr>
+</tbody></table>
+
+<h3 id="sec12">12. Technischer Datenweg von der Akquisition zum Befund</h3>
+<div class="flow">Akquisition an der Modalität → DICOM-C-STORE an PACS-Server → Ablage im Kurzzeitarchiv → Verteilung an PACS-Viewer (C-MOVE/C-GET) → Befundung inkl. Vorbefund-Vergleich (C-FIND) → Freigabe des Befunds → Migration in das Langzeitarchiv</div>
+<table><thead><tr><th>Schritt</th><th>Beteiligte Komponente</th></tr></thead><tbody>
+<tr><td>1. Bilderzeugung</td><td>Modalität (siehe Kapitel „Bildgebung“)</td></tr>
+<tr><td>2. Übertragung</td><td>DICOM C-STORE über das Netzwerk (siehe Kapitel „Ethernet“, „VLAN“)</td></tr>
+<tr><td>3. Empfang und Validierung</td><td>PACS-Server</td></tr>
+<tr><td>4. Kurzzeitspeicherung</td><td>Online-Archiv</td></tr>
+<tr><td>5. Anzeige</td><td>PACS-Viewer (diagnostisch, Web oder mobil)</td></tr>
+<tr><td>6. Langzeitarchivierung</td><td>Nearline-/Offline-Archiv bzw. VNA</td></tr>
+</tbody></table>
+
+<h3 id="sec13">13. Integration mit RIS und KIS</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Auftragsbezug</td><td>Das PACS ordnet eingehende Bilddaten anhand der vom RIS über die Modality Worklist bereitgestellten Auftragsdaten dem richtigen Patienten und Untersuchungsauftrag zu (siehe Kapitel „RIS“, Abschnitt 6).</td></tr>
+<tr><td>Statusrückmeldung</td><td>Der Eingang vollständiger Bilddaten im PACS kann dem RIS zurückgemeldet werden, um den Workflow-Status zu aktualisieren.</td></tr>
+<tr><td>Bereitstellung im KIS</td><td>Freigegebene Befunde und Bild-Links werden dem KIS zur Verfügung gestellt, sodass Bilddaten auch außerhalb der Radiologie einsehbar sind (siehe Kapitel „KIS“).</td></tr>
+</tbody></table>
+
+<h3 id="sec14">14. Sicherheit und Aufbewahrung</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Zugriffskontrolle</td><td>Rollenbasierte Berechtigung für Betrachtung, Export und Löschung von Bilddaten.</td></tr>
+<tr><td>Aufbewahrungsfristen</td><td>Gesetzlich vorgeschriebene Mindestaufbewahrungsfristen bestimmen die Auslegung der Langzeitarchiv-Architektur (siehe Abschnitt 7).</td></tr>
+<tr><td>Revisionssicherheit</td><td>Nachträgliche Veränderung oder Löschung archivierter Bilddaten muss ausgeschlossen bzw. lückenlos protokolliert sein.</td></tr>
+<tr><td>Netzsegmentierung</td><td>PACS-Server werden in der geschützten Serverzone des Rechenzentrums betrieben (siehe Kapitel „Firewalls“, Abschnitt 9).</td></tr>
+</tbody></table>
+
+<h3 id="sec15">15. Technische Vergleichskriterien für eine PACS-Auswahl</h3>
+<table><thead><tr><th>Kriterium</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>DICOM-Konformität</td><td>Vollständige Unterstützung der benötigten DICOM-Dienste und -Objektklassen.</td></tr>
+<tr><td>Viewer-Funktionsumfang</td><td>Verfügbarkeit von MPR, 3D, Hanging Protocols und Messwerkzeugen je nach Fachbereich.</td></tr>
+<tr><td>VNA-Fähigkeit</td><td>Möglichkeit einer herstellerunabhängigen Langzeitarchivierung zur Vermeidung von Vendor-Lock-in.</td></tr>
+<tr><td>Skalierbarkeit</td><td>Eignung für wachsende Bilddatenmengen und zusätzliche Standorte.</td></tr>
+<tr><td>Zugriffswege</td><td>Verfügbarkeit von Web- und mobilen Viewern für Zuweiser und Rufbereitschaft.</td></tr>
+</tbody></table>
+
+<h3 id="sec16">16. Bekannte PACS-Hersteller</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Produkt</th><th>Besonderheit</th></tr></thead>
+<tbody>
+<tr><td><strong>Siemens Healthineers</strong></td><td>syngo.plaza (PACS), syngo.via (Advanced Visualization)</td><td>Enge Integration von PACS-Grundfunktionen und fortgeschrittener 2D/3D/4D-Visualisierung auf gemeinsamer Plattform.</td></tr>
+<tr><td><strong>Agfa HealthCare</strong></td><td>Enterprise Imaging (inkl. ORBITaf VNA)</td><td>Kombiniert RIS, PACS und herstellerneutrales Archiv in einer Plattform für Radiologie und weitere bildintensive Fachbereiche.</td></tr>
+<tr><td><strong>Sectra</strong></td><td>Sectra Radiology Suite / Sectra Enterprise Imaging</td><td>Skalierbare Lösung für standortübergreifende Radiologieverbünde, inkl. isoliertem sicherem Remote-Zugriff (Secure Desktop).</td></tr>
+<tr><td><strong>Visus</strong></td><td>JiveX</td><td>In Deutschland entwickeltes PACS/VNA mit breiter Verbreitung im deutschsprachigen Raum.</td></tr>
+<tr><td><strong>Philips (vormals Carestream)</strong></td><td>Vue PACS</td><td>Aus der Übernahme von Carestreams Bildgebungs-IT-Sparte durch Philips 2019 hervorgegangen.</td></tr>
+<tr><td><strong>GE HealthCare</strong></td><td>Centricity PACS / Centricity Universal Viewer</td><td>Breite Modalitätsunterstützung und Integration mit weiteren GE-HealthCare-Systemen.</td></tr>
+</tbody>
+</table>
+
+<h3 id="sec17">17. Begriffe und Quellen</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>DICOM</td><td>Digital Imaging and Communications in Medicine; Standard für medizinische Bilddaten und deren Übertragung.</td></tr>
+<tr><td>Study/Series/Instance</td><td>Hierarchische Organisationsebenen von DICOM-Bilddaten (siehe Abschnitt 6).</td></tr>
+<tr><td>VNA</td><td>Vendor Neutral Archive; herstellerunabhängiges Bildarchiv (siehe Abschnitt 8).</td></tr>
+<tr><td>Hanging Protocol</td><td>Vordefinierte Bildschirmanordnung von Bildserien im Viewer.</td></tr>
+<tr><td>Windowing</td><td>Anpassung von Helligkeit und Kontrast zur gewebespezifischen Bilddarstellung.</td></tr>
+</tbody></table>
+
+<div class="note">
+<strong>Quellen:</strong>
+<ul>
+<li>Agfa HealthCare: <a href="https://www.agfahealthcare.com" target="_blank" rel="noopener">Enterprise Imaging</a></li>
+<li>Studiengang: <a href="https://www.bht-berlin.de/medi" target="_blank" rel="noopener">Fernstudium Medizinische Informatik – Berliner Hochschule für Technik (BHT)</a></li>
+<li>Wikipedia: <a href="https://de.wikipedia.org/wiki/Picture_Archiving_and_Communication_System" target="_blank" rel="noopener">Picture Archiving and Communication System</a></li>
+<li>Wikipedia: <a href="https://de.wikipedia.org/wiki/Digital_Imaging_and_Communications_in_Medicine" target="_blank" rel="noopener">DICOM</a></li>
+</ul>
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

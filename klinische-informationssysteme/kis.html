@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KIS – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  table { width:100%; border-collapse:collapse; margin:1.2em 0 1.8em; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 3px 12px rgba(16,42,67,.05); }
+  th, td { border:1px solid #d9e2ea; padding:10px 12px; text-align:left; vertical-align:top; }
+  thead th { background:#1a5276; color:#fff; border-color:#1a5276; font-weight:700; }
+  tbody tr:nth-child(even) { background:#eaf4f8; }
+  tbody tr:hover { background:#dcedf5; }
+  .toc-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:14px; margin:1.2em 0 2em; }
+  .toc-card { display:flex; flex-direction:column; align-items:flex-start; gap:4px; background:#fff; border:1px solid #d9e2ea; border-radius:10px; padding:14px 14px 16px; text-decoration:none; color:inherit; box-shadow:0 2px 8px rgba(16,42,67,.05); transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+  .toc-card:hover { transform:translateY(-3px); box-shadow:0 8px 18px rgba(16,42,67,.14); border-color:#1a5276; }
+  .toc-card svg { width:44px; height:44px; stroke:#1a5276; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; margin-bottom:4px; }
+  .toc-card svg .fill { fill:#1a5276; stroke:none; }
+  .toc-card .toc-num { font-size:.72em; font-weight:700; letter-spacing:.06em; color:#6a93ac; }
+  .toc-card .toc-title { font-weight:700; color:#17324a; line-height:1.25; }
+  .toc-card .toc-desc { font-size:.85em; color:#5b7080; }
+  .diagram-box { background:#fff; border:1px solid #d9e2ea; border-radius:10px; box-shadow:0 3px 12px rgba(16,42,67,.05); padding:18px; margin:1.2em 0 1.8em; overflow-x:auto; }
+  .diagram-box svg { display:block; margin:0 auto; }
+  .diagram-box .cap { text-align:center; font-size:.85em; color:#5b7080; margin-top:8px; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../klinische-informationssysteme/index.html">Klinische Informationssysteme</a> /
+  KIS
+</div>
+
+<div class="hero">
+  <h2>KIS</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Krankenhausinformationssystem – zentrales IT-System zur Verwaltung, Dokumentation und Abrechnung aller Patientenprozesse</td></tr>
+      <tr><td>Prinzip</td><td>Ein Kern-KIS bildet Patienten-, Fall- und Bewegungsdaten ab und bindet über eine Kommunikationsplattform zahlreiche Subsysteme an</td></tr>
+      <tr><td>Nutzen</td><td>Papierlose, durchgängige Dokumentation, effizientere Abläufe, bessere Abrechenbarkeit und höhere Patientensicherheit</td></tr>
+      <tr><td>Standards</td><td>HL7 v2/FHIR, DICOM, IHE-Integrationsprofile</td></tr>
+      <tr><td>Hersteller</td><td>U. a. Dedalus (ORBIS), CompuGroup Medical (CGM MEDICO/CLINICAL), Meierhofer (M-KIS), Oracle Health, Epic</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist eine technische und medizininformatische Dokumentation und orientiert sich an
+    öffentlich verfügbaren Herstellerinformationen. Quellenangaben finden sich am Ende der Seite.
+  </div>
+</div>
+
+<h3>Inhaltsverzeichnis</h3>
+<p>Klicken Sie auf eine Karte, um direkt zum jeweiligen Abschnitt zu springen.</p>
+<div class="toc-grid">
+  <a class="toc-card" href="#sec1"><svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="20" rx="2"/><path d="M16 36 L24 30 L32 36"/><circle cx="24" cy="18" r="4"/><path d="M18 25 a6 8 0 0 1 12 0"/></svg><span class="toc-num">01</span><span class="toc-title">Was ist ein KIS?</span><span class="toc-desc">Definition, Prinzip und Zweck</span></a>
+  <a class="toc-card" href="#sec2"><svg viewBox="0 0 48 48"><line x1="6" y1="24" x2="42" y2="24"/><circle cx="10" cy="24" r="3" class="fill"/><circle cx="20" cy="24" r="3" class="fill"/><circle cx="30" cy="24" r="3" class="fill"/><circle cx="40" cy="24" r="3" class="fill"/></svg><span class="toc-num">02</span><span class="toc-title">Historische Entwicklung</span><span class="toc-desc">Von der Papierakte zum digitalen KIS</span></a>
+  <a class="toc-card" href="#sec3"><svg viewBox="0 0 48 48"><rect x="10" y="8" width="28" height="10" rx="2"/><rect x="10" y="22" width="28" height="10" rx="2"/><rect x="10" y="34" width="28" height="6" rx="2"/></svg><span class="toc-num">03</span><span class="toc-title">Funktionsbereiche</span><span class="toc-desc">Administration, Medizin, Pflege</span></a>
+  <a class="toc-card" href="#sec4"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="12" height="12" rx="2"/><path d="M18 24 H30"/><rect x="30" y="18" width="12" height="12" rx="2"/></svg><span class="toc-num">04</span><span class="toc-title">Architektur eines KIS</span><span class="toc-desc">Kern-KIS und Subsysteme</span></a>
+  <a class="toc-card" href="#sec5"><svg viewBox="0 0 48 48"><circle cx="24" cy="12" r="4"/><circle cx="10" cy="34" r="4"/><circle cx="38" cy="34" r="4"/><line x1="24" y1="16" x2="12" y2="31"/><line x1="24" y1="16" x2="36" y2="31"/></svg><span class="toc-num">05</span><span class="toc-title">Datenmodell</span><span class="toc-desc">Patient, Fall, Bewegungsdaten</span></a>
+  <a class="toc-card" href="#sec6"><svg viewBox="0 0 48 48"><rect x="8" y="10" width="32" height="8" rx="2"/><rect x="8" y="22" width="32" height="8" rx="2"/><rect x="8" y="34" width="16" height="6" rx="2"/></svg><span class="toc-num">06</span><span class="toc-title">Schnittstellen &amp; Standards</span><span class="toc-desc">HL7, FHIR, DICOM, IHE</span></a>
+  <a class="toc-card" href="#sec7"><svg viewBox="0 0 48 48"><path d="M10 24 H24 M24 24 L18 18 M24 24 L18 30"/><path d="M38 24 H24" stroke-dasharray="4 3"/></svg><span class="toc-num">07</span><span class="toc-title">Typischer Datenfluss</span><span class="toc-desc">Von Aufnahme bis Entlassung</span></a>
+  <a class="toc-card" href="#sec8"><svg viewBox="0 0 48 48"><path d="M24 6 L40 12 V24 C40 34 33 40 24 42 C15 40 8 34 8 24 V12 Z"/><path d="M17 24 L22 29 L32 18"/></svg><span class="toc-num">08</span><span class="toc-title">Nutzen eines KIS</span><span class="toc-desc">Was es konkret bringt</span></a>
+  <a class="toc-card" href="#sec9"><svg viewBox="0 0 48 48"><rect x="12" y="22" width="24" height="18" rx="2"/><path d="M17 22 V15 a7 7 0 0 1 14 0 v7"/><circle cx="24" cy="30" r="2.4" class="fill"/></svg><span class="toc-num">09</span><span class="toc-title">Sicherheit &amp; Datenschutz</span><span class="toc-desc">Zugriffsschutz, Protokollierung</span></a>
+  <a class="toc-card" href="#sec10"><svg viewBox="0 0 48 48"><line x1="24" y1="6" x2="24" y2="42"/><line x1="10" y1="14" x2="38" y2="14"/><path d="M10 14 L4 26 H16 Z"/><path d="M38 14 L32 26 H44 Z"/></svg><span class="toc-num">10</span><span class="toc-title">Vergleichskriterien</span><span class="toc-desc">Worauf bei der Auswahl geachtet wird</span></a>
+  <a class="toc-card" href="#sec11"><svg viewBox="0 0 48 48"><path d="M6 40 V20 L16 14 V40 M16 40 V10 L26 4 V40 M26 40 V16 L38 22 V40 Z"/><line x1="4" y1="40" x2="44" y2="40"/></svg><span class="toc-num">11</span><span class="toc-title">Bekannte KIS-Hersteller</span><span class="toc-desc">ORBIS, CGM, M-KIS u. a.</span></a>
+  <a class="toc-card" href="#sec12"><svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/></svg><span class="toc-num">12</span><span class="toc-title">Begriffe &amp; Quellen</span><span class="toc-desc">Glossar und Literatur</span></a>
+</div>
+
+<h3 id="sec1">1. Was ist ein KIS?</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Definition</td><td>Ein Krankenhausinformationssystem (KIS) ist das zentrale IT-System eines Krankenhauses zur Verwaltung, Dokumentation, Koordination und Abrechnung sämtlicher Patientenprozesse – von der Aufnahme bis zur Entlassung.</td></tr>
+<tr><td>Grundprinzip</td><td>Ein KIS führt administrative Daten (Patientenstammdaten, Fallakte, Abrechnung) und klinische Daten (Diagnosen, Befunde, Verordnungen, Pflegedokumentation) in einer gemeinsamen, für alle Berufsgruppen zugänglichen Plattform zusammen.</td></tr>
+<tr><td>Rolle im Gesamtsystem</td><td>Das KIS bildet die zentrale Klammer, an die Subsysteme wie Labor-, Radiologie- und PDMS-Systeme über standardisierte Schnittstellen angebunden werden (siehe Kapitel „PDMS“ sowie „Gerätevernetzung“).</td></tr>
+</tbody></table>
+
+<h3 id="sec2">2. Historische Entwicklung</h3>
+<table><thead><tr><th>Phase</th><th>Merkmal</th></tr></thead><tbody>
+<tr><td>Papierakte</td><td>Vollständig papiergebundene Dokumentation, Befunde und Anforderungen per Botengang oder Hauspost.</td></tr>
+<tr><td>Insellösungen (1980er/1990er)</td><td>Erste EDV-Systeme für einzelne Bereiche (z. B. Patientenaufnahme, Labor) ohne durchgängige Integration.</td></tr>
+<tr><td>Integriertes KIS</td><td>Zusammenführung administrativer und klinischer Funktionen in einer gemeinsamen Plattform mit definierten Schnittstellen zu Subsystemen.</td></tr>
+<tr><td>Web- und Cloud-basierte Systeme</td><td>Aktuelle KIS-Generationen setzen zunehmend auf Microservice-Architekturen, HTML5-Web-Clients (siehe Kapitel „HTML“) und Cloud-Betrieb.</td></tr>
+</tbody></table>
+
+<h3 id="sec3">3. Funktionsbereiche eines KIS</h3>
+<table><thead><tr><th>Bereich</th><th>Typische Funktionen</th></tr></thead><tbody>
+<tr><td>Patientenverwaltung (ADT)</td><td>Aufnahme, Verlegung, Entlassung; Verwaltung von Patientenstammdaten und Fallakten.</td></tr>
+<tr><td>Medizinische Dokumentation</td><td>Diagnosen, Anamnese, Arztbriefe, Verlaufsdokumentation.</td></tr>
+<tr><td>Pflegedokumentation</td><td>Pflegeplanung, Pflegeberichte, Risikoscores.</td></tr>
+<tr><td>Order Entry / Leistungsanforderung</td><td>Elektronische Anforderung von Labor-, Radiologie- und weiteren Leistungen direkt am Arbeitsplatz.</td></tr>
+<tr><td>Befundkommunikation</td><td>Elektronischer Rückfluss von Labor-, Radiologie- und sonstigen Befunden in die Patientenakte.</td></tr>
+<tr><td>Terminplanung</td><td>Koordination von Untersuchungs-, OP- und Ambulanzterminen.</td></tr>
+<tr><td>Leistungsabrechnung</td><td>Erfassung abrechnungsrelevanter Leistungen (z. B. DRG-Kodierung) und Übergabe an nachgelagerte Abrechnungssysteme.</td></tr>
+</tbody></table>
+
+<h3 id="sec4">4. Architektur eines KIS</h3>
+<div class="diagram-box">
+<svg viewBox="0 0 820 200" width="100%" style="max-width:780px">
+  <g stroke="#1a5276" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="320" y="70" width="180" height="60" rx="6" fill="#eaf4f8"/>
+    <rect x="20" y="20" width="140" height="40" rx="4"/>
+    <rect x="20" y="80" width="140" height="40" rx="4"/>
+    <rect x="20" y="140" width="140" height="40" rx="4"/>
+    <rect x="660" y="20" width="140" height="40" rx="4"/>
+    <rect x="660" y="80" width="140" height="40" rx="4"/>
+    <rect x="660" y="140" width="140" height="40" rx="4"/>
+    <path d="M160 40 H320 V100" stroke-dasharray="4 3"/>
+    <path d="M160 100 H320"/>
+    <path d="M160 160 H320 V100" stroke-dasharray="4 3"/>
+    <path d="M500 40 H660" stroke-dasharray="4 3"/>
+    <path d="M500 100 H660"/>
+    <path d="M500 160 H660" stroke-dasharray="4 3"/>
+  </g>
+  <text x="90" y="45" font-size="10" text-anchor="middle" fill="#17324a">Aufnahme/ADT</text>
+  <text x="90" y="105" font-size="10" text-anchor="middle" fill="#17324a">Stationsarbeitsplatz</text>
+  <text x="90" y="165" font-size="10" text-anchor="middle" fill="#17324a">Ambulanz</text>
+  <text x="410" y="95" font-size="11" text-anchor="middle" fill="#17324a">Kern-KIS</text>
+  <text x="410" y="110" font-size="9" text-anchor="middle" fill="#5b7080">Kommunikationsserver</text>
+  <text x="730" y="45" font-size="10" text-anchor="middle" fill="#17324a">Labor-System</text>
+  <text x="730" y="105" font-size="10" text-anchor="middle" fill="#17324a">RIS/PACS</text>
+  <text x="730" y="165" font-size="10" text-anchor="middle" fill="#17324a">PDMS</text>
+</svg>
+<div class="cap">Das Kern-KIS bündelt administrative und klinische Kernfunktionen und tauscht über einen Kommunikationsserver (Interface Engine) standardisierte Nachrichten mit Subsystemen wie Labor, RIS/PACS und PDMS aus.</div>
+</div>
+<table><thead><tr><th>Komponente</th><th>Aufgabe</th></tr></thead><tbody>
+<tr><td>Kern-KIS</td><td>Zentrale Datenhaltung von Patienten-, Fall- und Bewegungsdaten sowie der administrativen Kernprozesse.</td></tr>
+<tr><td>Kommunikationsserver / Interface Engine</td><td>Middleware, die Nachrichten zwischen Kern-KIS und angebundenen Subsystemen standardisiert vermittelt (siehe Kapitel „Gerätevernetzung“, Abschnitt 9).</td></tr>
+<tr><td>Subsysteme</td><td>Fachlich spezialisierte Systeme wie Labor-, Radiologie- (RIS/PACS) oder Intensiv-/PDMS-Systeme, die eigenständig betrieben, aber eng integriert werden.</td></tr>
+<tr><td>Web-Client</td><td>Moderne KIS stellen ihre Oberfläche zunehmend browserbasiert bereit (siehe Kapitel „HTML“, Abschnitt 10).</td></tr>
+</tbody></table>
+
+<h3 id="sec5">5. Datenmodell</h3>
+<table><thead><tr><th>Entität</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Patient</td><td>Personenbezogene Stammdaten (Name, Geburtsdatum, Versicherung), unabhängig von einzelnen Behandlungsepisoden.</td></tr>
+<tr><td>Fall</td><td>Eine konkrete Behandlungsepisode (z. B. ein stationärer Aufenthalt) mit Aufnahme- und Entlassdatum, zugeordneter Station und Fachabteilung.</td></tr>
+<tr><td>Bewegungsdaten</td><td>Historie von Verlegungen zwischen Stationen/Betten innerhalb eines Falls.</td></tr>
+<tr><td>Leistungsdaten</td><td>Erbrachte diagnostische und therapeutische Leistungen, Grundlage der Abrechnung.</td></tr>
+</tbody></table>
+
+<h3 id="sec6">6. Schnittstellen und Standards</h3>
+<table><thead><tr><th>Standard</th><th>Einsatzbereich</th></tr></thead><tbody>
+<tr><td>HL7 v2</td><td>Klassischer, nachrichtenbasierter Standard für Aufnahme-, Verlegungs-, Entlassungs- (ADT) und Befundnachrichten zwischen KIS und Subsystemen.</td></tr>
+<tr><td>HL7 FHIR</td><td>Moderner, RESTful-API-basierter Nachfolgestandard (siehe Kapitel „REST“ und „APIs“) für den strukturierten Austausch von Gesundheitsdaten.</td></tr>
+<tr><td>DICOM</td><td>Standard für Bild- und Befunddaten aus der Radiologie (siehe Kapitel „Bildgebung“).</td></tr>
+<tr><td>IHE-Integrationsprofile</td><td>Definieren konkrete, standardisierte Abläufe (z. B. Modality Worklist) für das Zusammenspiel mehrerer Systeme.</td></tr>
+</tbody></table>
+
+<h3 id="sec7">7. Typischer Datenfluss</h3>
+<div class="flow">Patientenaufnahme (ADT) → Fallanlage im KIS → Order Entry (Labor/Radiologie/PDMS) → Befundrückfluss → Dokumentation im Verlauf → Leistungserfassung → Arztbrief/Entlassung → Abrechnung</div>
+
+<h3 id="sec8">8. Nutzen eines KIS</h3>
+<table><thead><tr><th>Nutzenaspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Durchgängige Dokumentation</td><td>Alle Berufsgruppen arbeiten auf derselben, aktuellen Patientenakte statt auf verstreuten Papierunterlagen.</td></tr>
+<tr><td>Effizientere Abläufe</td><td>Elektronische Anforderung und Befundrückmeldung ersetzen Botengänge und manuelle Übertragung, was Wartezeiten reduziert.</td></tr>
+<tr><td>Verbesserte Patientensicherheit</td><td>Zentrale, jederzeit verfügbare Informationen (z. B. Allergien, Voruntersuchungen) reduzieren Behandlungsfehler.</td></tr>
+<tr><td>Bessere Abrechenbarkeit</td><td>Strukturierte Leistungserfassung erleichtert eine vollständige und korrekte Abrechnung erbrachter Leistungen.</td></tr>
+<tr><td>Auswertbarkeit</td><td>Strukturierte Daten ermöglichen Qualitätsmanagement, Controlling und wissenschaftliche Auswertungen.</td></tr>
+</tbody></table>
+
+<h3 id="sec9">9. Sicherheit und Datenschutz</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Zugriffskontrolle</td><td>Rollenbasierte Rechtevergabe stellt sicher, dass nur berechtigtes Personal auf bestimmte Patientendaten zugreifen kann.</td></tr>
+<tr><td>Protokollierung</td><td>Zugriffe auf Patientendaten werden nachvollziehbar protokolliert (Audit Trail).</td></tr>
+<tr><td>Netzsegmentierung</td><td>KIS-Server werden in einer geschützten Serverzone betrieben (siehe Kapitel „Firewalls“, Abschnitt 9).</td></tr>
+<tr><td>Datenschutz</td><td>Verarbeitung besonders sensibler Gesundheitsdaten nach den geltenden datenschutzrechtlichen Vorgaben.</td></tr>
+</tbody></table>
+
+<h3 id="sec10">10. Technische Vergleichskriterien für eine KIS-Auswahl</h3>
+<table><thead><tr><th>Kriterium</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>Integrationstiefe</td><td>Wie umfassend sind administrative, medizinische und pflegerische Prozesse in einer Plattform abgebildet?</td></tr>
+<tr><td>Interoperabilität</td><td>Unterstützung von HL7 v2, FHIR, DICOM und IHE-Profilen für die Anbindung von Subsystemen.</td></tr>
+<tr><td>Architektur</td><td>Moderne Microservice- und Cloud-Fähigkeit versus klassische monolithische Architektur.</td></tr>
+<tr><td>Bedienbarkeit</td><td>Intuitive, rollenspezifische Oberflächen für Ärzte, Pflege und Verwaltung.</td></tr>
+<tr><td>Mobile Nutzung</td><td>Verfügbarkeit als Web-Client auf Desktop, Tablet und mobilen Visitenwagen.</td></tr>
+</tbody></table>
+
+<h3 id="sec11">11. Bekannte KIS-Hersteller und Systeme</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Produkt</th><th>Besonderheit</th></tr></thead>
+<tbody>
+<tr><td><strong>Dedalus HealthCare</strong></td><td>ORBIS / ORBIS U</td><td>Marktführendes KIS im deutschsprachigen Raum; ORBIS U basiert auf einer modernen, cloudfähigen Microservice-Architektur mit HTML5-Web-Client.</td></tr>
+<tr><td><strong>CompuGroup Medical (CGM)</strong></td><td>CGM MEDICO, CGM CLINICAL</td><td>Zwei parallele KIS-Produktlinien für unterschiedliche Klinikgrößen und Versorgungsstufen.</td></tr>
+<tr><td><strong>Meierhofer AG</strong></td><td>M-KIS</td><td>Häufig gemeinsam mit dem hauseigenen PDMS M-PDMS im deutschsprachigen Raum im Einsatz.</td></tr>
+<tr><td><strong>Oracle Health (vormals Cerner)</strong></td><td>Millennium</td><td>International verbreitetes KIS/EHR-System, in Deutschland u. a. in einzelnen Klinikverbünden im Einsatz.</td></tr>
+<tr><td><strong>Epic</strong></td><td>Epic EHR</td><td>International führendes System, in Deutschland u. a. von der Charité Berlin ausgewählt.</td></tr>
+</tbody>
+</table>
+
+<h3 id="sec12">12. Begriffe und Quellen</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>ADT</td><td>Admission, Discharge, Transfer; Kernfunktionen der Patientenverwaltung.</td></tr>
+<tr><td>Interface Engine</td><td>Middleware zur standardisierten Nachrichtenvermittlung zwischen KIS und Subsystemen.</td></tr>
+<tr><td>Order Entry</td><td>Elektronische Anforderung von Leistungen direkt aus dem KIS heraus.</td></tr>
+<tr><td>DRG</td><td>Diagnosis Related Groups; Fallpauschalensystem zur Krankenhausabrechnung.</td></tr>
+</tbody></table>
+
+<div class="note">
+<strong>Quellen:</strong>
+<ul>
+<li>Dedalus HealthCare: <a href="https://www.dedalus.com/dach/de/our-offer/products/orbis/orbis/" target="_blank" rel="noopener">ORBIS Krankenhausinformationssystem</a></li>
+<li>Studiengang: <a href="https://www.bht-berlin.de/medi" target="_blank" rel="noopener">Fernstudium Medizinische Informatik – Berliner Hochschule für Technik (BHT)</a></li>
+<li>Wikipedia: <a href="https://de.wikipedia.org/wiki/Krankenhausinformationssystem" target="_blank" rel="noopener">Krankenhausinformationssystem</a></li>
+</ul>
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>
