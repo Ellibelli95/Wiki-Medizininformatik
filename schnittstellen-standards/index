@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schnittstellen & Standards – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb"><a href="../index.html">Startseite</a> / Schnittstellen & Standards</div>
+<div class="hero">
+
+<h2>Schnittstellen & Standards</h2>
+<p>Dieser Bereich bündelt die wichtigsten Themen zu <strong>Schnittstellen & Standards</strong>. Wähle einen Artikel aus:</p>
+<div class="grid"><a class="card" href="hl7.html"><h3>HL7</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a><a class="card" href="fhir.html"><h3>FHIR</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a><a class="card" href="dicom.html"><h3>DICOM</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a><a class="card" href="ihe.html"><h3>IHE</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a><a class="card" href="cda.html"><h3>CDA</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a><a class="card" href="loinc.html"><h3>LOINC</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a><a class="card" href="snomed-ct.html"><h3>SNOMED CT</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a><a class="card" href="icd.html"><h3>ICD</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a><a class="card" href="weitere-standards.html"><h3>Weitere Standards</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a></div>
+
+</div>
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>
