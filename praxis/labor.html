@@ -11,6 +11,7 @@
 <h1>MedizinInformatik Wiki</h1>
 <p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
 </div></header>
+
 <nav><div class="nav-inner">
 <a href="../index.html">Startseite</a>
 <a href="../medizintechnik/index.html">Medizintechnik</a>
@@ -24,23 +25,149 @@
 <a href="../web-engineering/index.html">Web Engineering</a>
 <a href="../praxis/index.html">Praxis</a>
 </div></nav>
+
 <main>
 <div class="breadcrumb"><a href="../index.html">Startseite</a> / Praxis / Fallbeispiele / Labor</div>
+
 <div class="hero">
 
 <h2>Labor</h2>
 <p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Labor</strong> vorgesehen.</p>
 <div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
+
 <h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
+<p>
+Ein medizinisches Labor ist ein zentraler Bestandteil der klinischen Diagnostik. Es verarbeitet Blut-, Urin-, Gewebe- und Spezialproben und liefert
+entscheidende Werte für Therapieentscheidungen, Intensivmedizin, Notfallversorgung und Monitoring chronischer Erkrankungen.
+</p>
+<p>
+Das Labor ist eng mit KIS, LIS (Laborinformationssystem), PDMS, Radiologie und Stationen vernetzt. Die Datenübertragung erfolgt automatisiert über
+HL7, FHIR, ASTM oder proprietäre Analyzer-Protokolle.
+</p>
+
+<h3>Komponenten & Geräte</h3>
+
+<h4>Blutanalysegeräte</h4>
+<p>
+Typische Geräte:
+<ul>
+<li><strong>Hämatologie:</strong> Sysmex XN‑Serie, Beckman Coulter DxH</li>
+<li><strong>Klinische Chemie:</strong> Roche Cobas c‑Serie, Abbott Architect</li>
+<li><strong>Gerinnung:</strong> Siemens Atellica, Stago STA‑R</li>
+</ul>
+Diese Geräte analysieren Blutbild, Elektrolyte, Leberenzyme, Nierenwerte, CRP, Gerinnungsparameter und vieles mehr.
+</p>
+
+<h4>Mikrobiologie</h4>
+<p>
+Geräte und Systeme:
+<ul>
+<li>BD Phoenix / Vitek 2 (Keimidentifikation & Antibiogramme)</li>
+<li>BD BACTEC (Blutkulturen)</li>
+<li>PCR‑Systeme (z. B. Roche Cobas 6800/8800, Cepheid GeneXpert)</li>
+</ul>
+Die Mikrobiologie liefert Erregernachweise, Resistenzprofile und Infektionsdiagnostik.
+</p>
+
+<h4>Immunologie & Spezialdiagnostik</h4>
+<p>
+<ul>
+<li>Immunoassay-Systeme (Roche Cobas e‑Serie, Abbott Alinity)</li>
+<li>Autoantikörperdiagnostik</li>
+<li>Hormonbestimmungen</li>
+<li>Therapeutisches Drug Monitoring</li>
+</ul>
+</p>
+
+<h4>Point-of-Care Testing (POCT)</h4>
+<p>
+POCT-Geräte stehen auf Stationen, Intensivstationen und im OP:
+<ul>
+<li>Blutgasanalysatoren (Radiometer ABL, Siemens RAPIDLab)</li>
+<li>Glukosemessgeräte</li>
+<li>Gerinnungs-Schnelltests</li>
+</ul>
+POCT ist oft direkt mit LIS/KIS verbunden.
+</p>
+
 <h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+<p>
+Das Labor arbeitet mit einem <strong>LIS (Laborinformationssystem)</strong>, das alle Proben, Aufträge, Ergebnisse und Geräteanbindungen verwaltet.
+Typische Systeme: <strong>Orbis LIS, Swisslab, Lauris, OpenLIS</strong>.
+</p>
+<p>
+Die Kommunikation erfolgt über:
+<ul>
+<li><strong>HL7 v2.x</strong> (ORM, ORU, OML)</li>
+<li><strong>HL7 FHIR</strong> (Observation, DiagnosticReport)</li>
+<li><strong>ASTM</strong> (ältere Analyzer-Protokolle)</li>
+<li><strong>TCP/IP</strong> oder <strong>seriell</strong> für Analyzer</li>
+</ul>
+</p>
+
+<h3>Datenfluss</h3>
+<p>
+Der typische Datenfluss im Labor:
+<ol>
+<li>Arzt/Pflege legt Laborauftrag im KIS/PDMS an.</li>
+<li>Auftrag wird per HL7 an das LIS übertragen.</li>
+<li>Proben werden entnommen und mit Barcode versehen.</li>
+<li>Analyzer messen die Werte und senden Ergebnisse an das LIS.</li>
+<li>LIS validiert Ergebnisse (technisch + medizinisch).</li>
+<li>Ergebnisse werden per HL7/FHIR zurück an KIS/PDMS gesendet.</li>
+<li>Arzt/Pflege sieht Ergebnisse in Patientenakte.</li>
+</ol>
+</p>
+
+<h3>Schnittstellen</h3>
+<p>
+Wichtige Schnittstellen:
+<ul>
+<li><strong>HL7 ORM</strong> – Laborauftrag</li>
+<li><strong>HL7 ORU</strong> – Laborergebnis</li>
+<li><strong>HL7 OML</strong> – Probenlogistik</li>
+<li><strong>FHIR Observation</strong> – Einzelwerte</li>
+<li><strong>FHIR DiagnosticReport</strong> – kompletter Laborbefund</li>
+<li><strong>ASTM</strong> – Analyzer-Kommunikation</li>
+</ul>
+</p>
+
+<h3>Sicherheit</h3>
+<p>
+Im Labor gelten hohe Sicherheitsanforderungen:
+<ul>
+<li>Geräte in separaten VLANs</li>
+<li>Firewall-Regeln für Analyzer</li>
+<li>Audit-Logs im LIS</li>
+<li>Barcode-basierte Probenverfolgung</li>
+<li>Redundante Server für LIS</li>
+<li>Datenschutz bei genetischen Untersuchungen</li>
+</ul>
+</p>
 
 <h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+<p>
+Typische Fehlerursachen:
+<ul>
+<li>HL7-Schnittstellenfehler (Segment fehlt, falscher Code)</li>
+<li>Analyzer offline (Netzwerk, IP-Konflikt, DHCP)</li>
+<li>Barcode nicht lesbar → falsche Probenzuordnung</li>
+<li>Gerätekalibrierung fehlerhaft</li>
+<li>POCT nicht synchronisiert → Werte fehlen im KIS</li>
+</ul>
+</p>
+
+<h4>Praxisbeispiel: Blutkultur positiv</h4>
+<p>
+Ein Patient zeigt Fieber und Schüttelfrost. Blutkulturen werden abgenommen und im BD BACTEC inkubiert.
+Nach 12 Stunden meldet das Gerät ein positives Signal. Die Probe wird im Mikrobiologie-System identifiziert
+(z. B. Vitek 2) und ein Antibiogramm erstellt. Ergebnisse gehen automatisch per HL7 ORU ins KIS/PDMS.
+Der Arzt passt die Therapie anhand der Resistenzdaten an.
+</p>
 
 </div>
 </main>
+
 <footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
 </body>
 </html>
