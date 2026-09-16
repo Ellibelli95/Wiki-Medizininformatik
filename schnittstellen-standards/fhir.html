@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FHIR – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+
+<body>
+<header>
+    <div class="header-inner">
+        <h1>MedizinInformatik Wiki</h1>
+        <p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+    </div>
+</header>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html">Startseite</a>
+        <a href="../medizintechnik/index.html">Medizintechnik</a>
+        <a href="../vernetzung/index.html">Vernetzung</a>
+        <a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+        <a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+        <a href="../datenfluesse/index.html">Datenflüsse</a>
+        <a href="../schnittstellen-standards/index.html">Standards</a>
+        <a href="../server-backend/index.html">Server</a>
+        <a href="../cybersecurity/index.html">Cybersecurity</a>
+        <a href="../web-engineering/index.html">Web Engineering</a>
+        <a href="../praxis/index.html">Praxis</a>
+    </div>
+</nav>
+
+<main>
+<div class="breadcrumb">
+    <a href="../index.html">Startseite</a> / Schnittstellen & Standards / FHIR
+</div>
+
+<div class="hero">
+
+<h2>FHIR</h2>
+<p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>FHIR</strong> vorgesehen.</p>
+
+<div class="note">
+<strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.
+</div>
+
+<!-- GRUNDLAGEN -->
+<h3>Grundlagen</h3>
+<p><strong>FHIR (Fast Healthcare Interoperability Resources)</strong> ist ein moderner HL7‑Standard zur strukturierten Übertragung medizinischer Daten. 
+Er kombiniert klassische HL7‑Konzepte mit Web‑Technologien wie REST, JSON, XML und OAuth2.</p>
+
+<p>In der medizinischen IT‑Infrastruktur dient FHIR als zentrale interoperable Schicht zwischen KIS, PDMS, Labor, Radiologie und Medizintechnik.</p>
+
+<!-- TECHNISCHER ZUSAMMENHANG -->
+<h3>Technischer Zusammenhang</h3>
+<p>FHIR basiert auf modularen <strong>Resources</strong>, die über eine REST‑API bereitgestellt werden. 
+Diese Ressourcen bilden die Grundlage für moderne Krankenhaus‑Architekturen.</p>
+
+<ul>
+    <li><strong>Patient</strong> – Stammdaten</li>
+    <li><strong>Encounter</strong> – Aufenthalt/Fall</li>
+    <li><strong>Observation</strong> – Vitalparameter, Laborwerte</li>
+    <li><strong>Device</strong> – Medizintechnikgeräte</li>
+    <li><strong>MedicationRequest</strong> – Verordnungen</li>
+</ul>
+
+<pre><code>GET /fhir/Patient/12345
+Accept: application/fhir+json
+</code></pre>
+
+<!-- DATENFLUSS -->
+<h3>Datenfluss & Integration mit Medizintechnik</h3>
+<p>Viele Medizintechnik‑Hersteller liefern Daten weiterhin über <strong>HL7 v2.x</strong>. 
+Diese werden in Integrationsplattformen wie <em>Mirth Connect</em> in FHIR‑Ressourcen überführt.</p>
+
+<ul>
+    <li><strong>Dräger</strong> – Beatmungsgeräte (Evita, Carina)</li>
+    <li><strong>Philips</strong> – IntelliVue Patientenmonitore</li>
+    <li><strong>GE Healthcare</strong> – CARESCAPE Monitoring</li>
+    <li><strong>Nihon Kohden</strong> – Telemetrie & Vitalparameter</li>
+    <li><strong>Mindray</strong> – Monitoring & Anästhesie</li>
+</ul>
+
+<p>Typischer Datenfluss:</p>
+<ol>
+    <li>Gerät sendet HL7‑ORU/ADT an die Integrationsengine.</li>
+    <li>Mirth Connect mappt HL7‑Felder (PID, PV1, OBX) auf FHIR‑Ressourcen.</li>
+    <li>FHIR‑Server speichert Patient, Encounter, Observation, Device.</li>
+    <li>KIS/PDMS ruft Daten per REST ab.</li>
+</ol>
+
+<!-- PRAXISBEISPIELE -->
+<h3>Praxisbeispiele</h3>
+
+<h4>Philips IntelliVue – Vitalparameter</h4>
+<p>Herzfrequenz, SpO₂ und Blutdruck werden als HL7‑ORU gesendet und in FHIR‑Observation umgewandelt.</p>
+
+<h4>Dräger Evita – Beatmungsdaten</h4>
+<p>Tidalvolumen, PEEP und Atemfrequenz werden als FHIR‑Observation gespeichert und dem Encounter zugeordnet.</p>
+
+<h4>GE / Nihon Kohden / Mindray – Alarmmanagement</h4>
+<p>Alarme wie Asystolie oder SpO₂‑Abfall werden als <code>DetectedIssue</code> oder spezielle <code>Observation</code> modelliert.</p>
+
+<!-- PROFILE -->
+<h3>FHIR‑Profile</h3>
+<ul>
+    <li>Vitalparameterprofil – Observation + LOINC + UCUM</li>
+    <li>Geräteprofil – Device + Hersteller + Seriennummer</li>
+    <li>Patientenprofil – Patient + Identifier</li>
+</ul>
+
+<!-- SICHERHEIT -->
+<h3>Sicherheit</h3>
+<ul>
+    <li>HTTPS/TLS</li>
+    <li>OAuth2 / OpenID Connect</li>
+    <li>Rollen & Rechte</li>
+    <li>Audit‑Logs</li>
+</ul>
+
+<!-- FEHLERANALYSE -->
+<h3>Fehleranalyse</h3>
+<ul>
+    <li>Fehlerhafte HL7→FHIR‑Mappings</li>
+    <li>Ungültige Profile</li>
+    <li>Patienten‑ID‑Konflikte</li>
+    <li>Performance‑Probleme bei Kurvendaten</li>
+</ul>
+
+<div class="note">
+<strong>Hinweis:</strong> Dieser Artikel dokumentiert Grundlagen, technische Struktur, typische Anwendungsfälle, Nachrichten, Fehlerbilder und Praxisbeispiele rund um FHIR.
+</div>
+
+</div>
+</main>
+
+<footer>
+MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki
+</footer>
+
+</body>
+</html>

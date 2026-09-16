@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ICD im Klinikum – Codeaufbau, Kodierworkflow, Schnittstellen zu HL7/FHIR und DRG-Abrechnung, mit vollständigem Praxisbeispiel einer stationären Kodierung.">
+<title>ICD – MedizinInformatik Wiki</title>
+<style>
+:root{--navy:#07335f;--navy-dark:#05284b;--blue:#0b6ebc;--line:#dfe6ec;--text:#18232d;--muted:#5f6b75;--bg:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:var(--bg);line-height:1.55}
+a{color:inherit;text-decoration:none}
+.header{background:linear-gradient(135deg,#062a4f,#0a3e70);color:#fff}
+.header-inner{max-width:1400px;margin:auto;display:flex;align-items:center;gap:22px;padding:18px 24px}
+.logo{display:flex;align-items:center;gap:12px;min-width:205px}
+.logo-mark{width:44px;height:44px;border:3px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700}
+.logo-title{font-size:18px;font-weight:800;line-height:1.05}
+.logo-subtitle{font-size:11px;opacity:.8;margin-top:4px}
+.nav{position:sticky;top:0;z-index:20;background:#062b50;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.nav-inner{max-width:1400px;margin:auto;display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:thin}
+.nav a{flex:0 0 auto;color:#fff;font-size:12px;font-weight:700;padding:13px 11px 12px;text-align:center;border-bottom:3px solid transparent;transition:.2s;white-space:nowrap}
+.nav a:hover,.nav a.active{background:#0b477b;border-bottom-color:#19a9ff}
+.nav-icon{display:block;font-size:18px;line-height:1;margin-bottom:5px}
+main{max-width:1400px;margin:auto}
+.breadcrumb{max-width:1000px;margin:16px auto 0;padding:0 24px;font-size:12.5px;color:var(--muted)}
+.breadcrumb a{color:var(--blue)}
+.intro{text-align:center;padding:32px 24px 16px}
+.intro h1{margin:0 0 10px;color:var(--navy);font-size:32px;line-height:1.2}
+.intro p{max-width:900px;margin:0 auto;color:#404a53;font-size:16px}
+.note{max-width:1000px;margin:20px auto 10px;padding:13px 18px;border-left:4px solid var(--blue);background:#f4f8fb;text-align:left;color:#3c4852;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:16px 28px 34px}
+.card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:24px 18px 20px;text-align:center;display:flex;flex-direction:column;min-height:225px;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 7px 20px rgba(5,40,75,.10);border-color:#b8ccdc}
+.icon{height:58px;display:grid;place-items:center;color:var(--navy);font-size:42px;font-weight:700;margin-bottom:6px}
+.card h2{font-size:16px;color:var(--navy);margin:2px 0 9px}
+.card p{font-size:13px;color:#3f484f;margin:0 auto 16px;max-width:260px}
+.btn{display:inline-block;align-self:center;margin-top:auto;background:var(--navy);color:#fff;padding:8px 14px;border-radius:2px;font-size:12px;font-weight:700}
+.btn:hover{background:#0b6ebc}
+.footer{background:linear-gradient(135deg,#062a4f,#083966);color:#fff;text-align:center;padding:18px 20px;font-size:13px}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}.logo{min-width:190px}.header-inner{padding:14px 18px}}
+@media(max-width:760px){.header-inner{justify-content:center}.logo{min-width:0}.logo-subtitle{display:none}.grid{grid-template-columns:repeat(2,1fr);padding:14px}.intro h1{font-size:26px}.nav a{font-size:11px;padding-inline:9px}}
+@media(max-width:500px){.grid{grid-template-columns:1fr}.card{min-height:205px}.intro{padding:26px 16px 12px}.intro p{font-size:14px}}
+
+/* ==== Ergänzungen für den Artikelbereich – gleiche Farbvariablen wie oben ==== */
+.article{max-width:1000px;margin:0 auto;padding:0 24px 40px}
+.article h2.section-title{color:var(--navy);border-bottom:2px solid var(--line);padding-bottom:7px;margin-top:42px;font-size:21px}
+.article h3.sub-title{color:var(--navy);margin:22px 0 8px;font-size:16px}
+table.info-table{width:100%;border-collapse:collapse;margin:14px 0 22px;font-size:13.5px}
+table.info-table th{background:var(--navy);color:#fff;text-align:left;padding:8px 10px}
+table.info-table td{border:1px solid var(--line);padding:8px 10px;vertical-align:top}
+table.info-table tr:nth-child(even) td{background:#f7fafc}
+.node-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0 22px}
+.node-box{border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:6px;padding:10px 12px;background:#fff;font-size:13px}
+.node-box strong{display:block;color:var(--navy);font-size:13.5px;margin-bottom:4px}
+.node-box code{background:#f4f8fb;padding:1px 4px;border-radius:3px}
+.flow-steps{counter-reset:step;margin:16px 0 24px;padding:0;list-style:none}
+.flow-steps li{position:relative;padding:9px 0 9px 44px;margin-bottom:6px;border-bottom:1px dashed var(--line);font-size:13.8px}
+.flow-steps li:last-child{border-bottom:none}
+.flow-steps li::before{counter-increment:step;content:counter(step);position:absolute;left:0;top:7px;width:27px;height:27px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+.klinik-beispiel{margin:16px 0;padding:14px 18px;border-left:4px solid #2e8b57;background:#f2f9f4;font-size:13.8px;color:#20362a;border-radius:0 6px 6px 0}
+.klinik-beispiel strong{color:#1f5c3c}
+.warnbox{margin:16px 0;padding:13px 18px;border-left:4px solid #b5551f;background:#fbf2ea;color:#5a3517;font-size:13.8px;border-radius:0 6px 6px 0}
+code.tag{background:#f4f8fb;border:1px solid var(--line);padding:1px 5px;border-radius:4px;font-family:Consolas,monospace;font-size:12.5px}
+.diagram-box{margin:18px 0;padding:16px 18px;background:var(--navy-dark);color:#eaf3fb;border-radius:8px;font-family:Consolas,monospace;font-size:12.6px;line-height:1.7;overflow-x:auto;white-space:pre}
+.toc-grid .card{min-height:150px}
+.toc-grid .icon{font-size:26px;height:40px}
+.code-anatomy{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:18px 0}
+.code-anatomy div{border:1px solid var(--line);border-radius:6px;padding:10px 14px;text-align:center;font-size:12.5px;background:#fff}
+.code-anatomy div b{display:block;color:var(--navy);font-size:18px;font-family:Consolas,monospace}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="../index.html" aria-label="MedizinInformatik Wiki Startseite">
+      <span class="logo-mark">+</span>
+      <span><span class="logo-title">MedizinInformatik<br>WIKI</span><span class="logo-subtitle">Technische Dokumentation</span></span>
+    </a>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <div class="nav-inner">
+    <a href="../index.html"><span class="nav-icon">⌂</span>Startseite</a>
+    <a href="../medizintechnik/index.html"><span class="nav-icon">♧</span>Medizintechnik</a>
+    <a href="../vernetzung/index.html"><span class="nav-icon">⌘</span>Vernetzung</a>
+    <a href="../krankenhaus-it/index.html"><span class="nav-icon">▦</span>Krankenhaus-IT</a>
+    <a href="../klinische-informationssysteme/index.html"><span class="nav-icon">▣</span>KIS &amp; Systeme</a>
+    <a href="../datenfluesse/index.html"><span class="nav-icon">⇄</span>Datenflüsse</a>
+    <a class="active" href="../schnittstellen-standards/index.html"><span class="nav-icon">⇋</span>Standards</a>
+    <a href="../server-backend/index.html"><span class="nav-icon">▤</span>Server &amp; Backend</a>
+    <a href="../cybersecurity/index.html"><span class="nav-icon">♙</span>Cybersecurity</a>
+    <a href="../web-engineering/index.html"><span class="nav-icon">&lt;/&gt;</span>Web Engineering</a>
+    <a href="../praxis/index.html"><span class="nav-icon">✚</span>Praxis / Fallbeispiele</a>
+  </div>
+</nav>
+
+<main>
+  <div class="breadcrumb"><a href="../index.html">Startseite</a> / <a href="../schnittstellen-standards/index.html">Schnittstellen &amp; Standards</a> / ICD</div>
+
+  <section class="intro">
+    <h1>ICD – International Classification of Diseases</h1>
+    <p>ICD ist die von der WHO herausgegebene, weltweit genutzte Klassifikation für <strong>Diagnosen</strong>. In deutschen Krankenhäusern wird die nationale Fassung <strong>ICD-10-GM</strong> (German Modification) verwendet – sie ist die Grundlage jeder Diagnosedokumentation im KIS und damit auch der Abrechnung über das DRG-System. Dieser Artikel zeigt Aufbau, Kodierworkflow und Schnittstellen anhand eines vollständigen Klinikbeispiels.</p>
+    <div class="note"><strong>Kernprinzip:</strong> Jede im KIS dokumentierte Diagnose wird als ICD-Code kodiert. Dieser Code fließt in die medizinische Dokumentation, in Qualitätsstatistiken und – zusammen mit OPS-Prozedurcodes – in den DRG-Grouper zur Abrechnung gegenüber der Krankenkasse.</div>
+  </section>
+
+  <section class="grid toc-grid" aria-label="Artikel-Überblick">
+    <a class="card" href="#grundlagen"><div class="icon">①</div><h2>Grundlagen</h2><p>Was ICD ist und wer es herausgibt</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#aufbau"><div class="icon">②</div><h2>Aufbau eines ICD-Codes</h2><p>Kapitel, Gruppe, Kategorie, Subkategorie</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#kodierung"><div class="icon">③</div><h2>Kodierung im Klinikalltag</h2><p>Hauptdiagnose, Nebendiagnosen, Kodierrichtlinien</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#schnittstellen"><div class="icon">④</div><h2>Schnittstellen &amp; Datenfluss</h2><p>KIS, HL7, FHIR und DRG-Grouper</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#versionierung"><div class="icon">⑤</div><h2>Versionierung &amp; Pflege</h2><p>Jährliche Updates, ICD-11-Umstieg</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#sicherheit"><div class="icon">⑥</div><h2>Prüfungen &amp; Fehleranalyse</h2><p>MD-Prüfung, Fehlkodierung, Upcoding</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#praxisbeispiel"><div class="icon">⑦</div><h2>Komplettes Praxisbeispiel</h2><p>Stationäre Pneumonie-Kodierung Ende-zu-Ende</p><span class="btn">Zum Abschnitt →</span></a>
+  </section>
+
+  <div class="article">
+
+    <h2 class="section-title" id="grundlagen">① Grundlagen und Zweck</h2>
+    <p>Die ICD-Klassifikation existiert, damit Diagnosen weltweit einheitlich, statistisch auswertbar und maschinenlesbar dokumentiert werden können – unabhängig von Sprache, Klinik oder Arzt. Aktuell sind zwei Versionen relevant:</p>
+    <ul>
+      <li><strong>ICD-10-GM</strong> (German Modification): die in Deutschland gesetzlich vorgeschriebene Version für die Diagnosekodierung in Krankenhäusern und Arztpraxen, herausgegeben und jährlich gepflegt vom BfArM.</li>
+      <li><strong>ICD-11</strong>: die neue, von der WHO international veröffentlichte Version mit überarbeiteter Struktur und deutlich mehr Differenzierungsmöglichkeiten; die Einführung als verbindlicher deutscher Abrechnungsstandard erfolgt schrittweise und ist von ICD-10-GM heute noch getrennt zu betrachten.</li>
+    </ul>
+    <p>Im Krankenhaus-IT-Kontext ist ICD damit die Brücke zwischen medizinischer Dokumentation (was hat der Patient?) und administrativen Prozessen (Abrechnung, Qualitätssicherung, Meldewesen).</p>
+
+    <h2 class="section-title" id="aufbau">② Aufbau eines ICD-10-GM-Codes</h2>
+    <p>Ein ICD-10-GM-Code ist hierarchisch aufgebaut. Am Beispiel <code class="tag">J18.9</code> („Pneumonie, nicht näher bezeichnet"):</p>
+
+    <div class="code-anatomy">
+      <div><b>J</b>Kapitel<br>Krankheiten des Atmungssystems</div>
+      <div><b>J18</b>Kategorie<br>Pneumonie, Erreger nicht näher bezeichnet</div>
+      <div><b>J18.9</b>Subkategorie<br>vierte Stelle, konkretisiert die Diagnose</div>
+    </div>
+
+    <table class="info-table">
+    <tr><th>Bestandteil</th><th>Bedeutung</th></tr>
+    <tr><td>Buchstabe (Kapitel)</td><td>Grobe Organsystem-/Krankheitsgruppe, z. B. J = Atmungssystem, I = Kreislaufsystem</td></tr>
+    <tr><td>Zwei Ziffern</td><td>Kategorie innerhalb des Kapitels, z. B. J18 = Pneumonie</td></tr>
+    <tr><td>Stelle nach dem Punkt</td><td>Subkategorie zur weiteren Präzisierung, z. B. J18.9 = ohne genauere Erregerangabe</td></tr>
+    <tr><td>Zusatzkennzeichen</td><td>In Deutschland zusätzlich Diagnosesicherheit (z. B. „G" = gesichert, „V" = Verdacht, „Z" = Zustand nach)</td></tr>
+    </table>
+
+    <h2 class="section-title" id="kodierung">③ Kodierung im Klinikalltag</h2>
+    <p>Im stationären Bereich wird zwischen mehreren Diagnosearten unterschieden, die alle im KIS erfasst werden:</p>
+    <ul>
+      <li><strong>Hauptdiagnose:</strong> die Diagnose, die nach Analyse am Ende des Aufenthalts als hauptsächlich für die Krankenhausbehandlung verantwortlich festgestellt wird – nicht zwingend die Aufnahmediagnose.</li>
+      <li><strong>Nebendiagnosen:</strong> Begleiterkrankungen oder Komplikationen, die den Behandlungsaufwand beeinflusst haben (z. B. Diabetes mellitus als Nebendiagnose bei einer Pneumonie-Behandlung).</li>
+    </ul>
+    <p>Die eigentliche Zuordnung von Freitext-Diagnosen zu einem passenden Code erfolgt meist nicht durch den behandelnden Arzt direkt, sondern durch spezialisierte <strong>Kodierfachkräfte</strong>, die die deutschen Kodierrichtlinien (DKR) anwenden – ein festes Regelwerk, das u. a. festlegt, was als Hauptdiagnose zählt und wie mehrere mögliche Diagnosen priorisiert werden.</p>
+
+    <div class="klinik-beispiel"><strong>Klinikum-Beispiel:</strong> Ein Patient wird wegen Atemnot aufgenommen (Aufnahmediagnose „Dyspnoe"). Im Verlauf wird eine ambulant erworbene Pneumonie diagnostiziert und behandelt. Am Ende des Aufenthalts kodiert die Kodierfachkraft „Pneumonie" (J18.9) als Hauptdiagnose, nicht „Dyspnoe" – da die Pneumonie die eigentliche Ursache des stationären Aufenthalts war.</p></div>
+
+    <h2 class="section-title" id="schnittstellen">④ Schnittstellen und Datenfluss</h2>
+    <p>ICD-Codes werden im KIS erfasst und fließen von dort in mehrere nachgelagerte Systeme:</p>
+
+    <table class="info-table">
+    <tr><th>System</th><th>Rolle</th><th>Übertragungsformat</th></tr>
+    <tr><td>KIS</td><td>Erfassung der Diagnose durch Arzt/Kodierfachkraft</td><td>interne Datenbank, danach HL7/FHIR-Export</td></tr>
+    <tr><td>Kodier-/Gruppierungssoftware</td><td>Prüft Kodierrichtlinien, kombiniert ICD- und OPS-Codes</td><td>HL7-DG1-Segment (Diagnose) bzw. FHIR-Ressource <code class="tag">Condition</code></td></tr>
+    <tr><td>DRG-Grouper</td><td>Berechnet aus Haupt-/Nebendiagnosen und Prozeduren (OPS) die abzurechnende Fallpauschale (DRG)</td><td>strukturierte Diagnose-/Prozedurliste je Fall</td></tr>
+    <tr><td>Abrechnungssystem</td><td>Übermittelt den Fall an die Krankenkasse (§301-Verfahren)</td><td>strukturierte Abrechnungsdatensätze</td></tr>
+    </table>
+
+    <p>Technisch wird eine Diagnose in HL7 v2 im <code class="tag">DG1</code>-Segment übertragen, u. a. mit dem Feld <code class="tag">DG1-3</code> für den ICD-Code selbst und <code class="tag">DG1-6</code> für die Diagnoseart (Haupt-/Nebendiagnose). In FHIR-basierten Schnittstellen wird stattdessen eine <code class="tag">Condition</code>-Ressource verwendet, deren <code class="tag">code</code>-Element auf das ICD-10-GM-Codesystem verweist.</p>
+
+    <div class="node-grid">
+      <div class="node-box"><strong>HL7 v2 – DG1-Segment</strong>Klassischer Weg zwischen KIS und nachgelagerten Abrechnungs-/Kodiersystemen.</div>
+      <div class="node-box"><strong>FHIR – Condition-Ressource</strong>Moderner, RESTful abfragbarer Weg, u. a. für elektronische Patientenakte und Auswertungen.</div>
+      <div class="node-box"><strong>DRG-Grouper</strong>Rechenkern, der aus Diagnosen und Prozeduren automatisiert die Fallpauschale ermittelt.</div>
+    </div>
+
+    <h2 class="section-title" id="versionierung">⑤ Versionierung und Pflege</h2>
+    <p>ICD-10-GM wird jährlich zum 1. Januar durch das BfArM aktualisiert – neue Codes kommen hinzu, manche werden präzisiert oder gestrichen. KIS-Hersteller müssen diese jährlichen Updates rechtzeitig einspielen, da mit veralteten Katalogen abgerechnete Fälle von den Kostenträgern zurückgewiesen werden können. Der internationale Umstieg auf <strong>ICD-11</strong> erfolgt in Deutschland schrittweise und getrennt von der laufenden ICD-10-GM-Nutzung, da ICD-11 strukturell deutlich anders aufgebaut ist (u. a. alphanumerische Codes mit mehr Differenzierungsebenen und Erweiterungscodes).</p>
+
+    <div class="warnbox"><strong>Praxishinweis:</strong> Ein häufiges IT-Problem beim Jahreswechsel ist, dass Kodiersoftware und KIS nicht zeitgleich auf den neuen ICD-Katalog aktualisiert werden – dadurch kann es kurzzeitig zu inkonsistenten Codelisten zwischen den Systemen kommen.</div>
+
+    <h2 class="section-title" id="sicherheit">⑥ Prüfungen und Fehleranalyse</h2>
+    <p>Da ICD-Codes direkt die Krankenhausvergütung beeinflussen, unterliegt die Kodierqualität einer strengen Kontrolle:</p>
+    <table class="info-table">
+    <tr><th>Symptom / Fall</th><th>Typische Ursache</th><th>Lösungsansatz</th></tr>
+    <tr><td>Fall wird vom Kostenträger beanstandet</td><td>Falsche Hauptdiagnose, fehlende Nebendiagnose, veralteter ICD-Katalog verwendet</td><td>Kodierung durch Kodierfachkraft/Medizincontrolling gegenprüfen</td></tr>
+    <tr><td>MD-Prüfung (Medizinischer Dienst) beanstandet Fall</td><td>Diskrepanz zwischen dokumentiertem Verlauf und kodierten Diagnosen</td><td>Klinische Dokumentation und Kodierung im Vier-Augen-Prinzip abgleichen</td></tr>
+    <tr><td>DRG-Grouper liefert unerwartetes Ergebnis</td><td>Fehlende oder falsch kombinierte OPS-Prozedurcodes</td><td>Vollständigkeit von Diagnose- und Prozedurliste prüfen</td></tr>
+    <tr><td>Verdacht auf systematisches Upcoding</td><td>Bewusste oder unbewusste Kodierung „schwererer" Nebendiagnosen ohne ausreichende Dokumentation</td><td>Interne Kodierrevision, Schulung anhand der DKR</td></tr>
+    </table>
+
+    <h2 class="section-title" id="praxisbeispiel">⑦ Komplettes Praxisbeispiel: Stationäre Pneumonie-Behandlung</h2>
+    <p>Zusammenfassend der Weg der Diagnose unseres (bereits aus dem DICOM-Artikel bekannten) Patientenfalls, diesmal aus Sicht der medizinischen Dokumentation:</p>
+
+    <ol class="flow-steps">
+      <li><strong>Aufnahme:</strong> Ein Patient wird mit Fieber und Husten stationär aufgenommen; im KIS wird zunächst die Aufnahmediagnose „Verdacht auf Pneumonie" (ICD-10-GM <code class="tag">J18.9 V</code>, Zusatzkennzeichen „Verdacht") dokumentiert.</li>
+      <li><strong>Diagnostik:</strong> Die im DICOM-Artikel beschriebene CT-Thorax-Untersuchung sowie Labordiagnostik bestätigen eine ambulant erworbene Pneumonie.</li>
+      <li><strong>Diagnosesicherung im KIS:</strong> Der behandelnde Arzt aktualisiert die Diagnose auf „gesichert" (<code class="tag">J18.9 G</code>) und ergänzt eine Nebendiagnose „Typ-2-Diabetes mellitus" (<code class="tag">E11.9</code>), da dieser den Behandlungsaufwand erhöht hat.</li>
+      <li><strong>Kodierprüfung:</strong> Die Kodierfachkraft prüft am Ende des Aufenthalts alle dokumentierten Diagnosen anhand der Kodierrichtlinien und bestätigt J18.9 als Hauptdiagnose sowie E11.9 als Nebendiagnose.</li>
+      <li><strong>Übertragung an den Grouper:</strong> Das KIS überträgt die Diagnosen per HL7-DG1-Segment (bzw. FHIR-<code class="tag">Condition</code>) zusammen mit den erbrachten OPS-Prozeduren (u. a. Röntgen-Thorax, Laboranalysen) an die Gruppierungssoftware.</li>
+      <li><strong>DRG-Berechnung:</strong> Der DRG-Grouper berechnet aus Haupt-/Nebendiagnose und Prozeduren die passende Fallpauschale.</li>
+      <li><strong>Abrechnung:</strong> Das Abrechnungssystem übermittelt den vollständigen Datensatz im §301-Verfahren an die Krankenkasse des Patienten.</li>
+    </ol>
+
+    <div class="klinik-beispiel"><strong>Ergebnis für die Praxis:</strong> Derselbe klinische Fall erzeugt in diesem Wiki bereits an zwei Stellen Daten: die Bilddaten im DICOM-Artikel und nun die kodierte Diagnose im ICD-Artikel. Beide Datenströme laufen im KIS zusammen und werden dort – über HL7/FHIR-Schnittstellen verbunden – zu einem vollständigen, abrechnungsfähigen Behandlungsfall zusammengeführt.</div>
+
+  </div>
+</main>
+
+<footer class="footer">© 2025 MedizinInformatik Wiki – Alle Rechte vorbehalten.</footer>
+</body>
+</html>

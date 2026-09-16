@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="HL7 – technische Wiki-Seite für medizinische IT, Krankenhaus-Integration, Medizintechnik und klinische Schnittstellen.">
+<title>HL7 – MedizinInformatik Wiki</title>
+<style>
+
+:root{--navy:#07335f;--navy-dark:#05284b;--blue:#0b6ebc;--line:#dfe6ec;--text:#18232d;--muted:#5f6b75;--bg:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:var(--bg);line-height:1.55}
+a{color:inherit;text-decoration:none}
+.header{background:linear-gradient(135deg,#062a4f,#0a3e70);color:#fff}
+.header-inner{max-width:1400px;margin:auto;display:flex;align-items:center;gap:22px;padding:18px 24px}
+.logo{display:flex;align-items:center;gap:12px;min-width:205px}
+.logo-mark{width:44px;height:44px;border:3px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700}
+.logo-title{font-size:18px;font-weight:800;line-height:1.05}
+.logo-subtitle{font-size:11px;opacity:.8;margin-top:4px}
+.nav{position:sticky;top:0;z-index:20;background:#062b50;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.nav-inner{max-width:1400px;margin:auto;display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:thin}
+.nav a{flex:0 0 auto;color:#fff;font-size:12px;font-weight:700;padding:13px 11px 12px;text-align:center;border-bottom:3px solid transparent;transition:.2s;white-space:nowrap}
+.nav a:hover,.nav a.active{background:#0b477b;border-bottom-color:#19a9ff}
+.nav-icon{display:block;font-size:18px;line-height:1;margin-bottom:5px}
+main{max-width:1400px;margin:auto}
+.hero-image{width:100%;display:block;max-height:520px;object-fit:cover;object-position:center}
+.image-caption{font-size:12px;color:#6d7378;text-align:right;background:#f4f5f6;padding:5px 24px}
+.intro{text-align:center;padding:32px 24px 16px}
+.intro h1{margin:0 0 10px;color:var(--navy);font-size:32px;line-height:1.2}
+.intro p{max-width:900px;margin:0 auto;color:#404a53;font-size:16px}
+.note{max-width:1000px;margin:20px auto 10px;padding:13px 18px;border-left:4px solid var(--blue);background:#f4f8fb;text-align:left;color:#3c4852;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:16px 28px 34px}
+.card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:24px 18px 20px;text-align:center;display:flex;flex-direction:column;min-height:225px;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 7px 20px rgba(5,40,75,.10);border-color:#b8ccdc}
+.icon{height:58px;display:grid;place-items:center;color:var(--navy);font-size:42px;font-weight:700;margin-bottom:6px}
+.card h2{font-size:16px;color:var(--navy);margin:2px 0 9px}
+.card p{font-size:13px;color:#3f484f;margin:0 auto 16px;max-width:260px}
+.btn{display:inline-block;align-self:center;margin-top:auto;background:var(--navy);color:#fff;padding:8px 14px;border-radius:2px;font-size:12px;font-weight:700}
+.btn:hover{background:#0b6ebc}
+.footer{background:linear-gradient(135deg,#062a4f,#083966);color:#fff;text-align:center;padding:18px 20px;font-size:13px}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}.logo{min-width:190px}.header-inner{padding:14px 18px}}
+@media(max-width:760px){.header-inner{justify-content:center}.logo{min-width:0}.logo-subtitle{display:none}.grid{grid-template-columns:repeat(2,1fr);padding:14px}.intro h1{font-size:26px}.hero-image{max-height:360px}.nav a{font-size:11px;padding-inline:9px}}
+@media(max-width:500px){.grid{grid-template-columns:1fr}.card{min-height:205px}.intro{padding:26px 16px 12px}.intro p{font-size:14px}.image-caption{padding-right:12px}}
+/* =========================
+   SUCHFELD
+   ========================= */
+
+.search-container {
+  max-width: 800px;
+  margin: 28px auto 10px;
+}
+
+.search-box {
+  display: flex;
+  gap: 8px;
+  background: #fff;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(5,40,75,.06);
+}
+
+.search-box input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  padding: 12px 14px;
+  font-size: 16px;
+  color: var(--text);
+  background: transparent;
+}
+
+.search-box input::placeholder {
+  color: var(--muted);
+}
+
+.search-box button {
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  background: var(--navy);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.search-box button:hover {
+  background: var(--blue);
+}
+
+.search-hint {
+  margin-top: 8px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media(max-width:600px) {
+  .search-box {
+    flex-direction: column;
+  }
+
+  .search-box button {
+    width: 100%;
+  }
+}
+
+
+/* HL7 Wiki – Erweiterung des visuellen Systems aus index.html */
+.wiki-wrap{padding:0 24px 42px}
+.breadcrumb{max-width:1350px;margin:0 auto;padding:15px 0 10px;color:var(--muted);font-size:12px}
+.breadcrumb a{color:var(--blue);font-weight:700}
+.wiki-hero{max-width:1100px;margin:0 auto;padding:28px 10px 24px;text-align:center}
+.wiki-hero .eyebrow{font-size:11px;font-weight:800;letter-spacing:1.3px;color:var(--blue);margin-bottom:8px}
+.wiki-hero h1{margin:0;color:var(--navy);font-size:38px;line-height:1.15}
+.wiki-hero p{max-width:900px;margin:12px auto 0;color:#404a53;font-size:16px}
+.wiki-hero .note{margin:20px auto 0}
+.wiki-grid{max-width:1350px;margin:auto;display:grid;grid-template-columns:220px minmax(0,1fr);gap:28px;align-items:start}
+.toc{position:sticky;top:65px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:14px 0;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.toc-title{padding:0 15px 9px;color:var(--navy);font-size:14px;font-weight:800}
+.toc a{display:block;padding:7px 15px;border-left:3px solid transparent;color:#4a5660;font-size:12px}
+.toc a:hover{background:#f4f8fb;color:var(--navy);border-left-color:#19a9ff}
+.wiki-content{min-width:0}
+.wiki-content section{border:1px solid var(--line);border-radius:8px;background:#fff;padding:24px 28px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.035)}
+.wiki-content h2{margin:0 0 12px;color:var(--navy);font-size:22px;border-bottom:1px solid var(--line);padding-bottom:9px}
+.wiki-content h3{color:var(--navy);font-size:17px}
+.wiki-content p,.wiki-content li{font-size:14px;color:#3f484f}
+.wiki-content a{color:var(--blue)}
+.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+.info-card{border:1px solid var(--line);border-radius:6px;background:#f8fafc;padding:13px;text-align:center}
+.info-card b{display:block;color:var(--navy);font-size:14px}
+.info-card span{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+table{width:100%;border-collapse:collapse;margin:15px 0;font-size:13px}
+th,td{border:1px solid var(--line);padding:10px 11px;text-align:left;vertical-align:top}
+th{background:#f1f6fa;color:var(--navy);font-weight:800}
+.codebox{overflow:auto;background:#071e35;color:#eaf5ff;border-radius:6px;padding:16px;font-family:Consolas,Monaco,monospace;font-size:12px;line-height:1.7}
+.codebox code{white-space:pre}
+.caption{font-size:11px!important;color:var(--muted)!important}
+.definition-list{display:grid;gap:8px}
+.definition-list div{display:grid;grid-template-columns:70px 1fr;gap:12px;border-bottom:1px solid #edf1f4;padding:8px 0}
+.definition-list b{color:var(--blue)}
+.manufacturer-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.manufacturer{border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:6px;padding:14px;background:#fbfcfd}
+.manufacturer strong{display:block;color:var(--navy);font-size:16px;margin-bottom:5px}
+.manufacturer span{font-size:13px;color:#48535c}
+.flow{display:flex;align-items:stretch;justify-content:center;gap:8px;margin:18px 0;overflow-x:auto}
+.flow div{min-width:145px;border:1px solid var(--line);border-radius:7px;background:#f7fafc;padding:13px;text-align:center;color:var(--navy);font-size:23px}
+.flow b{display:block;font-size:13px;margin-top:4px}
+.flow small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.flow i{align-self:center;color:var(--blue);font-style:normal;font-size:22px}
+.steps{padding-left:22px}
+.steps li{padding:5px 0}
+.warning{margin-top:16px;padding:13px 16px;border-left:4px solid #c98a00;background:#fff9e9;color:#5d4b20;font-size:13px}
+.checklist{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.checklist div{border:1px solid var(--line);background:#f8fafc;border-radius:5px;padding:9px 11px;color:#3f484f;font-size:13px}
+.sources-note{background:#f4f8fb!important}
+@media(max-width:900px){.wiki-grid{grid-template-columns:1fr}.toc{position:static;display:grid;grid-template-columns:repeat(2,1fr)}.toc-title{grid-column:1/-1}.info-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.wiki-wrap{padding:0 12px 30px}.wiki-content section{padding:19px 16px}.wiki-hero h1{font-size:30px}.manufacturer-grid,.checklist,.info-grid{grid-template-columns:1fr}.toc{grid-template-columns:1fr}.flow{justify-content:flex-start}.flow i{display:none}table{font-size:11px}th,td{padding:7px}}
+
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="../index.html" aria-label="MedizinInformatik Wiki Startseite">
+      <span class="logo-mark">+</span>
+      <span><span class="logo-title">MedizinInformatik<br>WIKI</span><span class="logo-subtitle">Technische Dokumentation</span></span>
+    </a>
+  </div>
+</header>
+<nav class="nav" aria-label="Hauptnavigation">
+  <div class="nav-inner">
+    <a href="../index.html"><span class="nav-icon">⌂</span>Startseite</a>
+    <a href="../medizintechnik/index.html"><span class="nav-icon">♧</span>Medizintechnik</a>
+    <a href="../vernetzung/index.html"><span class="nav-icon">⌘</span>Vernetzung</a>
+    <a href="../krankenhaus-it/index.html"><span class="nav-icon">▦</span>Krankenhaus-IT</a>
+    <a href="../klinische-informationssysteme/index.html"><span class="nav-icon">▣</span>KIS &amp; Systeme</a>
+    <a href="../datenfluesse/index.html"><span class="nav-icon">⇄</span>Datenflüsse</a>
+    <a class="active" href="../schnittstellen-standards/index.html"><span class="nav-icon">⇋</span>Standards</a>
+    <a href="../server-backend/index.html"><span class="nav-icon">▤</span>Server &amp; Backend</a>
+    <a href="../cybersecurity/index.html"><span class="nav-icon">♙</span>Cybersecurity</a>
+    <a href="../web-engineering/index.html"><span class="nav-icon">&lt;/&gt;</span>Web Engineering</a>
+    <a href="../praxis/index.html"><span class="nav-icon">✚</span>Praxis / Fallbeispiele</a>
+    <a href="../index.html#kontakt"><span class="nav-icon">✉</span>Kontakt</a>
+  </div>
+</nav>
+
+<main>
+  <div class="wiki-wrap">
+    <div class="breadcrumb"><a href="../index.html">Startseite</a> / Schnittstellen &amp; Standards / HL7</div>
+
+    <section class="wiki-hero">
+      <div class="eyebrow">SCHNITTSTELLEN &amp; STANDARDS · MEDIZINISCHE IT</div>
+      <h1>HL7</h1>
+      <p>Health Level Seven – Standardfamilie für den strukturierten Austausch klinischer Informationen zwischen Krankenhaus-IT, Informationssystemen und medizinischen Geräten.</p>
+      <div class="note"><strong>Wiki-Prinzip:</strong> HL7 nicht isoliert betrachten: Im Krankenhaus entsteht der Datenfluss typischerweise aus Patient, Auftrag und Gerät über Netzwerk, Interface Engine und klinische Anwendung bis zur Dokumentation im KIS.</div>
+    </section>
+
+    <div class="wiki-grid">
+      <aside class="toc">
+        <div class="toc-title">Inhalt</div>
+        <a href="#grundlagen">1. Grundlagen</a>
+        <a href="#varianten">2. HL7-Versionen &amp; Varianten</a>
+        <a href="#v2">3. HL7 v2 – Nachrichten</a>
+        <a href="#segmente">4. Segmente &amp; Felder</a>
+        <a href="#nachrichten">5. Typische Nachrichtentypen</a>
+        <a href="#geraete">6. Medizintechnik &amp; Hersteller</a>
+        <a href="#architektur">7. Krankenhaus-Architektur</a>
+        <a href="#beispiel">8. Praxisbeispiel</a>
+        <a href="#fehler">9. Fehleranalyse</a>
+        <a href="#sicherheit">10. Sicherheit</a>
+        <a href="#vergleich">11. HL7 v2, CDA &amp; FHIR</a>
+        <a href="#checkliste">12. Integrations-Checkliste</a>
+      </aside>
+
+      <article class="wiki-content">
+        <section id="grundlagen">
+          <h2>1. Grundlagen</h2>
+          <p><strong>HL7</strong> steht für <em>Health Level Seven</em> und bezeichnet eine Familie von Standards für den Austausch und die Strukturierung von Gesundheitsinformationen. Im Krankenhaus verbindet HL7 unter anderem KIS, LIS, RIS, PDMS, Integrationsserver und medizinische Geräte.</p>
+          <p>Wichtig: HL7 ist nicht einfach „ein Kabelprotokoll“. Es beschreibt vor allem die Struktur und Bedeutung der auszutauschenden Informationen. Der Transport kann beispielsweise über TCP/IP mit <strong>MLLP</strong> bei klassischem HL7 v2 erfolgen.</p>
+          <div class="info-grid">
+            <div class="info-card"><b>Patient</b><span>Identität, Fallnummer, Aufenthaltsdaten</span></div>
+            <div class="info-card"><b>Auftrag</b><span>Labor-, Untersuchungs- oder Messauftrag</span></div>
+            <div class="info-card"><b>Ergebnis</b><span>Messwerte, Befunde und Statusinformationen</span></div>
+            <div class="info-card"><b>System</b><span>KIS, LIS, PDMS, RIS/PACS, Middleware</span></div>
+          </div>
+        </section>
+
+        <section id="varianten">
+          <h2>2. HL7-Versionen &amp; Varianten</h2>
+          <p>In der Krankenhauspraxis ist vor allem <strong>HL7 Version 2.x</strong> für operative Systemkopplungen verbreitet. Daneben existieren weitere HL7-Standards mit anderen Zielsetzungen.</p>
+          <table>
+            <tr><th>Standard</th><th>Typische Verwendung</th><th>Beispiel</th></tr>
+            <tr><td><strong>HL7 v2.x</strong></td><td>Nachrichtenbasierte Integration</td><td>ADT, ORM, ORU</td></tr>
+            <tr><td><strong>HL7 CDA</strong></td><td>Strukturierte klinische Dokumente</td><td>Arztbrief, Befunddokument</td></tr>
+            <tr><td><strong>HL7 FHIR</strong></td><td>Moderne API- und Web-Integration</td><td>Patient, Observation, DiagnosticReport</td></tr>
+          </table>
+        </section>
+
+        <section id="v2">
+          <h2>3. HL7 v2 – Nachrichten</h2>
+          <p>Eine HL7-v2-Nachricht besteht aus mehreren <strong>Segmenten</strong>. Jedes Segment beginnt mit einem dreistelligen Segmentnamen. Die Felder werden durch Trennzeichen voneinander getrennt.</p>
+          <div class="codebox"><code>MSH|^~\&amp;|MONITOR|ICU|KIS|HOSPITAL|202609132030||ORU^R01|12345|P|2.5<br>PID|1||4711^^^HOSPITAL^MR||Muster^Max||19800101|M<br>OBR|1||REQ123|MDC^Vitalparameter^99LOCAL<br>OBX|1|NM|8867-4^Heart rate^LN||78|/min|60-100|N|||F</code></div>
+          <p class="caption">Vereinfachtes Lehrbeispiel. Die konkrete Feldbelegung hängt von der HL7-Version und dem Implementierungsleitfaden des Krankenhauses ab.</p>
+        </section>
+
+        <section id="segmente">
+          <h2>4. Segmente &amp; Felder</h2>
+          <div class="definition-list">
+            <div><b>MSH</b><span>Message Header – beschreibt u. a. Sender, Empfänger, Nachrichtentyp, Control-ID und HL7-Version.</span></div>
+            <div><b>PID</b><span>Patient Identification – enthält patientenbezogene Identifikationsdaten.</span></div>
+            <div><b>PV1</b><span>Patient Visit – Informationen zum Aufenthalt bzw. Fall.</span></div>
+            <div><b>ORC</b><span>Common Order – allgemeine Auftragsinformationen.</span></div>
+            <div><b>OBR</b><span>Observation Request – Auftrag bzw. Untersuchungsanforderung.</span></div>
+            <div><b>OBX</b><span>Observation Result – Messwert, Befund oder Ergebnis.</span></div>
+          </div>
+          <div class="note"><strong>Merksatz:</strong> Bei einer typischen Messwertübertragung kann man vereinfacht denken: <strong>PID = Wer?</strong> · <strong>OBR = Was wurde angefordert?</strong> · <strong>OBX = Welches Ergebnis wurde geliefert?</strong></div>
+        </section>
+
+        <section id="nachrichten">
+          <h2>5. Typische Nachrichtentypen</h2>
+          <table>
+            <tr><th>Nachricht</th><th>Zweck im Krankenhaus</th><th>Beispiel</th></tr>
+            <tr><td><strong>ADT</strong></td><td>Admission / Discharge / Transfer</td><td>Aufnahme, Verlegung oder Entlassung eines Patienten</td></tr>
+            <tr><td><strong>ORM</strong></td><td>Order Message</td><td>Auftrag von KIS an Labor- oder Diagnosesystem</td></tr>
+            <tr><td><strong>ORU</strong></td><td>Observation Result</td><td>Labor- oder Messwerte zurück an ein klinisches System</td></tr>
+            <tr><td><strong>ACK</strong></td><td>Acknowledgement</td><td>Empfangsbestätigung bzw. Fehlerstatus</td></tr>
+          </table>
+        </section>
+
+        <section id="geraete">
+          <h2>6. Medizintechnik &amp; Hersteller</h2>
+          <p>Medizinische Geräte erzeugen häufig Messdaten, Statusinformationen oder Alarme. Ob ein konkretes Gerät HL7 direkt unterstützt, über eine Middleware angebunden wird oder ein herstellerspezifisches Protokoll nutzt, hängt von Modell, Softwareversion, Lizenzierung und Krankenhauskonfiguration ab.</p>
+          <div class="manufacturer-grid">
+            <div class="manufacturer"><strong>Dräger</strong><span>Patientenmonitoring und Anästhesie-/Beatmungssysteme können in klinische Integrationsumgebungen eingebunden werden. HL7 kann dabei Teil einer mehrstufigen Integrationsarchitektur sein.</span></div>
+            <div class="manufacturer"><strong>Philips</strong><span>Patientenmonitoring und klinische Informationslösungen können Mess- und Patientendaten in übergeordnete Systeme integrieren.</span></div>
+            <div class="manufacturer"><strong>GE HealthCare</strong><span>Medizinische Geräte und klinische Systeme können in Krankenhaus-Netzwerke und Integrationsplattformen eingebunden werden; die konkrete Schnittstelle ist produktabhängig.</span></div>
+            <div class="manufacturer"><strong>Nihon Kohden</strong><span>Patientenmonitoring und diagnostische Systeme können Daten an klinische IT-Umgebungen übergeben; die konkrete HL7-Unterstützung muss für das jeweilige Produkt geprüft werden.</span></div>
+            <div class="manufacturer"><strong>Mindray</strong><span>Patientenmonitore und weitere Systeme können in klinische Netzwerke integriert werden. HL7 ist je nach Produkt und Integrationslösung Teil des möglichen Datenpfades.</span></div>
+          </div>
+          <div class="note"><strong>Wichtig:</strong> Herstellername ≠ automatisch „HL7 direkt“. In einem realen Projekt müssen immer Gerätetyp, Modell, Firmware/Software, Kommunikationsoption, Lizenz, Interface-Spezifikation und unterstützte HL7-Version geprüft werden.</div>
+        </section>
+
+        <section id="architektur">
+          <h2>7. Krankenhaus-Architektur</h2>
+          <div class="flow">
+            <div>🩺<b>Medizinisches Gerät</b><small>Monitor / Gerät / Analyzer</small></div>
+            <i>→</i><div>🌐<b>Medizinisches VLAN</b><small>IP, DNS, Routing, Firewall</small></div>
+            <i>→</i><div>⚙<b>Interface Engine</b><small>Routing, Mapping, Validation</small></div>
+            <i>→</i><div>🏥<b>KIS / PDMS / LIS</b><small>klinische Anwendung</small></div>
+          </div>
+          <p>Eine <strong>Interface Engine</strong> kann HL7-Nachrichten entgegennehmen, prüfen, transformieren und an das richtige Ziel weiterleiten. Dadurch muss nicht jedes Gerät direkt mit jedem klinischen System gekoppelt werden.</p>
+        </section>
+
+        <section id="beispiel">
+          <h2>8. Praxisbeispiel: Patientenmonitor auf der Intensivstation</h2>
+          <p>Ein Patient wird im KIS aufgenommen und erhält eine Fall- bzw. Patienten-ID. Der Monitor auf der Intensivstation ist dem Patienten zugeordnet. Messwerte wie Herzfrequenz, Blutdruck oder SpO₂ werden über die Integrationsstrecke an ein klinisches System übertragen.</p>
+          <ol class="steps">
+            <li><strong>Patientenaufnahme:</strong> Das KIS erzeugt bzw. verwaltet die Patientendaten.</li>
+            <li><strong>Zuordnung:</strong> Patient und Gerät werden über eine definierte Workflow- oder Identifikationslogik zusammengeführt.</li>
+            <li><strong>Messung:</strong> Der Monitor erfasst Vitalparameter.</li>
+            <li><strong>Übertragung:</strong> Ein Gateway oder eine Integrationsplattform übernimmt die Daten.</li>
+            <li><strong>HL7:</strong> Die Daten werden – falls so implementiert – als strukturierte HL7-Nachricht weitergegeben.</li>
+            <li><strong>Dokumentation:</strong> Das Zielsystem verarbeitet und speichert die Daten entsprechend seiner Anwendung.</li>
+          </ol>
+        </section>
+
+        <section id="fehler">
+          <h2>9. Fehleranalyse</h2>
+          <table>
+            <tr><th>Fehlerbild</th><th>Mögliche Ursache</th><th>Prüfung</th></tr>
+            <tr><td>Keine Nachricht</td><td>Netzwerk, Port, Firewall, Dienst</td><td>Connectivity, Listener, Logs</td></tr>
+            <tr><td>ACK mit Fehler</td><td>Ungültige Nachricht oder Feldbelegung</td><td>ACK-Code und Originalnachricht prüfen</td></tr>
+            <tr><td>Patient nicht gefunden</td><td>PID bzw. Identifier nicht passend</td><td>Patienten-/Fall-ID und Mapping prüfen</td></tr>
+            <tr><td>Messwert fehlt</td><td>OBX fehlt oder Mapping nicht korrekt</td><td>OBR/OBX und Interface-Mapping prüfen</td></tr>
+            <tr><td>Falscher Patient</td><td>Fehlerhafte Gerätezuordnung</td><td>Workflow, Identifikation und Stammdaten prüfen</td></tr>
+          </table>
+          <div class="warning"><strong>Praxisregel:</strong> Bei patientenbezogenen Schnittstellen ist ein „technisch erfolgreich übertragen“ nicht automatisch gleichbedeutend mit „klinisch korrekt verarbeitet“. Die fachliche Zuordnung muss zusätzlich geprüft werden.</div>
+        </section>
+
+        <section id="sicherheit">
+          <h2>10. Sicherheit</h2>
+          <ul>
+            <li>Medizinische Geräte in geeigneten Netzwerksegmenten/VLANs betreiben.</li>
+            <li>Nur notwendige Kommunikationsbeziehungen zwischen Geräten, Gateways und Servern erlauben.</li>
+            <li>Firewall-Regeln und Kommunikationsports dokumentieren.</li>
+            <li>Logs und Monitoring für Schnittstellen und Interface Engines etablieren.</li>
+            <li>Administrationszugänge schützen und Rollen-/Berechtigungskonzepte beachten.</li>
+            <li>Änderungen an produktiven medizinischen Schnittstellen kontrolliert testen und dokumentieren.</li>
+          </ul>
+        </section>
+
+        <section id="vergleich">
+          <h2>11. HL7 v2, CDA &amp; FHIR</h2>
+          <table>
+            <tr><th></th><th>HL7 v2</th><th>CDA</th><th>FHIR</th></tr>
+            <tr><td><strong>Grundidee</strong></td><td>Nachrichten</td><td>Klinische Dokumente</td><td>Ressourcen + APIs</td></tr>
+            <tr><td><strong>Typischer Einsatz</strong></td><td>Systemintegration</td><td>Dokumentenaustausch</td><td>Moderne Anwendungen / APIs</td></tr>
+            <tr><td><strong>Beispiel</strong></td><td>ORU^R01</td><td>Arztbrief</td><td>Observation</td></tr>
+          </table>
+        </section>
+
+        <section id="checkliste">
+          <h2>12. Integrations-Checkliste</h2>
+          <div class="checklist">
+            <div>☐ Gerät und Modell eindeutig identifizieren</div>
+            <div>☐ Unterstützte HL7-Version und Nachrichtentypen klären</div>
+            <div>☐ Sender/Receiver und IP/Port dokumentieren</div>
+            <div>☐ MLLP bzw. Transportmechanismus prüfen</div>
+            <div>☐ PID/Patientenidentifier und Fallnummern abstimmen</div>
+            <div>☐ OBR/OBX-Mapping mit Fachbereich testen</div>
+            <div>☐ ACK-Verhalten und Fehlerfälle testen</div>
+            <div>☐ Firewall/VLAN/NAC-Regeln dokumentieren</div>
+            <div>☐ Test-, Abnahme- und Rückfallverfahren festlegen</div>
+            <div>☐ Herstellerdokumentation und Implementierungsleitfaden archivieren</div>
+          </div>
+        </section>
+
+        <section class="sources-note">
+          <h2>Technischer Hinweis zur Herstellerangabe</h2>
+          <p>Die Herstellerbeispiele auf dieser Wiki-Seite dienen zur Einordnung typischer Krankenhaus-Integrationsszenarien. Sie behaupten nicht, dass jedes Produkt jedes Herstellers dieselben HL7-Funktionen besitzt. Für eine konkrete Implementierung sind die jeweilige Produktspezifikation und die Schnittstellen-/Integrationsdokumentation maßgeblich.</p>
+        </section>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">© 2025 MedizinInformatik Wiki – HL7 · Technische Dokumentation</footer>
+</body>
+</html>

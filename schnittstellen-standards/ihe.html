@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="IHE im Klinikum – Integrationsprofile, Akteure und Transaktionen, Scheduled Workflow, PIX/PDQ, XDS/XDS-I und ATNA, mit vollständigem Praxisbeispiel im Klinikverbund.">
+<title>IHE – MedizinInformatik Wiki</title>
+<style>
+:root{--navy:#07335f;--navy-dark:#05284b;--blue:#0b6ebc;--line:#dfe6ec;--text:#18232d;--muted:#5f6b75;--bg:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:var(--bg);line-height:1.55}
+a{color:inherit;text-decoration:none}
+.header{background:linear-gradient(135deg,#062a4f,#0a3e70);color:#fff}
+.header-inner{max-width:1400px;margin:auto;display:flex;align-items:center;gap:22px;padding:18px 24px}
+.logo{display:flex;align-items:center;gap:12px;min-width:205px}
+.logo-mark{width:44px;height:44px;border:3px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700}
+.logo-title{font-size:18px;font-weight:800;line-height:1.05}
+.logo-subtitle{font-size:11px;opacity:.8;margin-top:4px}
+.nav{position:sticky;top:0;z-index:20;background:#062b50;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.nav-inner{max-width:1400px;margin:auto;display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:thin}
+.nav a{flex:0 0 auto;color:#fff;font-size:12px;font-weight:700;padding:13px 11px 12px;text-align:center;border-bottom:3px solid transparent;transition:.2s;white-space:nowrap}
+.nav a:hover,.nav a.active{background:#0b477b;border-bottom-color:#19a9ff}
+.nav-icon{display:block;font-size:18px;line-height:1;margin-bottom:5px}
+main{max-width:1400px;margin:auto}
+.breadcrumb{max-width:1000px;margin:16px auto 0;padding:0 24px;font-size:12.5px;color:var(--muted)}
+.breadcrumb a{color:var(--blue)}
+.intro{text-align:center;padding:32px 24px 16px}
+.intro h1{margin:0 0 10px;color:var(--navy);font-size:32px;line-height:1.2}
+.intro p{max-width:900px;margin:0 auto;color:#404a53;font-size:16px}
+.note{max-width:1000px;margin:20px auto 10px;padding:13px 18px;border-left:4px solid var(--blue);background:#f4f8fb;text-align:left;color:#3c4852;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:16px 28px 34px}
+.card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:24px 18px 20px;text-align:center;display:flex;flex-direction:column;min-height:225px;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 7px 20px rgba(5,40,75,.10);border-color:#b8ccdc}
+.icon{height:58px;display:grid;place-items:center;color:var(--navy);font-size:42px;font-weight:700;margin-bottom:6px}
+.card h2{font-size:16px;color:var(--navy);margin:2px 0 9px}
+.card p{font-size:13px;color:#3f484f;margin:0 auto 16px;max-width:260px}
+.btn{display:inline-block;align-self:center;margin-top:auto;background:var(--navy);color:#fff;padding:8px 14px;border-radius:2px;font-size:12px;font-weight:700}
+.btn:hover{background:#0b6ebc}
+.footer{background:linear-gradient(135deg,#062a4f,#083966);color:#fff;text-align:center;padding:18px 20px;font-size:13px}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}.logo{min-width:190px}.header-inner{padding:14px 18px}}
+@media(max-width:760px){.header-inner{justify-content:center}.logo{min-width:0}.logo-subtitle{display:none}.grid{grid-template-columns:repeat(2,1fr);padding:14px}.intro h1{font-size:26px}.nav a{font-size:11px;padding-inline:9px}}
+@media(max-width:500px){.grid{grid-template-columns:1fr}.card{min-height:205px}.intro{padding:26px 16px 12px}.intro p{font-size:14px}}
+
+/* ==== Ergänzungen für den Artikelbereich – gleiche Farbvariablen wie oben ==== */
+.article{max-width:1000px;margin:0 auto;padding:0 24px 40px}
+.article h2.section-title{color:var(--navy);border-bottom:2px solid var(--line);padding-bottom:7px;margin-top:42px;font-size:21px}
+.article h3.sub-title{color:var(--navy);margin:22px 0 8px;font-size:16px}
+table.info-table{width:100%;border-collapse:collapse;margin:14px 0 22px;font-size:13.5px}
+table.info-table th{background:var(--navy);color:#fff;text-align:left;padding:8px 10px}
+table.info-table td{border:1px solid var(--line);padding:8px 10px;vertical-align:top}
+table.info-table tr:nth-child(even) td{background:#f7fafc}
+.node-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0 22px}
+.node-box{border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:6px;padding:10px 12px;background:#fff;font-size:13px}
+.node-box strong{display:block;color:var(--navy);font-size:13.5px;margin-bottom:4px}
+.node-box code{background:#f4f8fb;padding:1px 4px;border-radius:3px}
+.flow-steps{counter-reset:step;margin:16px 0 24px;padding:0;list-style:none}
+.flow-steps li{position:relative;padding:9px 0 9px 44px;margin-bottom:6px;border-bottom:1px dashed var(--line);font-size:13.8px}
+.flow-steps li:last-child{border-bottom:none}
+.flow-steps li::before{counter-increment:step;content:counter(step);position:absolute;left:0;top:7px;width:27px;height:27px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+.klinik-beispiel{margin:16px 0;padding:14px 18px;border-left:4px solid #2e8b57;background:#f2f9f4;font-size:13.8px;color:#20362a;border-radius:0 6px 6px 0}
+.klinik-beispiel strong{color:#1f5c3c}
+.warnbox{margin:16px 0;padding:13px 18px;border-left:4px solid #b5551f;background:#fbf2ea;color:#5a3517;font-size:13.8px;border-radius:0 6px 6px 0}
+code.tag{background:#f4f8fb;border:1px solid var(--line);padding:1px 5px;border-radius:4px;font-family:Consolas,monospace;font-size:12.5px}
+.diagram-box{margin:18px 0;padding:16px 18px;background:var(--navy-dark);color:#eaf3fb;border-radius:8px;font-family:Consolas,monospace;font-size:12.6px;line-height:1.7;overflow-x:auto;white-space:pre}
+.toc-grid .card{min-height:150px}
+.toc-grid .icon{font-size:26px;height:40px}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="../index.html" aria-label="MedizinInformatik Wiki Startseite">
+      <span class="logo-mark">+</span>
+      <span><span class="logo-title">MedizinInformatik<br>WIKI</span><span class="logo-subtitle">Technische Dokumentation</span></span>
+    </a>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <div class="nav-inner">
+    <a href="../index.html"><span class="nav-icon">⌂</span>Startseite</a>
+    <a href="../medizintechnik/index.html"><span class="nav-icon">♧</span>Medizintechnik</a>
+    <a href="../vernetzung/index.html"><span class="nav-icon">⌘</span>Vernetzung</a>
+    <a href="../krankenhaus-it/index.html"><span class="nav-icon">▦</span>Krankenhaus-IT</a>
+    <a href="../klinische-informationssysteme/index.html"><span class="nav-icon">▣</span>KIS &amp; Systeme</a>
+    <a href="../datenfluesse/index.html"><span class="nav-icon">⇄</span>Datenflüsse</a>
+    <a class="active" href="../schnittstellen-standards/index.html"><span class="nav-icon">⇋</span>Standards</a>
+    <a href="../server-backend/index.html"><span class="nav-icon">▤</span>Server &amp; Backend</a>
+    <a href="../cybersecurity/index.html"><span class="nav-icon">♙</span>Cybersecurity</a>
+    <a href="../web-engineering/index.html"><span class="nav-icon">&lt;/&gt;</span>Web Engineering</a>
+    <a href="../praxis/index.html"><span class="nav-icon">✚</span>Praxis / Fallbeispiele</a>
+  </div>
+</nav>
+
+<main>
+  <div class="breadcrumb"><a href="../index.html">Startseite</a> / <a href="../schnittstellen-standards/index.html">Schnittstellen &amp; Standards</a> / IHE</div>
+
+  <section class="intro">
+    <h1>IHE – Integrating the Healthcare Enterprise</h1>
+    <p>IHE definiert keine neuen Nachrichtenformate, sondern legt fest, <strong>wie HL7 und DICOM in konkreten klinischen Arbeitsabläufen kombiniert</strong> werden müssen, damit Systeme verschiedener Hersteller reibungslos zusammenarbeiten. IHE beschreibt dazu <strong>Akteure</strong> (Actors), <strong>Transaktionen</strong> zwischen ihnen und bündelt beides zu wiederverwendbaren <strong>Integrationsprofilen</strong>.</p>
+    <div class="note"><strong>Kernprinzip:</strong> HL7 und DICOM sagen, <em>wie</em> eine Nachricht aussieht. IHE sagt, <em>wer</em> sie <em>wann</em> an <em>wen</em> senden muss, damit ein realer klinischer Workflow – z. B. Anmeldung → Auftrag → Bildaufnahme → Befund → Dokumentenaustausch zwischen Kliniken – Ende-zu-Ende funktioniert.</div>
+  </section>
+
+  <section class="grid toc-grid" aria-label="Artikel-Überblick">
+    <a class="card" href="#grundlagen"><div class="icon">①</div><h2>Grundlagen</h2><p>Was IHE ist und wozu Profile dienen</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#konzepte"><div class="icon">②</div><h2>Akteure &amp; Transaktionen</h2><p>Die Bausteine jedes IHE-Profils</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#profile"><div class="icon">③</div><h2>Wichtige Profile im Überblick</h2><p>SWF, PIX, PDQ, XDS, XDS-I, ATNA</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#swf"><div class="icon">④</div><h2>Scheduled Workflow (SWF)</h2><p>Anmeldung, Auftrag und Bildaufnahme im Detail</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#pixpdq"><div class="icon">⑤</div><h2>PIX &amp; PDQ</h2><p>Patientenidentifikation über Häuser hinweg</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#xds"><div class="icon">⑥</div><h2>XDS &amp; XDS-I</h2><p>Dokumenten- und Bildaustausch im Verbund</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#sicherheit"><div class="icon">⑦</div><h2>ATNA &amp; Fehleranalyse</h2><p>Audit Trail und typische Störungen</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#praxisbeispiel"><div class="icon">⑧</div><h2>Komplettes Praxisbeispiel</h2><p>Patient im Klinikverbund Ende-zu-Ende</p><span class="btn">Zum Abschnitt →</span></a>
+  </section>
+
+  <div class="article">
+
+    <h2 class="section-title" id="grundlagen">① Grundlagen und Zweck</h2>
+    <p>IHE ist eine 1998 von Radiologen und IT-Fachleuten in den USA gegründete Initiative (heute international, u. a. IHE Deutschland e. V.), an der sich Fachgesellschaften, Kliniken und Industrie beteiligen. Das Problem, das IHE löst: HL7 und DICOM lassen viele Freiheitsgrade offen – zwei Hersteller können beide „HL7-konform" sein und trotzdem nicht zusammenarbeiten, weil unklar ist, wer welche Nachricht zu welchem Zeitpunkt senden muss. IHE schließt diese Lücke mit klar definierten, testbaren <strong>Integrationsprofilen</strong>, die auf jährlichen "Connectathons" zwischen Herstellern praktisch geprüft werden.</p>
+
+    <h2 class="section-title" id="konzepte">② Akteure und Transaktionen</h2>
+    <p>Jedes IHE-Profil besteht aus denselben drei Bausteinen:</p>
+
+    <div class="node-grid">
+      <div class="node-box"><strong>Actor (Akteur)</strong>Eine funktionale Rolle, die ein System einnimmt – z. B. „Order Placer", „Order Filler", „Image Manager". Ein reales System (z. B. das KIS) kann mehrere Akteure gleichzeitig abbilden.</div>
+      <div class="node-box"><strong>Transaction (Transaktion)</strong>Eine konkrete Nachricht zwischen zwei Akteuren, referenziert über eine feste Kennung wie <code class="tag">ITI-8</code> (IT Infrastructure) oder <code class="tag">RAD-4</code> (Radiology).</div>
+      <div class="node-box"><strong>Integration Profile</strong>Eine Gruppe von Akteuren und Transaktionen, die zusammen einen klinischen Workflow abbilden, z. B. „Scheduled Workflow" oder „Cross-Enterprise Document Sharing".</div>
+    </div>
+
+    <p>Ein Hersteller veröffentlicht in seiner Produktdokumentation eine <strong>IHE Integration Statement</strong>, in der steht, welche Akteure und Profile das Produkt unterstützt. Beim Kauf oder bei der Integration neuer Systeme wird genau dieses Dokument verglichen, um Kompatibilität zu prüfen – vergleichbar mit dem Abgleich der DICOM-Konformitätserklärung bei reinen Bildgeräten.</p>
+
+    <h2 class="section-title" id="profile">③ Wichtige Profile im Überblick</h2>
+    <table class="info-table">
+    <tr><th>Profil</th><th>Domäne</th><th>Zweck</th></tr>
+    <tr><td><strong>SWF</strong> – Scheduled Workflow</td><td>Radiology / IT Infrastructure</td><td>Verbindet Anmeldung (ADT), Auftragsverwaltung und Modality-Ablauf inkl. DICOM Worklist und MPPS</td></tr>
+    <tr><td><strong>PIX</strong> – Patient Identifier Cross-Referencing</td><td>IT Infrastructure</td><td>Führt unterschiedliche Patienten-IDs verschiedener Systeme/Standorte auf denselben Patienten zusammen</td></tr>
+    <tr><td><strong>PDQ</strong> – Patient Demographics Query</td><td>IT Infrastructure</td><td>Ermöglicht Systemen, Patientenstammdaten bei einem zentralen Patientenindex abzufragen</td></tr>
+    <tr><td><strong>XDS</strong> / <strong>XDS.b</strong> – Cross-Enterprise Document Sharing</td><td>IT Infrastructure</td><td>Standardisierter Austausch klinischer Dokumente (Befunde, Berichte) zwischen Einrichtungen über eine gemeinsame Registry</td></tr>
+    <tr><td><strong>XDS-I</strong> – Cross-Enterprise Document Sharing for Imaging</td><td>Radiology</td><td>Erweitert XDS um den Austausch von Bildstudien und zugehörigen Manifesten zwischen Kliniken</td></tr>
+    <tr><td><strong>ATNA</strong> – Audit Trail and Node Authentication</td><td>IT Infrastructure</td><td>Definiert Knotenauthentifizierung und ein gemeinsames, zentrales Audit-Log für alle beteiligten Systeme</td></tr>
+    <tr><td><strong>PAM</strong> – Patient Administration Management</td><td>IT Infrastructure</td><td>Regelt Aufnahme, Verlegung, Entlassung (ADT) zwischen KIS und angeschlossenen Subsystemen</td></tr>
+    </table>
+
+    <h2 class="section-title" id="swf">④ Scheduled Workflow (SWF) im Detail</h2>
+    <p>Das <strong>SWF-Profil</strong> ist das radiologische Kernprofil und beschreibt exakt den Ablauf, der im DICOM-Artikel dieses Wikis bereits technisch gezeigt wurde – nur jetzt mit den offiziellen IHE-Akteursnamen und Transaktionsnummern:</p>
+
+    <table class="info-table">
+    <tr><th>Akteur</th><th>Typisches System im Klinikum</th><th>Aufgabe</th></tr>
+    <tr><td>ADT Patient Registration</td><td>KIS (Aufnahme)</td><td>Erfasst Patientenstammdaten und Fallbewegung</td></tr>
+    <tr><td>Order Placer</td><td>KIS / Stationsarbeitsplatz</td><td>Erzeugt die Anforderung einer Untersuchung</td></tr>
+    <tr><td>Order Filler</td><td>RIS / Broker</td><td>Plant den Auftrag, vergibt Accession Number, stellt Modality Worklist bereit</td></tr>
+    <tr><td>Acquisition Modality</td><td>CT, MRT, Röntgengerät</td><td>Fragt Worklist ab, nimmt Bilder auf, meldet MPPS</td></tr>
+    <tr><td>Image Manager / Image Archive</td><td>PACS</td><td>Speichert und verwaltet die Bilddaten dauerhaft</td></tr>
+    <tr><td>Image Display</td><td>Befundmonitor / Viewer</td><td>Zeigt Bilder dem Radiologen zur Befundung</td></tr>
+    </table>
+
+    <ol class="flow-steps">
+      <li><strong>ITI-30 (Patient Identity Feed):</strong> Das KIS als ADT-Akteur meldet die Aufnahme des Patienten an alle angeschlossenen Subsysteme.</li>
+      <li><strong>RAD-2 (Order erzeugt):</strong> Der Order Placer sendet die HL7-Auftragsnachricht an den Order Filler (RIS/Broker).</li>
+      <li><strong>RAD-4 (Procedure Scheduled):</strong> Der Order Filler bestätigt den geplanten Ablauf und macht den Eintrag als DICOM Modality Worklist verfügbar.</li>
+      <li><strong>RAD-5 (Query Modality Worklist):</strong> Die Modality fragt die Worklist ab – technisch identisch zum bereits beschriebenen DICOM-C-FIND.</li>
+      <li><strong>RAD-6/RAD-7 (MPPS In Progress/Completed):</strong> Die Modality meldet Beginn und Ende der Untersuchung an den Order Filler zurück.</li>
+      <li><strong>RAD-8 (Images Stored):</strong> Die Bilder werden per DICOM C-STORE an den Image Manager (PACS) übertragen.</li>
+      <li><strong>RAD-9/RAD-10:</strong> Storage Commitment bestätigt die sichere Archivierung.</li>
+    </ol>
+
+    <div class="klinik-beispiel"><strong>Klinikum-Beispiel:</strong> Wenn im DICOM-Artikel dieses Wikis vom „Broker, der HL7 in eine DICOM-Worklist umwandelt" die Rede ist, übernimmt dieser Broker im IHE-Sprachgebrauch gleichzeitig die Rollen <em>Order Filler</em> und stellt die Transaktion <em>RAD-4</em> bereit – SWF beschreibt also formal denselben Ablauf, den Techniker im Alltag schlicht „die Worklist-Kette" nennen.</div>
+
+    <h2 class="section-title" id="pixpdq">⑤ PIX und PDQ – Patientenidentifikation über Häuser hinweg</h2>
+    <p>In einem Klinikverbund mit mehreren Standorten führt jedes Haus häufig eine eigene, lokale Patienten-ID. Damit ein Patient trotzdem eindeutig wiedererkannt wird, gibt es zwei ergänzende Profile:</p>
+
+    <div class="node-grid">
+      <div class="node-box"><strong>PIX – Patient Identifier Cross-Referencing</strong>Ein zentraler PIX-Manager verknüpft die lokalen IDs verschiedener Standorte zu einem gemeinsamen Referenzschlüssel (Transaktion <code class="tag">ITI-8</code>/<code class="tag">ITI-9</code>).</div>
+      <div class="node-box"><strong>PDQ – Patient Demographics Query</strong>Ein System kann beim zentralen Patientenindex per Namen/Geburtsdatum nach existierenden Patientenstammdaten suchen, statt sie neu zu erfassen (Transaktion <code class="tag">ITI-21</code>/<code class="tag">ITI-22</code>).</div>
+    </div>
+
+    <div class="klinik-beispiel"><strong>Klinikum-Beispiel:</strong> Wird Herr Novak vom Klinikum Nord (lokale ID 8823) in das Klinikum Süd desselben Verbunds verlegt, fragt die Aufnahme in Süd per PDQ beim zentralen Patientenindex an. Dieser liefert die bereits erfassten Stammdaten zurück, und der PIX-Manager merkt sich, dass „Nord-ID 8823" und „Süd-ID 55210" derselbe Mensch sind – Voraussetzung dafür, dass später auch Bilder und Dokumente korrekt zugeordnet werden können.</div>
+
+    <h2 class="section-title" id="xds">⑥ XDS und XDS-I – Dokumenten- und Bildaustausch im Verbund</h2>
+    <p>Während SWF den Ablauf <em>innerhalb</em> eines Hauses regelt, beschreibt <strong>XDS</strong> (Cross-Enterprise Document Sharing), wie Dokumente – Arztbriefe, Befunde, Laborberichte – <em>zwischen</em> Einrichtungen sicher auffindbar gemacht werden, ohne dass jedes Haus jedes Dokument doppelt vorhalten muss.</p>
+
+    <table class="info-table">
+    <tr><th>Akteur</th><th>Aufgabe</th></tr>
+    <tr><td>Document Source</td><td>Erstellendes System (z. B. RIS, das einen Befund veröffentlicht)</td></tr>
+    <tr><td>Document Repository</td><td>Speichert das eigentliche Dokument physisch</td></tr>
+    <tr><td>Document Registry</td><td>Führt nur die Metadaten/Verweise – vergleichbar mit einem Suchindex über alle Häuser des Verbunds</td></tr>
+    <tr><td>Document Consumer</td><td>Fragt die Registry ab und holt das Dokument beim zuständigen Repository ab</td></tr>
+    </table>
+
+    <p><strong>XDS-I</strong> erweitert dasselbe Prinzip auf Bildstudien: Statt eines Dokuments wird ein „Manifest" veröffentlicht, das auf die eigentliche DICOM-Studie im PACS des Ursprungshauses verweist. Der Document Consumer im anderen Haus kann darüber die Bilder gezielt nachladen, ohne dass sie vorab kopiert werden müssen.</p>
+
+    <div class="klinik-beispiel"><strong>Klinikum-Beispiel:</strong> Herr Novak wurde in Klinikum Nord bereits mittels CT untersucht. Bei der Aufnahme in Klinikum Süd fragt der behandelnde Arzt über den Document Consumer die zentrale <em>Document Registry</em> des Verbunds ab, findet den Verweis auf die CT-Studie samt Befund aus Nord und lässt sich die Bilder über XDS-I direkt aus dem PACS von Nord anzeigen – eine erneute Untersuchung mit zusätzlicher Strahlenbelastung entfällt.</div>
+
+    <h2 class="section-title" id="sicherheit">⑦ ATNA und Fehleranalyse</h2>
+    <p><strong>ATNA</strong> sorgt dafür, dass sich alle beteiligten Knoten im Verbund gegenseitig authentifizieren (z. B. per zertifikatsbasiertem TLS) und dass jeder Zugriff auf Patientendaten – Anzeige, Abfrage, Übertragung – an ein zentrales, fälschungssicheres Audit-Log gemeldet wird. Das ist besonders im Verbund mehrerer rechtlich getrennter Kliniken relevant, wo Datenschutzanforderungen strikt eingehalten werden müssen.</p>
+
+    <table class="info-table">
+    <tr><th>Symptom</th><th>Typische Ursache</th><th>Lösungsansatz</th></tr>
+    <tr><td>Patient in Süd wird nicht als „bekannt" erkannt</td><td>PIX-Abgleich fehlgeschlagen, abweichende Demografiedaten (z. B. Tippfehler im Namen)</td><td>PDQ-Suche mit weiteren Kriterien wiederholen, Datenqualität in Quellsystem prüfen</td></tr>
+    <tr><td>Dokument in der Registry gefunden, aber nicht abrufbar</td><td>Verbindung zum Document Repository des Ursprungshauses gestört</td><td>Netzwerk-/Zertifikatsstatus zwischen den Standorten prüfen</td></tr>
+    <tr><td>XDS-I-Bilder laden nicht</td><td>PACS des Ursprungshauses nicht erreichbar oder Manifest verweist auf falsche Study Instance UID</td><td>Manifest-Metadaten und PACS-Erreichbarkeit gegenprüfen</td></tr>
+    <tr><td>Zugriff wird verweigert trotz korrekter Anfrage</td><td>ATNA-Zertifikat abgelaufen oder Knoten nicht in der Vertrauensliste</td><td>Zertifikatsstatus und Knotenkonfiguration prüfen</td></tr>
+    </table>
+
+    <div class="warnbox"><strong>Praxishinweis:</strong> Die häufigste Fehlerquelle in gewachsenen Verbundstrukturen ist nicht die Technik, sondern uneinheitliche Stammdatenpflege (z. B. unterschiedliche Schreibweisen von Namen) – dadurch schlägt der automatische PIX-Abgleich fehl und Patienten werden fälschlich als „neu" angelegt.</div>
+
+    <h2 class="section-title" id="praxisbeispiel">⑧ Komplettes Praxisbeispiel: Patient im Klinikverbund Ende-zu-Ende</h2>
+    <p>Zusammenfassend der Weg von Herrn Novak durch den Klinikverbund „Nord/Süd", unter Nutzung mehrerer IHE-Profile gemeinsam:</p>
+
+    <ol class="flow-steps">
+      <li><strong>Tag 1, Klinikum Nord:</strong> Aufnahme im KIS (ADT-Akteur), lokale Patienten-ID 8823 wird per PIX an den zentralen Patientenindex des Verbunds gemeldet.</li>
+      <li><strong>Order Placer → Order Filler:</strong> Die Station fordert „CT Thorax" an; das RIS (Order Filler) plant die Untersuchung und stellt sie als DICOM-Worklist bereit (SWF, RAD-4).</li>
+      <li><strong>Bildaufnahme:</strong> Das CT fragt die Worklist ab (RAD-5), nimmt die Bilder auf, meldet MPPS (RAD-6/RAD-7) und speichert im PACS Nord (RAD-8).</li>
+      <li><strong>Befund und Veröffentlichung:</strong> Der Radiologe in Nord befundet; RIS und PACS veröffentlichen Befund und Bildmanifest als Document Source in der zentralen Document Registry des Verbunds (XDS/XDS-I).</li>
+      <li><strong>Tag 3, Verlegung nach Klinikum Süd:</strong> Die Aufnahme in Süd fragt per PDQ die Stammdaten ab; der zentrale Patientenindex liefert die bereits bekannten Daten inklusive der PIX-Verknüpfung „Nord-ID 8823 = Süd-ID 55210".</li>
+      <li><strong>Zugriff auf Vorbefunde:</strong> Der behandelnde Arzt in Süd fragt als Document Consumer die Registry ab, findet CT-Befund und Bildmanifest aus Nord und lässt sich die Bilder über XDS-I direkt aus dem PACS Nord anzeigen.</li>
+      <li><strong>Protokollierung:</strong> Jeder dieser Zugriffe wird per ATNA im zentralen, verbundweiten Audit-Log dokumentiert.</li>
+    </ol>
+
+    <div class="klinik-beispiel"><strong>Ergebnis für die Praxis:</strong> Ohne IHE-Profile müsste jede der beteiligten Schnittstellen (KIS↔RIS, RIS↔Modality, PACS↔PACS über Standorte hinweg, Patientenabgleich zwischen Häusern) individuell zwischen den beteiligten Herstellern ausgehandelt und getestet werden. IHE definiert diese Abläufe einmal herstellerneutral – SWF, PIX/PDQ, XDS/XDS-I und ATNA greifen dabei ineinander und bilden zusammen den gesamten Weg des Patienten durch einen Klinikverbund ab.</div>
+
+  </div>
+</main>
+
+<footer class="footer">© 2025 MedizinInformatik Wiki – Alle Rechte vorbehalten.</footer>
+</body>
+</html>
