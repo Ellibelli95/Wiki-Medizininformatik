@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  table { width:100%; border-collapse:collapse; margin:1.2em 0 1.8em; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 3px 12px rgba(16,42,67,.05); }
+  th, td { border:1px solid #d9e2ea; padding:10px 12px; text-align:left; vertical-align:top; }
+  thead th { background:#1a5276; color:#fff; border-color:#1a5276; font-weight:700; }
+  tbody tr:nth-child(even) { background:#eaf4f8; }
+  tbody tr:hover { background:#dcedf5; }
+  .toc-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:14px; margin:1.2em 0 2em; }
+  .toc-card { display:flex; flex-direction:column; align-items:flex-start; gap:4px; background:#fff; border:1px solid #d9e2ea; border-radius:10px; padding:14px 14px 16px; text-decoration:none; color:inherit; box-shadow:0 2px 8px rgba(16,42,67,.05); transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+  .toc-card:hover { transform:translateY(-3px); box-shadow:0 8px 18px rgba(16,42,67,.14); border-color:#1a5276; }
+  .toc-card svg { width:44px; height:44px; stroke:#1a5276; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; margin-bottom:4px; }
+  .toc-card svg .fill { fill:#1a5276; stroke:none; }
+  .toc-card .toc-num { font-size:.72em; font-weight:700; letter-spacing:.06em; color:#6a93ac; }
+  .toc-card .toc-title { font-weight:700; color:#17324a; line-height:1.25; }
+  .toc-card .toc-desc { font-size:.85em; color:#5b7080; }
+  .diagram-box { background:#fff; border:1px solid #d9e2ea; border-radius:10px; box-shadow:0 3px 12px rgba(16,42,67,.05); padding:18px; margin:1.2em 0 1.8em; overflow-x:auto; }
+  .diagram-box svg { display:block; margin:0 auto; }
+  .diagram-box .cap { text-align:center; font-size:.85em; color:#5b7080; margin-top:8px; }
+  .quellen-list { font-size:.92em; }
+  .quellen-list li { margin-bottom:6px; }
+  code { background:#eaf4f8; padding:1px 5px; border-radius:4px; font-size:.92em; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../web-engineering/index.html">Web Engineering</a> /
+  JavaScript
+</div>
+
+<div class="hero">
+  <h2>JavaScript</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Clientseitige (und serverseitige) Skriptsprache zur dynamischen Steuerung von Webseiten</td></tr>
+      <tr><td>Kernkonzepte</td><td>Wertetypen, Funktionen, Closures, Prototypen, this-Bindung</td></tr>
+      <tr><td>Interaktivität</td><td>Ereignisbehandlung, DOM-Manipulation, Formularvalidierung</td></tr>
+      <tr><td>Asynchronität</td><td>Callbacks, Promises und async/await für nicht-blockierende Abläufe</td></tr>
+      <tr><td>Bezug Medizin-IT</td><td>Interaktive PDMS-/KIS-Oberflächen, clientseitige Validierung klinischer Formulare</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite orientiert sich inhaltlich am Lehrmodul „Web-Engineering“ des Fernstudiengangs
+    Medizinische Informatik. Quellenangaben finden sich am Ende der Seite.
+  </div>
+</div>
+
+<h3>Inhaltsverzeichnis</h3>
+<p>Klicken Sie auf eine Karte, um direkt zum jeweiligen Abschnitt zu springen.</p>
+<div class="toc-grid">
+  <a class="toc-card" href="#sec1"><svg viewBox="0 0 48 48"><rect x="8" y="8" width="32" height="32" rx="4"/><path d="M18 20 L14 24 L18 28 M30 20 L34 24 L30 28"/></svg><span class="toc-num">01</span><span class="toc-title">Was ist JavaScript?</span><span class="toc-desc">Definition und Zweck</span></a>
+  <a class="toc-card" href="#sec2"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="14" height="12" rx="2"/><path d="M20 24 H28"/><rect x="28" y="18" width="14" height="12" rx="2"/></svg><span class="toc-num">02</span><span class="toc-title">Einbettung in HTML</span><span class="toc-desc">inline, extern, async/defer</span></a>
+  <a class="toc-card" href="#sec3"><svg viewBox="0 0 48 48"><rect x="10" y="8" width="28" height="10" rx="2"/><rect x="10" y="22" width="28" height="10" rx="2"/><rect x="10" y="34" width="28" height="6" rx="2"/></svg><span class="toc-num">03</span><span class="toc-title">Wertetypen &amp; Variablen</span><span class="toc-desc">var, let, const</span></a>
+  <a class="toc-card" href="#sec4"><svg viewBox="0 0 48 48"><path d="M24 8 a12 12 0 0 1 12 12 v6 l4 6 H8 l4-6 v-6 a12 12 0 0 1 12-12 Z"/><path d="M20 36 a4 4 0 0 0 8 0"/></svg><span class="toc-num">04</span><span class="toc-title">Gleichheit ==/===</span><span class="toc-desc">Typumwandlung vs. strikter Vergleich</span></a>
+  <a class="toc-card" href="#sec5"><svg viewBox="0 0 48 48"><rect x="6" y="10" width="36" height="28" rx="2"/><line x1="6" y1="18" x2="42" y2="18"/><line x1="6" y1="26" x2="42" y2="26"/><line x1="6" y1="32" x2="42" y2="32"/></svg><span class="toc-num">05</span><span class="toc-title">Arrays &amp; Objekte</span><span class="toc-desc">Prototypen, Objekte ohne Klassen</span></a>
+  <a class="toc-card" href="#sec6"><svg viewBox="0 0 48 48"><circle cx="14" cy="14" r="6"/><circle cx="34" cy="34" r="6"/><path d="M20 18 L28 30"/></svg><span class="toc-num">06</span><span class="toc-title">Funktionen &amp; Closures</span><span class="toc-desc">Deklaration, Ausdruck, innere Funktionen</span></a>
+  <a class="toc-card" href="#sec7"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><text x="24" y="29" font-size="14" text-anchor="middle" fill="#1a5276" stroke="none">this</text></svg><span class="toc-num">07</span><span class="toc-title">this-Bindung</span><span class="toc-desc">Kontextabhängigkeit</span></a>
+  <a class="toc-card" href="#sec8"><svg viewBox="0 0 48 48"><path d="M10 24 H24 M24 24 L18 18 M24 24 L18 30"/><circle cx="34" cy="24" r="8"/></svg><span class="toc-num">08</span><span class="toc-title">Ereignisbehandlung</span><span class="toc-desc">Event Handling im DOM</span></a>
+  <a class="toc-card" href="#sec9"><svg viewBox="0 0 48 48"><rect x="8" y="10" width="32" height="8" rx="2"/><rect x="8" y="22" width="32" height="8" rx="2"/><path d="M14 34 L20 40 L34 26"/></svg><span class="toc-num">09</span><span class="toc-title">Formularvalidierung</span><span class="toc-desc">Constraint Validation API</span></a>
+  <a class="toc-card" href="#sec10"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M24 14 V24 L31 29"/></svg><span class="toc-num">10</span><span class="toc-title">Asynchrone Programmierung</span><span class="toc-desc">Callbacks, Promises, async/await</span></a>
+  <a class="toc-card" href="#sec11"><svg viewBox="0 0 48 48"><circle cx="24" cy="12" r="4"/><circle cx="10" cy="34" r="4"/><circle cx="38" cy="34" r="4"/><line x1="24" y1="16" x2="12" y2="31"/><line x1="24" y1="16" x2="36" y2="31"/></svg><span class="toc-num">11</span><span class="toc-title">DOM-Manipulation</span><span class="toc-desc">Elemente lesen und verändern</span></a>
+  <a class="toc-card" href="#sec12"><svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="20" rx="2"/><path d="M16 36 L24 30 L32 36"/><circle cx="24" cy="18" r="4"/><path d="M18 25 a6 8 0 0 1 12 0"/></svg><span class="toc-num">12</span><span class="toc-title">JavaScript in der Medizin-IT</span><span class="toc-desc">Interaktive PDMS-Oberflächen</span></a>
+  <a class="toc-card" href="#sec13"><svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/></svg><span class="toc-num">13</span><span class="toc-title">Begriffe &amp; Quellen</span><span class="toc-desc">Glossar und Literatur</span></a>
+</div>
+
+<h3 id="sec1">1. Was ist JavaScript?</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Definition</td><td>JavaScript ist eine dynamisch typisierte, interpretierte Skriptsprache, die ursprünglich zur clientseitigen Steuerung von Webseiten entwickelt wurde und heute auch serverseitig (z. B. mit Node.js) eingesetzt wird.</td></tr>
+<tr><td>Standardisierung</td><td>Der Sprachstandard wird als ECMAScript (ES) durch die ECMA International gepflegt; aktuelle Engines unterstützen moderne Versionen wie ES6 (ES2015) und neuer.</td></tr>
+<tr><td>Ausführung im Browser</td><td>Ein in den Browser integrierter Interpreter (Engine) führt JavaScript-Code aus und ermöglicht den Zugriff auf HTML- und CSS-Inhalte über das DOM (siehe Kapitel „HTML“, Abschnitt 9).</td></tr>
+</tbody></table>
+
+<h3 id="sec2">2. Einbettung in HTML</h3>
+<table><thead><tr><th>Methode</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Inline</td><td>Direkt über Attribute wie <code>onclick</code> am Element; heute aus Wartbarkeits- und Sicherheitsgründen nicht mehr empfohlen.</td></tr>
+<tr><td>Intern</td><td>Innerhalb eines <code>&lt;script&gt;</code>-Blocks im HTML-Dokument.</td></tr>
+<tr><td>Extern</td><td>Über <code>&lt;script src="datei.js"&gt;</code> eingebundene Datei; ermöglicht Wiederverwendung und Caching.</td></tr>
+<tr><td><code>async</code> / <code>defer</code></td><td>Attribute zur Steuerung des Ladeverhaltens externer Skripte: <code>async</code> lädt parallel und führt sofort aus, <code>defer</code> lädt parallel, führt aber erst nach vollständigem Parsen des HTML aus.</td></tr>
+</tbody></table>
+
+<h3 id="sec3">3. Wertetypen und Variablen</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Primitive Wertetypen</td><td><code>string</code>, <code>number</code>, <code>boolean</code>, <code>undefined</code>, <code>null</code>, <code>symbol</code> und <code>bigint</code>; werden bei Zuweisung kopiert (Value-Semantik).</td></tr>
+<tr><td>Hüllobjekte</td><td>Zu primitiven Typen existieren korrespondierende Objekttypen (z. B. <code>String</code>, <code>Number</code>), die zusätzliche Methoden bereitstellen.</td></tr>
+<tr><td><code>var</code></td><td>Funktionsgültiger Variablenbezeichner (älterer Standard); anfällig für unerwartetes Verhalten durch Hoisting.</td></tr>
+<tr><td><code>let</code></td><td>Blockgültige, veränderbare Variable; heutiger Standardfall für Variablen.</td></tr>
+<tr><td><code>const</code></td><td>Blockgültige Konstante; die Referenz kann nicht neu zugewiesen werden, der referenzierte Objektinhalt jedoch schon.</td></tr>
+</tbody></table>
+
+<h3 id="sec4">4. Gleichheit: == versus ===</h3>
+<table><thead><tr><th>Operator</th><th>Verhalten</th></tr></thead><tbody>
+<tr><td><code>==</code></td><td>Vergleicht nach impliziter Typumwandlung; kann zu unerwarteten Ergebnissen führen (z. B. <code>0 == "0"</code> ergibt <code>true</code>).</td></tr>
+<tr><td><code>===</code></td><td>Strikter Vergleich ohne Typumwandlung; sowohl Wert als auch Typ müssen übereinstimmen.</td></tr>
+<tr><td>Empfehlung</td><td>In produktivem Code sollte konsequent <code>===</code> verwendet werden, um Fehler durch implizite Typumwandlung zu vermeiden.</td></tr>
+</tbody></table>
+
+<h3 id="sec5">5. Arrays und Objekte</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Arrays</td><td>Geordnete, indexierte Listen von Werten beliebigen Typs mit zahlreichen eingebauten Methoden (<code>map</code>, <code>filter</code>, <code>reduce</code> u. a.).</td></tr>
+<tr><td>Objekte ohne Klassen</td><td>JavaScript-Objekte lassen sich als einfache Schlüssel-Wert-Sammlungen erzeugen, ohne dass zuvor eine Klasse definiert werden muss.</td></tr>
+<tr><td>Prototypen</td><td>JavaScript nutzt prototypische Vererbung: Jedes Objekt kann über eine interne Prototyp-Kette auf Eigenschaften und Methoden eines anderen Objekts zugreifen.</td></tr>
+<tr><td>Klassen-Syntax (ES6)</td><td>Die <code>class</code>-Syntax ist syntaktischer Zucker über dem prototypischen Vererbungsmodell und erleichtert die Lesbarkeit objektorientierten Codes.</td></tr>
+</tbody></table>
+
+<h3 id="sec6">6. Funktionen und Closures</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Funktionsdeklaration</td><td><code>function name() { }</code>; wird vor der Ausführung vollständig eingelesen (Hoisting) und kann daher auch vor ihrer textuellen Position aufgerufen werden.</td></tr>
+<tr><td>Funktionsausdruck</td><td>Zuweisung einer (auch anonymen) Funktion an eine Variable, z. B. <code>const f = function() { }</code> oder als Arrow Function <code>const f = () =&gt; { }</code>.</td></tr>
+<tr><td>Innere Funktionen / Closures</td><td>Eine innerhalb einer Funktion definierte Funktion behält Zugriff auf die Variablen ihrer äußeren Funktion, auch nachdem diese beendet wurde – Grundlage für Kapselung und private Zustände.</td></tr>
+</tbody></table>
+
+<h3 id="sec7">7. this-Bindung</h3>
+<table><thead><tr><th>Aufrufkontext</th><th>Wert von this</th></tr></thead><tbody>
+<tr><td>Methodenaufruf (<code>obj.methode()</code>)</td><td>Verweist auf das Objekt, über das die Methode aufgerufen wurde.</td></tr>
+<tr><td>Einfacher Funktionsaufruf</td><td>Im nicht-strikten Modus das globale Objekt, im Strict Mode <code>undefined</code>.</td></tr>
+<tr><td>Arrow Functions</td><td>Übernehmen den <code>this</code>-Wert ihres umgebenden lexikalischen Kontexts, statt einen eigenen zu definieren – vermeidet einen häufigen Fehlerquell bei verschachtelten Callbacks.</td></tr>
+<tr><td>Explizite Bindung</td><td>Über <code>call</code>, <code>apply</code> oder <code>bind</code> kann der <code>this</code>-Kontext einer Funktion gezielt festgelegt werden.</td></tr>
+</tbody></table>
+
+<h3 id="sec8">8. Ereignisbehandlung</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Event Listener</td><td><code>element.addEventListener('click', handler)</code> registriert eine Funktion, die beim Eintreten eines Ereignisses ausgeführt wird.</td></tr>
+<tr><td>Event-Objekt</td><td>Enthält Informationen zum ausgelösten Ereignis, z. B. das auslösende Element (<code>target</code>) oder gedrückte Tasten.</td></tr>
+<tr><td>Event Bubbling</td><td>Ereignisse propagieren vom auslösenden Element aus durch die Baumstruktur nach oben, sofern nicht explizit gestoppt (<code>stopPropagation</code>).</td></tr>
+<tr><td>Event Delegation</td><td>Ausnutzung des Bubbling-Verhaltens, um einen einzigen Listener auf einem übergeordneten Element für viele Kindelemente zu verwenden – reduziert Speicherbedarf bei dynamisch erzeugten Listen.</td></tr>
+</tbody></table>
+
+<h3 id="sec9">9. Formularvalidierung mit der Constraint Validation API</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Grundprinzip</td><td>Ergänzt die deklarativen HTML5-Validierungsattribute (siehe Kapitel „HTML“, Abschnitt 5) um eine programmatische JavaScript-Schnittstelle.</td></tr>
+<tr><td>Wichtige Methoden</td><td><code>checkValidity()</code> prüft, ob ein Feld gültig ist; <code>setCustomValidity()</code> setzt eine eigene Fehlermeldung.</td></tr>
+<tr><td>Vorteil</td><td>Kombiniert native Browservalidierung mit individuellen, fachlich passenden Fehlermeldungen, z. B. bei klinischen Eingabeformularen.</td></tr>
+</tbody></table>
+
+<h3 id="sec10">10. Asynchrone Programmierung</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Callback</td><td>Eine Funktion, die als Argument übergeben und nach Abschluss einer asynchronen Operation aufgerufen wird; bei tiefer Verschachtelung entsteht die schwer lesbare „Callback-Hölle“.</td></tr>
+<tr><td>Promise</td><td>Objekt, das den zukünftigen Abschluss (erfolgreich oder fehlerhaft) einer asynchronen Operation repräsentiert und mit <code>.then()</code>/<code>.catch()</code> verkettet werden kann.</td></tr>
+<tr><td>async/await</td><td>Syntaktischer Zucker über Promises, der asynchronen Code in einer sequenziell lesbaren Form schreiben lässt.</td></tr>
+<tr><td>Bedeutung für Web-APIs</td><td>Grundlage für AJAX- und REST-Aufrufe (siehe Kapitel „APIs“ und „REST“), die Netzwerkanfragen nicht-blockierend verarbeiten.</td></tr>
+</tbody></table>
+
+<h3 id="sec11">11. DOM-Manipulation</h3>
+<table><thead><tr><th>Methode</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td><code>document.querySelector()</code></td><td>Selektiert das erste zu einem CSS-Selektor passende Element.</td></tr>
+<tr><td><code>element.textContent</code> / <code>innerHTML</code></td><td>Liest bzw. setzt den Text- oder HTML-Inhalt eines Elements.</td></tr>
+<tr><td><code>element.classList</code></td><td>Ermöglicht das Hinzufügen, Entfernen oder Umschalten von CSS-Klassen zur Laufzeit.</td></tr>
+<tr><td><code>createElement</code> / <code>appendChild</code></td><td>Erzeugen und Einfügen neuer DOM-Elemente, z. B. zur dynamischen Darstellung von Listen oder Tabellenzeilen.</td></tr>
+</tbody></table>
+
+<h3 id="sec12">12. JavaScript in der Medizin-IT</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Interaktive Oberflächen</td><td>JavaScript steuert dynamische PDMS-/KIS-Web-Clients, z. B. Live-Aktualisierung von Vitaldaten ohne vollständigen Seitenneuaufbau.</td></tr>
+<tr><td>Clientseitige Validierung</td><td>Sofortige Rückmeldung bei fehlerhaften Eingaben in klinischen Dokumentationsformularen, ergänzt durch serverseitige Prüfung.</td></tr>
+<tr><td>Kommunikation mit Backend-Systemen</td><td>Asynchrone Aufrufe (siehe Kapitel 10) an REST-/FHIR-Schnittstellen zum Laden und Speichern von Patientendaten, ohne die Seite neu zu laden.</td></tr>
+</tbody></table>
+
+<h3 id="sec13">13. Begriffe und Quellen</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>Closure</td><td>Funktion, die auf Variablen ihres umgebenden Gültigkeitsbereichs zugreifen kann, auch nach dessen Beendigung.</td></tr>
+<tr><td>Promise</td><td>Objekt zur Repräsentation eines zukünftigen asynchronen Ergebnisses.</td></tr>
+<tr><td>Event Bubbling</td><td>Aufwärtspropagierung eines Ereignisses durch den DOM-Baum.</td></tr>
+<tr><td>Hoisting</td><td>Verhalten, bei dem Deklarationen vor der Ausführung an den Anfang ihres Gültigkeitsbereichs „gehoben“ werden.</td></tr>
+</tbody></table>
+
+<div class="note">
+<strong>Quellen:</strong>
+<ul class="quellen-list">
+<li>Pavlista, T.: <em>Web-Engineering</em> – Modul 12.1 Projektarbeit, Fernstudium Medizinische Informatik, Berliner Hochschule für Technik (BHT), Fernstudieninstitut, 5. Auflage, 09/2021 (interne Studienunterlage).</li>
+<li>Studiengang: <a href="https://www.bht-berlin.de/medi" target="_blank" rel="noopener">Fernstudium Medizinische Informatik – Berliner Hochschule für Technik (BHT)</a></li>
+<li>Wikipedia: <a href="https://de.wikipedia.org/wiki/JavaScript" target="_blank" rel="noopener">JavaScript</a></li>
+</ul>
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

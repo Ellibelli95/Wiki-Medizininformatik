@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  table { width:100%; border-collapse:collapse; margin:1.2em 0 1.8em; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 3px 12px rgba(16,42,67,.05); }
+  th, td { border:1px solid #d9e2ea; padding:10px 12px; text-align:left; vertical-align:top; }
+  thead th { background:#1a5276; color:#fff; border-color:#1a5276; font-weight:700; }
+  tbody tr:nth-child(even) { background:#eaf4f8; }
+  tbody tr:hover { background:#dcedf5; }
+  .toc-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:14px; margin:1.2em 0 2em; }
+  .toc-card { display:flex; flex-direction:column; align-items:flex-start; gap:4px; background:#fff; border:1px solid #d9e2ea; border-radius:10px; padding:14px 14px 16px; text-decoration:none; color:inherit; box-shadow:0 2px 8px rgba(16,42,67,.05); transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+  .toc-card:hover { transform:translateY(-3px); box-shadow:0 8px 18px rgba(16,42,67,.14); border-color:#1a5276; }
+  .toc-card svg { width:44px; height:44px; stroke:#1a5276; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; margin-bottom:4px; }
+  .toc-card svg .fill { fill:#1a5276; stroke:none; }
+  .toc-card .toc-num { font-size:.72em; font-weight:700; letter-spacing:.06em; color:#6a93ac; }
+  .toc-card .toc-title { font-weight:700; color:#17324a; line-height:1.25; }
+  .toc-card .toc-desc { font-size:.85em; color:#5b7080; }
+  .diagram-box { background:#fff; border:1px solid #d9e2ea; border-radius:10px; box-shadow:0 3px 12px rgba(16,42,67,.05); padding:18px; margin:1.2em 0 1.8em; overflow-x:auto; }
+  .diagram-box svg { display:block; margin:0 auto; }
+  .diagram-box .cap { text-align:center; font-size:.85em; color:#5b7080; margin-top:8px; }
+  .quellen-list { font-size:.92em; }
+  .quellen-list li { margin-bottom:6px; }
+  code { background:#eaf4f8; padding:1px 5px; border-radius:4px; font-size:.92em; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../web-engineering/index.html">Web Engineering</a> /
+  CSS
+</div>
+
+<div class="hero">
+  <h2>CSS</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Cascading Style Sheets – Sprache zur visuellen Gestaltung von HTML-Dokumenten</td></tr>
+      <tr><td>Kernkonzepte</td><td>Selektoren, Kaskade/Spezifität, Box-Modell, Positionierung</td></tr>
+      <tr><td>Moderne Layouts</td><td>Responsive Webdesign mit Media Queries, Flexbox und Grid</td></tr>
+      <tr><td>Werkzeuge</td><td>CSS-Präprozessoren (SASS/LESS) und CSS-Frameworks</td></tr>
+      <tr><td>Bezug Medizin-IT</td><td>Responsive Gestaltung klinischer Dashboards und Web-Clients für unterschiedliche Endgeräte</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite orientiert sich inhaltlich am Lehrmodul „Web-Engineering“ des Fernstudiengangs
+    Medizinische Informatik. Quellenangaben finden sich am Ende der Seite.
+  </div>
+</div>
+
+<h3>Inhaltsverzeichnis</h3>
+<p>Klicken Sie auf eine Karte, um direkt zum jeweiligen Abschnitt zu springen.</p>
+<div class="toc-grid">
+  <a class="toc-card" href="#sec1"><svg viewBox="0 0 48 48"><rect x="8" y="8" width="32" height="32" rx="4"/><path d="M16 24 a8 8 0 0 1 16 0 a8 8 0 0 1 -16 0"/></svg><span class="toc-num">01</span><span class="toc-title">Was ist CSS?</span><span class="toc-desc">Definition und Zweck</span></a>
+  <a class="toc-card" href="#sec2"><svg viewBox="0 0 48 48"><line x1="6" y1="24" x2="42" y2="24"/><circle cx="10" cy="24" r="3" class="fill"/><circle cx="20" cy="24" r="3" class="fill"/><circle cx="30" cy="24" r="3" class="fill"/><circle cx="40" cy="24" r="3" class="fill"/></svg><span class="toc-num">02</span><span class="toc-title">Historische Entwicklung</span><span class="toc-desc">Von CSS1 zu CSS3</span></a>
+  <a class="toc-card" href="#sec3"><svg viewBox="0 0 48 48"><rect x="8" y="14" width="32" height="20" rx="2"/><line x1="8" y1="22" x2="40" y2="22"/></svg><span class="toc-num">03</span><span class="toc-title">CSS-Syntax &amp; Selektoren</span><span class="toc-desc">Regeln, Eigenschaften, Werte</span></a>
+  <a class="toc-card" href="#sec4"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="14" height="12" rx="2"/><path d="M20 24 H28"/><rect x="28" y="18" width="14" height="12" rx="2"/></svg><span class="toc-num">04</span><span class="toc-title">CSS einbinden</span><span class="toc-desc">Inline, intern, extern</span></a>
+  <a class="toc-card" href="#sec5"><svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="10" rx="2"/><rect x="10" y="22" width="28" height="10" rx="2"/><rect x="10" y="34" width="28" height="6" rx="2"/></svg><span class="toc-num">05</span><span class="toc-title">Kaskade &amp; Spezifität</span><span class="toc-desc">Wer gewinnt bei Konflikten?</span></a>
+  <a class="toc-card" href="#sec6"><svg viewBox="0 0 48 48"><rect x="8" y="8" width="32" height="32" rx="2"/><rect x="16" y="16" width="16" height="16" rx="1"/></svg><span class="toc-num">06</span><span class="toc-title">Das Box-Modell</span><span class="toc-desc">Content, Padding, Border, Margin</span></a>
+  <a class="toc-card" href="#sec7"><svg viewBox="0 0 48 48"><rect x="8" y="10" width="14" height="14" rx="2"/><rect x="26" y="24" width="14" height="14" rx="2"/></svg><span class="toc-num">07</span><span class="toc-title">Positionierung &amp; Floating</span><span class="toc-desc">static, relative, absolute, fixed</span></a>
+  <a class="toc-card" href="#sec8"><svg viewBox="0 0 48 48"><rect x="6" y="14" width="14" height="20" rx="2"/><rect x="24" y="10" width="18" height="28" rx="2"/></svg><span class="toc-num">08</span><span class="toc-title">Responsive Webdesign</span><span class="toc-desc">Media Queries</span></a>
+  <a class="toc-card" href="#sec9"><svg viewBox="0 0 48 48"><rect x="6" y="10" width="10" height="10" rx="2"/><rect x="19" y="10" width="10" height="10" rx="2"/><rect x="32" y="10" width="10" height="10" rx="2"/><rect x="6" y="24" width="10" height="10" rx="2"/><rect x="19" y="24" width="10" height="10" rx="2"/><rect x="32" y="24" width="10" height="10" rx="2"/></svg><span class="toc-num">09</span><span class="toc-title">Flexbox &amp; Grid</span><span class="toc-desc">Moderne Layout-Techniken</span></a>
+  <a class="toc-card" href="#sec10"><svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/></svg><span class="toc-num">10</span><span class="toc-title">Präprozessoren &amp; Frameworks</span><span class="toc-desc">SASS, LESS, Bootstrap</span></a>
+  <a class="toc-card" href="#sec11"><svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="20" rx="2"/><path d="M16 36 L24 30 L32 36"/><circle cx="24" cy="18" r="4"/><path d="M18 25 a6 8 0 0 1 12 0"/></svg><span class="toc-num">11</span><span class="toc-title">CSS in der Medizin-IT</span><span class="toc-desc">Responsive Klinik-Dashboards</span></a>
+  <a class="toc-card" href="#sec12"><svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/></svg><span class="toc-num">12</span><span class="toc-title">Begriffe &amp; Quellen</span><span class="toc-desc">Glossar und Literatur</span></a>
+</div>
+
+<h3 id="sec1">1. Was ist CSS?</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Definition</td><td>CSS (Cascading Style Sheets) ist eine Stylesheet-Sprache zur Beschreibung der visuellen Darstellung von HTML-Dokumenten.</td></tr>
+<tr><td>Zweck</td><td>Trennung von Inhalt (HTML) und Gestaltung (CSS), wodurch Layout-Änderungen zentral und ohne Eingriff in die Dokumentstruktur möglich werden.</td></tr>
+<tr><td>Standardisierung</td><td>CSS wird vom W3C als Sammlung modularer Spezifikationen (CSS3-Module) weiterentwickelt, z. B. für Selektoren, Flexbox oder Grid.</td></tr>
+</tbody></table>
+
+<h3 id="sec2">2. Historische Entwicklung</h3>
+<table><thead><tr><th>Version</th><th>Merkmal</th></tr></thead><tbody>
+<tr><td>CSS1 (1996)</td><td>Grundlegende Eigenschaften für Schrift, Farbe und einfaches Boxlayout.</td></tr>
+<tr><td>CSS2/2.1 (1998/2011)</td><td>Erweiterte Positionierung, Medientypen und verbesserte Kaskadenregeln.</td></tr>
+<tr><td>CSS3 (modular, seit ca. 2011)</td><td>Aufteilung in unabhängige Module (u. a. Flexbox, Grid, Animations, Media Queries), wodurch einzelne Bereiche eigenständig weiterentwickelt werden können.</td></tr>
+</tbody></table>
+
+<h3 id="sec3">3. CSS-Syntax und Selektoren</h3>
+<table><thead><tr><th>Selektortyp</th><th>Beispiel</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>Elementselektor</td><td><code>p { }</code></td><td>Wählt alle Elemente eines bestimmten Typs aus.</td></tr>
+<tr><td>Klassenselektor</td><td><code>.hinweis { }</code></td><td>Wählt alle Elemente mit der Klasse „hinweis“ aus.</td></tr>
+<tr><td>ID-Selektor</td><td><code>#kopf { }</code></td><td>Wählt genau ein Element mit der ID „kopf“ aus.</td></tr>
+<tr><td>Kombinatoren</td><td><code>nav a</code>, <code>ul &gt; li</code></td><td>Wählen Elemente anhand ihrer Position im Dokumentbaum aus (Nachfahre, direktes Kind).</td></tr>
+<tr><td>Pseudo-Klassen</td><td><code>:hover</code>, <code>:focus</code></td><td>Wählen Elemente abhängig von einem Zustand aus.</td></tr>
+</tbody></table>
+
+<h3 id="sec4">4. CSS in HTML einbinden</h3>
+<table><thead><tr><th>Methode</th><th>Beschreibung</th><th>Empfehlung</th></tr></thead><tbody>
+<tr><td>Inline</td><td>Über das <code>style</code>-Attribut direkt am Element</td><td>Nur für punktuelle Ausnahmen; erschwert Wartung und Kaskade</td></tr>
+<tr><td>Intern</td><td>Innerhalb eines <code>&lt;style&gt;</code>-Blocks im <code>&lt;head&gt;</code></td><td>Für einzelne, in sich geschlossene Seiten geeignet</td></tr>
+<tr><td>Extern</td><td>Über <code>&lt;link rel="stylesheet"&gt;</code> eingebundene Datei (siehe Kapitel „HTML“, Abschnitt 6)</td><td>Standardfall für produktive Projekte; ermöglicht Caching und Wiederverwendung</td></tr>
+</tbody></table>
+
+<h3 id="sec5">5. Kaskade und Spezifität</h3>
+<table><thead><tr><th>Faktor</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Kaskade</td><td>Bei widersprüchlichen Regeln entscheiden Quelle (Browser-, Autoren-, Nutzer-Stylesheet), Spezifität und Reihenfolge im Dokument über die angewendete Regel.</td></tr>
+<tr><td>Spezifität</td><td>ID-Selektoren wiegen schwerer als Klassenselektoren, diese wiederum schwerer als reine Elementselektoren.</td></tr>
+<tr><td><code>!important</code></td><td>Überschreibt die normale Spezifitätsberechnung; sollte sparsam eingesetzt werden, da es die Wartbarkeit erschwert.</td></tr>
+<tr><td>Vererbung</td><td>Bestimmte Eigenschaften (z. B. <code>color</code>, <code>font-family</code>) werden automatisch an Kindelemente weitergegeben, sofern nicht überschrieben.</td></tr>
+</tbody></table>
+
+<h3 id="sec6">6. Das Box-Modell</h3>
+<div class="diagram-box">
+<svg viewBox="0 0 400 260" width="100%" style="max-width:360px">
+  <g stroke="#1a5276" stroke-width="2" fill="none">
+    <rect x="10" y="10" width="380" height="240"/>
+    <rect x="40" y="40" width="320" height="180" fill="#eaf4f8"/>
+    <rect x="70" y="70" width="260" height="120"/>
+    <rect x="100" y="100" width="200" height="60" fill="#fff"/>
+  </g>
+  <text x="200" y="30" font-size="10" text-anchor="middle" fill="#17324a">Margin</text>
+  <text x="200" y="58" font-size="10" text-anchor="middle" fill="#17324a">Border</text>
+  <text x="200" y="88" font-size="10" text-anchor="middle" fill="#17324a">Padding</text>
+  <text x="200" y="134" font-size="11" text-anchor="middle" fill="#17324a">Content</text>
+</svg>
+<div class="cap">Das CSS-Box-Modell: Jedes Element besteht aus Inhalt, Innenabstand (Padding), Rahmen (Border) und Außenabstand (Margin).</div>
+</div>
+<table><thead><tr><th>Bestandteil</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Content</td><td>Der eigentliche Inhalt des Elements (Text, Bild, verschachtelte Elemente).</td></tr>
+<tr><td>Padding</td><td>Innenabstand zwischen Inhalt und Rahmen.</td></tr>
+<tr><td>Border</td><td>Sichtbarer oder unsichtbarer Rahmen um Inhalt und Padding.</td></tr>
+<tr><td>Margin</td><td>Außenabstand zu benachbarten Elementen.</td></tr>
+<tr><td><code>box-sizing</code></td><td>Bestimmt, ob Breiten-/Höhenangaben nur den Content (<code>content-box</code>) oder zusätzlich Padding und Border (<code>border-box</code>) einschließen.</td></tr>
+</tbody></table>
+
+<h3 id="sec7">7. Positionierung und Floating</h3>
+<table><thead><tr><th>Wert</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td><code>static</code></td><td>Standardverhalten; das Element folgt dem normalen Dokumentfluss.</td></tr>
+<tr><td><code>relative</code></td><td>Verschiebung relativ zur eigentlichen Position, ohne den Fluss der übrigen Elemente zu beeinflussen.</td></tr>
+<tr><td><code>absolute</code></td><td>Positionierung relativ zum nächsten positionierten Vorfahren; das Element wird aus dem normalen Fluss entfernt.</td></tr>
+<tr><td><code>fixed</code></td><td>Positionierung relativ zum Browser-Viewport; bleibt beim Scrollen an derselben Bildschirmposition.</td></tr>
+<tr><td><code>float</code></td><td>Historische Technik zur Umfließung von Elementen (z. B. Bildern), heute größtenteils durch Flexbox/Grid abgelöst (siehe Kapitel 9).</td></tr>
+</tbody></table>
+
+<h3 id="sec8">8. Responsive Webdesign mit Media Queries</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Media Query</td><td>CSS-Regel, die abhängig von Eigenschaften des Ausgabegeräts (z. B. Viewport-Breite) angewendet wird, etwa <code>@media (max-width: 768px) { }</code>.</td></tr>
+<tr><td>Mobile First</td><td>Entwurfsprinzip, bei dem zunächst für kleine Bildschirme gestaltet und die Darstellung für größere Viewports schrittweise erweitert wird.</td></tr>
+<tr><td>Viewport-Meta-Tag</td><td><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code> sorgt dafür, dass mobile Browser die Seite nicht künstlich verkleinern.</td></tr>
+<tr><td>Bedeutung im Klinikumfeld</td><td>Klinische Web-Clients werden häufig sowohl auf stationären Arbeitsplätzen als auch auf mobilen Visitenwagen/Tablets genutzt – responsive Gestaltung ist daher Standardanforderung.</td></tr>
+</tbody></table>
+
+<h3 id="sec9">9. Flexbox und Grid</h3>
+<table><thead><tr><th>Technik</th><th>Einsatzbereich</th><th>Kernkonzept</th></tr></thead><tbody>
+<tr><td>Flexbox</td><td>Eindimensionale Anordnung (Zeile oder Spalte)</td><td><code>display:flex</code> mit Eigenschaften wie <code>justify-content</code> und <code>align-items</code> zur flexiblen Verteilung von Platz</td></tr>
+<tr><td>CSS Grid</td><td>Zweidimensionale Layouts (Zeilen und Spalten gleichzeitig)</td><td><code>display:grid</code> mit <code>grid-template-columns</code>/<code>-rows</code> zur präzisen Rasteranordnung</td></tr>
+<tr><td>Verhältnis zu älteren Techniken</td><td>—</td><td>Beide Techniken lösen die früher übliche, fehleranfällige Umsetzung komplexer Layouts über <code>float</code> ab.</td></tr>
+</tbody></table>
+
+<h3 id="sec10">10. Präprozessoren und Frameworks</h3>
+<table><thead><tr><th>Werkzeug</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>SASS/SCSS</td><td>CSS-Präprozessor mit Variablen, Verschachtelung, Mixins und Funktionen; wird zu reinem CSS kompiliert.</td></tr>
+<tr><td>LESS</td><td>Ähnlicher Präprozessor mit vergleichbarem Funktionsumfang, JavaScript-basiert kompilierbar.</td></tr>
+<tr><td>CSS-Frameworks (z. B. Bootstrap)</td><td>Fertige Klassenbibliotheken für Raster, Komponenten und responsive Layouts, die die Entwicklungszeit deutlich verkürzen können.</td></tr>
+</tbody></table>
+
+<h3 id="sec11">11. CSS in der Medizin-IT</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Responsive Dashboards</td><td>Überwachungs- und Verlaufsdaten aus PDMS/KIS werden über responsive Layouts auf unterschiedlichsten Endgeräten lesbar dargestellt.</td></tr>
+<tr><td>Konsistentes Erscheinungsbild</td><td>Zentral gepflegte Stylesheets sorgen für ein einheitliches, wiedererkennbares Erscheinungsbild über verschiedene Fachanwendungen hinweg.</td></tr>
+<tr><td>Zugänglichkeit</td><td>Ausreichende Farbkontraste und skalierbare Schriftgrößen unterstützen die Lesbarkeit unter klinischen Lichtverhältnissen.</td></tr>
+</tbody></table>
+
+<h3 id="sec12">12. Begriffe und Quellen</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>Selektor</td><td>Ausdruck, der festlegt, auf welche Elemente eine CSS-Regel angewendet wird.</td></tr>
+<tr><td>Spezifität</td><td>Gewichtung, nach der bei widersprüchlichen Regeln entschieden wird, welche gilt.</td></tr>
+<tr><td>Box-Modell</td><td>Grundlegendes Layoutkonzept aus Content, Padding, Border und Margin.</td></tr>
+<tr><td>Media Query</td><td>Bedingte CSS-Regel abhängig von Geräteeigenschaften.</td></tr>
+</tbody></table>
+
+<div class="note">
+<strong>Quellen:</strong>
+<ul class="quellen-list">
+<li>Pavlista, T.: <em>Web-Engineering</em> – Modul 12.1 Projektarbeit, Fernstudium Medizinische Informatik, Berliner Hochschule für Technik (BHT), Fernstudieninstitut, 5. Auflage, 09/2021 (interne Studienunterlage).</li>
+<li>Studiengang: <a href="https://www.bht-berlin.de/medi" target="_blank" rel="noopener">Fernstudium Medizinische Informatik – Berliner Hochschule für Technik (BHT)</a></li>
+<li>Wikipedia: <a href="https://de.wikipedia.org/wiki/Cascading_Style_Sheets" target="_blank" rel="noopener">Cascading Style Sheets</a></li>
+</ul>
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

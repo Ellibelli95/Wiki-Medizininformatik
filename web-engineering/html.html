@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  table { width:100%; border-collapse:collapse; margin:1.2em 0 1.8em; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 3px 12px rgba(16,42,67,.05); }
+  th, td { border:1px solid #d9e2ea; padding:10px 12px; text-align:left; vertical-align:top; }
+  thead th { background:#1a5276; color:#fff; border-color:#1a5276; font-weight:700; }
+  tbody tr:nth-child(even) { background:#eaf4f8; }
+  tbody tr:hover { background:#dcedf5; }
+  .toc-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:14px; margin:1.2em 0 2em; }
+  .toc-card { display:flex; flex-direction:column; align-items:flex-start; gap:4px; background:#fff; border:1px solid #d9e2ea; border-radius:10px; padding:14px 14px 16px; text-decoration:none; color:inherit; box-shadow:0 2px 8px rgba(16,42,67,.05); transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+  .toc-card:hover { transform:translateY(-3px); box-shadow:0 8px 18px rgba(16,42,67,.14); border-color:#1a5276; }
+  .toc-card svg { width:44px; height:44px; stroke:#1a5276; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; margin-bottom:4px; }
+  .toc-card svg .fill { fill:#1a5276; stroke:none; }
+  .toc-card .toc-num { font-size:.72em; font-weight:700; letter-spacing:.06em; color:#6a93ac; }
+  .toc-card .toc-title { font-weight:700; color:#17324a; line-height:1.25; }
+  .toc-card .toc-desc { font-size:.85em; color:#5b7080; }
+  .diagram-box { background:#fff; border:1px solid #d9e2ea; border-radius:10px; box-shadow:0 3px 12px rgba(16,42,67,.05); padding:18px; margin:1.2em 0 1.8em; overflow-x:auto; }
+  .diagram-box svg { display:block; margin:0 auto; }
+  .diagram-box .cap { text-align:center; font-size:.85em; color:#5b7080; margin-top:8px; }
+  .quellen-list { font-size:.92em; }
+  .quellen-list li { margin-bottom:6px; }
+  code { background:#eaf4f8; padding:1px 5px; border-radius:4px; font-size:.92em; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../web-engineering/index.html">Web Engineering</a> /
+  HTML
+</div>
+
+<div class="hero">
+  <h2>HTML</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Auszeichnungssprache zur Strukturierung von Inhalten im Web (HyperText Markup Language)</td></tr>
+      <tr><td>Aktuelle Version</td><td>HTML5 mit semantischen Elementen, neuen Formular-Attributen und APIs (Canvas, Storage, Geolocation)</td></tr>
+      <tr><td>Kernkonzepte</td><td>Elemente, Attribute, id/class, das <code>&lt;link&gt;</code>-Element, Formulare, GET/POST</td></tr>
+      <tr><td>Zusammenspiel</td><td>Bildet zusammen mit CSS und JavaScript das clientseitige DOM, das der Browser rendert</td></tr>
+      <tr><td>Bezug Medizin-IT</td><td>Grundlage webbasierter KIS-/PDMS-Oberflächen und Patientenportale</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist als vertiefendes technisches Nachschlagewerk aufgebaut und orientiert sich inhaltlich
+    am Lehrmodul „Web-Engineering“ des Fernstudiengangs Medizinische Informatik. Quellenangaben finden sich am Ende der Seite.
+  </div>
+</div>
+
+<h3>Inhaltsverzeichnis</h3>
+<p>Klicken Sie auf eine Karte, um direkt zum jeweiligen Abschnitt zu springen.</p>
+<div class="toc-grid">
+  <a class="toc-card" href="#sec1"><svg viewBox="0 0 48 48"><path d="M10 10 H30 L38 18 V38 H10 Z"/><path d="M30 10 V18 H38"/><line x1="15" y1="24" x2="33" y2="24"/><line x1="15" y1="30" x2="33" y2="30"/></svg><span class="toc-num">01</span><span class="toc-title">Was ist HTML?</span><span class="toc-desc">Definition und Zweck</span></a>
+  <a class="toc-card" href="#sec2"><svg viewBox="0 0 48 48"><line x1="6" y1="24" x2="42" y2="24"/><circle cx="10" cy="24" r="3" class="fill"/><circle cx="20" cy="24" r="3" class="fill"/><circle cx="30" cy="24" r="3" class="fill"/><circle cx="40" cy="24" r="3" class="fill"/></svg><span class="toc-num">02</span><span class="toc-title">Historische Entwicklung</span><span class="toc-desc">Von HTML zu HTML5</span></a>
+  <a class="toc-card" href="#sec3"><svg viewBox="0 0 48 48"><rect x="8" y="8" width="32" height="32" rx="3"/><line x1="8" y1="16" x2="40" y2="16"/></svg><span class="toc-num">03</span><span class="toc-title">Grundstruktur</span><span class="toc-desc">Dokumentaufbau (DOCTYPE, head, body)</span></a>
+  <a class="toc-card" href="#sec4"><svg viewBox="0 0 48 48"><rect x="6" y="14" width="16" height="20" rx="2"/><rect x="26" y="14" width="16" height="20" rx="2"/></svg><span class="toc-num">04</span><span class="toc-title">Semantik &amp; Elemente</span><span class="toc-desc">div, span, id, class</span></a>
+  <a class="toc-card" href="#sec5"><svg viewBox="0 0 48 48"><rect x="8" y="10" width="32" height="8" rx="2"/><rect x="8" y="22" width="32" height="8" rx="2"/><rect x="8" y="34" width="16" height="6" rx="2"/></svg><span class="toc-num">05</span><span class="toc-title">Formulare mit HTML5</span><span class="toc-desc">Attribute und Validierung</span></a>
+  <a class="toc-card" href="#sec6"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="14" height="12" rx="2"/><path d="M20 24 H28"/><rect x="28" y="18" width="14" height="12" rx="2"/></svg><span class="toc-num">06</span><span class="toc-title">Das link-Element</span><span class="toc-desc">Ressourcen einbinden</span></a>
+  <a class="toc-card" href="#sec7"><svg viewBox="0 0 48 48"><rect x="8" y="12" width="32" height="24" rx="3"/><path d="M14 30 L22 18 L28 26 L34 16"/></svg><span class="toc-num">07</span><span class="toc-title">Neue Features von HTML5</span><span class="toc-desc">Canvas, Video, Storage</span></a>
+  <a class="toc-card" href="#sec8"><svg viewBox="0 0 48 48"><path d="M10 24 H24 M24 24 L18 18 M24 24 L18 30"/><path d="M38 24 H24" stroke-dasharray="4 3"/></svg><span class="toc-num">08</span><span class="toc-title">GET oder POST</span><span class="toc-desc">Formularübertragung</span></a>
+  <a class="toc-card" href="#sec9"><svg viewBox="0 0 48 48"><circle cx="24" cy="12" r="4"/><circle cx="10" cy="34" r="4"/><circle cx="38" cy="34" r="4"/><line x1="24" y1="16" x2="12" y2="31"/><line x1="24" y1="16" x2="36" y2="31"/></svg><span class="toc-num">09</span><span class="toc-title">DOM &amp; Rendering</span><span class="toc-desc">Wie der Browser HTML verarbeitet</span></a>
+  <a class="toc-card" href="#sec10"><svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="20" rx="2"/><path d="M16 36 L24 30 L32 36"/><circle cx="24" cy="18" r="4"/><path d="M18 25 a6 8 0 0 1 12 0"/></svg><span class="toc-num">10</span><span class="toc-title">HTML in der Medizin-IT</span><span class="toc-desc">Webbasierte KIS-/PDMS-Clients</span></a>
+  <a class="toc-card" href="#sec11"><svg viewBox="0 0 48 48"><path d="M24 6 L40 12 V24 C40 34 33 40 24 42 C15 40 8 34 8 24 V12 Z"/><path d="M17 24 L22 29 L32 18"/></svg><span class="toc-num">11</span><span class="toc-title">Best Practices &amp; Validierung</span><span class="toc-desc">Barrierefreiheit, W3C-Validator</span></a>
+  <a class="toc-card" href="#sec12"><svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/></svg><span class="toc-num">12</span><span class="toc-title">Begriffe &amp; Quellen</span><span class="toc-desc">Glossar und Literatur</span></a>
+</div>
+
+<h3 id="sec1">1. Was ist HTML?</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Definition</td><td>HTML (HyperText Markup Language) ist eine textbasierte Auszeichnungssprache zur Strukturierung von Inhalten im World Wide Web.</td></tr>
+<tr><td>Funktionsweise</td><td>Inhalte werden durch Elemente (Tags) ausgezeichnet, die deren Bedeutung und Struktur beschreiben – nicht deren visuelle Darstellung, die durch CSS erfolgt.</td></tr>
+<tr><td>Standardisierung</td><td>HTML wird vom World Wide Web Consortium (W3C) bzw. der WHATWG als „living standard“ weiterentwickelt.</td></tr>
+<tr><td>Rolle im Web-Stack</td><td>HTML bildet zusammen mit CSS (Gestaltung) und JavaScript (Verhalten) die drei grundlegenden Client-Technologien des Web.</td></tr>
+</tbody></table>
+
+<h3 id="sec2">2. Historische Entwicklung</h3>
+<table><thead><tr><th>Version</th><th>Wesentliche Neuerung</th></tr></thead><tbody>
+<tr><td>HTML (1991–1995)</td><td>Erste einfache Auszeichnungssprache für wissenschaftliche Dokumente am CERN.</td></tr>
+<tr><td>HTML 4.01 (1999)</td><td>Trennung von Struktur und Layout wird propagiert; CSS gewinnt an Bedeutung.</td></tr>
+<tr><td>XHTML (2000)</td><td>Strengere, XML-konforme Schreibweise von HTML; heute weitgehend abgelöst.</td></tr>
+<tr><td>HTML5 (ab 2014 als W3C-Empfehlung)</td><td>Semantische Elemente, native Formularvalidierung, Multimedia- und Storage-APIs ohne Plugins wie Flash.</td></tr>
+</tbody></table>
+
+<h3 id="sec3">3. Grundstruktur eines HTML-Dokuments</h3>
+<table><thead><tr><th>Bestandteil</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td><code>&lt;!DOCTYPE html&gt;</code></td><td>Kennzeichnet das Dokument als HTML5-Dokument und aktiviert den Standard-Rendering-Modus des Browsers.</td></tr>
+<tr><td><code>&lt;html&gt;</code></td><td>Wurzelelement des Dokuments; das <code>lang</code>-Attribut kennzeichnet die Dokumentsprache.</td></tr>
+<tr><td><code>&lt;head&gt;</code></td><td>Enthält Metadaten wie Zeichensatz, Titel, eingebundene Stylesheets und Skripte.</td></tr>
+<tr><td><code>&lt;body&gt;</code></td><td>Enthält den sichtbaren Inhalt der Seite.</td></tr>
+<tr><td><code>&lt;meta charset="UTF-8"&gt;</code></td><td>Legt die Zeichenkodierung fest und verhindert Darstellungsfehler bei Sonderzeichen (z. B. Umlauten).</td></tr>
+</tbody></table>
+
+<h3 id="sec4">4. Semantik und wichtige Elemente</h3>
+<table><thead><tr><th>Element/Attribut</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td><code>&lt;div&gt;</code></td><td>Generischer Blockcontainer ohne eigene Semantik; dient der strukturellen Gruppierung.</td></tr>
+<tr><td><code>&lt;span&gt;</code></td><td>Generischer Inline-Container ohne eigene Semantik; dient der gezielten Formatierung einzelner Textabschnitte.</td></tr>
+<tr><td><code>id</code></td><td>Eindeutiger Bezeichner eines Elements innerhalb des Dokuments; Zielanker für Verlinkungen sowie Ansatzpunkt für CSS und JavaScript.</td></tr>
+<tr><td><code>class</code></td><td>Nicht eindeutiges Klassifizierungsmerkmal; mehrere Elemente können dieselbe Klasse tragen und gemeinsam gestaltet werden.</td></tr>
+<tr><td>Semantische Elemente</td><td><code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;footer&gt;</code> beschreiben die Bedeutung von Seitenbereichen und verbessern Zugänglichkeit und Suchmaschinenlesbarkeit.</td></tr>
+</tbody></table>
+
+<h3 id="sec5">5. Formulare mit HTML5</h3>
+<table><thead><tr><th>Feature</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Neue Eingabetypen</td><td><code>email</code>, <code>number</code>, <code>date</code>, <code>tel</code>, <code>url</code> u. a. ermöglichen passende mobile Tastaturen und Basisvalidierung ohne JavaScript.</td></tr>
+<tr><td>Validierungsattribute</td><td><code>required</code>, <code>pattern</code>, <code>min</code>/<code>max</code> und <code>step</code> definieren clientseitige Prüfregeln.</td></tr>
+<tr><td>Constraint Validation API</td><td>JavaScript-Schnittstelle, über die Formularvalidierung programmatisch gesteuert und mit eigenen Fehlermeldungen versehen werden kann (siehe Kapitel „JavaScript“).</td></tr>
+<tr><td>Platzhalter &amp; Autofocus</td><td><code>placeholder</code> und <code>autofocus</code> verbessern die Benutzerführung ohne zusätzlichen Skriptaufwand.</td></tr>
+</tbody></table>
+
+<h3 id="sec6">6. Das link-Element</h3>
+<table><thead><tr><th>Attribut</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td><code>rel="stylesheet"</code></td><td>Bindet ein externes CSS-Stylesheet ein (siehe Kapitel „CSS“).</td></tr>
+<tr><td><code>rel="icon"</code></td><td>Definiert das Favicon der Seite.</td></tr>
+<tr><td><code>href</code></td><td>Pfad bzw. URL zur eingebundenen Ressource.</td></tr>
+<tr><td>Bedeutung für die Performance</td><td>Externe Stylesheets werden vom Browser parallel zum HTML geladen und können gecacht werden, was wiederholte Seitenaufrufe beschleunigt.</td></tr>
+</tbody></table>
+
+<h3 id="sec7">7. Neue Features von HTML5</h3>
+<table><thead><tr><th>Feature</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td><code>&lt;canvas&gt;</code></td><td>Zeichenfläche für dynamische, JavaScript-gesteuerte 2D-Grafiken und Animationen.</td></tr>
+<tr><td><code>&lt;video&gt;</code> / <code>&lt;audio&gt;</code></td><td>Native Einbindung von Multimedia-Inhalten ohne Plugins wie Flash.</td></tr>
+<tr><td>Web Storage</td><td><code>localStorage</code> und <code>sessionStorage</code> ermöglichen clientseitige Datenspeicherung ohne Cookies.</td></tr>
+<tr><td>Geolocation API</td><td>Ermittlung des Standorts eines Endgeräts mit Zustimmung des Nutzers.</td></tr>
+<tr><td>Semantische Struktur</td><td>Siehe Kapitel 4; erleichtert maschinelle Interpretation der Seite.</td></tr>
+</tbody></table>
+
+<h3 id="sec8">8. GET oder POST</h3>
+<table><thead><tr><th>Methode</th><th>Merkmal</th><th>Typischer Einsatz</th></tr></thead><tbody>
+<tr><td>GET</td><td>Übermittelt Formulardaten als Teil der URL (Query-String); sichtbar, cachebar, in der Browser-Historie gespeichert.</td></tr>
+<tr><td>POST</td><td>Übermittelt Formulardaten im Nachrichtenkörper der HTTP-Anfrage; nicht in der URL sichtbar, nicht standardmäßig gecacht.</td></tr>
+<tr><td>Auswahlkriterium</td><td>GET für idempotente, unkritische Abfragen (z. B. Suchanfragen); POST für Datenänderungen oder sensible Daten (z. B. Zugangsdaten, Patientendaten).</td></tr>
+</tbody></table>
+
+<h3 id="sec9">9. DOM und Browser-Rendering</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Parsing</td><td>Der Browser analysiert den empfangenen HTML-Code und erzeugt daraus eine Baumstruktur im Hauptspeicher – das Document Object Model (DOM).</td></tr>
+<tr><td>Zugriff über JavaScript</td><td>Über die DOM-Schnittstelle können Elemente ausgelesen, verändert, hinzugefügt oder entfernt werden (siehe Kapitel „JavaScript“).</td></tr>
+<tr><td>CSS-Zuordnung</td><td>Für jedes Element werden die zuständigen CSS-Regeln ermittelt und zu einem Render-Baum kombiniert.</td></tr>
+<tr><td>Rendering</td><td>Ein Renderer berechnet Layout und Darstellung und zeichnet das Ergebnis auf den Bildschirm.</td></tr>
+</tbody></table>
+
+<h3 id="sec10">10. HTML in der Medizin-IT</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Webbasierte Clients</td><td>Moderne KIS- und PDMS-Systeme (siehe Kapitel „Gerätevernetzung“, Abschnitt 10) stellen ihre Benutzeroberfläche zunehmend als HTML-basierte Web-Clients bereit, die über den Webserver ausgeliefert werden.</td></tr>
+<tr><td>Formulare für klinische Dokumentation</td><td>Strukturierte HTML5-Formulare mit Validierungsattributen unterstützen eine konsistente, fehlerarme Dateneingabe.</td></tr>
+<tr><td>Barrierefreiheit</td><td>Semantisches HTML erleichtert den Einsatz von Screenreadern und anderen Hilfsmitteln – relevant für Patientenportale.</td></tr>
+</tbody></table>
+
+<h3 id="sec11">11. Best Practices und Validierung</h3>
+<table><thead><tr><th>Empfehlung</th><th>Begründung</th></tr></thead><tbody>
+<tr><td>Semantische statt rein visuelle Auszeichnung</td><td>Erleichtert Wartbarkeit, Barrierefreiheit und maschinelle Verarbeitung.</td></tr>
+<tr><td>Trennung von Struktur, Gestaltung und Verhalten</td><td>HTML für Struktur, CSS für Gestaltung, JavaScript für Verhalten – reduziert Kopplung und erleichtert Wartung.</td></tr>
+<tr><td>W3C-Validierung</td><td>Der offizielle W3C-Validator prüft HTML-Dokumente auf Spezifikationskonformität und deckt strukturelle Fehler auf.</td></tr>
+<tr><td>Verwendung der Browser-Entwicklertools</td><td>Ermöglichen die Inspektion des gerenderten DOM sowie das Debugging von Struktur- und Darstellungsproblemen.</td></tr>
+</tbody></table>
+
+<h3 id="sec12">12. Begriffe und Quellen</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>Element/Tag</td><td>Grundlegender Baustein eines HTML-Dokuments, z. B. <code>&lt;p&gt;</code>.</td></tr>
+<tr><td>Attribut</td><td>Zusätzliche Eigenschaft eines Elements, z. B. <code>id</code> oder <code>class</code>.</td></tr>
+<tr><td>DOM</td><td>Document Object Model; Baumstruktur, über die der Browser Dokumentinhalte programmatisch zugänglich macht.</td></tr>
+<tr><td>Semantisches HTML</td><td>Verwendung von Elementen entsprechend ihrer inhaltlichen Bedeutung statt nur ihrer visuellen Wirkung.</td></tr>
+</tbody></table>
+
+<div class="note">
+<strong>Quellen:</strong>
+<ul class="quellen-list">
+<li>Pavlista, T.: <em>Web-Engineering</em> – Modul 12.1 Projektarbeit, Fernstudium Medizinische Informatik, Berliner Hochschule für Technik (BHT), Fernstudieninstitut, 5. Auflage, 09/2021 (interne Studienunterlage).</li>
+<li>Studiengang: <a href="https://www.bht-berlin.de/medi" target="_blank" rel="noopener">Fernstudium Medizinische Informatik – Berliner Hochschule für Technik (BHT)</a></li>
+<li>Wikipedia: <a href="https://de.wikipedia.org/wiki/Hypertext_Markup_Language" target="_blank" rel="noopener">Hypertext Markup Language</a></li>
+</ul>
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

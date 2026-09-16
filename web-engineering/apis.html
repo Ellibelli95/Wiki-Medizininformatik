@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APIs – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  table { width:100%; border-collapse:collapse; margin:1.2em 0 1.8em; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 3px 12px rgba(16,42,67,.05); }
+  th, td { border:1px solid #d9e2ea; padding:10px 12px; text-align:left; vertical-align:top; }
+  thead th { background:#1a5276; color:#fff; border-color:#1a5276; font-weight:700; }
+  tbody tr:nth-child(even) { background:#eaf4f8; }
+  tbody tr:hover { background:#dcedf5; }
+  .toc-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:14px; margin:1.2em 0 2em; }
+  .toc-card { display:flex; flex-direction:column; align-items:flex-start; gap:4px; background:#fff; border:1px solid #d9e2ea; border-radius:10px; padding:14px 14px 16px; text-decoration:none; color:inherit; box-shadow:0 2px 8px rgba(16,42,67,.05); transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+  .toc-card:hover { transform:translateY(-3px); box-shadow:0 8px 18px rgba(16,42,67,.14); border-color:#1a5276; }
+  .toc-card svg { width:44px; height:44px; stroke:#1a5276; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; margin-bottom:4px; }
+  .toc-card svg .fill { fill:#1a5276; stroke:none; }
+  .toc-card .toc-num { font-size:.72em; font-weight:700; letter-spacing:.06em; color:#6a93ac; }
+  .toc-card .toc-title { font-weight:700; color:#17324a; line-height:1.25; }
+  .toc-card .toc-desc { font-size:.85em; color:#5b7080; }
+  .diagram-box { background:#fff; border:1px solid #d9e2ea; border-radius:10px; box-shadow:0 3px 12px rgba(16,42,67,.05); padding:18px; margin:1.2em 0 1.8em; overflow-x:auto; }
+  .diagram-box svg { display:block; margin:0 auto; }
+  .diagram-box .cap { text-align:center; font-size:.85em; color:#5b7080; margin-top:8px; }
+  .quellen-list { font-size:.92em; }
+  .quellen-list li { margin-bottom:6px; }
+  code { background:#eaf4f8; padding:1px 5px; border-radius:4px; font-size:.92em; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../web-engineering/index.html">Web Engineering</a> /
+  APIs
+</div>
+
+<div class="hero">
+  <h2>APIs</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Programmierschnittstelle (Application Programming Interface) zur definierten Kommunikation zwischen Softwarekomponenten</td></tr>
+      <tr><td>Arten</td><td>Web-APIs, Browser-APIs, Bibliotheks-APIs, Betriebssystem-APIs</td></tr>
+      <tr><td>Historischer Vorläufer</td><td>AJAX als Technik zur asynchronen Kommunikation zwischen Browser und Server</td></tr>
+      <tr><td>Sicherheit</td><td>Authentifizierung über API-Keys, OAuth oder JWT</td></tr>
+      <tr><td>Bezug Medizin-IT</td><td>HL7 FHIR als API-Standard für den Austausch von Gesundheitsdaten, Anbindung von Medizingeräten</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite orientiert sich inhaltlich am Lehrmodul „Web-Engineering“ des Fernstudiengangs
+    Medizinische Informatik. Quellenangaben finden sich am Ende der Seite.
+  </div>
+</div>
+
+<h3>Inhaltsverzeichnis</h3>
+<p>Klicken Sie auf eine Karte, um direkt zum jeweiligen Abschnitt zu springen.</p>
+<div class="toc-grid">
+  <a class="toc-card" href="#sec1"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="14" height="12" rx="2"/><path d="M20 24 H28"/><rect x="28" y="18" width="14" height="12" rx="2"/></svg><span class="toc-num">01</span><span class="toc-title">Was ist eine API?</span><span class="toc-desc">Definition und Zweck</span></a>
+  <a class="toc-card" href="#sec2"><svg viewBox="0 0 48 48"><rect x="10" y="8" width="28" height="10" rx="2"/><rect x="10" y="22" width="28" height="10" rx="2"/><rect x="10" y="34" width="28" height="6" rx="2"/></svg><span class="toc-num">02</span><span class="toc-title">Arten von APIs</span><span class="toc-desc">Web, Browser, Bibliothek, OS</span></a>
+  <a class="toc-card" href="#sec3"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="12" height="12" rx="2"/><path d="M18 24 H30" /><path d="M27 21 L30 24 L27 27"/><rect x="30" y="18" width="12" height="12" rx="2"/></svg><span class="toc-num">03</span><span class="toc-title">Client-Server-Kommunikation</span><span class="toc-desc">Anfrage und Antwort</span></a>
+  <a class="toc-card" href="#sec4"><svg viewBox="0 0 48 48"><circle cx="24" cy="12" r="4"/><circle cx="10" cy="34" r="4"/><circle cx="38" cy="34" r="4"/><line x1="24" y1="16" x2="12" y2="31"/><line x1="24" y1="16" x2="36" y2="31"/></svg><span class="toc-num">04</span><span class="toc-title">Wichtige Browser-APIs</span><span class="toc-desc">DOM, Fetch, Geolocation</span></a>
+  <a class="toc-card" href="#sec5"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M24 14 V24 L31 29"/></svg><span class="toc-num">05</span><span class="toc-title">AJAX als Vorläufer</span><span class="toc-desc">Asynchrone Server-Kommunikation</span></a>
+  <a class="toc-card" href="#sec6"><svg viewBox="0 0 48 48"><path d="M24 6 L40 12 V24 C40 34 33 40 24 42 C15 40 8 34 8 24 V12 Z"/><path d="M17 24 L22 29 L32 18"/></svg><span class="toc-num">06</span><span class="toc-title">API-Design-Prinzipien</span><span class="toc-desc">Konsistenz, Versionierung, Doku</span></a>
+  <a class="toc-card" href="#sec7"><svg viewBox="0 0 48 48"><rect x="12" y="22" width="24" height="18" rx="2"/><path d="M17 22 V15 a7 7 0 0 1 14 0 v7"/><circle cx="24" cy="30" r="2.4" class="fill"/></svg><span class="toc-num">07</span><span class="toc-title">Authentifizierung</span><span class="toc-desc">API-Key, OAuth, JWT</span></a>
+  <a class="toc-card" href="#sec8"><svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="20" rx="2"/><path d="M16 36 L24 30 L32 36"/><circle cx="24" cy="18" r="4"/><path d="M18 25 a6 8 0 0 1 12 0"/></svg><span class="toc-num">08</span><span class="toc-title">APIs in der Medizin-IT</span><span class="toc-desc">HL7 FHIR, Gerätedaten</span></a>
+  <a class="toc-card" href="#sec9"><svg viewBox="0 0 48 48"><path d="M24 8 a12 12 0 0 1 12 12 v6 l4 6 H8 l4-6 v-6 a12 12 0 0 1 12-12 Z"/><path d="M20 36 a4 4 0 0 0 8 0"/></svg><span class="toc-num">09</span><span class="toc-title">Fehlerbehandlung</span><span class="toc-desc">Statuscodes und Fehlerformate</span></a>
+  <a class="toc-card" href="#sec10"><svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/></svg><span class="toc-num">10</span><span class="toc-title">Begriffe &amp; Quellen</span><span class="toc-desc">Glossar und Literatur</span></a>
+</div>
+
+<h3 id="sec1">1. Was ist eine API?</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Definition</td><td>Eine API (Application Programming Interface, Programmierschnittstelle) definiert, wie Softwarekomponenten miteinander kommunizieren können, ohne dass die jeweilige interne Implementierung bekannt sein muss.</td></tr>
+<tr><td>Zweck</td><td>Kapselung von Funktionalität hinter einer stabilen, dokumentierten Schnittstelle, die unabhängig von internen Änderungen weiterverwendet werden kann.</td></tr>
+<tr><td>Web-API</td><td>Im Web-Kontext meist eine über HTTP erreichbare Schnittstelle, über die ein Client (Browser, App, anderes System) Daten abrufen oder verändern kann.</td></tr>
+</tbody></table>
+
+<h3 id="sec2">2. Arten von APIs</h3>
+<table><thead><tr><th>Art</th><th>Beispiel</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Web-API</td><td>REST-Schnittstelle eines Servers (siehe Kapitel „REST“)</td><td>Über HTTP erreichbare Schnittstelle zwischen Client und Server</td></tr>
+<tr><td>Browser-API</td><td>DOM-API, Fetch-API, Geolocation-API</td><td>Vom Browser bereitgestellte Schnittstellen, die per JavaScript angesprochen werden (siehe Kapitel „JavaScript“)</td></tr>
+<tr><td>Bibliotheks-API</td><td>Schnittstelle einer JavaScript- oder Programmiersprachen-Bibliothek</td><td>Definiert, welche Funktionen/Methoden eine Bibliothek nach außen anbietet</td></tr>
+<tr><td>Betriebssystem-API</td><td>Dateisystemzugriff, Netzwerk-API des Betriebssystems</td><td>Schnittstelle zwischen Anwendungssoftware und Betriebssystem</td></tr>
+</tbody></table>
+
+<h3 id="sec3">3. Client-Server-Kommunikation über Web-APIs</h3>
+<div class="diagram-box">
+<svg viewBox="0 0 640 160" width="100%" style="max-width:600px">
+  <g stroke="#1a5276" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="20" y="55" width="120" height="50" rx="6"/>
+    <rect x="500" y="55" width="120" height="50" rx="6" fill="#eaf4f8"/>
+    <path d="M140 70 H500" stroke-dasharray="6 5"/>
+    <polygon points="490,64 502,70 490,76" fill="#1a5276" stroke="none"/>
+    <path d="M500 90 H140" stroke-dasharray="6 5"/>
+    <polygon points="150,84 138,90 150,96" fill="#1a5276" stroke="none"/>
+  </g>
+  <text x="80" y="85" font-size="11" text-anchor="middle" fill="#17324a">Client</text>
+  <text x="560" y="85" font-size="11" text-anchor="middle" fill="#17324a">API-Server</text>
+  <text x="320" y="62" font-size="10" text-anchor="middle" fill="#17324a">HTTP-Anfrage (Request)</text>
+  <text x="320" y="106" font-size="10" text-anchor="middle" fill="#17324a">HTTP-Antwort (Response)</text>
+</svg>
+<div class="cap">Grundprinzip einer Web-API: Der Client sendet eine HTTP-Anfrage, der Server antwortet mit strukturierten Daten (häufig JSON, siehe Kapitel „JSON“).</div>
+</div>
+
+<h3 id="sec4">4. Wichtige Browser-APIs</h3>
+<table><thead><tr><th>API</th><th>Zweck</th></tr></thead><tbody>
+<tr><td>DOM-API</td><td>Programmatischer Zugriff auf Struktur und Inhalt der geladenen Webseite (siehe Kapitel „HTML“, Abschnitt 9).</td></tr>
+<tr><td>Fetch-API</td><td>Moderne, Promise-basierte Schnittstelle zum Absetzen von HTTP-Anfragen aus JavaScript heraus.</td></tr>
+<tr><td>Geolocation-API</td><td>Ermittlung des Gerätestandorts mit Zustimmung des Nutzers.</td></tr>
+<tr><td>Constraint Validation API</td><td>Programmatische Formularvalidierung (siehe Kapitel „JavaScript“, Abschnitt 9).</td></tr>
+</tbody></table>
+
+<h3 id="sec5">5. AJAX als Vorläufer</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Definition</td><td>AJAX (Asynchronous JavaScript and XML) bezeichnet die Technik, im Hintergrund Daten vom Server nachzuladen, ohne die gesamte Seite neu zu laden.</td></tr>
+<tr><td>Historische Einordnung</td><td>Ursprünglich über das <code>XMLHttpRequest</code>-Objekt realisiert; heute größtenteils durch die modernere Fetch-API abgelöst.</td></tr>
+<tr><td>Bedeutung</td><td>AJAX war die technische Grundlage für die Entwicklung interaktiver Single-Page-Anwendungen und moderner API-Kommunikation.</td></tr>
+</tbody></table>
+
+<h3 id="sec6">6. API-Design-Prinzipien</h3>
+<table><thead><tr><th>Prinzip</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Konsistenz</td><td>Einheitliche Benennung von Endpunkten, Parametern und Antwortformaten erleichtert die Nutzung durch Entwickler.</td></tr>
+<tr><td>Versionierung</td><td>Explizite Versionsangaben (z. B. im URL-Pfad <code>/v1/…</code>) ermöglichen Weiterentwicklung, ohne bestehende Clients zu brechen.</td></tr>
+<tr><td>Dokumentation</td><td>Maschinenlesbare Spezifikationen (z. B. OpenAPI) erleichtern automatische Codegenerierung und Testung.</td></tr>
+<tr><td>Idempotenz</td><td>Wiederholte, identische Anfragen sollten denselben Zustand erzeugen wie eine einmalige Anfrage – relevant für zuverlässige Fehlerbehandlung.</td></tr>
+</tbody></table>
+
+<h3 id="sec7">7. Authentifizierung von APIs</h3>
+<table><thead><tr><th>Verfahren</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>API-Key</td><td>Statischer, dem Client zugewiesener Schlüssel, der bei jeder Anfrage mitgesendet wird; einfach, aber vergleichsweise unflexibel.</td></tr>
+<tr><td>OAuth</td><td>Autorisierungsframework, das einer Anwendung delegierten Zugriff auf Ressourcen im Namen eines Nutzers gewährt, ohne dessen Zugangsdaten offenzulegen.</td></tr>
+<tr><td>JWT (JSON Web Token)</td><td>Signiertes, selbstbeschreibendes Token, das Identitäts- und Berechtigungsinformationen enthält und vom Server ohne zusätzliche Datenbankabfrage geprüft werden kann (siehe Kapitel „Web Security“).</td></tr>
+</tbody></table>
+
+<h3 id="sec8">8. APIs in der Medizin-IT</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>HL7 FHIR</td><td>Moderner, RESTful-API-basierter Standard zum Austausch strukturierter Gesundheitsdaten zwischen Informationssystemen.</td></tr>
+<tr><td>Geräteanbindung</td><td>Gateways und Geräteserver (siehe Kapitel „Serielle Anbindung“, Abschnitt 9) stellen die Daten vernetzter Medizingeräte häufig über eine interne API dem Applikationsserver bereit.</td></tr>
+<tr><td>Interoperabilität</td><td>Standardisierte APIs sind zentrale Voraussetzung für die Integration heterogener Systeme unterschiedlicher Hersteller im Krankenhaus.</td></tr>
+</tbody></table>
+
+<h3 id="sec9">9. Fehlerbehandlung</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>HTTP-Statuscodes</td><td>Standardisierte numerische Codes (siehe Kapitel „REST“, Abschnitt 5) signalisieren Erfolg oder Art eines Fehlers.</td></tr>
+<tr><td>Strukturierte Fehlerantworten</td><td>Gut gestaltete APIs liefern im Fehlerfall zusätzlich ein maschinenlesbares Fehlerobjekt (z. B. als JSON) mit Fehlercode und verständlicher Beschreibung.</td></tr>
+<tr><td>Clientseitige Behandlung</td><td>Asynchrone API-Aufrufe (siehe Kapitel „JavaScript“, Abschnitt 10) sollten Fehlerfälle explizit behandeln, um robuste Benutzeroberflächen zu gewährleisten.</td></tr>
+</tbody></table>
+
+<h3 id="sec10">10. Begriffe und Quellen</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>Endpunkt</td><td>Konkrete, über eine URL adressierbare Funktion einer API.</td></tr>
+<tr><td>AJAX</td><td>Technik zum asynchronen Nachladen von Daten ohne vollständigen Seitenneuaufbau.</td></tr>
+<tr><td>OAuth</td><td>Framework zur delegierten Autorisierung ohne Weitergabe von Zugangsdaten.</td></tr>
+<tr><td>FHIR</td><td>Fast Healthcare Interoperability Resources; HL7-Standard für RESTful-Gesundheitsdaten-APIs.</td></tr>
+</tbody></table>
+
+<div class="note">
+<strong>Quellen:</strong>
+<ul class="quellen-list">
+<li>Pavlista, T.: <em>Web-Engineering</em> – Modul 12.1 Projektarbeit, Fernstudium Medizinische Informatik, Berliner Hochschule für Technik (BHT), Fernstudieninstitut, 5. Auflage, 09/2021 (interne Studienunterlage).</li>
+<li>Studiengang: <a href="https://www.bht-berlin.de/medi" target="_blank" rel="noopener">Fernstudium Medizinische Informatik – Berliner Hochschule für Technik (BHT)</a></li>
+<li>Wikipedia: <a href="https://de.wikipedia.org/wiki/Programmierschnittstelle" target="_blank" rel="noopener">Programmierschnittstelle (API)</a></li>
+</ul>
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

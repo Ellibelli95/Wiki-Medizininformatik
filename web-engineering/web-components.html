@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Components – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  table { width:100%; border-collapse:collapse; margin:1.2em 0 1.8em; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 3px 12px rgba(16,42,67,.05); }
+  th, td { border:1px solid #d9e2ea; padding:10px 12px; text-align:left; vertical-align:top; }
+  thead th { background:#1a5276; color:#fff; border-color:#1a5276; font-weight:700; }
+  tbody tr:nth-child(even) { background:#eaf4f8; }
+  tbody tr:hover { background:#dcedf5; }
+  .toc-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:14px; margin:1.2em 0 2em; }
+  .toc-card { display:flex; flex-direction:column; align-items:flex-start; gap:4px; background:#fff; border:1px solid #d9e2ea; border-radius:10px; padding:14px 14px 16px; text-decoration:none; color:inherit; box-shadow:0 2px 8px rgba(16,42,67,.05); transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+  .toc-card:hover { transform:translateY(-3px); box-shadow:0 8px 18px rgba(16,42,67,.14); border-color:#1a5276; }
+  .toc-card svg { width:44px; height:44px; stroke:#1a5276; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; margin-bottom:4px; }
+  .toc-card svg .fill { fill:#1a5276; stroke:none; }
+  .toc-card .toc-num { font-size:.72em; font-weight:700; letter-spacing:.06em; color:#6a93ac; }
+  .toc-card .toc-title { font-weight:700; color:#17324a; line-height:1.25; }
+  .toc-card .toc-desc { font-size:.85em; color:#5b7080; }
+  .diagram-box { background:#fff; border:1px solid #d9e2ea; border-radius:10px; box-shadow:0 3px 12px rgba(16,42,67,.05); padding:18px; margin:1.2em 0 1.8em; overflow-x:auto; }
+  .diagram-box svg { display:block; margin:0 auto; }
+  .diagram-box .cap { text-align:center; font-size:.85em; color:#5b7080; margin-top:8px; }
+  .quellen-list { font-size:.92em; }
+  .quellen-list li { margin-bottom:6px; }
+  code { background:#eaf4f8; padding:1px 5px; border-radius:4px; font-size:.92em; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../web-engineering/index.html">Web Engineering</a> /
+  Web Components
+</div>
+
+<div class="hero">
+  <h2>Web Components</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Browserstandard zur Erstellung wiederverwendbarer, gekapselter HTML-Elemente</td></tr>
+      <tr><td>Grundtechnologien</td><td>Custom Elements, Shadow DOM, HTML-Templates, ES-Module</td></tr>
+      <tr><td>Kapselung</td><td>Shadow DOM isoliert Struktur und Stile einer Komponente vom Rest der Seite</td></tr>
+      <tr><td>Abgrenzung</td><td>Framework-unabhängige Alternative bzw. Ergänzung zu React, Angular und Vue</td></tr>
+      <tr><td>Bezug Medizin-IT</td><td>Wiederverwendbare Widgets (z. B. Vitaldaten-Anzeige) über mehrere Fachanwendungen hinweg</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite orientiert sich inhaltlich am Lehrmodul „Web-Engineering“ des Fernstudiengangs
+    Medizinische Informatik sowie ergänzend an den offiziellen Webstandards. Quellenangaben finden sich am Ende der Seite.
+  </div>
+</div>
+
+<h3>Inhaltsverzeichnis</h3>
+<p>Klicken Sie auf eine Karte, um direkt zum jeweiligen Abschnitt zu springen.</p>
+<div class="toc-grid">
+  <a class="toc-card" href="#sec1"><svg viewBox="0 0 48 48"><rect x="10" y="10" width="12" height="12" rx="2"/><rect x="26" y="10" width="12" height="12" rx="2"/><rect x="18" y="26" width="12" height="12" rx="2"/></svg><span class="toc-num">01</span><span class="toc-title">Was sind Web Components?</span><span class="toc-desc">Definition und Zweck</span></a>
+  <a class="toc-card" href="#sec2"><svg viewBox="0 0 48 48"><rect x="6" y="10" width="16" height="12" rx="2"/><rect x="26" y="10" width="16" height="12" rx="2"/><rect x="6" y="26" width="16" height="12" rx="2"/><rect x="26" y="26" width="16" height="12" rx="2"/></svg><span class="toc-num">02</span><span class="toc-title">Vier Grundtechnologien</span><span class="toc-desc">Custom Elements, Shadow DOM, Templates, Module</span></a>
+  <a class="toc-card" href="#sec3"><svg viewBox="0 0 48 48"><path d="M24 6 L40 12 V24 C40 34 33 40 24 42 C15 40 8 34 8 24 V12 Z"/><text x="24" y="28" font-size="12" text-anchor="middle" fill="#1a5276" stroke="none">&lt;/&gt;</text></svg><span class="toc-num">03</span><span class="toc-title">Custom Elements</span><span class="toc-desc">Eigene HTML-Tags definieren</span></a>
+  <a class="toc-card" href="#sec4"><svg viewBox="0 0 48 48"><rect x="8" y="8" width="32" height="32" rx="4" stroke-dasharray="4 3"/><rect x="16" y="16" width="16" height="16" rx="2"/></svg><span class="toc-num">04</span><span class="toc-title">Shadow DOM</span><span class="toc-desc">Kapselung von Struktur und Stil</span></a>
+  <a class="toc-card" href="#sec5"><svg viewBox="0 0 48 48"><rect x="8" y="12" width="32" height="24" rx="3"/><path d="M14 30 L22 18 L28 26 L34 16"/></svg><span class="toc-num">05</span><span class="toc-title">Templates &amp; Slots</span><span class="toc-desc">Wiederverwendbare Vorlagen</span></a>
+  <a class="toc-card" href="#sec6"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M24 14 V24 L31 29"/></svg><span class="toc-num">06</span><span class="toc-title">Lebenszyklus</span><span class="toc-desc">connectedCallback u. a.</span></a>
+  <a class="toc-card" href="#sec7"><svg viewBox="0 0 48 48"><circle cx="14" cy="24" r="8"/><circle cx="34" cy="24" r="8"/><path d="M22 24 H26"/></svg><span class="toc-num">07</span><span class="toc-title">Web Components vs. Frameworks</span><span class="toc-desc">React, Angular, Vue im Vergleich</span></a>
+  <a class="toc-card" href="#sec8"><svg viewBox="0 0 48 48"><path d="M24 6 L40 12 V24 C40 34 33 40 24 42 C15 40 8 34 8 24 V12 Z"/><path d="M17 24 L22 29 L32 18"/></svg><span class="toc-num">08</span><span class="toc-title">Vorteile &amp; Einsatzgebiete</span><span class="toc-desc">Wann Web Components sinnvoll sind</span></a>
+  <a class="toc-card" href="#sec9"><svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="20" rx="2"/><path d="M16 36 L24 30 L32 36"/><circle cx="24" cy="18" r="4"/><path d="M18 25 a6 8 0 0 1 12 0"/></svg><span class="toc-num">09</span><span class="toc-title">Web Components in der Medizin-IT</span><span class="toc-desc">Wiederverwendbare klinische Widgets</span></a>
+  <a class="toc-card" href="#sec10"><svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/></svg><span class="toc-num">10</span><span class="toc-title">Begriffe &amp; Quellen</span><span class="toc-desc">Glossar und Literatur</span></a>
+</div>
+
+<h3 id="sec1">1. Was sind Web Components?</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Definition</td><td>Web Components sind ein Bündel von Browserstandards, mit denen sich wiederverwendbare, gekapselte und framework-unabhängige HTML-Elemente erstellen lassen.</td></tr>
+<tr><td>Zweck</td><td>Eigene, benutzerdefinierte HTML-Tags mit eigener Struktur, eigenem Verhalten und eigenem, gekapseltem Styling definieren – ohne Abhängigkeit von einem bestimmten JavaScript-Framework.</td></tr>
+<tr><td>Nativer Browserstandard</td><td>Im Gegensatz zu Komponentenkonzepten einzelner Frameworks (z. B. React-Komponenten) werden Web Components direkt vom Browser nativ unterstützt.</td></tr>
+</tbody></table>
+
+<h3 id="sec2">2. Die vier Grundtechnologien</h3>
+<table><thead><tr><th>Technologie</th><th>Aufgabe</th></tr></thead><tbody>
+<tr><td>Custom Elements</td><td>API zur Definition neuer, benutzerdefinierter HTML-Elemente mit eigenem Verhalten.</td></tr>
+<tr><td>Shadow DOM</td><td>Kapselt die interne DOM-Struktur und das Styling einer Komponente vom umgebenden Dokument.</td></tr>
+<tr><td>HTML-Templates</td><td>Das <code>&lt;template&gt;</code>-Element definiert wiederverwendbare Markup-Fragmente, die zunächst nicht gerendert werden.</td></tr>
+<tr><td>ES-Module</td><td>Standardisierter JavaScript-Mechanismus zum modularen Import und Export von Komponentencode.</td></tr>
+</tbody></table>
+
+<h3 id="sec3">3. Custom Elements im Detail</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Definition</td><td>Über <code>customElements.define('mein-element', KlassenName)</code> wird ein neues HTML-Element registriert, dessen Verhalten in einer JavaScript-Klasse implementiert ist.</td></tr>
+<tr><td>Namenskonvention</td><td>Benutzerdefinierte Elementnamen müssen einen Bindestrich enthalten (z. B. <code>vital-anzeige</code>), um Kollisionen mit zukünftigen Standard-HTML-Elementen zu vermeiden.</td></tr>
+<tr><td>Autonome vs. angepasste Elemente</td><td>Autonome Custom Elements erben von <code>HTMLElement</code>; angepasste („customized built-in“) Elemente erweitern ein bestehendes Standardelement wie <code>&lt;button&gt;</code>.</td></tr>
+</tbody></table>
+
+<h3 id="sec4">4. Shadow DOM</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Kapselung</td><td>Der Shadow DOM erzeugt einen eigenständigen DOM-Teilbaum innerhalb eines Elements, dessen interne Struktur und Stile von außen nicht durch normale CSS-Selektoren beeinflusst werden.</td></tr>
+<tr><td>Shadow Root</td><td>Über <code>element.attachShadow({mode: 'open'})</code> wird die Wurzel des gekapselten Teilbaums erzeugt.</td></tr>
+<tr><td>Vorteil</td><td>Verhindert unbeabsichtigte Stilüberschneidungen zwischen einer Komponente und der einbettenden Seite – besonders wertvoll in großen, aus vielen Fachanwendungen zusammengesetzten Portalen.</td></tr>
+</tbody></table>
+
+<h3 id="sec5">5. HTML-Templates und Slots</h3>
+<table><thead><tr><th>Element</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td><code>&lt;template&gt;</code></td><td>Definiert inertes Markup, das beim Laden der Seite nicht gerendert wird, aber per JavaScript geklont und eingefügt werden kann.</td></tr>
+<tr><td><code>&lt;slot&gt;</code></td><td>Platzhalter innerhalb des Shadow DOM, an dem vom Nutzer der Komponente übergebener Inhalt (Light DOM) eingefügt wird.</td></tr>
+<tr><td>Anwendungsfall</td><td>Ermöglicht es, den strukturellen Rahmen einer Komponente vorzugeben, während der konkrete Inhalt flexibel bleibt.</td></tr>
+</tbody></table>
+
+<h3 id="sec6">6. Lebenszyklus eines Custom Elements</h3>
+<table><thead><tr><th>Callback</th><th>Ausgelöst bei</th></tr></thead><tbody>
+<tr><td><code>constructor()</code></td><td>Erzeugung der Elementinstanz.</td></tr>
+<tr><td><code>connectedCallback()</code></td><td>Einfügen des Elements in das Dokument – typischer Ort für Initialisierung und erstes Rendering.</td></tr>
+<tr><td><code>disconnectedCallback()</code></td><td>Entfernen des Elements aus dem Dokument – Aufräumarbeiten wie das Entfernen von Event-Listenern.</td></tr>
+<tr><td><code>attributeChangedCallback()</code></td><td>Änderung eines beobachteten Attributs – ermöglicht reaktives Verhalten auf äußere Konfiguration.</td></tr>
+</tbody></table>
+
+<h3 id="sec7">7. Web Components vs. Frameworks</h3>
+<table><thead><tr><th>Aspekt</th><th>Web Components</th><th>Frameworks (React/Angular/Vue)</th></tr></thead><tbody>
+<tr><td>Basis</td><td>Nativer Browserstandard, kein Build-Schritt zwingend notwendig</td><td>Bibliothek/Framework mit eigenem Komponentenmodell, meist mit Build-Tooling</td></tr>
+<tr><td>Interoperabilität</td><td>In beliebiger Umgebung nutzbar, auch innerhalb von React/Angular/Vue-Anwendungen</td><td>Komponenten i. d. R. an das jeweilige Framework gebunden</td></tr>
+<tr><td>Ökosystem</td><td>Kleiner, aber wachsend</td><td>Sehr groß, viele fertige Bibliotheken und Werkzeuge</td></tr>
+<tr><td>Typischer Einsatz</td><td>Framework-übergreifend wiederverwendbare UI-Bausteine, Design-Systeme</td><td>Komplette, umfangreiche Single-Page-Anwendungen</td></tr>
+</tbody></table>
+
+<h3 id="sec8">8. Vorteile und Einsatzgebiete</h3>
+<table><thead><tr><th>Vorteil</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Wiederverwendbarkeit</td><td>Eine Komponente kann in unterschiedlichen Projekten und Technologie-Stacks unverändert eingesetzt werden.</td></tr>
+<tr><td>Kapselung</td><td>Interne Struktur und Styling beeinflussen die umgebende Seite nicht und umgekehrt.</td></tr>
+<tr><td>Langlebigkeit</td><td>Da Web Components auf Webstandards statt auf einem einzelnen Framework basieren, sind sie unabhängig von dessen Lebenszyklus.</td></tr>
+<tr><td>Design-Systeme</td><td>Gut geeignet, um ein einheitliches, wiederverwendbares Komponenten-Set für mehrere, technologisch unterschiedliche Anwendungen bereitzustellen.</td></tr>
+</tbody></table>
+
+<h3 id="sec9">9. Web Components in der Medizin-IT</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Wiederverwendbare Widgets</td><td>Eine als Web Component gekapselte Vitaldaten-Anzeige oder Alarmleiste kann unverändert in unterschiedlichen, technologisch heterogenen Fachanwendungen (KIS, PDMS, Patientenportal) eingebettet werden.</td></tr>
+<tr><td>Konsistentes Erscheinungsbild</td><td>Zentral gepflegte Komponenten sorgen für ein einheitliches Look-and-Feel über verschiedene, möglicherweise von unterschiedlichen Herstellern stammende Web-Clients hinweg.</td></tr>
+<tr><td>Reduzierte Kopplung</td><td>Die Kapselung durch Shadow DOM verhindert, dass Stiländerungen einer Fachanwendung unbeabsichtigt eingebettete Komponenten anderer Systeme beeinflussen.</td></tr>
+</tbody></table>
+
+<h3 id="sec10">10. Begriffe und Quellen</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>Shadow DOM</td><td>Gekapselter, vom Hauptdokument isolierter DOM-Teilbaum einer Komponente.</td></tr>
+<tr><td>Light DOM</td><td>Der vom Nutzer einer Komponente übergebene, „normale“ DOM-Inhalt außerhalb des Shadow DOM.</td></tr>
+<tr><td>Slot</td><td>Platzhalter im Shadow DOM zur Einfügung von Light-DOM-Inhalt.</td></tr>
+<tr><td>Custom Element</td><td>Benutzerdefiniertes HTML-Element mit eigener Implementierung.</td></tr>
+</tbody></table>
+
+<div class="note">
+<strong>Quellen:</strong>
+<ul class="quellen-list">
+<li>Pavlista, T.: <em>Web-Engineering</em> – Modul 12.1 Projektarbeit, Fernstudium Medizinische Informatik, Berliner Hochschule für Technik (BHT), Fernstudieninstitut, 5. Auflage, 09/2021 (interne Studienunterlage; ergänzt um allgemeine Webstandards, da Web Components dort nicht als eigenes Kapitel geführt werden).</li>
+<li>Studiengang: <a href="https://www.bht-berlin.de/medi" target="_blank" rel="noopener">Fernstudium Medizinische Informatik – Berliner Hochschule für Technik (BHT)</a></li>
+<li>Wikipedia: <a href="https://de.wikipedia.org/wiki/Web_Components" target="_blank" rel="noopener">Web Components</a></li>
+</ul>
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

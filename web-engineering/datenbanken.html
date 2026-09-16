@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Datenbanken – relationales Modell, Normalisierung, SQL und NoSQL im Vergleich, mit ER-Diagramm eines KIS-Datenmodells und vollständigem Praxisbeispiel.">
+<title>Datenbanken – MedizinInformatik Wiki</title>
+<style>
+:root{--navy:#07335f;--navy-dark:#05284b;--blue:#0b6ebc;--line:#dfe6ec;--text:#18232d;--muted:#5f6b75;--bg:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:var(--bg);line-height:1.55}
+a{color:inherit;text-decoration:none}
+.header{background:linear-gradient(135deg,#062a4f,#0a3e70);color:#fff}
+.header-inner{max-width:1400px;margin:auto;display:flex;align-items:center;gap:22px;padding:18px 24px}
+.logo{display:flex;align-items:center;gap:12px;min-width:205px}
+.logo-mark{width:44px;height:44px;border:3px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700}
+.logo-title{font-size:18px;font-weight:800;line-height:1.05}
+.logo-subtitle{font-size:11px;opacity:.8;margin-top:4px}
+.nav{position:sticky;top:0;z-index:20;background:#062b50;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.nav-inner{max-width:1400px;margin:auto;display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:thin}
+.nav a{flex:0 0 auto;color:#fff;font-size:12px;font-weight:700;padding:13px 11px 12px;text-align:center;border-bottom:3px solid transparent;transition:.2s;white-space:nowrap}
+.nav a:hover,.nav a.active{background:#0b477b;border-bottom-color:#19a9ff}
+.nav-icon{display:block;font-size:18px;line-height:1;margin-bottom:5px}
+main{max-width:1400px;margin:auto}
+.breadcrumb{max-width:1000px;margin:16px auto 0;padding:0 24px;font-size:12.5px;color:var(--muted)}
+.breadcrumb a{color:var(--blue)}
+.intro{text-align:center;padding:32px 24px 16px}
+.intro h1{margin:0 0 10px;color:var(--navy);font-size:32px;line-height:1.2}
+.intro p{max-width:900px;margin:0 auto;color:#404a53;font-size:16px}
+.note{max-width:1000px;margin:20px auto 10px;padding:13px 18px;border-left:4px solid var(--blue);background:#f4f8fb;text-align:left;color:#3c4852;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:16px 28px 34px}
+.card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:24px 18px 20px;text-align:center;display:flex;flex-direction:column;min-height:225px;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 7px 20px rgba(5,40,75,.10);border-color:#b8ccdc}
+.icon{height:58px;display:grid;place-items:center;color:var(--navy);font-size:42px;font-weight:700;margin-bottom:6px}
+.card h2{font-size:16px;color:var(--navy);margin:2px 0 9px}
+.card p{font-size:13px;color:#3f484f;margin:0 auto 16px;max-width:260px}
+.btn{display:inline-block;align-self:center;margin-top:auto;background:var(--navy);color:#fff;padding:8px 14px;border-radius:2px;font-size:12px;font-weight:700}
+.btn:hover{background:#0b6ebc}
+.footer{background:linear-gradient(135deg,#062a4f,#083966);color:#fff;text-align:center;padding:18px 20px;font-size:13px}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}.logo{min-width:190px}.header-inner{padding:14px 18px}}
+@media(max-width:760px){.header-inner{justify-content:center}.logo{min-width:0}.logo-subtitle{display:none}.grid{grid-template-columns:repeat(2,1fr);padding:14px}.intro h1{font-size:26px}.nav a{font-size:11px;padding-inline:9px}}
+@media(max-width:500px){.grid{grid-template-columns:1fr}.card{min-height:205px}.intro{padding:26px 16px 12px}.intro p{font-size:14px}}
+
+/* ==== Ergänzungen für den Artikelbereich – gleiche Farbvariablen wie oben ==== */
+.article{max-width:1000px;margin:0 auto;padding:0 24px 40px}
+.article h2.section-title{color:var(--navy);border-bottom:2px solid var(--line);padding-bottom:7px;margin-top:42px;font-size:21px}
+.article h3.sub-title{color:var(--navy);margin:22px 0 8px;font-size:16px}
+table.info-table{width:100%;border-collapse:collapse;margin:14px 0 22px;font-size:13.5px}
+table.info-table th{background:var(--navy);color:#fff;text-align:left;padding:8px 10px}
+table.info-table td{border:1px solid var(--line);padding:8px 10px;vertical-align:top}
+table.info-table tr:nth-child(even) td{background:#f7fafc}
+.node-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0 22px}
+.node-box{border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:6px;padding:10px 12px;background:#fff;font-size:13px}
+.node-box strong{display:block;color:var(--navy);font-size:13.5px;margin-bottom:4px}
+.node-box code{background:#f4f8fb;padding:1px 4px;border-radius:3px}
+.flow-steps{counter-reset:step;margin:16px 0 24px;padding:0;list-style:none}
+.flow-steps li{position:relative;padding:9px 0 9px 44px;margin-bottom:6px;border-bottom:1px dashed var(--line);font-size:13.8px}
+.flow-steps li:last-child{border-bottom:none}
+.flow-steps li::before{counter-increment:step;content:counter(step);position:absolute;left:0;top:7px;width:27px;height:27px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+.klinik-beispiel{margin:16px 0;padding:14px 18px;border-left:4px solid #2e8b57;background:#f2f9f4;font-size:13.8px;color:#20362a;border-radius:0 6px 6px 0}
+.klinik-beispiel strong{color:#1f5c3c}
+.warnbox{margin:16px 0;padding:13px 18px;border-left:4px solid #b5551f;background:#fbf2ea;color:#5a3517;font-size:13.8px;border-radius:0 6px 6px 0}
+code.tag{background:#f4f8fb;border:1px solid var(--line);padding:1px 5px;border-radius:4px;font-family:Consolas,monospace;font-size:12.5px}
+.diagram-box{margin:18px 0;padding:16px 18px;background:var(--navy-dark);color:#eaf3fb;border-radius:8px;font-family:Consolas,monospace;font-size:12.6px;line-height:1.7;overflow-x:auto;white-space:pre}
+.toc-grid .card{min-height:150px}
+.toc-grid .icon{font-size:26px;height:40px}
+.hero-visual{max-width:1000px;margin:22px auto 8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 10px;box-shadow:0 3px 14px rgba(5,40,75,.06)}
+.hero-visual svg{width:100%;height:auto;display:block}
+.img-caption{text-align:center;color:var(--muted);font-size:12px;margin:6px 0 0}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="../index.html" aria-label="MedizinInformatik Wiki Startseite">
+      <span class="logo-mark">+</span>
+      <span><span class="logo-title">MedizinInformatik<br>WIKI</span><span class="logo-subtitle">Technische Dokumentation</span></span>
+    </a>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <div class="nav-inner">
+    <a href="../index.html"><span class="nav-icon">⌂</span>Startseite</a>
+    <a href="../medizintechnik/index.html"><span class="nav-icon">♧</span>Medizintechnik</a>
+    <a href="../vernetzung/index.html"><span class="nav-icon">⌘</span>Vernetzung</a>
+    <a href="../krankenhaus-it/index.html"><span class="nav-icon">▦</span>Krankenhaus-IT</a>
+    <a href="../klinische-informationssysteme/index.html"><span class="nav-icon">▣</span>KIS &amp; Systeme</a>
+    <a href="../datenfluesse/index.html"><span class="nav-icon">⇄</span>Datenflüsse</a>
+    <a href="../schnittstellen-standards/index.html"><span class="nav-icon">⇋</span>Standards</a>
+    <a href="../server-backend/index.html"><span class="nav-icon">▤</span>Server &amp; Backend</a>
+    <a href="../cybersecurity/index.html"><span class="nav-icon">♙</span>Cybersecurity</a>
+    <a class="active" href="../web-engineering/index.html"><span class="nav-icon">&lt;/&gt;</span>Web Engineering</a>
+    <a href="../praxis/index.html"><span class="nav-icon">✚</span>Praxis / Fallbeispiele</a>
+  </div>
+</nav>
+
+<main>
+  <div class="breadcrumb"><a href="../index.html">Startseite</a> / <a href="../web-engineering/index.html">Web Engineering</a> / Datenbanken</div>
+
+  <section class="intro">
+    <h1>Datenbanken</h1>
+    <p>Während der <a href="../server-backend/datenbankserver.html">Datenbankserver-Artikel</a> die Infrastruktur beschreibt, geht es hier um das <strong>Datenmodell</strong> selbst: Wie werden Patienten, Fälle und Diagnosen in Tabellen abgebildet, wie verhindert man widersprüchliche Daten, und wie fragt man sie mit SQL wieder ab? Diese Grundlagen sind unabhängig davon, auf welchem Server die Datenbank am Ende läuft.</p>
+    <div class="note"><strong>Kernprinzip:</strong> Ein gutes Datenmodell speichert jede Information genau einmal, verknüpft zusammengehörige Daten über Schlüssel statt über Wiederholung – und macht dadurch Abfragen sowohl korrekt als auch effizient.</div>
+  </section>
+
+  <div class="hero-visual">
+    <svg viewBox="0 0 820 260" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrowE" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#0b6ebc"/></marker>
+      </defs>
+      <text x="410" y="22" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700" fill="#07335f">ER-Diagramm: vereinfachtes KIS-Datenmodell</text>
+
+      <g font-family="Arial" font-size="11.5">
+        <rect x="20" y="55" width="190" height="100" rx="8" fill="#f4f8fb" stroke="#0b6ebc" stroke-width="1.5"/>
+        <text x="115" y="75" text-anchor="middle" fill="#07335f" font-weight="700">Patient</text>
+        <line x1="20" y1="82" x2="210" y2="82" stroke="#dfe6ec"/>
+        <text x="30" y="98">patient_id (PK)</text>
+        <text x="30" y="114">name</text>
+        <text x="30" y="130">geburtsdatum</text>
+
+        <rect x="315" y="30" width="190" height="100" rx="8" fill="#f4f8fb" stroke="#0b6ebc" stroke-width="1.5"/>
+        <text x="410" y="50" text-anchor="middle" fill="#07335f" font-weight="700">Fall</text>
+        <line x1="315" y1="57" x2="505" y2="57" stroke="#dfe6ec"/>
+        <text x="325" y="73">fall_id (PK)</text>
+        <text x="325" y="89">patient_id (FK)</text>
+        <text x="325" y="105">accession_number</text>
+
+        <rect x="315" y="150" width="190" height="100" rx="8" fill="#f4f8fb" stroke="#0b6ebc" stroke-width="1.5"/>
+        <text x="410" y="170" text-anchor="middle" fill="#07335f" font-weight="700">Diagnose</text>
+        <line x1="315" y1="177" x2="505" y2="177" stroke="#dfe6ec"/>
+        <text x="325" y="193">diagnose_id (PK)</text>
+        <text x="325" y="209">fall_id (FK)</text>
+        <text x="325" y="225">icd_code</text>
+
+        <rect x="610" y="30" width="190" height="100" rx="8" fill="#f4f8fb" stroke="#0b6ebc" stroke-width="1.5"/>
+        <text x="705" y="50" text-anchor="middle" fill="#07335f" font-weight="700">Laborwert</text>
+        <line x1="610" y1="57" x2="800" y2="57" stroke="#dfe6ec"/>
+        <text x="620" y="73">wert_id (PK)</text>
+        <text x="620" y="89">fall_id (FK)</text>
+        <text x="620" y="105">loinc_code</text>
+
+        <line x1="210" y1="100" x2="315" y2="80" stroke="#0b6ebc" stroke-width="1.6" marker-end="url(#arrowE)"/>
+        <text x="255" y="82" fill="#5f6b75" font-size="10">1 : n</text>
+
+        <line x1="410" y1="130" x2="410" y2="150" stroke="#0b6ebc" stroke-width="1.6" marker-end="url(#arrowE)"/>
+        <text x="425" y="143" fill="#5f6b75" font-size="10">1 : n</text>
+
+        <line x1="505" y1="80" x2="610" y2="80" stroke="#0b6ebc" stroke-width="1.6" marker-end="url(#arrowE)"/>
+        <text x="545" y="72" fill="#5f6b75" font-size="10">1 : n</text>
+      </g>
+    </svg>
+  </div>
+  <p class="img-caption">Abb. 1: Patient, Fall, Diagnose und Laborwert als verknüpfte Tabellen (Primär-/Fremdschlüssel)</p>
+
+  <section class="grid toc-grid" aria-label="Artikel-Überblick">
+    <a class="card" href="#grundlagen"><div class="icon">①</div><h2>Grundlagen</h2><p>Was eine Datenbank von einem Datenbankserver unterscheidet</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#relational"><div class="icon">②</div><h2>Das relationale Modell</h2><p>Tabellen, Primär- und Fremdschlüssel</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#normalisierung"><div class="icon">③</div><h2>Normalisierung</h2><p>1. bis 3. Normalform am Beispiel</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#sql"><div class="icon">④</div><h2>SQL-Grundlagen</h2><p>SELECT, JOIN, WHERE am KIS-Beispiel</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#nosql"><div class="icon">⑤</div><h2>NoSQL zur Abgrenzung</h2><p>Dokumentenorientierte Speicherung, z. B. für FHIR</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#praxisbeispiel"><div class="icon">⑥</div><h2>Praxisbeispiel</h2><p>JOIN-Abfrage Ende-zu-Ende</p><span class="btn">Zum Abschnitt →</span></a>
+  </section>
+
+  <div class="article">
+
+    <h2 class="section-title" id="grundlagen">① Grundlagen</h2>
+    <p>Eine <strong>Datenbank</strong> ist die logische Organisation von Daten in Tabellen, Beziehungen und Regeln. Der <a href="../server-backend/datenbankserver.html">Datenbankserver</a> ist dagegen die physische Infrastruktur (Hardware/Prozess), auf der eine oder mehrere Datenbanken betrieben werden. Ein Datenbankserver kann z. B. gleichzeitig die KIS-Datenbank, die PACS-Metadatenbank und ein Data Warehouse hosten – jede davon mit eigenem, in sich konsistentem Datenmodell.</p>
+
+    <h2 class="section-title" id="relational">② Das relationale Modell</h2>
+    <p>Im Klinikkontext dominiert bis heute das <strong>relationale Modell</strong>: Daten werden in Tabellen mit fest definierten Spalten gespeichert, einzelne Datensätze werden über einen <strong>Primärschlüssel</strong> (Primary Key) eindeutig identifiziert, Beziehungen zwischen Tabellen über <strong>Fremdschlüssel</strong> (Foreign Key) abgebildet – wie in Abbildung 1 dargestellt. Ein Fall gehört über <code class="tag">patient_id</code> zu genau einem Patienten, kann aber mehrere Diagnosen und Laborwerte besitzen (1:n-Beziehung).</p>
+
+    <h2 class="section-title" id="normalisierung">③ Normalisierung</h2>
+    <p>Normalisierung beschreibt Regeln, um Redundanz und Inkonsistenzen im Datenmodell zu vermeiden:</p>
+    <table class="info-table">
+    <tr><th>Normalform</th><th>Regel</th><th>Beispiel</th></tr>
+    <tr><td>1. Normalform</td><td>Jede Spalte enthält nur einen atomaren Wert, keine Wertelisten</td><td>Nicht mehrere ICD-Codes in einer Spalte, sondern eine eigene Zeile je Diagnose</td></tr>
+    <tr><td>2. Normalform</td><td>Jede Nicht-Schlüsselspalte hängt vom gesamten Primärschlüssel ab</td><td>Patientenname gehört in die Patiententabelle, nicht in die Diagnosetabelle</td></tr>
+    <tr><td>3. Normalform</td><td>Keine Nicht-Schlüsselspalte hängt von einer anderen Nicht-Schlüsselspalte ab</td><td>Der Klartext einer ICD-Bezeichnung wird über den Code nachgeschlagen, nicht in jeder Zeile wiederholt</td></tr>
+    </table>
+    <p>Normalisierung reduziert Speicherplatz und verhindert widersprüchliche Kopien derselben Information – hat aber den Preis, dass Abfragen mehrere Tabellen per JOIN wieder zusammenführen müssen.</p>
+
+    <h2 class="section-title" id="sql">④ SQL-Grundlagen am KIS-Beispiel</h2>
+    <p>Um die in Abbildung 1 getrennt gespeicherten Daten wieder zusammenzuführen, wird die Abfragesprache <strong>SQL</strong> verwendet:</p>
+    <div class="diagram-box">SELECT p.name, f.accession_number, d.icd_code
+FROM   Patient p
+JOIN   Fall f  ON f.patient_id = p.patient_id
+JOIN   Diagnose d ON d.fall_id = f.fall_id
+WHERE  p.patient_id = 4471123;</div>
+    <p>Diese Abfrage liefert Namen, Fallnummer und alle ICD-Codes (siehe <a href="../schnittstellen-standards/icd.html">ICD-Artikel</a>) eines bestimmten Patienten – obwohl die Informationen in drei getrennten, normalisierten Tabellen liegen.</p>
+
+    <h2 class="section-title" id="nosql">⑤ NoSQL zur Abgrenzung</h2>
+    <p>Neben relationalen Datenbanken kommen zunehmend <strong>dokumentenorientierte NoSQL-Datenbanken</strong> zum Einsatz, die ganze Datensätze als ein zusammenhängendes JSON-Dokument statt über mehrere verknüpfte Tabellen speichern. Das passt gut zu FHIR-Ressourcen (siehe <a href="../schnittstellen-standards/loinc.html">LOINC-</a>/<a href="../schnittstellen-standards/icd.html">ICD-Artikel</a>), die selbst bereits als JSON-Dokumente definiert sind. Der Kompromiss: schnelles Lesen ganzer Dokumente, aber aufwendigere übergreifende Auswertungen über viele Dokumente hinweg als im relationalen Modell.</p>
+
+    <h2 class="section-title" id="praxisbeispiel">⑥ Praxisbeispiel: JOIN-Abfrage Ende-zu-Ende</h2>
+    <ol class="flow-steps">
+      <li>Der im <a href="../server-backend/webserver.html">Webserver-Artikel</a> beschriebene FHIR-Applikationsserver muss für eine Anfrage Patient, Fall und Diagnose zusammenführen.</li>
+      <li>Er sendet die oben gezeigte JOIN-Abfrage an den <a href="../server-backend/datenbankserver.html">Datenbankserver</a>.</li>
+      <li>Der Datenbankserver nutzt die Indizes auf <code class="tag">patient_id</code> und <code class="tag">fall_id</code>, um die drei Tabellen effizient zu verknüpfen.</li>
+      <li>Das Ergebnis – eine einzige, flache Ergebnistabelle – wird an den Applikationsserver zurückgegeben.</li>
+      <li>Dieser wandelt die Zeilen in eine FHIR-<code class="tag">Condition</code>-Ressource um und liefert sie über den Webserver aus.</li>
+    </ol>
+    <div class="klinik-beispiel"><strong>Ergebnis für die Praxis:</strong> Die saubere Trennung von Patient, Fall und Diagnose in Abbildung 1 kostet beim Schreiben etwas mehr Struktur, zahlt sich aber beim Lesen aus: Ein einzelner Patient mit Hunderten Diagnosen über Jahre hinweg lässt sich so ohne Datenredundanz und ohne Inkonsistenzen abfragen.</div>
+
+  </div>
+</main>
+
+<footer class="footer">© 2025 MedizinInformatik Wiki – Alle Rechte vorbehalten.</footer>
+</body>
+</html>
