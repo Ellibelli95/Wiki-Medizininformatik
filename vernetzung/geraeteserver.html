@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Geräteserver im Klinikum – Anbindung medizinischer Geräte über Switch, Netzwerksegment und Gateway an KIS/PDMS, mit vollständigem Praxisbeispiel Patientenmonitor.">
+<title>Geräteserver – MedizinInformatik Wiki</title>
+<style>
+:root{--navy:#07335f;--navy-dark:#05284b;--blue:#0b6ebc;--line:#dfe6ec;--text:#18232d;--muted:#5f6b75;--bg:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:var(--bg);line-height:1.55}
+a{color:inherit;text-decoration:none}
+.header{background:linear-gradient(135deg,#062a4f,#0a3e70);color:#fff}
+.header-inner{max-width:1400px;margin:auto;display:flex;align-items:center;gap:22px;padding:18px 24px}
+.logo{display:flex;align-items:center;gap:12px;min-width:205px}
+.logo-mark{width:44px;height:44px;border:3px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700}
+.logo-title{font-size:18px;font-weight:800;line-height:1.05}
+.logo-subtitle{font-size:11px;opacity:.8;margin-top:4px}
+.nav{position:sticky;top:0;z-index:20;background:#062b50;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.nav-inner{max-width:1400px;margin:auto;display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:thin}
+.nav a{flex:0 0 auto;color:#fff;font-size:12px;font-weight:700;padding:13px 11px 12px;text-align:center;border-bottom:3px solid transparent;transition:.2s;white-space:nowrap}
+.nav a:hover,.nav a.active{background:#0b477b;border-bottom-color:#19a9ff}
+.nav-icon{display:block;font-size:18px;line-height:1;margin-bottom:5px}
+main{max-width:1400px;margin:auto}
+.breadcrumb{max-width:1000px;margin:16px auto 0;padding:0 24px;font-size:12.5px;color:var(--muted)}
+.breadcrumb a{color:var(--blue)}
+.intro{text-align:center;padding:32px 24px 16px}
+.intro h1{margin:0 0 10px;color:var(--navy);font-size:32px;line-height:1.2}
+.intro p{max-width:900px;margin:0 auto;color:#404a53;font-size:16px}
+.note{max-width:1000px;margin:20px auto 10px;padding:13px 18px;border-left:4px solid var(--blue);background:#f4f8fb;text-align:left;color:#3c4852;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:16px 28px 34px}
+.card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:24px 18px 20px;text-align:center;display:flex;flex-direction:column;min-height:225px;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 7px 20px rgba(5,40,75,.10);border-color:#b8ccdc}
+.icon{height:58px;display:grid;place-items:center;color:var(--navy);font-size:42px;font-weight:700;margin-bottom:6px}
+.card h2{font-size:16px;color:var(--navy);margin:2px 0 9px}
+.card p{font-size:13px;color:#3f484f;margin:0 auto 16px;max-width:260px}
+.btn{display:inline-block;align-self:center;margin-top:auto;background:var(--navy);color:#fff;padding:8px 14px;border-radius:2px;font-size:12px;font-weight:700}
+.btn:hover{background:#0b6ebc}
+.footer{background:linear-gradient(135deg,#062a4f,#083966);color:#fff;text-align:center;padding:18px 20px;font-size:13px}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}.logo{min-width:190px}.header-inner{padding:14px 18px}}
+@media(max-width:760px){.header-inner{justify-content:center}.logo{min-width:0}.logo-subtitle{display:none}.grid{grid-template-columns:repeat(2,1fr);padding:14px}.intro h1{font-size:26px}.nav a{font-size:11px;padding-inline:9px}}
+@media(max-width:500px){.grid{grid-template-columns:1fr}.card{min-height:205px}.intro{padding:26px 16px 12px}.intro p{font-size:14px}}
+
+/* ==== Ergänzungen für den Artikelbereich – gleiche Farbvariablen wie oben ==== */
+.article{max-width:1000px;margin:0 auto;padding:0 24px 40px}
+.article h2.section-title{color:var(--navy);border-bottom:2px solid var(--line);padding-bottom:7px;margin-top:42px;font-size:21px}
+.article h3.sub-title{color:var(--navy);margin:22px 0 8px;font-size:16px}
+table.info-table{width:100%;border-collapse:collapse;margin:14px 0 22px;font-size:13.5px}
+table.info-table th{background:var(--navy);color:#fff;text-align:left;padding:8px 10px}
+table.info-table td{border:1px solid var(--line);padding:8px 10px;vertical-align:top}
+table.info-table tr:nth-child(even) td{background:#f7fafc}
+.node-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0 22px}
+.node-box{border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:6px;padding:10px 12px;background:#fff;font-size:13px}
+.node-box strong{display:block;color:var(--navy);font-size:13.5px;margin-bottom:4px}
+.node-box code{background:#f4f8fb;padding:1px 4px;border-radius:3px}
+.flow-steps{counter-reset:step;margin:16px 0 24px;padding:0;list-style:none}
+.flow-steps li{position:relative;padding:9px 0 9px 44px;margin-bottom:6px;border-bottom:1px dashed var(--line);font-size:13.8px}
+.flow-steps li:last-child{border-bottom:none}
+.flow-steps li::before{counter-increment:step;content:counter(step);position:absolute;left:0;top:7px;width:27px;height:27px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+.klinik-beispiel{margin:16px 0;padding:14px 18px;border-left:4px solid #2e8b57;background:#f2f9f4;font-size:13.8px;color:#20362a;border-radius:0 6px 6px 0}
+.klinik-beispiel strong{color:#1f5c3c}
+.warnbox{margin:16px 0;padding:13px 18px;border-left:4px solid #b5551f;background:#fbf2ea;color:#5a3517;font-size:13.8px;border-radius:0 6px 6px 0}
+code.tag{background:#f4f8fb;border:1px solid var(--line);padding:1px 5px;border-radius:4px;font-family:Consolas,monospace;font-size:12.5px}
+.diagram-box{margin:18px 0;padding:16px 18px;background:var(--navy-dark);color:#eaf3fb;border-radius:8px;font-family:Consolas,monospace;font-size:12.6px;line-height:1.7;overflow-x:auto;white-space:pre}
+.toc-grid .card{min-height:150px}
+.toc-grid .icon{font-size:26px;height:40px}
+.hero-visual{max-width:1000px;margin:22px auto 8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 10px;box-shadow:0 3px 14px rgba(5,40,75,.06)}
+.hero-visual svg{width:100%;height:auto;display:block}
+.img-caption{text-align:center;color:var(--muted);font-size:12px;margin:6px 0 0}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="../index.html" aria-label="MedizinInformatik Wiki Startseite">
+      <span class="logo-mark">+</span>
+      <span><span class="logo-title">MedizinInformatik<br>WIKI</span><span class="logo-subtitle">Technische Dokumentation</span></span>
+    </a>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <div class="nav-inner">
+    <a href="../index.html"><span class="nav-icon">⌂</span>Startseite</a>
+    <a href="../medizintechnik/index.html"><span class="nav-icon">♧</span>Medizintechnik</a>
+    <a class="active" href="../vernetzung/index.html"><span class="nav-icon">⌘</span>Vernetzung</a>
+    <a href="../krankenhaus-it/index.html"><span class="nav-icon">▦</span>Krankenhaus-IT</a>
+    <a href="../klinische-informationssysteme/index.html"><span class="nav-icon">▣</span>KIS &amp; Systeme</a>
+    <a href="../datenfluesse/index.html"><span class="nav-icon">⇄</span>Datenflüsse</a>
+    <a href="../schnittstellen-standards/index.html"><span class="nav-icon">⇋</span>Standards</a>
+    <a href="../server-backend/index.html"><span class="nav-icon">▤</span>Server &amp; Backend</a>
+    <a href="../cybersecurity/index.html"><span class="nav-icon">♙</span>Cybersecurity</a>
+    <a href="../web-engineering/index.html"><span class="nav-icon">&lt;/&gt;</span>Web Engineering</a>
+    <a href="../praxis/index.html"><span class="nav-icon">✚</span>Praxis / Fallbeispiele</a>
+  </div>
+</nav>
+
+<main>
+  <div class="breadcrumb"><a href="../index.html">Startseite</a> / <a href="../vernetzung/index.html">Vernetzung der Medizingeräte</a> / Geräteserver</div>
+
+  <section class="intro">
+    <h1>Geräteserver im Klinikum</h1>
+    <p>Der Geräteserver (oft auch <strong>Gateway</strong> genannt) ist die Instanz, über die medizinische Geräte am Patientenbett – Monitore, Infusionspumpen, Beatmungsgeräte – ihre Messdaten in die IT-Infrastruktur des Klinikums einspeisen. Er übernimmt die Protokollumsetzung zwischen der oft herstellerspezifischen Gerätekommunikation und den standardisierten Formaten von PDMS und KIS.</p>
+    <div class="note"><strong>Kernprinzip:</strong> Medizinische Geräte sprechen selten direkt HL7 oder FHIR. Der Geräteserver übersetzt zwischen der physischen Geräteebene und der Anwendungsebene – vergleichbar mit der Rolle, die der <a href="../server-backend/kommunikationsserver.html">Kommunikationsserver</a> zwischen Fachsystemen einnimmt, nur eine Ebene tiefer im Netzwerk.</div>
+  </section>
+
+  <div class="hero-visual">
+    <svg viewBox="0 0 900 210" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrowG" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#0b6ebc"/></marker>
+      </defs>
+      <text x="450" y="24" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700" fill="#07335f">Datenübertragungsweg: Medizingerät bis Anwendung</text>
+      <g font-family="Arial" font-size="12">
+        <rect x="10" y="65" width="140" height="70" rx="8" fill="#f4f8fb" stroke="#0b6ebc" stroke-width="1.5"/>
+        <text x="80" y="95" text-anchor="middle" fill="#07335f" font-weight="700">Medizinisches</text>
+        <text x="80" y="111" text-anchor="middle" fill="#07335f" font-weight="700">Gerät</text>
+
+        <line x1="150" y1="100" x2="200" y2="100" stroke="#0b6ebc" stroke-width="2" marker-end="url(#arrowG)"/>
+
+        <rect x="205" y="65" width="110" height="70" rx="8" fill="#f4f8fb" stroke="#0b6ebc" stroke-width="1.5"/>
+        <text x="260" y="105" text-anchor="middle" fill="#07335f" font-weight="700">Switch</text>
+
+        <line x1="315" y1="100" x2="365" y2="100" stroke="#0b6ebc" stroke-width="2" marker-end="url(#arrowG)"/>
+
+        <rect x="370" y="65" width="140" height="70" rx="8" fill="#f4f8fb" stroke="#0b6ebc" stroke-width="1.5"/>
+        <text x="440" y="95" text-anchor="middle" fill="#07335f" font-weight="700">Netzwerk-</text>
+        <text x="440" y="111" text-anchor="middle" fill="#07335f" font-weight="700">segment (VLAN)</text>
+
+        <line x1="510" y1="100" x2="560" y2="100" stroke="#0b6ebc" stroke-width="2" marker-end="url(#arrowG)"/>
+
+        <rect x="565" y="65" width="140" height="70" rx="8" fill="#07335f"/>
+        <text x="635" y="95" text-anchor="middle" fill="#fff" font-weight="700">Geräteserver</text>
+        <text x="635" y="111" text-anchor="middle" fill="#cfe3f2" font-size="11">(Gateway)</text>
+
+        <line x1="705" y1="100" x2="755" y2="100" stroke="#0b6ebc" stroke-width="2" marker-end="url(#arrowG)"/>
+
+        <rect x="760" y="65" width="130" height="70" rx="8" fill="#f4f8fb" stroke="#0b6ebc" stroke-width="1.5"/>
+        <text x="825" y="95" text-anchor="middle" fill="#07335f" font-weight="700">Anwendung</text>
+        <text x="825" y="111" text-anchor="middle" fill="#07335f" font-weight="700">(PDMS/KIS)</text>
+      </g>
+      <text x="450" y="175" text-anchor="middle" font-family="Arial" font-size="11.5" fill="#5f6b75">Gerät → Switch → Netzwerksegment → Gateway/Geräteserver → Anwendung</text>
+    </svg>
+  </div>
+  <p class="img-caption">Abb. 1: Weg der Gerätedaten vom Bett bis zur Anwendung</p>
+
+  <section class="grid toc-grid" aria-label="Artikel-Überblick">
+    <a class="card" href="#grundlagen"><div class="icon">①</div><h2>Grundlagen</h2><p>Warum Geräte nicht direkt ins KIS senden</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#komponenten"><div class="icon">②</div><h2>Stationen des Datenwegs</h2><p>Gerät, Switch, Netzwerksegment, Gateway</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#protokolle"><div class="icon">③</div><h2>Protokolle am Bett</h2><p>Herstellerprotokolle vs. HL7/FHIR</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#anbindungswege"><div class="icon">④</div><h2>Zwei Anbindungswege</h2><p>Direkt vs. über die Monitor-Zentrale</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#einsatz"><div class="icon">⑤</div><h2>Einsatz im Klinikum</h2><p>Monitore, Pumpen, Beatmungsgeräte, CT</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#mirth"><div class="icon">⑥</div><h2>Mirth Connect auf dem Geräteserver</h2><p>Kommunikationsserver-Software direkt an der Quelle</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#sicherheit"><div class="icon">⑦</div><h2>Sicherheit &amp; Fehleranalyse</h2><p>Segmentierung, typische Ausfallbilder</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#praxisbeispiel"><div class="icon">⑧</div><h2>Praxisbeispiel</h2><p>Patientenmonitor Ende-zu-Ende</p><span class="btn">Zum Abschnitt →</span></a>
+  </section>
+
+  <div class="article">
+
+    <h2 class="section-title" id="grundlagen">① Grundlagen</h2>
+    <p>Medizinische Geräte am Bett sind primär für die klinische Funktion gebaut – Überwachung, Therapie – und erst in zweiter Linie für die IT-Integration. Viele Geräte sprechen daher herstellerspezifische, teils proprietäre Protokolle statt direkt HL7 oder FHIR. Der <strong>Geräteserver</strong> schließt diese Lücke: Er sitzt netzwerktechnisch zwischen den Geräten und den klinischen Anwendungen, sammelt die Rohdaten mehrerer Geräte ein und normalisiert sie in ein für PDMS/KIS verständliches Format.</p>
+
+    <h2 class="section-title" id="komponenten">② Stationen des Datenwegs</h2>
+    <p>Wie in Abbildung 1 gezeigt, durchläuft ein Messwert vom Gerät bis zur Anwendung mehrere klar abgrenzbare Stationen – ein Aufbau, der in der Vorlesung meist entlang der OSI-Schichten erläutert wird:</p>
+    <table class="info-table">
+    <tr><th>Station</th><th>Aufgabe</th><th>OSI-Bezug</th></tr>
+    <tr><td>Medizinisches Gerät</td><td>Erzeugt Rohdaten (Vitalwerte, Alarme, Gerätestatus)</td><td>Anwendungsschicht (geräteeigenes Protokoll)</td></tr>
+    <tr><td>Switch</td><td>Vermittelt den Netzwerkverkehr innerhalb des lokalen Segments</td><td>Sicherungsschicht (Ethernet)</td></tr>
+    <tr><td>Netzwerksegment (VLAN)</td><td>Trennt medizinische Geräte organisatorisch und sicherheitstechnisch vom übrigen Netz</td><td>Vermittlungsschicht (IP-Segmentierung)</td></tr>
+    <tr><td>Geräteserver / Gateway</td><td>Sammelt Daten mehrerer Geräte, normalisiert und leitet sie weiter</td><td>Anwendungsschicht (Protokollumsetzung)</td></tr>
+    <tr><td>Anwendung (PDMS/KIS)</td><td>Stellt die Daten im klinischen Kontext dar, archiviert sie dauerhaft</td><td>Anwendungsschicht</td></tr>
+    </table>
+
+    <h2 class="section-title" id="protokolle">③ Protokolle am Bett</h2>
+    <p>Am Patientenbett existiert häufig ein Nebeneinander mehrerer Protokollwelten:</p>
+    <div class="node-grid">
+      <div class="node-box"><strong>Herstellerprotokoll</strong>Proprietäre Bus- oder Netzwerkprotokolle einzelner Gerätehersteller, oft nur mit deren eigenem Gateway auslesbar.</div>
+      <div class="node-box"><strong>IEEE 11073 (SDC)</strong>Herstellerübergreifender Standard speziell für die Vernetzung von Medizingeräten am Bett.</div>
+      <div class="node-box"><strong>HL7 v2</strong>Wird vom Geräteserver häufig als Zielformat erzeugt, um Werte an KIS/PDMS zu übergeben.</div>
+      <div class="node-box"><strong>DICOM</strong>Bei bildgebenden Geräten (siehe <a href="../schnittstellen-standards/dicom.html">DICOM-Artikel</a>) übernimmt die Modality selbst die Rolle eines DICOM-Knotens – der Geräteserver ist hier eher bei nicht-bildgebenden Geräten relevant.</div>
+    </div>
+
+    <h2 class="section-title" id="anbindungswege">④ Zwei Anbindungswege: direkt vs. über die Monitor-Zentrale</h2>
+    <p>In der Praxis kommen am Geräteserver nicht alle Daten auf demselben Weg an. Je nach Alter und Ausstattung eines Geräts unterscheidet man grundsätzlich zwei Anbindungswege, die in derselben Station parallel existieren können:</p>
+
+    <h3 class="sub-title">Weg A – direkte Netzwerkanbindung</h3>
+    <p>Neuere Geräte besitzen häufig eine eigene Ethernet-Schnittstelle und werden wie ein gewöhnlicher IT-Netzwerkteilnehmer direkt an den Switch des medizinischen VLANs angeschlossen. Ihre Daten laufen ohne Zwischenstation direkt zum Geräteserver, der sie unmittelbar entgegennimmt und weiterverarbeitet.</p>
+
+    <h3 class="sub-title">Weg B – Anbindung über eine Monitor-Zentrale</h3>
+    <p>Ältere oder seriell angebundene Geräte (z. B. über RS-232 oder einen proprietären Gerätebus) hängen dagegen zunächst an einer stationseigenen <strong>Monitor-Zentrale</strong> (Central Station) – etwa einer Philips-IntelliVue-Zentrale, einer GE-CARESCAPE-Zentrale oder einer Dräger-Infinity-Zentrale. Diese Zentrale sammelt die Rohdaten mehrerer Bettplätze im proprietären Herstellerformat, bereitet sie aggregiert auf und sendet sie – nicht das einzelne Gerät selbst – über das Netzwerk an den Geräteserver weiter.</p>
+
+    <table class="info-table">
+    <tr><th>Anbindungsweg</th><th>Typische Geräte</th><th>Übertragungsweg</th><th>Format an den Geräteserver</th></tr>
+    <tr><td>Weg A – direkt</td><td>Moderne, netzwerkfähige Patientenmonitore und Beatmungsgeräte mit eigener Ethernet-Schnittstelle</td><td>Gerät → Switch → Geräteserver (keine Zwischenstation)</td><td>HL7 ORU mit OBX-Segmenten oder FHIR <code class="tag">Observation</code></td></tr>
+    <tr><td>Weg B – über Zentrale</td><td>Ältere, seriell/busangebundene Bettmonitore mehrerer Hersteller</td><td>Gerät → seriell/Bus → Monitor-Zentrale → Zentrale exportiert gebündelt → Geräteserver</td><td>HL7 ADT (Bettzuordnung des Patienten) + HL7 ORU mit OBX-Segmenten je Messwert</td></tr>
+    </table>
+
+    <p>Die beiden HL7-Nachrichtentypen erfüllen dabei unterschiedliche Aufgaben: Die <strong>ADT-Nachricht</strong> (Admission/Discharge/Transfer) teilt dem Geräteserver bzw. dem PDMS mit, <em>welcher Patient auf welchem Bett liegt</em> – erst dadurch können nachfolgende Messwerte überhaupt dem richtigen Patienten zugeordnet werden. Die eigentlichen Messwerte selbst stecken in den <strong>OBX-Segmenten</strong> einer HL7-ORU-Nachricht, strukturell identisch zu den im <a href="../schnittstellen-standards/loinc.html">LOINC-Artikel</a> beschriebenen Laborbefunden – nur dass hier statt eines Laborparameters ein Vitalwert (z. B. Herzfrequenz) übertragen wird, teils ebenfalls mit LOINC-Code im OBX-3-Feld.</p>
+
+    <div class="diagram-box">Weg A (direkt):
+ Gerät --Ethernet--> Switch --> Geräteserver --HL7 ORU/OBX oder FHIR--> PDMS
+
+Weg B (über Zentrale):
+ Gerät --seriell/Bus--> Monitor-Zentrale --Ethernet--> Switch --> Geräteserver
+                                    |
+                     HL7 ADT (Bettzuordnung) + HL7 ORU/OBX (Messwerte), gebündelt für mehrere Betten
+                                    v
+                                 Geräteserver --> PDMS</div>
+
+    <p>Am Geräteserver selbst macht es aus Sicht des PDMS am Ende keinen Unterschied, über welchen der beiden Wege ein Wert gekommen ist – der Geräteserver normalisiert beide Male auf dasselbe Zielformat. Als PDMS-Zielsysteme kommen in deutschen Kliniken u. a. Systeme wie <strong>COPRA ICU</strong>, <strong>MetaVision</strong> oder <strong>ICCA</strong> zum Einsatz, die alle über HL7- bzw. zunehmend FHIR-Schnittstellen Daten vom Geräteserver entgegennehmen.</p>
+
+    <div class="klinik-beispiel"><strong>Klinikum-Beispiel:</strong> Auf einer Intensivstation sind die fünf neuesten Beatmungsgeräte direkt per Ethernet an den Switch angeschlossen (Weg A) und senden ihre Werte unmittelbar als HL7 ORU an den Geräteserver. Die zwölf älteren Bettmonitore derselben Station sind dagegen seriell an eine gemeinsame Monitor-Zentrale angebunden (Weg B); die Zentrale sendet für alle zwölf Betten gesammelt HL7-ADT- und HL7-ORU-Nachrichten an denselben Geräteserver. Im PDMS erscheinen am Ende alle 17 Betten einheitlich – unabhängig vom technischen Anbindungsweg im Hintergrund.</div>
+
+    <h2 class="section-title" id="einsatz">⑤ Einsatz im Klinikum</h2>
+    <p>Typische an einen Geräteserver angeschlossene Systeme sind Patientenmonitore auf Intensivstation und Normalstation, Infusions- und Spritzenpumpen, Beatmungsgeräte sowie Anästhesiearbeitsplätze im OP. Der Geräteserver bündelt dabei die Daten vieler Betten eines Bereichs und stellt sie gesammelt dem PDMS zur Verfügung – statt dass jedes einzelne Gerät eine eigene Verbindung zum PDMS aufbauen müsste.</p>
+
+    <h2 class="section-title" id="mirth">⑥ Mirth Connect auf dem Geräteserver</h2>
+    <p>In der Praxis ist der Geräteserver nicht immer nur eine reine Protokollumsetzungs-Blackbox – häufig wird auf ihm direkt eine vollwertige Kommunikationsserver-Software installiert. Ein typisches Beispiel ist <strong>Mirth Connect</strong> (siehe auch <a href="../server-backend/kommunikationsserver.html#mirth">Mirth-Connect-Abschnitt im Kommunikationsserver-Artikel</a>): Statt Vitaldaten ungefiltert über das Netz an einen weit entfernten, zentralen Kommunikationsserver zu schicken, läuft eine eigene Mirth-Connect-Instanz direkt auf dem Geräteserver der jeweiligen Station.</p>
+
+    <p>Diese lokale Instanz übernimmt dort typischerweise folgende Aufgaben:</p>
+    <div class="node-grid">
+      <div class="node-box"><strong>Empfang von beliebigen Zentralen</strong>Ein Source Connector nimmt die Daten der stationseigenen Monitor-Zentrale entgegen – unabhängig davon, welcher Hersteller dahintersteht.</div>
+      <div class="node-box"><strong>Empfang von ADT aus dem KIS</strong>Ein zweiter Kanal empfängt HL7-ADT-Nachrichten (Aufnahme/Verlegung/Entlassung) direkt vom KIS, um z. B. Bettenzuordnungen lokal aktuell zu halten.</div>
+      <div class="node-box"><strong>Empfang von Labordaten</strong>Ein weiterer Kanal kann Laborergebnisse (siehe <a href="../schnittstellen-standards/loinc.html">LOINC-Artikel</a>) entgegennehmen, sofern sie stationsnah verarbeitet werden sollen.</div>
+      <div class="node-box"><strong>Weiterleitung an andere Server</strong>Alle Kanäle bündeln ihre Ergebnisse und senden sie gezielt an PDMS, zentrales Archiv oder eine übergeordnete, zentrale Mirth-Connect-Instanz im Rechenzentrum weiter.</div>
+    </div>
+
+    <p>Der entscheidende Vorteil dieser Aufstellung: Bereits auf dem Geräteserver – also so nah wie möglich an der eigentlichen Datenquelle – werden die Nachrichten aus ganz unterschiedlichen Quellen (Monitor-Zentrale, KIS, Labor) vereinheitlicht, gefiltert und erst danach gebündelt weitergeleitet. Das reduziert die Netzwerklast auf dem Weg zum Rechenzentrum und macht die Station auch bei einer kurzzeitigen Störung der zentralen Anbindung teilweise weiter funktionsfähig, da die lokale Mirth-Instanz Nachrichten zwischenspeichert, bis die Verbindung zum Zielserver wiederhergestellt ist.</p>
+
+    <div class="klinik-beispiel"><strong>Klinikum-Beispiel:</strong> Auf dem Geräteserver der Intensivstation ist Mirth Connect mit drei Kanälen konfiguriert: Kanal 1 empfängt die Vitaldaten der Monitor-Zentrale, Kanal 2 die ADT-Nachrichten des KIS für die Bettenübersicht, Kanal 3 optional Laborwerte für die unmittelbare Anzeige am Bett. Alle drei Kanäle senden ihre aufbereiteten Ergebnisse an dieselbe Ziel-Adresse im PDMS – für das PDMS sieht es so aus, als käme alles aus einer einzigen, konsistenten Quelle, obwohl im Hintergrund drei völlig unterschiedliche Systeme angebunden sind.</div>
+
+    <h2 class="section-title" id="sicherheit">⑦ Sicherheit und Fehleranalyse</h2>
+    <ul>
+      <li><strong>Eigenes Medizingeräte-VLAN:</strong> Trennung vom Verwaltungsnetz reduziert Angriffsfläche und verhindert Störungen durch normalen Büroverkehr.</li>
+      <li><strong>Redundante Anbindung:</strong> Kritische Bereiche wie Intensivstation und OP verfügen häufig über redundante Switches/Gateways.</li>
+      <li><strong>Alarmweiterleitung:</strong> Geräteserver müssen Alarme mit besonders geringer Verzögerung weiterleiten – Latenz ist hier ein Sicherheitsfaktor.</li>
+    </ul>
+    <table class="info-table">
+    <tr><th>Symptom</th><th>Typische Ursache</th><th>Lösungsansatz</th></tr>
+    <tr><td>Vitalwerte fehlen im PDMS</td><td>Gerät vom Switch getrennt, Gateway-Dienst gestört</td><td>Physische Verbindung und Gateway-Status prüfen</td></tr>
+    <tr><td>Verzögerte Anzeige von Alarmen</td><td>Netzwerküberlastung im Gerätesegment</td><td>VLAN-Auslastung und Priorisierung (QoS) prüfen</td></tr>
+    <tr><td>Werte eines neuen Gerätetyps erscheinen nicht</td><td>Fehlendes Protokoll-Mapping im Geräteserver</td><td>Gerätetreiber/Mapping im Geräteserver ergänzen</td></tr>
+    </table>
+
+    <div class="warnbox"><strong>Praxishinweis:</strong> Da Geräteserver oft mehrere Betten oder eine ganze Station bündeln, betrifft ein Ausfall meist nicht nur ein einzelnes Gerät, sondern gleich mehrere Überwachungsplätze gleichzeitig – ein wichtiger Hinweis bei der Störungseingrenzung.</div>
+
+    <h2 class="section-title" id="praxisbeispiel">⑧ Praxisbeispiel: Patientenmonitor Ende-zu-Ende</h2>
+    <ol class="flow-steps">
+      <li><strong>Messung:</strong> Der Patientenmonitor am Bett misst fortlaufend Herzfrequenz, Blutdruck und Sauerstoffsättigung.</li>
+      <li><strong>Übertragung zum Switch:</strong> Die Werte werden über das strukturierte Verkabelungssystem der Station an den zuständigen Switch gesendet.</li>
+      <li><strong>Netzwerksegment:</strong> Der Switch leitet die Daten innerhalb des medizinischen VLANs weiter, getrennt vom übrigen Kliniknetz.</li>
+      <li><strong>Geräteserver:</strong> Der Geräteserver der Station empfängt die Werte mehrerer Monitore gleichzeitig und normalisiert sie in ein einheitliches Format.</li>
+      <li><strong>Weiterleitung an das PDMS:</strong> Die normalisierten Vitaldaten werden an das PDMS übertragen und dort im Kurvenverlauf des Patienten dargestellt.</li>
+      <li><strong>Sichtbarkeit im KIS:</strong> Über die Anbindung des PDMS an das KIS sind die aktuellen Vitalwerte auch im übergeordneten Patientenkontext einsehbar – zusammen mit den bereits in anderen Artikeln beschriebenen Bild-, Diagnose- und Laborinformationen.</li>
+    </ol>
+    <div class="klinik-beispiel"><strong>Ergebnis für die Praxis:</strong> Der Geräteserver ist damit für die Bettenebene das, was der <a href="../server-backend/kommunikationsserver.html">Kommunikationsserver</a> für die Fachsystemebene ist: eine zentrale, bündelnde Instanz, die verhindert, dass jedes einzelne Gerät eine eigene, direkte Verbindung zur Anwendungsebene aufbauen muss.</div>
+
+  </div>
+</main>
+
+<footer class="footer">© 2025 MedizinInformatik Wiki – Alle Rechte vorbehalten.</footer>
+</body>
+</html>

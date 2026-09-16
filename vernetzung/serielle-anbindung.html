@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serielle Anbindung – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* Absicherung: identische Tabellenformatierung wie auf den anderen Medizintechnik-Seiten */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2em 0 1.8em;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+  }
+  th, td {
+    border: 1px solid #d9e2ea;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  thead th {
+    background: #1a5276;
+    color: #fff;
+    border-color: #1a5276;
+    font-weight: 700;
+  }
+  tbody tr:nth-child(even) { background: #eaf4f8; }
+  tbody tr:hover { background: #dcedf5; }
+
+  /* Klickbare Einleitung / Inhaltsverzeichnis mit Icon-Grafiken */
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin: 1.2em 0 2em;
+  }
+  .toc-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    background: #fff;
+    border: 1px solid #d9e2ea;
+    border-radius: 10px;
+    padding: 14px 14px 16px;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 2px 8px rgba(16,42,67,.05);
+    transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  }
+  .toc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(16,42,67,.14);
+    border-color: #1a5276;
+  }
+  .toc-card svg {
+    width: 44px;
+    height: 44px;
+    stroke: #1a5276;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    margin-bottom: 4px;
+  }
+  .toc-card svg .fill { fill: #1a5276; stroke: none; }
+  .toc-card .toc-num {
+    font-size: .72em;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: #6a93ac;
+  }
+  .toc-card .toc-title {
+    font-weight: 700;
+    color: #17324a;
+    line-height: 1.25;
+  }
+  .toc-card .toc-desc {
+    font-size: .85em;
+    color: #5b7080;
+  }
+
+  /* Anschluss-/Architekturdiagramme */
+  .diagram-box {
+    background: #fff;
+    border: 1px solid #d9e2ea;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+    padding: 18px;
+    margin: 1.2em 0 1.8em;
+    overflow-x: auto;
+  }
+  .diagram-box svg { display:block; margin: 0 auto; }
+  .diagram-box .cap {
+    text-align: center;
+    font-size: .85em;
+    color: #5b7080;
+    margin-top: 8px;
+  }
+
+  /* Herstellerkarten (nicht klickbar) */
+  .provider-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 14px;
+    margin: 1.2em 0 1.8em;
+  }
+  .provider-card {
+    background: #fff;
+    border: 1px solid #d9e2ea;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(16,42,67,.05);
+  }
+  .provider-card .p-icon {
+    width: 52px; height: 52px;
+    border-radius: 10px;
+    display:flex; align-items:center; justify-content:center;
+    background:#1a5276; color:#fff; font-weight:700; font-size:1.1em;
+    margin-bottom: 10px;
+  }
+  .provider-card h4 { margin: 0 0 4px; color:#17324a; }
+  .provider-card p { margin: 2px 0; font-size:.9em; color:#3d5566; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../vernetzung/index.html">Vernetzung</a> /
+  Serielle Anbindung
+</div>
+
+<div class="hero">
+  <h2>Serielle Anbindung</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Anbindung nicht netzwerkfähiger Medizingeräte (z. B. Beatmungsgeräte) über serielle Schnittstellen an ein Gateway</td></tr>
+      <tr><td>Physische Kette</td><td>Device Serial Cable → D89-Adapter → Device-ID-Modul (RJ45) → Patch-Cable → Gateway</td></tr>
+      <tr><td>Netzwerkaufnahme</td><td>Network Access Control (NAC), MAC-Adress-Erkennung und automatische IP-Zuweisung per DHCP</td></tr>
+      <tr><td>Verkabelung</td><td>Netzwerkdose, Etagenverteiler, Patchfeld und strukturierte Verkabelung</td></tr>
+      <tr><td>Datenweg</td><td>Gerät → Geräteserver → Applikationsserver → Datenbankserver → Webserver</td></tr>
+      <tr><td>Systemanbieter</td><td>Beispiele: Meierhofer (M-KIS/M-PDMS) und CompuGroup Medical (CGM CLINICAL/CGM MEDICO)</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist eine technische und medizininformatische Dokumentation.
+    Konkrete Netzwerk-, Patch- und Freigabeprozesse richten sich nach dem hausinternen IT-Sicherheitskonzept
+    und werden durch die zuständige Krankenhaus-IT bzw. Medizintechnik umgesetzt.
+  </div>
+</div>
+
+<h3>Inhaltsverzeichnis</h3>
+<p>Klicken Sie auf eine Karte, um direkt zum jeweiligen Abschnitt zu springen.</p>
+<div class="toc-grid">
+
+  <a class="toc-card" href="#sec1">
+    <svg viewBox="0 0 48 48"><path d="M6 24 H16"/><circle cx="20" cy="24" r="4"/><path d="M24 24 H30"/><rect x="30" y="18" width="12" height="12" rx="2"/></svg>
+    <span class="toc-num">01</span>
+    <span class="toc-title">Was ist serielle Anbindung?</span>
+    <span class="toc-desc">Begriff und Zielsetzung</span>
+  </a>
+
+  <a class="toc-card" href="#sec2">
+    <svg viewBox="0 0 48 48"><rect x="4" y="8" width="10" height="20" rx="1"/><path d="M14 14 H22"/><rect x="22" y="10" width="10" height="10" rx="1"/><path d="M32 15 H40"/><rect x="34" y="26" width="10" height="10" rx="2"/></svg>
+    <span class="toc-num">02</span>
+    <span class="toc-title">Anschlussbeispiel am Gerät</span>
+    <span class="toc-desc">Serial Cable, D89, Device-ID, Gateway</span>
+  </a>
+
+  <a class="toc-card" href="#sec3">
+    <svg viewBox="0 0 48 48"><rect x="6" y="18" width="12" height="12" rx="2"/><rect x="30" y="18" width="12" height="12" rx="2"/><line x1="18" y1="24" x2="30" y2="24"/></svg>
+    <span class="toc-num">03</span>
+    <span class="toc-title">Physische Komponenten</span>
+    <span class="toc-desc">Kabel, Adapter, Module im Detail</span>
+  </a>
+
+  <a class="toc-card" href="#sec4">
+    <svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="20" rx="2"/><path d="M16 36 L24 30 L32 36"/><circle cx="24" cy="18" r="4"/><path d="M18 25 a6 8 0 0 1 12 0"/></svg>
+    <span class="toc-num">04</span>
+    <span class="toc-title">Erstaufnahme ins Netzwerk (NAC)</span>
+    <span class="toc-desc">Network Access Control</span>
+  </a>
+
+  <a class="toc-card" href="#sec5">
+    <svg viewBox="0 0 48 48"><rect x="6" y="16" width="16" height="10" rx="2"/><text x="14" y="23" font-size="7" text-anchor="middle" fill="#1a5276" stroke="none">MAC</text><path d="M22 21 H30"/><rect x="30" y="16" width="12" height="10" rx="2"/><text x="36" y="23" font-size="7" text-anchor="middle" fill="#1a5276" stroke="none">IP</text></svg>
+    <span class="toc-num">05</span>
+    <span class="toc-title">MAC-Adresse &amp; IP-Zuweisung</span>
+    <span class="toc-desc">DHCP-Vergabe und Reservierung</span>
+  </a>
+
+  <a class="toc-card" href="#sec6">
+    <svg viewBox="0 0 48 48"><rect x="6" y="20" width="8" height="8"/><path d="M14 24 H20"/><rect x="20" y="14" width="14" height="20" rx="1"/><line x1="24" y1="18" x2="30" y2="18"/><line x1="24" y1="24" x2="30" y2="24"/><line x1="24" y1="30" x2="30" y2="30"/></svg>
+    <span class="toc-num">06</span>
+    <span class="toc-title">Netzwerkdosen &amp; Patchen</span>
+    <span class="toc-desc">Etagenverteiler und Patchfeld</span>
+  </a>
+
+  <a class="toc-card" href="#sec7">
+    <svg viewBox="0 0 48 48"><line x1="24" y1="6" x2="24" y2="42"/><line x1="10" y1="14" x2="38" y2="14"/><path d="M10 14 L4 26 H16 Z"/><path d="M38 14 L32 26 H44 Z"/><line x1="16" y1="40" x2="32" y2="40"/></svg>
+    <span class="toc-num">07</span>
+    <span class="toc-title">Strukturierte Verkabelung</span>
+    <span class="toc-desc">Normen und Dokumentation</span>
+  </a>
+
+  <a class="toc-card" href="#sec8">
+    <svg viewBox="0 0 48 48"><rect x="4" y="30" width="10" height="8" rx="1"/><rect x="19" y="20" width="10" height="8" rx="1"/><rect x="34" y="10" width="10" height="8" rx="1"/><path d="M9 30 V24 H24 V28 M24 20 V14 H39 V18"/></svg>
+    <span class="toc-num">08</span>
+    <span class="toc-title">Netzwerkinfrastruktur im Überblick</span>
+    <span class="toc-desc">Switches, VLAN, Rechenzentrum</span>
+  </a>
+
+  <a class="toc-card" href="#sec9">
+    <svg viewBox="0 0 48 48"><rect x="6" y="18" width="10" height="12" rx="1"/><path d="M16 24 H26"/><rect x="26" y="12" width="16" height="24" rx="2"/><line x1="31" y1="18" x2="37" y2="18"/><line x1="31" y1="24" x2="37" y2="24"/></svg>
+    <span class="toc-num">09</span>
+    <span class="toc-title">Vom Gerät zum Geräteserver</span>
+    <span class="toc-desc">Rolle des Gateways</span>
+  </a>
+
+  <a class="toc-card" href="#sec10">
+    <svg viewBox="0 0 48 48"><rect x="4" y="8" width="10" height="10" rx="1"/><rect x="19" y="8" width="10" height="10" rx="1"/><rect x="34" y="8" width="10" height="10" rx="1"/><rect x="19" y="28" width="10" height="10" rx="1"/><path d="M9 18 V23 H24 V18 M24 18 V23 M39 18 V23 H24"/></svg>
+    <span class="toc-num">10</span>
+    <span class="toc-title">Applikations-, Datenbank- &amp; Webserver</span>
+    <span class="toc-desc">Drei-Schichten-Architektur</span>
+  </a>
+
+  <a class="toc-card" href="#sec11">
+    <svg viewBox="0 0 48 48"><circle cx="8" cy="24" r="3"/><circle cx="18" cy="24" r="3"/><circle cx="28" cy="24" r="3"/><circle cx="38" cy="24" r="3"/><path d="M11 24 H15 M21 24 H25 M31 24 H35"/></svg>
+    <span class="toc-num">11</span>
+    <span class="toc-title">Gesamter Datenfluss</span>
+    <span class="toc-desc">Ende-zu-Ende-Übersicht</span>
+  </a>
+
+  <a class="toc-card" href="#sec12">
+    <svg viewBox="0 0 48 48"><rect x="12" y="22" width="24" height="18" rx="2"/><path d="M17 22 V15 a7 7 0 0 1 14 0 v7"/><circle cx="24" cy="30" r="2.4" class="fill"/></svg>
+    <span class="toc-num">12</span>
+    <span class="toc-title">Sicherheit der Anbindung</span>
+    <span class="toc-desc">NAC, 802.1X, VLAN, Firewall</span>
+  </a>
+
+  <a class="toc-card" href="#sec13">
+    <svg viewBox="0 0 48 48"><path d="M24 8 a12 12 0 0 1 12 12 v6 l4 6 H8 l4-6 v-6 a12 12 0 0 1 12-12 Z"/><path d="M20 36 a4 4 0 0 0 8 0"/></svg>
+    <span class="toc-num">13</span>
+    <span class="toc-title">Typische Fehlerbilder</span>
+    <span class="toc-desc">Ursachen und Prüfpunkte</span>
+  </a>
+
+  <a class="toc-card" href="#sec14">
+    <svg viewBox="0 0 48 48"><path d="M6 40 V20 L16 14 V40 M16 40 V10 L26 4 V40 M26 40 V16 L38 22 V40 Z"/><line x1="4" y1="40" x2="44" y2="40"/></svg>
+    <span class="toc-num">14</span>
+    <span class="toc-title">Anbieter für KIS-/PDMS-Integration</span>
+    <span class="toc-desc">Meierhofer, CGM und weitere</span>
+  </a>
+
+  <a class="toc-card" href="#sec15">
+    <svg viewBox="0 0 48 48"><rect x="4" y="8" width="12" height="8" rx="1"/><rect x="18" y="20" width="12" height="8" rx="1"/><rect x="32" y="32" width="12" height="8" rx="1"/><path d="M10 16 V20 M24 28 V32"/></svg>
+    <span class="toc-num">15</span>
+    <span class="toc-title">Typischer Workflow</span>
+    <span class="toc-desc">Konkrete Systeme im Einsatz</span>
+  </a>
+
+</div>
+
+<h3 id="sec1">1. Was ist serielle Anbindung?</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Grundfunktion</td><td>Serielle Anbindung bezeichnet die Verbindung eines medizinischen Geräts ohne native Netzwerkfähigkeit über eine serielle Schnittstelle (z. B. RS-232) mit einem Interface bzw. Gateway, das die Daten anschließend in das Krankenhausnetzwerk einspeist.</td></tr>
+<tr><td>Typische Geräte</td><td>Beatmungsgeräte, Narkosegeräte, ältere Überwachungsmonitore und andere Bestandsgeräte ohne integrierten Netzwerkanschluss.</td></tr>
+<tr><td>Ziel</td><td>Auch nicht netzwerkfähige Geräte in die digitale Dokumentation (PDMS/KIS) einzubinden, ohne das Gerät selbst austauschen zu müssen.</td></tr>
+<tr><td>Sicht der Medizininformatik</td><td>Die serielle Anbindung ist die unterste physische Integrationsebene innerhalb der Gerätevernetzung (siehe Kapitel „Gerätevernetzung“) und Voraussetzung für den weiteren digitalen Datenfluss.</td></tr>
+</tbody></table>
+
+<h3 id="sec2">2. Anschlussbeispiel am Gerät</h3>
+<p>Am Beispiel eines Beatmungsgeräts zeigt sich die typische physische Kette von der Geräteschnittstelle bis zum Gateway:</p>
+<div class="diagram-box">
+<svg viewBox="0 0 860 300" width="100%" style="max-width:820px">
+  <!-- Gerät -->
+  <g stroke="#1a5276" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="20" y="60" width="70" height="130" rx="4"/>
+    <rect x="28" y="70" width="54" height="34" rx="2"/>
+    <line x1="34" y1="80" x2="60" y2="80"/>
+    <line x1="34" y1="90" x2="70" y2="90"/>
+    <line x1="35" y1="190" x2="35" y2="220"/>
+    <line x1="75" y1="190" x2="75" y2="220"/>
+    <circle cx="35" cy="226" r="6"/>
+    <circle cx="75" cy="226" r="6"/>
+  </g>
+  <text x="55" y="255" font-size="12" text-anchor="middle" fill="#17324a">Medizinisches Gerät</text>
+  <text x="55" y="270" font-size="11" text-anchor="middle" fill="#5b7080">(z. B. Beatmungsgerät)</text>
+
+  <!-- Device Serial Cable -->
+  <path d="M90 120 H150" stroke="#1a5276" stroke-width="3" fill="none"/>
+  <text x="120" y="110" font-size="11" text-anchor="middle" fill="#17324a">Device Serial Cable</text>
+
+  <!-- D89 Adapter -->
+  <rect x="150" y="105" width="50" height="30" rx="4" stroke="#1a5276" stroke-width="2" fill="#eaf4f8"/>
+  <text x="175" y="150" font-size="11" text-anchor="middle" fill="#17324a">D89&#8209;M</text>
+
+  <!-- Cable to Device ID Module -->
+  <path d="M200 120 H250" stroke="#1a5276" stroke-width="3" fill="none"/>
+
+  <!-- Device ID Module -->
+  <rect x="250" y="95" width="90" height="50" rx="6" stroke="#1a5276" stroke-width="2" fill="#eaf4f8"/>
+  <text x="295" y="125" font-size="11" text-anchor="middle" fill="#17324a">Device&#8209;ID&#8209;</text>
+  <text x="295" y="138" font-size="11" text-anchor="middle" fill="#17324a">Modul (RJ45 F)</text>
+  <text x="295" y="165" font-size="10" text-anchor="middle" fill="#5b7080">Geräteidentifikation</text>
+
+  <!-- Patch cable -->
+  <path d="M340 120 H420" stroke="#1a5276" stroke-width="3" fill="none"/>
+  <text x="380" y="110" font-size="11" text-anchor="middle" fill="#17324a">Patch&#8209;Cable</text>
+
+  <!-- Gateway / SmartLinx-ähnliches Gerät -->
+  <g stroke="#1a5276" stroke-width="2" fill="none">
+    <rect x="420" y="60" width="90" height="130" rx="6"/>
+    <rect x="428" y="70" width="74" height="90" rx="3" fill="#eaf4f8"/>
+  </g>
+  <text x="465" y="205" font-size="12" text-anchor="middle" fill="#17324a">Gateway</text>
+  <text x="465" y="220" font-size="10" text-anchor="middle" fill="#5b7080">(Geräteserver-Terminal)</text>
+
+  <!-- Weiter ins Netzwerk -->
+  <path d="M510 120 H580" stroke="#1a5276" stroke-width="3" stroke-dasharray="6 5" fill="none"/>
+  <polygon points="580,114 592,120 580,126" fill="#1a5276" stroke="none"/>
+  <text x="545" y="110" font-size="11" text-anchor="middle" fill="#17324a">zum Krankenhausnetz</text>
+
+  <!-- Netzwerkdose -->
+  <rect x="600" y="100" width="40" height="40" rx="4" stroke="#1a5276" stroke-width="2" fill="#fff"/>
+  <line x1="612" y1="112" x2="628" y2="112" stroke="#1a5276" stroke-width="2"/>
+  <line x1="612" y1="128" x2="628" y2="128" stroke="#1a5276" stroke-width="2"/>
+  <text x="620" y="160" font-size="10" text-anchor="middle" fill="#5b7080">Netzwerkdose</text>
+
+  <path d="M640 120 H700" stroke="#1a5276" stroke-width="3" fill="none"/>
+
+  <!-- Patchfeld / Switch -->
+  <rect x="700" y="95" width="120" height="50" rx="4" stroke="#1a5276" stroke-width="2" fill="#eaf4f8"/>
+  <line x1="712" y1="108" x2="808" y2="108"/>
+  <line x1="712" y1="118" x2="808" y2="118"/>
+  <line x1="712" y1="128" x2="808" y2="128"/>
+  <text x="760" y="165" font-size="10" text-anchor="middle" fill="#5b7080">Patchfeld / Access-Switch</text>
+</svg>
+<div class="cap">Beispielhafte physische Anschlusskette: Gerät → Device Serial Cable → D89-Adapter → Device-ID-Modul → Patch-Cable → Gateway → Netzwerkdose → Patchfeld/Access-Switch.</div>
+</div>
+
+<h3 id="sec3">3. Physische Komponenten im Detail</h3>
+<table><thead><tr><th>Komponente</th><th>Funktion</th><th>Typische Ausführung</th></tr></thead><tbody>
+<tr><td><strong>Device Serial Cable</strong></td><td>Verbindet die serielle Schnittstelle des Geräts mit dem ersten Adapter</td><td>Herstellerspezifisches, geschirmtes Kabel</td></tr>
+<tr><td><strong>D89-Adapter (D89 M)</strong></td><td>Physische Steckverbindung zwischen Gerätekabel und Device-ID-Modul</td><td>D-Sub-Steckverbinder mit definierter Pinbelegung</td></tr>
+<tr><td><strong>Device-ID-Modul</strong></td><td>Identifiziert den angeschlossenen Gerätetyp und wandelt das serielle Signal für die Netzwerkübertragung um</td><td>Kompaktmodul mit RJ45-Buchse</td></tr>
+<tr><td><strong>Patch-Cable</strong></td><td>Verbindet das Device-ID-Modul mit dem Gateway</td><td>Ethernet-Patchkabel (Cat.6/Cat.6a)</td></tr>
+<tr><td><strong>Gateway</strong></td><td>Sammelt und digitalisiert die Gerätedaten und stellt die Netzwerkschnittstelle bereit</td><td>Geräte-Gateway/Bedside-Terminal (z. B. Mobile-Gateway-Lösung eines Middleware-Anbieters)</td></tr>
+</tbody></table>
+
+<h3 id="sec4">4. Erstaufnahme eines Geräts ins Krankenhausnetzwerk (NAC)</h3>
+<table><thead><tr><th>Schritt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>1. Physischer Anschluss</td><td>Das Gerät bzw. sein Gateway wird an eine freigegebene Netzwerkdose angeschlossen.</td></tr>
+<tr><td>2. Port-Authentifizierung</td><td>Ein Network-Access-Control-System (NAC) prüft am Switch-Port, ob das anfragende Gerät zugelassen ist – häufig über 802.1X-Authentifizierung oder MAC-Adress-Whitelisting.</td></tr>
+<tr><td>3. MAC-Adress-Prüfung</td><td>Die eindeutige MAC-Adresse der Netzwerkkarte des Geräts bzw. Gateways wird erfasst und mit einer hinterlegten Positivliste (Whitelist) oder einer Zertifikatsprüfung abgeglichen.</td></tr>
+<tr><td>4. Zuordnung zum Netzwerksegment</td><td>Bei erfolgreicher Prüfung ordnet das NAC-System den Port automatisch einem definierten VLAN zu (z. B. Medizintechnik-VLAN).</td></tr>
+<tr><td>5. IP-Adressvergabe</td><td>Ein DHCP-Server im zugeordneten Segment vergibt dem Gerät eine IP-Adresse – siehe Kapitel 5.</td></tr>
+<tr><td>6. Registrierung</td><td>Das Gerät wird im Asset-/Configuration-Management (CMDB) mit MAC-Adresse, IP-Adresse, Standort und Verantwortlichkeit dokumentiert.</td></tr>
+<tr><td>7. Freigabe</td><td>Erst nach erfolgreicher Prüfung und Registrierung wird der Port dauerhaft aktiv geschaltet; nicht erkannte Geräte werden in ein Quarantäne-VLAN oder gar nicht erst freigeschaltet.</td></tr>
+</tbody></table>
+
+<h3 id="sec5">5. MAC-Adresse und IP-Zuweisung</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>MAC-Adresse</td><td>Weltweit eindeutige, herstellerseitig vergebene Hardware-Adresse der Netzwerkschnittstelle; dient als Identifikationsmerkmal für NAC und DHCP.</td></tr>
+<tr><td>DHCP-Anfrage</td><td>Nach Freischaltung durch das NAC sendet das Gerät eine DHCP-Discover-Anfrage in das zugewiesene VLAN.</td></tr>
+<tr><td>DHCP-Reservierung</td><td>Für medizinische Geräte wird üblicherweise eine feste IP-Adresse über eine MAC-basierte DHCP-Reservierung vergeben, damit das Gerät bei jedem Neustart dieselbe Adresse erhält.</td></tr>
+<tr><td>Statische Zuweisung</td><td>Alternativ – insbesondere bei kritischen Systemen – kann die IP-Adresse fest am Gerät oder Gateway konfiguriert werden, dokumentiert in der IP-Adressverwaltung (IPAM).</td></tr>
+<tr><td>Dokumentation</td><td>Zuordnung von MAC-Adresse, IP-Adresse, Gerätetyp, Standort und VLAN wird zentral im IPAM/CMDB gepflegt, um Nachvollziehbarkeit und Fehlersuche zu ermöglichen.</td></tr>
+</tbody></table>
+
+<h3 id="sec6">6. Netzwerkdosen und Patchen</h3>
+<table><thead><tr><th>Element</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Netzwerkdose (Anschlussdose)</td><td>Fest installierte RJ45-Dose am Arbeitsplatz bzw. Bettenplatz, an die das Gerät oder Gateway per Patchkabel angeschlossen wird.</td></tr>
+<tr><td>Verlegekabel</td><td>Fest verlegtes Kabel (i. d. R. Cat.6/Cat.6a) von der Netzwerkdose zum zuständigen Etagenverteiler.</td></tr>
+<tr><td>Etagenverteiler</td><td>Technikraum pro Gebäudeabschnitt/Etage mit Patchfeld und Access-Switches.</td></tr>
+<tr><td>Patchfeld</td><td>Sammelpunkt, an dem die von den Dosen kommenden Leitungen auf nummerierte Ports aufgelegt sind.</td></tr>
+<tr><td>Patchen</td><td>Ein kurzes Patchkabel verbindet den betreffenden Patchfeld-Port mit einem freien Port des Access-Switches; damit wird die Netzwerkdose logisch aktiv geschaltet.</td></tr>
+<tr><td>Dosen-/Portdokumentation</td><td>Jede Dose und jeder Patchfeld-Port ist eindeutig beschriftet (z. B. Raum-Nr. + Dosen-Nr.) und in der Netzwerkdokumentation hinterlegt, damit die physische Zuordnung jederzeit nachvollziehbar ist.</td></tr>
+</tbody></table>
+
+<h3 id="sec7">7. Strukturierte Verkabelung und Dokumentation</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Normierung</td><td>Die Verkabelung folgt den Vorgaben strukturierter Verkabelungssysteme (z. B. Normenreihen zur Gebäudeverkabelung), um Erweiterbarkeit und Standardisierung sicherzustellen.</td></tr>
+<tr><td>Hierarchie</td><td>Primärverkabelung (Gebäude/Rechenzentrum), Sekundärverkabelung (Etage) und Tertiärverkabelung (Arbeitsplatz/Dose) sind klar getrennt.</td></tr>
+<tr><td>Kennzeichnung</td><td>Einheitliches Bezeichnungsschema für Dosen, Kabel und Patchfeld-Ports zur eindeutigen Rückverfolgbarkeit.</td></tr>
+<tr><td>Redundanz</td><td>Kritische medizinische Bereiche (z. B. Intensivstation, OP) werden häufig mit redundanten Anschlusswegen und Switches ausgestattet.</td></tr>
+</tbody></table>
+
+<h3 id="sec8">8. Netzwerkinfrastruktur im Überblick</h3>
+<div class="diagram-box">
+<svg viewBox="0 0 900 260" width="100%" style="max-width:860px">
+  <g stroke="#1a5276" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="20" y="90" width="80" height="50" rx="4"/>
+    <rect x="140" y="90" width="90" height="50" rx="4"/>
+    <rect x="270" y="90" width="90" height="50" rx="4"/>
+    <rect x="400" y="90" width="100" height="50" rx="4"/>
+    <rect x="540" y="40" width="120" height="50" rx="4"/>
+    <rect x="540" y="140" width="120" height="50" rx="4"/>
+    <rect x="700" y="20" width="150" height="30" rx="4"/>
+    <rect x="700" y="60" width="150" height="30" rx="4"/>
+    <rect x="700" y="150" width="150" height="30" rx="4"/>
+    <rect x="700" y="190" width="150" height="30" rx="4"/>
+    <path d="M100 115 H140"/>
+    <path d="M230 115 H270"/>
+    <path d="M360 115 H400"/>
+    <path d="M500 115 H540 M500 115 V65 H540 M500 115 V165 H540"/>
+    <path d="M660 65 H700 M660 65 V35 H700 M660 65 V75 H700"/>
+    <path d="M660 165 H700 M660 165 V165 H700 M660 165 V205 H700"/>
+  </g>
+  <text x="60" y="118" font-size="10" text-anchor="middle" fill="#17324a">Gerät /</text>
+  <text x="60" y="130" font-size="10" text-anchor="middle" fill="#17324a">Gateway</text>
+  <text x="185" y="118" font-size="10" text-anchor="middle" fill="#17324a">Netzwerkdose /</text>
+  <text x="185" y="130" font-size="10" text-anchor="middle" fill="#17324a">Patchfeld</text>
+  <text x="315" y="118" font-size="10" text-anchor="middle" fill="#17324a">Access-</text>
+  <text x="315" y="130" font-size="10" text-anchor="middle" fill="#17324a">Switch (VLAN)</text>
+  <text x="450" y="118" font-size="10" text-anchor="middle" fill="#17324a">Core-Switch /</text>
+  <text x="450" y="130" font-size="10" text-anchor="middle" fill="#17324a">Firewall</text>
+  <text x="600" y="60" font-size="10" text-anchor="middle" fill="#17324a">Geräteserver</text>
+  <text x="600" y="80" font-size="10" text-anchor="middle" fill="#17324a">(Middleware)</text>
+  <text x="600" y="160" font-size="10" text-anchor="middle" fill="#17324a">Rechenzentrum</text>
+  <text x="600" y="180" font-size="10" text-anchor="middle" fill="#17324a">(Serverfarm)</text>
+  <text x="775" y="38" font-size="10" text-anchor="middle" fill="#17324a">Applikationsserver</text>
+  <text x="775" y="78" font-size="10" text-anchor="middle" fill="#17324a">Datenbankserver</text>
+  <text x="775" y="168" font-size="10" text-anchor="middle" fill="#17324a">Webserver</text>
+  <text x="775" y="208" font-size="10" text-anchor="middle" fill="#17324a">Client/Arbeitsplatz</text>
+</svg>
+<div class="cap">Vereinfachte Netzwerkinfrastruktur vom Gerät über Netzwerkdose, Access-Switch und Core-Switch/Firewall bis in das Rechenzentrum mit Geräte-, Applikations-, Datenbank- und Webserver.</div>
+</div>
+<table><thead><tr><th>Ebene</th><th>Funktion</th></tr></thead><tbody>
+<tr><td>Access-Ebene</td><td>Netzwerkdosen, Patchfelder und Access-Switches an Stationen/Räumen; Zuordnung zu VLANs (z. B. Medizintechnik, IT-Arbeitsplätze, Gäste-WLAN).</td></tr>
+<tr><td>Distribution-/Core-Ebene</td><td>Etagen- und Gebäudeverteiler mit leistungsfähigeren Switches, die den Verkehr bündeln und an das Rechenzentrum weiterleiten.</td></tr>
+<tr><td>Sicherheitszone</td><td>Firewalls und Netzsegmentierung trennen Medizintechnik-Netz, Klinik-IT-Netz und Internetzugang voneinander.</td></tr>
+<tr><td>Rechenzentrum</td><td>Zentrale Serverfarm mit Geräteserver(n), Applikationsserver(n), Datenbankserver(n) und Webserver(n).</td></tr>
+</tbody></table>
+
+<h3 id="sec9">9. Vom Gerät zum Geräteserver</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Aufgabe des Geräteservers</td><td>Der Geräteserver (häufig als Middleware-/Gateway-Server bezeichnet) empfängt die über das Netzwerk ankommenden Rohdaten aller angeschlossenen Gateways und Geräte.</td></tr>
+<tr><td>Protokollumsetzung</td><td>Herstellerspezifische Datenformate werden in standardisierte Nachrichten (z. B. HL7) umgewandelt.</td></tr>
+<tr><td>Pufferung</td><td>Bei kurzzeitigen Netzwerk- oder Zielsystemausfällen werden Daten zwischengespeichert, um Datenverlust zu vermeiden.</td></tr>
+<tr><td>Weiterleitung</td><td>Die standardisierten Daten werden anschließend an den Applikationsserver des PDMS/KIS übergeben.</td></tr>
+</tbody></table>
+
+<h3 id="sec10">10. Applikations-, Datenbank- und Webserver</h3>
+<table><thead><tr><th>Server-Rolle</th><th>Aufgabe</th></tr></thead><tbody>
+<tr><td>Applikationsserver</td><td>Enthält die Fachlogik des PDMS/KIS: Validierung, Zuordnung zum Patienten, klinische Regeln und Verarbeitung der eingehenden Gerätedaten.</td></tr>
+<tr><td>Datenbankserver</td><td>Persistiert alle Verlaufs-, Mess- und Dokumentationsdaten dauerhaft und stellt sie für Auswertungen und die Anzeige bereit.</td></tr>
+<tr><td>Webserver</td><td>Stellt die Benutzeroberfläche für Ärzte und Pflegepersonal bereit (Web-Client bzw. Thin-Client-Zugriff auf das PDMS/KIS).</td></tr>
+<tr><td>Zusammenspiel</td><td>Geräteserver → Applikationsserver (Fachlogik) → Datenbankserver (Speicherung) → Webserver (Darstellung am Arbeitsplatz) bilden gemeinsam die mehrschichtige Systemarchitektur eines PDMS/KIS.</td></tr>
+</tbody></table>
+
+<h3 id="sec11">11. Gesamter Datenfluss (Ende-zu-Ende)</h3>
+<div class="flow">Medizinisches Gerät → Serielle Schnittstelle/Device-ID-Modul → Gateway → Netzwerkdose/Patchfeld → Access-Switch (VLAN) → Core-Switch/Firewall → Geräteserver (Middleware) → Applikationsserver → Datenbankserver → Webserver → Client/Arbeitsplatz</div>
+<table><thead><tr><th>Abschnitt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Physisch</td><td>Gerät bis Netzwerkdose/Patchfeld – Kapitel 2–7.</td></tr>
+<tr><td>Netzwerktechnisch</td><td>Access-Switch bis Core-Switch/Firewall – Kapitel 8.</td></tr>
+<tr><td>Anwendungsseitig</td><td>Geräteserver bis Webserver – Kapitel 9–10.</td></tr>
+<tr><td>Ergebnis</td><td>Durchgängige, automatisierte und dokumentierte Datenkette vom Gerät bis zur Anzeige am Arbeitsplatz.</td></tr>
+</tbody></table>
+
+<h3 id="sec12">12. Sicherheit der Anbindung</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Network Access Control (NAC)</td><td>Verhindert, dass unautorisierte Geräte Zugang zum Netzwerk erhalten.</td></tr>
+<tr><td>802.1X-Authentifizierung</td><td>Port-basierte Authentifizierung von Geräten/Gateways vor der Netzwerkfreischaltung.</td></tr>
+<tr><td>VLAN-Segmentierung</td><td>Trennung von Medizintechnik-, Klinik-IT- und Gästenetzen zur Risikominimierung.</td></tr>
+<tr><td>Firewall-Regeln</td><td>Beschränkung der Kommunikation zwischen Netzsegmenten auf notwendige Ports und Protokolle.</td></tr>
+<tr><td>Quarantäne-VLAN</td><td>Nicht erkannte oder nicht konforme Geräte werden isoliert, bis eine Prüfung erfolgt ist.</td></tr>
+<tr><td>Dokumentation/Monitoring</td><td>Zentrale Protokollierung von Port-Freischaltungen und Geräteverbindungen zur Nachvollziehbarkeit.</td></tr>
+</tbody></table>
+
+<h3 id="sec13">13. Typische Fehlerbilder</h3>
+<table><thead><tr><th>Fehlerbild</th><th>Mögliche Ursache</th><th>Zu prüfende Bereiche</th></tr></thead><tbody>
+<tr><td>Keine Datenübertragung</td><td>Defektes Serial Cable oder Patch-Cable, gelöste Steckverbindung</td><td>Physische Verbindungen, D89-Adapter, Device-ID-Modul</td></tr>
+<tr><td>Gerät wird nicht erkannt</td><td>Fehlende NAC-Freischaltung oder falsche VLAN-Zuordnung</td><td>NAC-Konfiguration, Portstatus am Switch</td></tr>
+<tr><td>Keine IP-Adresse</td><td>DHCP-Server nicht erreichbar oder Reservierung fehlt</td><td>DHCP-Konfiguration, IPAM-Eintrag</td></tr>
+<tr><td>Falsche Patientenzuordnung</td><td>Fehlerhafte Konfiguration des Geräteservers oder der Middleware</td><td>Geräteserver-/Middleware-Konfiguration</td></tr>
+<tr><td>Unterbrochene Anzeige im PDMS</td><td>Störung zwischen Applikations-, Datenbank- oder Webserver</td><td>Serverstatus, Netzwerkverbindung im Rechenzentrum</td></tr>
+</tbody></table>
+
+<h3 id="sec14">14. Anbieter für KIS-/PDMS-Integration</h3>
+<p>Die im Rechenzentrum eingesetzten Applikations-, Datenbank- und Webserver gehören in der Regel zu einem übergeordneten KIS- bzw. PDMS-System. Zwei etablierte Anbieter im deutschsprachigen Raum:</p>
+<div class="provider-grid">
+  <div class="provider-card">
+    <div class="p-icon">MH</div>
+    <h4>Meierhofer AG</h4>
+    <p><strong>Produkte:</strong> M-KIS (Krankenhausinformationssystem), M-PDMS (Patientendatenmanagementsystem für Intensivstation, Anästhesie, Stroke Unit)</p>
+    <p><strong>Einsatz:</strong> Krankenhäuser, Kliniken und Spitäler im deutschsprachigen Raum</p>
+  </div>
+  <div class="provider-card">
+    <div class="p-icon">CGM</div>
+    <h4>CompuGroup Medical (CGM)</h4>
+    <p><strong>Produkte:</strong> CGM MEDICO und CGM CLINICAL (Krankenhausinformationssysteme), CGM Clinical Archive</p>
+    <p><strong>Einsatz:</strong> Krankenhäuser aller Versorgungsstufen in Deutschland, Österreich und der Schweiz</p>
+  </div>
+  <div class="provider-card">
+    <div class="p-icon">GE</div>
+    <h4>GE HealthCare</h4>
+    <p><strong>Produkte:</strong> Mural Virtual Care Solution, CARESCAPE Gateway</p>
+    <p><strong>Einsatz:</strong> Zentrale Überwachung und Geräteanbindung auf Intensivstationen</p>
+  </div>
+  <div class="provider-card">
+    <div class="p-icon">PH</div>
+    <h4>Philips (Capsule)</h4>
+    <p><strong>Produkte:</strong> Capsule Medical Device Information Platform, IntelliBridge</p>
+    <p><strong>Einsatz:</strong> Herstellerübergreifende Geräteintegration in PDMS/KIS</p>
+  </div>
+</div>
+
+<h3 id="sec15">15. Typischer Workflow mit konkreten Systemen</h3>
+<table>
+<thead><tr><th>Workflow-Schritt</th><th>Beispielkomponente</th><th>Beschreibung</th></tr></thead>
+<tbody>
+<tr><td>Geräteanschluss</td><td>Beatmungsgerät mit Device Serial Cable, D89-Adapter, Device-ID-Modul</td><td>Physische Anbindung an das Gateway gemäß Kapitel 2–3</td></tr>
+<tr><td>Netzwerkfreischaltung</td><td>NAC-System der Krankenhaus-IT</td><td>Prüfung von MAC-Adresse und Zuordnung zum Medizintechnik-VLAN</td></tr>
+<tr><td>IP-Vergabe</td><td>DHCP-Server im Medizintechnik-Segment</td><td>Automatische, MAC-basierte Adressvergabe</td></tr>
+<tr><td>Datenübernahme</td><td>Geräteserver/Middleware</td><td>Protokollumsetzung und Weiterleitung an das PDMS</td></tr>
+<tr><td>Dokumentation</td><td>M-PDMS (Meierhofer) oder vergleichbares PDMS</td><td>Speicherung der Verlaufsdaten über Applikations- und Datenbankserver</td></tr>
+<tr><td>Klinische Gesamtsicht</td><td>M-KIS oder CGM MEDICO/CGM CLINICAL</td><td>Bereitstellung der Daten im Krankenhausinformationssystem über den Webserver</td></tr>
+</tbody>
+</table>
+
+<div class="note">
+  <strong>Stand der technischen Übersicht:</strong> September 2026.
+  Konkrete Netzwerk-, NAC- und Patch-Konzepte sowie die eingesetzten KIS-/PDMS-Systeme sind einrichtungsabhängig.
+  Für Betrieb und Konfiguration sind die hausinternen IT-Sicherheitsrichtlinien sowie die aktuelle Herstellerdokumentation maßgeblich.
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

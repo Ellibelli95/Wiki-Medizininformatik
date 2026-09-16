@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ethernet – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2em 0 1.8em;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+  }
+  th, td {
+    border: 1px solid #d9e2ea;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  thead th {
+    background: #1a5276;
+    color: #fff;
+    border-color: #1a5276;
+    font-weight: 700;
+  }
+  tbody tr:nth-child(even) { background: #eaf4f8; }
+  tbody tr:hover { background: #dcedf5; }
+
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin: 1.2em 0 2em;
+  }
+  .toc-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    background: #fff;
+    border: 1px solid #d9e2ea;
+    border-radius: 10px;
+    padding: 14px 14px 16px;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 2px 8px rgba(16,42,67,.05);
+    transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  }
+  .toc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(16,42,67,.14);
+    border-color: #1a5276;
+  }
+  .toc-card svg {
+    width: 44px;
+    height: 44px;
+    stroke: #1a5276;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    margin-bottom: 4px;
+  }
+  .toc-card svg .fill { fill: #1a5276; stroke: none; }
+  .toc-card .toc-num {
+    font-size: .72em;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: #6a93ac;
+  }
+  .toc-card .toc-title {
+    font-weight: 700;
+    color: #17324a;
+    line-height: 1.25;
+  }
+  .toc-card .toc-desc {
+    font-size: .85em;
+    color: #5b7080;
+  }
+
+  .diagram-box {
+    background: #fff;
+    border: 1px solid #d9e2ea;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+    padding: 18px;
+    margin: 1.2em 0 1.8em;
+    overflow-x: auto;
+  }
+  .diagram-box svg { display:block; margin: 0 auto; }
+  .diagram-box .cap {
+    text-align: center;
+    font-size: .85em;
+    color: #5b7080;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../vernetzung/index.html">Vernetzung</a> /
+  Ethernet
+</div>
+
+<div class="hero">
+  <h2>Ethernet</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Standardisierte Übertragungstechnik der OSI-Schichten 1 und 2 für kabelgebundene lokale Netzwerke</td></tr>
+      <tr><td>Standard</td><td>IEEE 802.3 mit zahlreichen Geschwindigkeits- und Medienvarianten</td></tr>
+      <tr><td>Kernelement</td><td>Ethernet-Frame mit MAC-Adressierung, EtherType und Prüfsumme (FCS)</td></tr>
+      <tr><td>Switching</td><td>MAC-Adresstabelle, Store-and-Forward-Vermittlung, Vollduplex-Betrieb</td></tr>
+      <tr><td>Zusatzfunktionen</td><td>Power over Ethernet (PoE) zur Stromversorgung vernetzter Endgeräte über das Datenkabel</td></tr>
+      <tr><td>Bezug Medizintechnik</td><td>Physische Grundlage der strukturierten Verkabelung (siehe Kapitel „Serielle Anbindung“)</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist als vertiefendes technisches Vorlesungsskript für Informatikerinnen und Informatiker
+    aufgebaut. Sie behandelt Ethernet protokolltechnisch im Detail und ordnet die Konzepte in den Kontext der Krankenhaus-IT ein.
+  </div>
+</div>
+
+<h3>Inhaltsverzeichnis</h3>
+<p>Klicken Sie auf eine Karte, um direkt zum jeweiligen Abschnitt zu springen.</p>
+<div class="toc-grid">
+
+  <a class="toc-card" href="#sec1">
+    <svg viewBox="0 0 48 48"><line x1="6" y1="24" x2="42" y2="24"/><circle cx="12" cy="24" r="4" class="fill"/><circle cx="36" cy="24" r="4" class="fill"/></svg>
+    <span class="toc-num">01</span>
+    <span class="toc-title">Definition und Zweck</span>
+    <span class="toc-desc">Grundlage kabelgebundener LANs</span>
+  </a>
+
+  <a class="toc-card" href="#sec2">
+    <svg viewBox="0 0 48 48"><line x1="6" y1="24" x2="42" y2="24"/><circle cx="10" cy="24" r="3" class="fill"/><circle cx="20" cy="24" r="3" class="fill"/><circle cx="30" cy="24" r="3" class="fill"/><circle cx="40" cy="24" r="3" class="fill"/></svg>
+    <span class="toc-num">02</span>
+    <span class="toc-title">Historische Entwicklung</span>
+    <span class="toc-desc">Von 10BASE5 zu 10G/25G</span>
+  </a>
+
+  <a class="toc-card" href="#sec3">
+    <svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="10" rx="2"/><rect x="10" y="24" width="28" height="10" rx="2"/></svg>
+    <span class="toc-num">03</span>
+    <span class="toc-title">OSI-Einordnung</span>
+    <span class="toc-desc">Bitübertragung und Sicherung</span>
+  </a>
+
+  <a class="toc-card" href="#sec4">
+    <svg viewBox="0 0 48 48"><rect x="6" y="18" width="36" height="12" rx="2"/><line x1="14" y1="18" x2="14" y2="30"/><line x1="24" y1="18" x2="24" y2="30"/><line x1="34" y1="18" x2="34" y2="30"/></svg>
+    <span class="toc-num">04</span>
+    <span class="toc-title">Ethernet-Frame-Aufbau</span>
+    <span class="toc-desc">Header, Payload, FCS</span>
+  </a>
+
+  <a class="toc-card" href="#sec5">
+    <svg viewBox="0 0 48 48"><rect x="8" y="18" width="32" height="12" rx="2"/><text x="24" y="27" font-size="8" text-anchor="middle" fill="#1a5276" stroke="none">MAC</text></svg>
+    <span class="toc-num">05</span>
+    <span class="toc-title">MAC-Adressen</span>
+    <span class="toc-desc">OUI, Unicast/Multicast/Broadcast</span>
+  </a>
+
+  <a class="toc-card" href="#sec6">
+    <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M24 14 V24 L31 29"/></svg>
+    <span class="toc-num">06</span>
+    <span class="toc-title">CSMA/CD &amp; Vollduplex</span>
+    <span class="toc-desc">Historie und moderner Betrieb</span>
+  </a>
+
+  <a class="toc-card" href="#sec7">
+    <svg viewBox="0 0 48 48"><line x1="24" y1="6" x2="24" y2="42"/><line x1="10" y1="14" x2="38" y2="14"/><path d="M10 14 L4 26 H16 Z"/><path d="M38 14 L32 26 H44 Z"/></svg>
+    <span class="toc-num">07</span>
+    <span class="toc-title">Standards &amp; Geschwindigkeiten</span>
+    <span class="toc-desc">Kabeltypen und Datenraten</span>
+  </a>
+
+  <a class="toc-card" href="#sec8">
+    <svg viewBox="0 0 48 48"><rect x="6" y="18" width="14" height="12" rx="2"/><path d="M20 24 H28"/><rect x="28" y="18" width="14" height="12" rx="2"/></svg>
+    <span class="toc-num">08</span>
+    <span class="toc-title">Switching-Grundlagen</span>
+    <span class="toc-desc">MAC-Tabelle, Learning, Flooding</span>
+  </a>
+
+  <a class="toc-card" href="#sec9">
+    <svg viewBox="0 0 48 48"><path d="M24 6 L30 20 H18 Z"/><rect x="18" y="20" width="12" height="18" rx="2"/></svg>
+    <span class="toc-num">09</span>
+    <span class="toc-title">Power over Ethernet</span>
+    <span class="toc-desc">Stromversorgung über Datenkabel</span>
+  </a>
+
+  <a class="toc-card" href="#sec10">
+    <svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="20" rx="2"/><path d="M16 36 L24 30 L32 36"/><circle cx="24" cy="18" r="4"/><path d="M18 25 a6 8 0 0 1 12 0"/></svg>
+    <span class="toc-num">10</span>
+    <span class="toc-title">Ethernet in der Medizintechnik</span>
+    <span class="toc-desc">Strukturierte Verkabelung</span>
+  </a>
+
+  <a class="toc-card" href="#sec11">
+    <svg viewBox="0 0 48 48"><rect x="8" y="8" width="32" height="24" rx="2"/><path d="M14 26 L20 18 L26 24 L34 14"/></svg>
+    <span class="toc-num">11</span>
+    <span class="toc-title">Fehlererkennung</span>
+    <span class="toc-desc">CRC/FCS-Prüfsumme</span>
+  </a>
+
+  <a class="toc-card" href="#sec12">
+    <svg viewBox="0 0 48 48"><path d="M24 8 a12 12 0 0 1 12 12 v6 l4 6 H8 l4-6 v-6 a12 12 0 0 1 12-12 Z"/><path d="M20 36 a4 4 0 0 0 8 0"/></svg>
+    <span class="toc-num">12</span>
+    <span class="toc-title">Fehleranalyse</span>
+    <span class="toc-desc">Duplex-Mismatch, Kabeldefekt</span>
+  </a>
+
+  <a class="toc-card" href="#sec13">
+    <svg viewBox="0 0 48 48"><rect x="12" y="22" width="24" height="18" rx="2"/><path d="M17 22 V15 a7 7 0 0 1 14 0 v7"/><circle cx="24" cy="30" r="2.4" class="fill"/></svg>
+    <span class="toc-num">13</span>
+    <span class="toc-title">Sicherheit am Switch-Port</span>
+    <span class="toc-desc">Port-Security, 802.1X</span>
+  </a>
+
+  <a class="toc-card" href="#sec14">
+    <svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/></svg>
+    <span class="toc-num">14</span>
+    <span class="toc-title">Begriffe und Zusammenfassung</span>
+    <span class="toc-desc">Glossar für die Praxis</span>
+  </a>
+
+</div>
+
+<h3 id="sec1">1. Definition und Zweck</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Definition</td><td>Ethernet ist eine Familie von Übertragungstechniken für kabelgebundene lokale Netzwerke, standardisiert unter IEEE 802.3, und bildet die physische und sicherungstechnische Grundlage nahezu aller heutigen LAN-Infrastrukturen.</td></tr>
+<tr><td>OSI-Zuordnung</td><td>Ethernet deckt die Bitübertragungsschicht (Schicht 1) und die Sicherungsschicht (Schicht 2) des OSI-Referenzmodells ab.</td></tr>
+<tr><td>Zweck</td><td>Zuverlässige, adressierte Übertragung von Datenrahmen (Frames) zwischen direkt oder über Switches verbundenen Endgeräten innerhalb eines lokalen Netzes.</td></tr>
+<tr><td>Bedeutung in der Krankenhaus-IT</td><td>Ethernet bildet die physische Basis, auf der VLANs (siehe Kapitel „VLAN“), IP-Adressierung und alle höheren Protokolle (HL7, DICOM, HTTP) letztlich transportiert werden.</td></tr>
+</tbody></table>
+
+<h3 id="sec2">2. Historische Entwicklung</h3>
+<table><thead><tr><th>Standard</th><th>Datenrate</th><th>Merkmal</th></tr></thead><tbody>
+<tr><td>10BASE5 / 10BASE2</td><td>10 Mbit/s</td><td>Koaxialkabel, gemeinsames Bus-Medium, historische Anfänge von Ethernet</td></tr>
+<tr><td>10BASE-T</td><td>10 Mbit/s</td><td>Erste Twisted-Pair-Variante mit sternförmiger Verkabelung über Hubs</td></tr>
+<tr><td>Fast Ethernet (100BASE-TX)</td><td>100 Mbit/s</td><td>Etablierung von Twisted-Pair-Kabeln als Standardmedium</td></tr>
+<tr><td>Gigabit Ethernet (1000BASE-T)</td><td>1 Gbit/s</td><td>Bis heute typische Anschlussgeschwindigkeit für Endgeräte</td></tr>
+<tr><td>10/25/40/100 Gigabit Ethernet</td><td>10–100 Gbit/s</td><td>Einsatz vor allem im Backbone/Rechenzentrum, meist auf Glasfaserbasis</td></tr>
+</tbody></table>
+
+<h3 id="sec3">3. OSI-Einordnung</h3>
+<table><thead><tr><th>OSI-Schicht</th><th>Ethernet-Bezug</th></tr></thead><tbody>
+<tr><td>Schicht 1 – Bitübertragung</td><td>Definiert physische Medien (Kupfer, Glasfaser), Steckverbinder, Signalisierung und Kodierung der Bits.</td></tr>
+<tr><td>Schicht 2 – Sicherung</td><td>Definiert den Frame-Aufbau, MAC-Adressierung, Fehlererkennung (FCS) und – bei switched Ethernet – die Vermittlung anhand von MAC-Adressen.</td></tr>
+<tr><td>Übergang zu Schicht 3</td><td>Das EtherType-Feld im Frame kennzeichnet das übergeordnete Protokoll (z. B. IPv4, IPv6, 802.1Q), auf dem Routing- und Transportprotokolle aufsetzen.</td></tr>
+</tbody></table>
+
+<h3 id="sec4">4. Ethernet-Frame-Aufbau</h3>
+<div class="diagram-box">
+<svg viewBox="0 0 820 160" width="100%" style="max-width:780px">
+  <g stroke="#1a5276" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="10" y="40" width="70" height="50"/>
+    <rect x="80" y="40" width="90" height="50"/>
+    <rect x="170" y="40" width="90" height="50"/>
+    <rect x="260" y="40" width="70" height="50"/>
+    <rect x="330" y="40" width="330" height="50"/>
+    <rect x="660" y="40" width="70" height="50"/>
+    <rect x="730" y="40" width="70" height="50"/>
+  </g>
+  <text x="45" y="70" font-size="9" text-anchor="middle" fill="#17324a">Präambel</text>
+  <text x="125" y="70" font-size="9" text-anchor="middle" fill="#17324a">Ziel-MAC</text>
+  <text x="215" y="70" font-size="9" text-anchor="middle" fill="#17324a">Quell-MAC</text>
+  <text x="295" y="70" font-size="9" text-anchor="middle" fill="#17324a">EtherType</text>
+  <text x="495" y="70" font-size="10" text-anchor="middle" fill="#17324a">Nutzdaten (Payload, 46–1500 Byte)</text>
+  <text x="695" y="70" font-size="9" text-anchor="middle" fill="#17324a">FCS</text>
+  <text x="765" y="70" font-size="9" text-anchor="middle" fill="#17324a">IFG</text>
+</svg>
+<div class="cap">Aufbau eines Ethernet-II-Frames von der Präambel bis zur abschließenden Prüfsumme (FCS) und der Interframe-Lücke (IFG).</div>
+</div>
+<table><thead><tr><th>Feld</th><th>Länge</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>Präambel + SFD</td><td>8 Byte</td><td>Synchronisationsmuster; das Start Frame Delimiter (SFD)-Byte markiert den eigentlichen Frame-Beginn</td></tr>
+<tr><td>Ziel-MAC-Adresse</td><td>6 Byte</td><td>Hardware-Adresse des Empfängers (Unicast, Multicast oder Broadcast)</td></tr>
+<tr><td>Quell-MAC-Adresse</td><td>6 Byte</td><td>Hardware-Adresse des Senders</td></tr>
+<tr><td>802.1Q-Tag (optional)</td><td>4 Byte</td><td>VLAN-Kennzeichnung, sofern vorhanden (siehe Kapitel „VLAN“, Abschnitt 3)</td></tr>
+<tr><td>EtherType / Length</td><td>2 Byte</td><td>Kennzeichnet das übergeordnete Protokoll (z. B. 0x0800 für IPv4) oder die Länge des Payloads</td></tr>
+<tr><td>Payload</td><td>46–1500 Byte</td><td>Eigentliche Nutzdaten, z. B. ein IP-Paket</td></tr>
+<tr><td>FCS (Frame Check Sequence)</td><td>4 Byte</td><td>CRC-32-Prüfsumme zur Erkennung von Übertragungsfehlern</td></tr>
+</tbody></table>
+
+<h3 id="sec5">5. MAC-Adressen</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Aufbau</td><td>48 Bit, üblicherweise als sechs Hexadezimal-Oktette dargestellt (z. B. 00:1A:2B:3C:4D:5E).</td></tr>
+<tr><td>OUI (Organizationally Unique Identifier)</td><td>Die ersten drei Oktette kennzeichnen den Hersteller der Netzwerkkarte und werden zentral vergeben.</td></tr>
+<tr><td>Unicast-Adresse</td><td>Adressiert genau ein Zielgerät.</td></tr>
+<tr><td>Multicast-Adresse</td><td>Adressiert eine definierte Gruppe von Empfängern (niedrigstwertiges Bit des ersten Oktetts gesetzt).</td></tr>
+<tr><td>Broadcast-Adresse</td><td>FF:FF:FF:FF:FF:FF; adressiert alle Geräte innerhalb derselben Broadcast-Domäne (vgl. Kapitel „VLAN“).</td></tr>
+<tr><td>Bezug zu DHCP</td><td>Die MAC-Adresse dient als Identifikationsmerkmal für DHCP-Reservierungen und NAC-Prüfungen (siehe Kapitel „DHCP“ und „Serielle Anbindung“).</td></tr>
+</tbody></table>
+
+<h3 id="sec6">6. CSMA/CD und Vollduplex-Betrieb</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>CSMA/CD (historisch)</td><td>Carrier Sense Multiple Access with Collision Detection; bei gemeinsam genutztem Medium (Hub-Betrieb, Halbduplex) prüfen Stationen vor dem Senden, ob das Medium frei ist, und erkennen Kollisionen.</td></tr>
+<tr><td>Kollisionsdomäne</td><td>Bereich, in dem gleichzeitiges Senden mehrerer Stationen zu Kollisionen führen kann; bei Hubs identisch mit dem gesamten angeschlossenen Segment.</td></tr>
+<tr><td>Modernes switched Ethernet</td><td>Durch den Einsatz von Switches mit dedizierten Punkt-zu-Punkt-Verbindungen und Vollduplex-Betrieb entfallen Kollisionen praktisch vollständig; CSMA/CD ist in modernen Netzen kaum noch relevant.</td></tr>
+<tr><td>Vollduplex</td><td>Gleichzeitiges Senden und Empfangen auf derselben Verbindung, wodurch die effektive Bandbreite gegenüber Halbduplex verdoppelt wird.</td></tr>
+</tbody></table>
+
+<h3 id="sec7">7. Standards und Geschwindigkeiten</h3>
+<table><thead><tr><th>Kabeltyp</th><th>Maximale Datenrate</th><th>Typische Reichweite</th></tr></thead><tbody>
+<tr><td>Cat.5e</td><td>1 Gbit/s</td><td>bis 100 m</td></tr>
+<tr><td>Cat.6</td><td>1–10 Gbit/s (10 Gbit/s eingeschränkt auf ca. 55 m)</td><td>bis 100 m</td></tr>
+<tr><td>Cat.6a</td><td>10 Gbit/s</td><td>bis 100 m</td></tr>
+<tr><td>Cat.7 / Cat.8</td><td>10–40 Gbit/s</td><td>abhängig von Anwendung, meist kürzere Strecken im Rechenzentrum</td></tr>
+<tr><td>Multimode-Glasfaser</td><td>10–100 Gbit/s</td><td>einige hundert Meter, typisch für Gebäude- und Etagenverbindungen</td></tr>
+<tr><td>Singlemode-Glasfaser</td><td>10–100 Gbit/s und mehr</td><td>mehrere Kilometer, typisch für Standortkopplungen</td></tr>
+</tbody></table>
+
+<h3 id="sec8">8. Switching-Grundlagen</h3>
+<table><thead><tr><th>Mechanismus</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>MAC-Adresstabelle</td><td>Der Switch merkt sich, an welchem Port welche Quell-MAC-Adresse zuletzt beobachtet wurde (Learning).</td></tr>
+<tr><td>Forwarding</td><td>Ist die Ziel-MAC-Adresse eines Frames bekannt, wird er ausschließlich an den zugehörigen Port weitergeleitet.</td></tr>
+<tr><td>Flooding</td><td>Ist die Ziel-MAC-Adresse unbekannt oder handelt es sich um einen Broadcast, wird der Frame an alle Ports (außer dem Eingangsport) gesendet.</td></tr>
+<tr><td>Store-and-Forward</td><td>Übliches Vermittlungsverfahren: Der gesamte Frame wird empfangen und auf Basis der FCS geprüft, bevor er weitergeleitet wird.</td></tr>
+<tr><td>Aging</td><td>Einträge in der MAC-Adresstabelle verfallen nach einer definierten Zeit ohne erneute Beobachtung, um veraltete Zuordnungen zu vermeiden.</td></tr>
+</tbody></table>
+
+<h3 id="sec9">9. Power over Ethernet (PoE)</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Grundprinzip</td><td>Übertragung elektrischer Energie über dieselben Adernpaare, die auch für die Datenübertragung genutzt werden.</td></tr>
+<tr><td>Standards</td><td>IEEE 802.3af (bis ca. 15,4 W), 802.3at/PoE+ (bis ca. 30 W) und 802.3bt/PoE++ (bis ca. 60–100 W).</td></tr>
+<tr><td>Typische Anwendungen</td><td>WLAN-Access-Points, IP-Telefone, Netzwerkkameras sowie Gateways und Bedside-Terminals zur Geräteanbindung.</td></tr>
+<tr><td>Vorteil im Klinikumfeld</td><td>Reduzierter Verkabelungsaufwand, da an vielen Standorten keine separate Stromversorgung installiert werden muss.</td></tr>
+</tbody></table>
+
+<h3 id="sec10">10. Ethernet in der Medizintechnik</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Strukturierte Verkabelung</td><td>Von der Netzwerkdose über das Patchfeld bis zum Access-Switch basiert die gesamte physische Infrastruktur auf Ethernet-Standards (siehe Kapitel „Serielle Anbindung“, Abschnitte 6–7).</td></tr>
+<tr><td>Anbindung von Gateways</td><td>Gateways, die Medizingeräte seriell einbinden, kommunizieren selbst über Ethernet mit dem restlichen Netzwerk.</td></tr>
+<tr><td>Bandbreitenplanung</td><td>Bildgebende Systeme (siehe Kapitel „Bildgebung“) benötigen aufgrund großer Datenmengen häufig Gigabit- oder 10-Gigabit-Anschlüsse.</td></tr>
+<tr><td>Redundanz</td><td>Kritische Bereiche wie Intensivstation oder OP werden häufig mit redundanten Ethernet-Uplinks ausgestattet.</td></tr>
+</tbody></table>
+
+<h3 id="sec11">11. Fehlererkennung</h3>
+<table><thead><tr><th>Mechanismus</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>CRC/FCS</td><td>Der Sender berechnet über den Frame-Inhalt eine zyklische Redundanzprüfung (CRC-32) und hängt das Ergebnis als FCS an; der Empfänger wiederholt die Berechnung und vergleicht die Werte.</td></tr>
+<tr><td>Verhalten bei Fehler</td><td>Stimmen die Prüfsummen nicht überein, wird der Frame verworfen; eine erneute Übertragung erfolgt – falls nötig – auf einer höheren Protokollschicht (z. B. TCP).</td></tr>
+<tr><td>Grenzen</td><td>CRC erkennt zufällige Übertragungsfehler zuverlässig, bietet jedoch keinen Schutz gegen absichtliche Manipulation.</td></tr>
+</tbody></table>
+
+<h3 id="sec12">12. Fehleranalyse</h3>
+<table><thead><tr><th>Fehlerbild</th><th>Mögliche Ursache</th><th>Zu prüfende Bereiche</th></tr></thead><tbody>
+<tr><td>Keine Verbindung (Link Down)</td><td>Kabeldefekt, defekter Port, falsches Kabel (Cross- statt Patchkabel bei älteren Geräten)</td><td>Physische Verbindung, Link-LED, Kabeltest</td></tr>
+<tr><td>Hohe CRC-Fehlerrate</td><td>Kabelschäden, elektromagnetische Störungen, zu lange Kabelstrecke</td><td>Kabelqualität, Verlegung, Streckenlänge</td></tr>
+<tr><td>Duplex-Mismatch</td><td>Ein Port arbeitet im Halbduplex-, der andere im Vollduplex-Modus</td><td>Auto-Negotiation-Einstellungen beider Endpunkte</td></tr>
+<tr><td>Geringer Durchsatz</td><td>Fehlerhafte Auto-Negotiation, überlastete Uplinks, falsche Kabelkategorie</td><td>Verhandelte Geschwindigkeit, Auslastung, Kabeltyp</td></tr>
+<tr><td>Broadcast-Sturm</td><td>Netzwerkschleife ohne funktionierenden Spanning Tree</td><td>Topologie, Spanning-Tree-Status (siehe Kapitel „VLAN“, Abschnitt 11)</td></tr>
+</tbody></table>
+
+<h3 id="sec13">13. Sicherheit am Switch-Port</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Port-Security</td><td>Begrenzung der Anzahl zulässiger MAC-Adressen je Port, um unautorisierte Mehrfachanschlüsse zu verhindern.</td></tr>
+<tr><td>802.1X</td><td>Port-basierte Authentifizierung vor der eigentlichen Netzwerkfreischaltung (siehe Kapitel „Serielle Anbindung“, Abschnitt 4).</td></tr>
+<tr><td>DHCP-Snooping</td><td>Verhindert, dass unautorisierte DHCP-Server an einem Switch-Port aktiv werden (siehe Kapitel „DHCP“, Abschnitt 13).</td></tr>
+<tr><td>Deaktivierung ungenutzter Ports</td><td>Reduziert die Angriffsfläche durch physisch nicht genutzte, aber aktive Anschlüsse.</td></tr>
+</tbody></table>
+
+<h3 id="sec14">14. Begriffe und Zusammenfassung</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>Frame</td><td>Grundlegende Übertragungseinheit auf der Ethernet-Sicherungsschicht.</td></tr>
+<tr><td>MAC-Adresse</td><td>Eindeutige Hardware-Adresse einer Netzwerkschnittstelle.</td></tr>
+<tr><td>FCS</td><td>Frame Check Sequence; CRC-Prüfsumme zur Fehlererkennung.</td></tr>
+<tr><td>Vollduplex</td><td>Gleichzeitiges Senden und Empfangen auf derselben Verbindung.</td></tr>
+<tr><td>PoE</td><td>Power over Ethernet; Stromversorgung über das Datenkabel.</td></tr>
+<tr><td>Store-and-Forward</td><td>Vermittlungsverfahren, bei dem der gesamte Frame vor der Weiterleitung geprüft wird.</td></tr>
+</tbody></table>
+
+<div class="note">
+  <strong>Fazit:</strong> Ethernet bildet die physische und sicherungstechnische Grundlage nahezu jeder
+  Krankenhaus-IT-Infrastruktur. Erst darauf aufbauend entfalten VLANs, DHCP und Firewalls ihre volle Wirkung –
+  ein stabiles, korrekt dimensioniertes Ethernet-Fundament ist Voraussetzung für den zuverlässigen Betrieb
+  vernetzter Medizingeräte.
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

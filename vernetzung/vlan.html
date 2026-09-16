@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VLAN – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2em 0 1.8em;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+  }
+  th, td {
+    border: 1px solid #d9e2ea;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  thead th {
+    background: #1a5276;
+    color: #fff;
+    border-color: #1a5276;
+    font-weight: 700;
+  }
+  tbody tr:nth-child(even) { background: #eaf4f8; }
+  tbody tr:hover { background: #dcedf5; }
+
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin: 1.2em 0 2em;
+  }
+  .toc-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    background: #fff;
+    border: 1px solid #d9e2ea;
+    border-radius: 10px;
+    padding: 14px 14px 16px;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 2px 8px rgba(16,42,67,.05);
+    transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  }
+  .toc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(16,42,67,.14);
+    border-color: #1a5276;
+  }
+  .toc-card svg {
+    width: 44px;
+    height: 44px;
+    stroke: #1a5276;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    margin-bottom: 4px;
+  }
+  .toc-card svg .fill { fill: #1a5276; stroke: none; }
+  .toc-card .toc-num {
+    font-size: .72em;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: #6a93ac;
+  }
+  .toc-card .toc-title {
+    font-weight: 700;
+    color: #17324a;
+    line-height: 1.25;
+  }
+  .toc-card .toc-desc {
+    font-size: .85em;
+    color: #5b7080;
+  }
+
+  .diagram-box {
+    background: #fff;
+    border: 1px solid #d9e2ea;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+    padding: 18px;
+    margin: 1.2em 0 1.8em;
+    overflow-x: auto;
+  }
+  .diagram-box svg { display:block; margin: 0 auto; }
+  .diagram-box .cap {
+    text-align: center;
+    font-size: .85em;
+    color: #5b7080;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../vernetzung/index.html">Vernetzung</a> /
+  VLAN
+</div>
+
+<div class="hero">
+  <h2>VLAN</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Logische Unterteilung eines physischen Netzwerks in mehrere voneinander getrennte Broadcast-Domänen</td></tr>
+      <tr><td>Standard</td><td>IEEE 802.1Q – VLAN-Tagging mit VLAN-ID, Trunk- und Access-Ports</td></tr>
+      <tr><td>Architektur</td><td>Zonenkonzept im Krankenhausnetz: Medizintechnik, Klinik-IT, Verwaltung, Gäste-WLAN</td></tr>
+      <tr><td>Zusammenspiel</td><td>Kopplung mit NAC (dynamische VLAN-Zuordnung), DHCP (Scope je VLAN) und Firewall (Zonentrennung)</td></tr>
+      <tr><td>Sicherheit</td><td>Schutz vor VLAN-Hopping, Native-VLAN-Härtung, Spanning Tree zur Schleifenvermeidung</td></tr>
+      <tr><td>Bezug Medizintechnik</td><td>Eigenes VLAN je Gerätekategorie zur Isolation vernetzter Medizinprodukte</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist als vertiefendes technisches Vorlesungsskript für Informatikerinnen und Informatiker
+    aufgebaut. Sie behandelt VLAN-Technologie im Detail und ordnet die Konzepte in den Kontext der Krankenhaus-IT ein.
+  </div>
+</div>
+
+<h3>Inhaltsverzeichnis</h3>
+<p>Klicken Sie auf eine Karte, um direkt zum jeweiligen Abschnitt zu springen.</p>
+<div class="toc-grid">
+
+  <a class="toc-card" href="#sec1">
+    <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><line x1="24" y1="8" x2="24" y2="40"/><line x1="8" y1="24" x2="40" y2="24"/></svg>
+    <span class="toc-num">01</span>
+    <span class="toc-title">Definition und Zweck</span>
+    <span class="toc-desc">Logische Netztrennung</span>
+  </a>
+
+  <a class="toc-card" href="#sec2">
+    <svg viewBox="0 0 48 48"><line x1="6" y1="24" x2="42" y2="24"/><circle cx="12" cy="24" r="3" class="fill"/><circle cx="24" cy="24" r="3" class="fill"/><circle cx="36" cy="24" r="3" class="fill"/></svg>
+    <span class="toc-num">02</span>
+    <span class="toc-title">Historische Motivation</span>
+    <span class="toc-desc">Broadcast- und Kollisionsdomänen</span>
+  </a>
+
+  <a class="toc-card" href="#sec3">
+    <svg viewBox="0 0 48 48"><rect x="6" y="10" width="36" height="28" rx="2"/><line x1="6" y1="18" x2="42" y2="18"/><line x1="6" y1="26" x2="42" y2="26"/><line x1="6" y1="32" x2="42" y2="32"/></svg>
+    <span class="toc-num">03</span>
+    <span class="toc-title">802.1Q-Tagging</span>
+    <span class="toc-desc">Aufbau des VLAN-Tags</span>
+  </a>
+
+  <a class="toc-card" href="#sec4">
+    <svg viewBox="0 0 48 48"><rect x="6" y="18" width="14" height="12" rx="2"/><path d="M20 24 H28"/><rect x="28" y="18" width="14" height="12" rx="2"/></svg>
+    <span class="toc-num">04</span>
+    <span class="toc-title">Trunk- und Access-Port</span>
+    <span class="toc-desc">Portmodi am Switch</span>
+  </a>
+
+  <a class="toc-card" href="#sec5">
+    <svg viewBox="0 0 48 48"><rect x="10" y="8" width="28" height="10" rx="2"/><rect x="10" y="22" width="28" height="10" rx="2"/><rect x="10" y="36" width="28" height="6" rx="2"/></svg>
+    <span class="toc-num">05</span>
+    <span class="toc-title">VLAN-Typen</span>
+    <span class="toc-desc">Data, Voice, Management, Native</span>
+  </a>
+
+  <a class="toc-card" href="#sec6">
+    <svg viewBox="0 0 48 48"><circle cx="24" cy="12" r="4"/><circle cx="10" cy="34" r="4"/><circle cx="38" cy="34" r="4"/><line x1="24" y1="16" x2="12" y2="31"/><line x1="24" y1="16" x2="36" y2="31"/></svg>
+    <span class="toc-num">06</span>
+    <span class="toc-title">Inter-VLAN-Routing</span>
+    <span class="toc-desc">Layer-3-Switch, Router-on-a-Stick</span>
+  </a>
+
+  <a class="toc-card" href="#sec7">
+    <svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="20" rx="2"/><path d="M16 36 L24 30 L32 36"/><circle cx="24" cy="18" r="4"/><path d="M18 25 a6 8 0 0 1 12 0"/></svg>
+    <span class="toc-num">07</span>
+    <span class="toc-title">VLAN-Architektur im Krankenhaus</span>
+    <span class="toc-desc">Zonenkonzept</span>
+  </a>
+
+  <a class="toc-card" href="#sec8">
+    <svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="20" rx="2"/><path d="M17 22 V15 a7 7 0 0 1 14 0 v7"/></svg>
+    <span class="toc-num">08</span>
+    <span class="toc-title">VLAN und NAC</span>
+    <span class="toc-desc">Dynamische Zuordnung</span>
+  </a>
+
+  <a class="toc-card" href="#sec9">
+    <svg viewBox="0 0 48 48"><rect x="8" y="16" width="12" height="10" rx="2"/><text x="14" y="23" font-size="6.5" text-anchor="middle" fill="#1a5276" stroke="none">MAC</text><path d="M20 21 H28"/><rect x="28" y="16" width="12" height="10" rx="2"/><text x="34" y="23" font-size="6.5" text-anchor="middle" fill="#1a5276" stroke="none">IP</text></svg>
+    <span class="toc-num">09</span>
+    <span class="toc-title">VLAN und DHCP</span>
+    <span class="toc-desc">Scope je Segment</span>
+  </a>
+
+  <a class="toc-card" href="#sec10">
+    <svg viewBox="0 0 48 48"><rect x="12" y="22" width="24" height="18" rx="2"/><path d="M17 22 V15 a7 7 0 0 1 14 0 v7"/><circle cx="24" cy="30" r="2.4" class="fill"/></svg>
+    <span class="toc-num">10</span>
+    <span class="toc-title">VLAN und Firewall</span>
+    <span class="toc-desc">Zonentrennung</span>
+  </a>
+
+  <a class="toc-card" href="#sec11">
+    <svg viewBox="0 0 48 48"><circle cx="14" cy="14" r="6"/><circle cx="34" cy="14" r="6"/><circle cx="24" cy="34" r="6"/><line x1="14" y1="20" x2="24" y2="30"/><line x1="34" y1="20" x2="24" y2="30"/><line x1="19.5" y1="14" x2="28.5" y2="14"/></svg>
+    <span class="toc-num">11</span>
+    <span class="toc-title">Spanning Tree</span>
+    <span class="toc-desc">Schleifenvermeidung</span>
+  </a>
+
+  <a class="toc-card" href="#sec12">
+    <svg viewBox="0 0 48 48"><path d="M24 8 a12 12 0 0 1 12 12 v6 l4 6 H8 l4-6 v-6 a12 12 0 0 1 12-12 Z"/><path d="M20 36 a4 4 0 0 0 8 0"/></svg>
+    <span class="toc-num">12</span>
+    <span class="toc-title">VLAN-Hopping</span>
+    <span class="toc-desc">Angriff und Gegenmaßnahmen</span>
+  </a>
+
+  <a class="toc-card" href="#sec13">
+    <svg viewBox="0 0 48 48"><rect x="6" y="16" width="14" height="16" rx="2"/><rect x="28" y="16" width="14" height="16" rx="2"/><path d="M20 24 H28" stroke-dasharray="3 3"/></svg>
+    <span class="toc-num">13</span>
+    <span class="toc-title">Hochverfügbarkeit</span>
+    <span class="toc-desc">Redundanz, MSTP</span>
+  </a>
+
+  <a class="toc-card" href="#sec14">
+    <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M24 14 V24 L31 29"/></svg>
+    <span class="toc-num">14</span>
+    <span class="toc-title">Fehleranalyse</span>
+    <span class="toc-desc">Typische Störungsbilder</span>
+  </a>
+
+  <a class="toc-card" href="#sec15">
+    <svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/></svg>
+    <span class="toc-num">15</span>
+    <span class="toc-title">Begriffe und Zusammenfassung</span>
+    <span class="toc-desc">Glossar für die Praxis</span>
+  </a>
+
+</div>
+
+<h3 id="sec1">1. Definition und Zweck</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Definition</td><td>Ein VLAN (Virtual Local Area Network) ist eine logische Unterteilung eines physischen Switching-Netzwerks in mehrere voneinander unabhängige Broadcast-Domänen, ohne dass dafür separate physische Verkabelung nötig ist.</td></tr>
+<tr><td>Standardisierung</td><td>Der maßgebliche Standard ist IEEE 802.1Q, der das VLAN-Tagging auf Ethernet-Frames definiert.</td></tr>
+<tr><td>Zweck</td><td>Logische Trennung unterschiedlicher Gerätegruppen (z. B. Medizintechnik, Verwaltung, Gäste) bei gemeinsam genutzter physischer Infrastruktur; Erhöhung von Sicherheit, Übersichtlichkeit und Performance.</td></tr>
+<tr><td>Sicht der Medizininformatik</td><td>VLANs bilden die Grundlage für die im Kapitel „Serielle Anbindung“ beschriebene Zuordnung eines neu angeschlossenen Geräts zu einem definierten Netzsegment nach erfolgreicher NAC-Prüfung.</td></tr>
+</tbody></table>
+
+<h3 id="sec2">2. Historische Motivation</h3>
+<table><thead><tr><th>Begriff</th><th>Beschreibung</th><th>Problem ohne VLAN</th></tr></thead><tbody>
+<tr><td>Kollisionsdomäne</td><td>Bereich, in dem sich mehrere Endgeräte den Übertragungskanal teilen (historisch bei Hubs relevant)</td><td>Durch modernes switched Ethernet (siehe Kapitel „Ethernet“) weitgehend gelöst</td></tr>
+<tr><td>Broadcast-Domäne</td><td>Bereich, in dem sich Broadcast-Frames (z. B. ARP-Anfragen) ungefiltert ausbreiten</td><td>In einem großen, flachen Netz erzeugt hohes Geräteaufkommen erheblichen Broadcast-Verkehr, der Bandbreite bindet und Sicherheitsrisiken erhöht</td></tr>
+<tr><td>Physische Segmentierung</td><td>Vor VLANs erforderte eine Netztrennung separate Switches und Verkabelung je Bereich</td><td>Hoher Hardware- und Verkabelungsaufwand, geringe Flexibilität bei organisatorischen Änderungen</td></tr>
+<tr><td>Lösung durch VLAN</td><td>Logische statt physische Trennung auf derselben Switching-Infrastruktur</td><td>Flexible, softwaredefinierte Netzsegmentierung ohne zusätzliche Verkabelung</td></tr>
+</tbody></table>
+
+<h3 id="sec3">3. 802.1Q-Tagging im Detail</h3>
+<div class="diagram-box">
+<svg viewBox="0 0 780 160" width="100%" style="max-width:740px">
+  <g stroke="#1a5276" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="10" y="40" width="90" height="50"/>
+    <rect x="100" y="40" width="90" height="50"/>
+    <rect x="190" y="40" width="120" height="50" fill="#eaf4f8"/>
+    <rect x="310" y="40" width="90" height="50"/>
+    <rect x="400" y="40" width="280" height="50"/>
+    <rect x="680" y="40" width="90" height="50"/>
+  </g>
+  <text x="55" y="70" font-size="10" text-anchor="middle" fill="#17324a">Ziel-MAC</text>
+  <text x="145" y="70" font-size="10" text-anchor="middle" fill="#17324a">Quell-MAC</text>
+  <text x="250" y="62" font-size="10" text-anchor="middle" fill="#17324a">802.1Q-Tag</text>
+  <text x="250" y="78" font-size="9" text-anchor="middle" fill="#5b7080">TPID · PCP · DEI · VID</text>
+  <text x="355" y="70" font-size="10" text-anchor="middle" fill="#17324a">EtherType</text>
+  <text x="540" y="70" font-size="10" text-anchor="middle" fill="#17324a">Nutzdaten (Payload)</text>
+  <text x="725" y="70" font-size="10" text-anchor="middle" fill="#17324a">FCS</text>
+</svg>
+<div class="cap">Ethernet-Frame mit eingefügtem 802.1Q-VLAN-Tag zwischen Quell-MAC-Adresse und EtherType-Feld.</div>
+</div>
+<table><thead><tr><th>Feld des VLAN-Tags</th><th>Länge</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>TPID (Tag Protocol Identifier)</td><td>2 Byte</td><td>Kennzeichnet den Frame als 802.1Q-getaggt (Wert 0x8100)</td></tr>
+<tr><td>PCP (Priority Code Point)</td><td>3 Bit</td><td>Priorisierung des Frames für Quality of Service (z. B. Sprachverkehr bevorzugt behandeln)</td></tr>
+<tr><td>DEI (Drop Eligible Indicator)</td><td>1 Bit</td><td>Kennzeichnet Frames, die bei Überlastung bevorzugt verworfen werden dürfen</td></tr>
+<tr><td>VID (VLAN Identifier)</td><td>12 Bit</td><td>Eindeutige VLAN-Kennung im Bereich 1–4094, bestimmt die Zugehörigkeit des Frames zu einem VLAN</td></tr>
+</tbody></table>
+
+<h3 id="sec4">4. Trunk- und Access-Port</h3>
+<table><thead><tr><th>Portmodus</th><th>Beschreibung</th><th>Typischer Einsatz</th></tr></thead><tbody>
+<tr><td>Access-Port</td><td>Dem Port ist genau ein VLAN fest zugeordnet; ein- und ausgehende Frames sind ungetaggt.</td><td>Anschluss eines Endgeräts, z. B. Medizingerät, Arbeitsplatzrechner</td></tr>
+<tr><td>Trunk-Port</td><td>Über den Port werden Frames mehrerer VLANs gleichzeitig transportiert, jeweils mit 802.1Q-Tag versehen.</td><td>Verbindung zwischen Switches oder zu einem Router/Layer-3-Switch</td></tr>
+<tr><td>Native VLAN</td><td>Ein auf einem Trunk-Port definiertes VLAN, dessen Frames ungetaggt übertragen werden.</td><td>Kompatibilität mit älteren, nicht 802.1Q-fähigen Geräten; sollte aus Sicherheitsgründen nicht produktiv genutzt werden (siehe Kapitel 12)</td></tr>
+</tbody></table>
+
+<h3 id="sec5">5. VLAN-Typen</h3>
+<table><thead><tr><th>VLAN-Typ</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Data-VLAN</td><td>Standard-VLAN für den regulären Nutzdatenverkehr einer Gerätegruppe.</td></tr>
+<tr><td>Voice-VLAN</td><td>Separates VLAN für IP-Telefonie mit priorisierter Behandlung (Quality of Service).</td></tr>
+<tr><td>Management-VLAN</td><td>Eigenes VLAN für die administrative Erreichbarkeit von Netzwerkkomponenten (Switches, Firewalls), getrennt vom Nutzdatenverkehr.</td></tr>
+<tr><td>Native VLAN</td><td>Siehe Kapitel 4; Sonderfall eines VLANs auf Trunk-Ports ohne Tagging.</td></tr>
+<tr><td>Quarantäne-VLAN</td><td>Isolationssegment für Geräte, die die NAC-Prüfung nicht bestanden haben (vgl. Kapitel „Serielle Anbindung“).</td></tr>
+</tbody></table>
+
+<h3 id="sec6">6. Inter-VLAN-Routing</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Notwendigkeit</td><td>VLANs sind eigenständige IP-Subnetze; Kommunikation zwischen zwei VLANs erfordert Routing auf Layer 3.</td></tr>
+<tr><td>Layer-3-Switch</td><td>Switch mit integrierter Routing-Funktion, der über sogenannte Switched Virtual Interfaces (SVI) je VLAN ein Gateway bereitstellt.</td></tr>
+<tr><td>Router-on-a-Stick</td><td>Klassische Alternative: Ein einzelner Router-Interface wird über einen Trunk-Port mit mehreren Sub-Interfaces (jeweils einem VLAN zugeordnet) verbunden.</td></tr>
+<tr><td>Kontrolle des Übergangs</td><td>Der Übergang zwischen VLANs wird in der Praxis zusätzlich durch Firewall-Regeln kontrolliert (siehe Kapitel „Firewalls“, Abschnitt 9).</td></tr>
+</tbody></table>
+
+<h3 id="sec7">7. VLAN-Architektur im Krankenhaus</h3>
+<table><thead><tr><th>VLAN</th><th>Typische Endgeräte</th><th>Besonderheit</th></tr></thead><tbody>
+<tr><td>Medizintechnik-VLAN</td><td>Beatmungsgeräte, Monitore, EKG-Geräte, Gateways</td><td>Strikte Isolation, meist keine direkte Internetverbindung</td></tr>
+<tr><td>Bildgebung-VLAN</td><td>CT, MRT, Ultraschall, PACS-nahe Systeme</td><td>Hoher Bandbreitenbedarf für Bilddatenübertragung</td></tr>
+<tr><td>Klinik-IT-VLAN</td><td>Arbeitsplatzrechner, KIS-/PDMS-Clients</td><td>Zugriff auf Applikations- und Webserver gemäß Regelwerk</td></tr>
+<tr><td>Server-VLAN</td><td>Geräteserver, Applikationsserver, Datenbankserver, Webserver</td><td>Besonders geschütztes Segment im Rechenzentrum</td></tr>
+<tr><td>Verwaltungs-VLAN</td><td>Administrative Arbeitsplätze</td><td>Getrennt von klinischen Systemen</td></tr>
+<tr><td>Gäste-VLAN</td><td>Patienten- und Besucher-WLAN</td><td>Vollständige Trennung von allen klinischen Netzsegmenten</td></tr>
+</tbody></table>
+
+<h3 id="sec8">8. VLAN und NAC</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Dynamische VLAN-Zuweisung</td><td>Nach erfolgreicher 802.1X-Authentifizierung teilt das NAC-System dem Switch-Port dynamisch das passende VLAN zu.</td></tr>
+<tr><td>Kopplung an Gerätetyp</td><td>Die Zuordnung kann auf Zertifikaten, MAC-Adressen oder Vendor-Informationen basieren, um z. B. ein Medizingerät automatisch in das Medizintechnik-VLAN einzuordnen.</td></tr>
+<tr><td>Quarantäne bei Fehlversuch</td><td>Nicht erkannte oder nicht autorisierte Geräte werden dem Quarantäne-VLAN zugewiesen (siehe Kapitel „Serielle Anbindung“, Abschnitt 4).</td></tr>
+</tbody></table>
+
+<h3 id="sec9">9. VLAN und DHCP</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Ein Scope je VLAN</td><td>Jedes VLAN entspricht einem eigenen IP-Subnetz und benötigt daher einen eigenen DHCP-Scope.</td></tr>
+<tr><td>DHCP-Relay</td><td>Da sich der zentrale DHCP-Server meist im Server-VLAN befindet, leitet ein DHCP-Relay-Agent (IP-Helper) die Anfragen aus den übrigen VLANs weiter (siehe Kapitel „DHCP“, Abschnitt 9).</td></tr>
+<tr><td>Konsistenz</td><td>VLAN-Zuordnung und DHCP-Scope müssen konsistent gepflegt werden, damit Geräte im richtigen Segment die passende IP-Konfiguration erhalten.</td></tr>
+</tbody></table>
+
+<h3 id="sec10">10. VLAN und Firewall</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Zonentrennung</td><td>Firewalls setzen an den Übergängen zwischen VLANs das eigentliche Sicherheitsregelwerk durch (siehe Kapitel „Firewalls“, Abschnitt 9).</td></tr>
+<tr><td>Kombinierter Schutz</td><td>VLANs erzeugen die logische Trennung, Firewalls kontrollieren, welcher Verkehr diese Trennung überhaupt überschreiten darf.</td></tr>
+<tr><td>Mikrosegmentierung</td><td>Innerhalb eines VLANs können zusätzliche Firewall-Regeln den Verkehr einzelner Gerätegruppen weiter einschränken.</td></tr>
+</tbody></table>
+
+<h3 id="sec11">11. Spanning Tree Protocol</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Problemstellung</td><td>Redundante physische Verbindungen zwischen Switches können zu Schleifen (Loops) und damit zu Broadcast-Stürmen führen.</td></tr>
+<tr><td>Spanning Tree Protocol (STP)</td><td>Berechnet einen schleifenfreien logischen Baum über die vorhandene Topologie und blockiert redundante Pfade, bis sie im Fehlerfall benötigt werden.</td></tr>
+<tr><td>Per-VLAN Spanning Tree (PVST)</td><td>Erlaubt eine eigene Spanning-Tree-Berechnung je VLAN, sodass unterschiedliche VLANs unterschiedliche redundante Pfade aktiv nutzen können.</td></tr>
+<tr><td>MSTP (Multiple Spanning Tree Protocol)</td><td>Fasst mehrere VLANs zu Instanzen zusammen und reduziert so den Rechenaufwand gegenüber PVST bei vielen VLANs.</td></tr>
+</tbody></table>
+
+<h3 id="sec12">12. VLAN-Hopping</h3>
+<table><thead><tr><th>Angriffstechnik</th><th>Beschreibung</th><th>Gegenmaßnahme</th></tr></thead><tbody>
+<tr><td>Switch Spoofing</td><td>Ein Angreifer gibt sich als Switch aus, um vom Access- in den Trunk-Modus zu wechseln und Zugriff auf alle VLANs zu erhalten.</td><td>Deaktivierung des automatischen Trunk-Aushandelns (DTP) auf Access-Ports</td></tr>
+<tr><td>Double Tagging</td><td>Ein Frame wird mit zwei VLAN-Tags versehen; nach Entfernen des äußeren (Native-VLAN-)Tags gelangt der Frame in ein anderes VLAN als vorgesehen.</td><td>Verzicht auf die Nutzung des Native VLANs für produktiven Verkehr, ungenutztes VLAN als Native VLAN definieren</td></tr>
+<tr><td>Allgemeine Härtung</td><td>—</td><td>Konsequente Trennung von Access- und Trunk-Konfiguration, Deaktivierung ungenutzter Ports, VLAN-ACLs</td></tr>
+</tbody></table>
+
+<h3 id="sec13">13. Hochverfügbarkeit</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Redundante Uplinks</td><td>Mehrere physische Verbindungen zwischen Switches, abgesichert durch Spanning Tree bzw. Link Aggregation.</td></tr>
+<tr><td>Link Aggregation</td><td>Bündelung mehrerer physischer Verbindungen zu einer logischen Verbindung mit höherer Bandbreite und Redundanz.</td></tr>
+<tr><td>Redundante Layer-3-Gateways</td><td>Protokolle wie VRRP oder HSRP stellen ein hochverfügbares Standardgateway für ein VLAN bereit.</td></tr>
+<tr><td>Relevanz für Kliniknetze</td><td>Kritische VLANs (z. B. Medizintechnik, Server) profitieren besonders von redundanter Anbindung, um Einzelausfälle abzufedern.</td></tr>
+</tbody></table>
+
+<h3 id="sec14">14. Fehleranalyse</h3>
+<table><thead><tr><th>Fehlerbild</th><th>Mögliche Ursache</th><th>Zu prüfende Bereiche</th></tr></thead><tbody>
+<tr><td>Gerät erhält keine Verbindung</td><td>Port ist dem falschen VLAN zugeordnet</td><td>Access-/Trunk-Konfiguration des Ports</td></tr>
+<tr><td>Kommunikation zwischen VLANs schlägt fehl</td><td>Fehlendes Inter-VLAN-Routing oder blockierende Firewall-Regel</td><td>Layer-3-Konfiguration, Firewall-Regelwerk</td></tr>
+<tr><td>Native-VLAN-Mismatch</td><td>Unterschiedliche Native-VLAN-Konfiguration an beiden Enden eines Trunks</td><td>Trunk-Konfiguration beider Switches</td></tr>
+<tr><td>Intermittierende Verbindungsabbrüche</td><td>Spanning-Tree-Neuberechnung nach Topologieänderung</td><td>STP-Logs, Portstatus</td></tr>
+<tr><td>Keine IP-Adresse im VLAN</td><td>Fehlender oder fehlkonfigurierter DHCP-Scope/Relay für dieses VLAN</td><td>DHCP-Konfiguration (siehe Kapitel „DHCP“)</td></tr>
+</tbody></table>
+
+<h3 id="sec15">15. Begriffe und Zusammenfassung</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>VLAN-ID (VID)</td><td>Eindeutige Kennung eines VLANs im Bereich 1–4094.</td></tr>
+<tr><td>Trunk</td><td>Portmodus zur gleichzeitigen Übertragung mehrerer VLANs auf einer physischen Verbindung.</td></tr>
+<tr><td>Access-Port</td><td>Portmodus mit fester Zuordnung zu genau einem VLAN.</td></tr>
+<tr><td>Broadcast-Domäne</td><td>Bereich, innerhalb dessen sich Broadcast-Frames ungefiltert ausbreiten.</td></tr>
+<tr><td>Inter-VLAN-Routing</td><td>Layer-3-Weiterleitung von Datenverkehr zwischen unterschiedlichen VLANs.</td></tr>
+<tr><td>Spanning Tree</td><td>Protokoll zur Vermeidung von Schleifen in redundant vermaschten Switch-Topologien.</td></tr>
+</tbody></table>
+
+<div class="note">
+  <strong>Fazit:</strong> VLANs sind das grundlegende Werkzeug zur logischen Segmentierung von Krankenhausnetzen.
+  Erst im Zusammenspiel mit NAC (dynamische Zuordnung), DHCP (Adressvergabe je Segment) und Firewalls
+  (Kontrolle der Übergänge) entsteht eine durchgängige, sichere Netzarchitektur für Medizintechnik und Klinik-IT.
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

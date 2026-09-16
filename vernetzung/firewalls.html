@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Firewalls – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* Absicherung: identische Tabellenformatierung wie auf den anderen Medizintechnik-Seiten */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2em 0 1.8em;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+  }
+  th, td {
+    border: 1px solid #d9e2ea;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  thead th {
+    background: #1a5276;
+    color: #fff;
+    border-color: #1a5276;
+    font-weight: 700;
+  }
+  tbody tr:nth-child(even) { background: #eaf4f8; }
+  tbody tr:hover { background: #dcedf5; }
+
+  /* Klickbare Einleitung / Inhaltsverzeichnis mit Icon-Grafiken */
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin: 1.2em 0 2em;
+  }
+  .toc-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    background: #fff;
+    border: 1px solid #d9e2ea;
+    border-radius: 10px;
+    padding: 14px 14px 16px;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 2px 8px rgba(16,42,67,.05);
+    transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  }
+  .toc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(16,42,67,.14);
+    border-color: #1a5276;
+  }
+  .toc-card svg {
+    width: 44px;
+    height: 44px;
+    stroke: #1a5276;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    margin-bottom: 4px;
+  }
+  .toc-card svg .fill { fill: #1a5276; stroke: none; }
+  .toc-card .toc-num {
+    font-size: .72em;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: #6a93ac;
+  }
+  .toc-card .toc-title {
+    font-weight: 700;
+    color: #17324a;
+    line-height: 1.25;
+  }
+  .toc-card .toc-desc {
+    font-size: .85em;
+    color: #5b7080;
+  }
+
+  /* Diagrammboxen */
+  .diagram-box {
+    background: #fff;
+    border: 1px solid #d9e2ea;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+    padding: 18px;
+    margin: 1.2em 0 1.8em;
+    overflow-x: auto;
+  }
+  .diagram-box svg { display:block; margin: 0 auto; }
+  .diagram-box .cap {
+    text-align: center;
+    font-size: .85em;
+    color: #5b7080;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../vernetzung/index.html">Vernetzung</a> /
+  Firewalls
+</div>
+
+<div class="hero">
+  <h2>Firewalls</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Kontrolle und Filterung des Netzwerkverkehrs zwischen unterschiedlich vertrauenswürdigen Netzsegmenten</td></tr>
+      <tr><td>Generationen</td><td>Paketfilter, Stateful-Inspection, Application-Layer-Firewall, Next-Generation-Firewall (NGFW)</td></tr>
+      <tr><td>Architektur</td><td>Zonenkonzept, DMZ, Bastion-Host, Regelwerk (ACL) mit Default-Deny-Prinzip</td></tr>
+      <tr><td>Zusatzfunktionen</td><td>NAT, VPN-Terminierung, Intrusion Prevention, Logging und Monitoring</td></tr>
+      <tr><td>Bezug Medizintechnik</td><td>Segmentierung von Medizingeräte-, Klinik-IT- und Verwaltungsnetzen; Absicherung von Geräteserver, Applikations-, Datenbank- und Webserver</td></tr>
+      <tr><td>Hochverfügbarkeit</td><td>Active/Passive- und Active/Active-Cluster für unterbrechungsfreien Betrieb</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist als vertiefendes technisches Vorlesungsskript für Informatikerinnen und Informatiker
+    aufgebaut. Sie behandelt Firewall-Technologien im Detail und ordnet die Konzepte in den Kontext der Krankenhaus-IT ein.
+  </div>
+</div>
+
+<h3>Inhaltsverzeichnis</h3>
+<p>Klicken Sie auf eine Karte, um direkt zum jeweiligen Abschnitt zu springen.</p>
+<div class="toc-grid">
+
+  <a class="toc-card" href="#sec1">
+    <svg viewBox="0 0 48 48"><rect x="12" y="10" width="24" height="28" rx="2"/><line x1="12" y1="20" x2="36" y2="20"/><line x1="12" y1="28" x2="36" y2="28"/></svg>
+    <span class="toc-num">01</span>
+    <span class="toc-title">Definition und Zweck</span>
+    <span class="toc-desc">Was eine Firewall leistet</span>
+  </a>
+
+  <a class="toc-card" href="#sec2">
+    <svg viewBox="0 0 48 48"><line x1="6" y1="24" x2="42" y2="24"/><circle cx="10" cy="24" r="3" class="fill"/><circle cx="20" cy="24" r="3" class="fill"/><circle cx="30" cy="24" r="3" class="fill"/><circle cx="40" cy="24" r="3" class="fill"/></svg>
+    <span class="toc-num">02</span>
+    <span class="toc-title">Historische Entwicklung</span>
+    <span class="toc-desc">Vier Firewall-Generationen</span>
+  </a>
+
+  <a class="toc-card" href="#sec3">
+    <svg viewBox="0 0 48 48"><rect x="6" y="18" width="14" height="12" rx="2"/><path d="M20 24 H28"/><rect x="28" y="14" width="14" height="20" rx="2"/><line x1="32" y1="20" x2="38" y2="20"/><line x1="32" y1="27" x2="38" y2="27"/></svg>
+    <span class="toc-num">03</span>
+    <span class="toc-title">Paketfilterung</span>
+    <span class="toc-desc">Header-Analyse (IP, Port, Protokoll)</span>
+  </a>
+
+  <a class="toc-card" href="#sec4">
+    <svg viewBox="0 0 48 48"><rect x="8" y="14" width="32" height="20" rx="2"/><line x1="8" y1="20" x2="40" y2="20"/><line x1="8" y1="26" x2="40" y2="26"/></svg>
+    <span class="toc-num">04</span>
+    <span class="toc-title">Stateful Inspection</span>
+    <span class="toc-desc">Zustandstabelle &amp; Connection Tracking</span>
+  </a>
+
+  <a class="toc-card" href="#sec5">
+    <svg viewBox="0 0 48 48"><circle cx="14" cy="24" r="8"/><circle cx="34" cy="24" r="8"/><path d="M22 24 H26"/></svg>
+    <span class="toc-num">05</span>
+    <span class="toc-title">Application-Layer/Proxy</span>
+    <span class="toc-desc">Vermittlung auf Anwendungsebene</span>
+  </a>
+
+  <a class="toc-card" href="#sec6">
+    <svg viewBox="0 0 48 48"><rect x="10" y="8" width="28" height="10" rx="2"/><rect x="10" y="22" width="28" height="10" rx="2"/><rect x="10" y="36" width="28" height="6" rx="2"/></svg>
+    <span class="toc-num">06</span>
+    <span class="toc-title">Next-Generation-Firewall</span>
+    <span class="toc-desc">DPI, IPS, Application Awareness</span>
+  </a>
+
+  <a class="toc-card" href="#sec7">
+    <svg viewBox="0 0 48 48"><rect x="4" y="18" width="10" height="12" rx="2"/><path d="M14 24 H22"/><rect x="18" y="10" width="14" height="28" rx="2" stroke-dasharray="3 3"/><path d="M32 24 H40"/><rect x="34" y="18" width="10" height="12" rx="2"/></svg>
+    <span class="toc-num">07</span>
+    <span class="toc-title">Architekturkonzepte</span>
+    <span class="toc-desc">DMZ, Bastion-Host, Screened Subnet</span>
+  </a>
+
+  <a class="toc-card" href="#sec8">
+    <svg viewBox="0 0 48 48"><rect x="6" y="10" width="36" height="28" rx="2"/><line x1="6" y1="18" x2="42" y2="18"/><line x1="6" y1="26" x2="42" y2="26"/><line x1="6" y1="32" x2="42" y2="32"/></svg>
+    <span class="toc-num">08</span>
+    <span class="toc-title">Regelwerk (ACL)</span>
+    <span class="toc-desc">Aufbau und Reihenfolge von Regeln</span>
+  </a>
+
+  <a class="toc-card" href="#sec9">
+    <svg viewBox="0 0 48 48"><circle cx="24" cy="10" r="4"/><circle cx="10" cy="34" r="4"/><circle cx="38" cy="34" r="4"/><line x1="24" y1="14" x2="12" y2="31"/><line x1="24" y1="14" x2="36" y2="31"/><line x1="14" y1="34" x2="34" y2="34"/></svg>
+    <span class="toc-num">09</span>
+    <span class="toc-title">Netzsegmentierung</span>
+    <span class="toc-desc">VLANs und Zonenkonzept</span>
+  </a>
+
+  <a class="toc-card" href="#sec10">
+    <svg viewBox="0 0 48 48"><rect x="8" y="16" width="12" height="10" rx="2"/><text x="14" y="23" font-size="6.5" text-anchor="middle" fill="#1a5276" stroke="none">intern</text><path d="M20 21 H28"/><rect x="28" y="16" width="12" height="10" rx="2"/><text x="34" y="23" font-size="6.5" text-anchor="middle" fill="#1a5276" stroke="none">extern</text></svg>
+    <span class="toc-num">10</span>
+    <span class="toc-title">NAT und Firewall</span>
+    <span class="toc-desc">SNAT, DNAT, Port-Forwarding</span>
+  </a>
+
+  <a class="toc-card" href="#sec11">
+    <svg viewBox="0 0 48 48"><rect x="12" y="22" width="24" height="18" rx="2"/><path d="M17 22 V15 a7 7 0 0 1 14 0 v7"/><circle cx="24" cy="30" r="2.4" class="fill"/></svg>
+    <span class="toc-num">11</span>
+    <span class="toc-title">VPN und Firewall</span>
+    <span class="toc-desc">IPsec, SSL-VPN, Fernwartung</span>
+  </a>
+
+  <a class="toc-card" href="#sec12">
+    <svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="20" rx="2"/><path d="M16 36 L24 30 L32 36"/><circle cx="24" cy="18" r="4"/><path d="M18 25 a6 8 0 0 1 12 0"/></svg>
+    <span class="toc-num">12</span>
+    <span class="toc-title">Firewalls in der Medizintechnik</span>
+    <span class="toc-desc">Schutz vernetzter Medizingeräte</span>
+  </a>
+
+  <a class="toc-card" href="#sec13">
+    <svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/><line x1="14" y1="30" x2="22" y2="30"/></svg>
+    <span class="toc-num">13</span>
+    <span class="toc-title">Logging und Monitoring</span>
+    <span class="toc-desc">SIEM-Anbindung, Audit</span>
+  </a>
+
+  <a class="toc-card" href="#sec14">
+    <svg viewBox="0 0 48 48"><rect x="6" y="16" width="14" height="16" rx="2"/><rect x="28" y="16" width="14" height="16" rx="2"/><path d="M20 24 H28" stroke-dasharray="3 3"/></svg>
+    <span class="toc-num">14</span>
+    <span class="toc-title">Hochverfügbarkeit</span>
+    <span class="toc-desc">Active/Passive, Active/Active</span>
+  </a>
+
+  <a class="toc-card" href="#sec15">
+    <svg viewBox="0 0 48 48"><path d="M24 8 a12 12 0 0 1 12 12 v6 l4 6 H8 l4-6 v-6 a12 12 0 0 1 12-12 Z"/><path d="M20 36 a4 4 0 0 0 8 0"/></svg>
+    <span class="toc-num">15</span>
+    <span class="toc-title">Angriffsvektoren und Abwehr</span>
+    <span class="toc-desc">Port-Scans, DDoS, Lateral Movement</span>
+  </a>
+
+  <a class="toc-card" href="#sec16">
+    <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M24 14 V24 L31 29"/></svg>
+    <span class="toc-num">16</span>
+    <span class="toc-title">Fehleranalyse</span>
+    <span class="toc-desc">Typische Störungsbilder</span>
+  </a>
+
+  <a class="toc-card" href="#sec17">
+    <svg viewBox="0 0 48 48"><path d="M10 10 H30 L38 18 V38 H10 Z"/><path d="M30 10 V18 H38"/><line x1="15" y1="24" x2="33" y2="24"/><line x1="15" y1="30" x2="33" y2="30"/></svg>
+    <span class="toc-num">17</span>
+    <span class="toc-title">Begriffe und Zusammenfassung</span>
+    <span class="toc-desc">Glossar für die Praxis</span>
+  </a>
+
+</div>
+
+<h3 id="sec1">1. Definition und Zweck</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Definition</td><td>Eine Firewall ist eine Netzwerk- oder Hostkomponente, die den Datenverkehr zwischen unterschiedlich vertrauenswürdigen Netzsegmenten anhand eines definierten Regelwerks kontrolliert, filtert und protokolliert.</td></tr>
+<tr><td>Zweck</td><td>Durchsetzung einer Sicherheitsrichtlinie: Nur explizit erlaubter Datenverkehr darf ein Netzsegment verlassen oder betreten (Default-Deny-Prinzip).</td></tr>
+<tr><td>Positionierung</td><td>Firewalls werden typischerweise an Netzgrenzen platziert, z. B. zwischen Internet und Krankenhausnetz, zwischen Medizintechnik-VLAN und übriger Klinik-IT oder vor dem Rechenzentrum.</td></tr>
+<tr><td>Abgrenzung</td><td>Eine Firewall ersetzt keine Endpunktsicherheit (z. B. Virenschutz), sondern ergänzt diese als netzwerkseitige Kontrollinstanz im Sinne eines mehrschichtigen Sicherheitskonzepts (Defense in Depth).</td></tr>
+</tbody></table>
+
+<h3 id="sec2">2. Historische Entwicklung</h3>
+<table><thead><tr><th>Generation</th><th>Funktionsweise</th><th>Grenzen</th></tr></thead><tbody>
+<tr><td>1. Paketfilter (statisch)</td><td>Prüfung einzelner Pakete anhand von IP-Adressen, Ports und Protokoll ohne Kontextwissen</td><td>Keine Kenntnis über Verbindungszustände; anfällig für bestimmte Spoofing-Techniken</td></tr>
+<tr><td>2. Stateful-Inspection-Firewall</td><td>Führt eine Zustandstabelle aktiver Verbindungen und bewertet Pakete im Kontext der zugehörigen Sitzung</td><td>Keine Analyse der Nutzdaten auf Anwendungsebene</td></tr>
+<tr><td>3. Application-Layer-/Proxy-Firewall</td><td>Vermittelt Verbindungen auf Anwendungsebene (z. B. HTTP-Proxy) und kann Inhalte prüfen</td><td>Höherer Ressourcenbedarf, protokollspezifische Implementierung nötig</td></tr>
+<tr><td>4. Next-Generation-Firewall (NGFW)</td><td>Kombiniert Stateful Inspection mit Deep Packet Inspection, Intrusion Prevention, Anwendungserkennung und benutzerbasierten Regeln</td><td>Komplexere Konfiguration, höherer Bedarf an Rechenleistung</td></tr>
+</tbody></table>
+
+<h3 id="sec3">3. Paketfilterung</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Funktionsweise</td><td>Jedes Paket wird isoliert anhand seines Headers bewertet: Quell-/Ziel-IP-Adresse, Quell-/Zielport und verwendetes Protokoll (TCP, UDP, ICMP).</td></tr>
+<tr><td>Entscheidungsgrundlage</td><td>Vergleich mit einer geordneten Liste von Regeln (Access Control List, ACL); die erste zutreffende Regel entscheidet über Zulassung oder Blockierung.</td></tr>
+<tr><td>Vorteil</td><td>Sehr performant, da keine Kontext- oder Inhaltsanalyse erforderlich ist.</td></tr>
+<tr><td>Nachteil</td><td>Keine Erkennung von Angriffen, die sich innerhalb erlaubter Ports/Protokolle bewegen (z. B. Anwendungsschicht-Angriffe).</td></tr>
+</tbody></table>
+
+<h3 id="sec4">4. Stateful Inspection</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Zustandstabelle</td><td>Für jede zugelassene Verbindung wird ein Eintrag (5-Tupel: Quell-IP, Ziel-IP, Quellport, Zielport, Protokoll) in einer Tabelle geführt.</td></tr>
+<tr><td>Connection Tracking</td><td>Rückkehrende Pakete einer bereits etablierten Verbindung werden automatisch zugelassen, ohne dass für sie eine eigene Regel notwendig ist.</td></tr>
+<tr><td>Sicherheitsgewinn</td><td>Deutlich robuster gegenüber Spoofing-Versuchen, da nur Pakete akzeptiert werden, die zu einer tatsächlich initiierten Verbindung gehören.</td></tr>
+<tr><td>Praxisrelevanz</td><td>Heutiger Mindeststandard; nahezu alle produktiven Firewalls arbeiten mindestens auf diesem Niveau.</td></tr>
+</tbody></table>
+
+<h3 id="sec5">5. Application-Layer- und Proxy-Firewalls</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Funktionsweise</td><td>Die Firewall tritt als Vermittler (Proxy) auf: Der Client baut eine Verbindung zur Firewall auf, diese wiederum eine separate Verbindung zum eigentlichen Ziel.</td></tr>
+<tr><td>Inhaltsprüfung</td><td>Da die Firewall den vollständigen Anwendungsprotokoll-Inhalt verarbeitet, können Inhalte gefiltert (z. B. schädliche Dateianhänge) und Protokollkonformität geprüft werden.</td></tr>
+<tr><td>Beispiel</td><td>HTTP-Proxy, der Webinhalte auf Schadcode oder unzulässige URLs prüft, bevor sie an den Client weitergeleitet werden.</td></tr>
+<tr><td>Einschränkung</td><td>Erfordert für jedes unterstützte Protokoll eine eigene Implementierung; nicht beliebig für alle Anwendungen skalierbar.</td></tr>
+</tbody></table>
+
+<h3 id="sec6">6. Next-Generation-Firewall (NGFW)</h3>
+<table><thead><tr><th>Funktion</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Deep Packet Inspection (DPI)</td><td>Analyse des tatsächlichen Paketinhalts über die reinen Header-Informationen hinaus, auch bei verschlüsseltem Verkehr nach TLS-Aufbruch.</td></tr>
+<tr><td>Intrusion Prevention System (IPS)</td><td>Erkennung und aktive Blockierung bekannter Angriffsmuster (Signaturen) und anomalen Verhaltens.</td></tr>
+<tr><td>Application Awareness</td><td>Identifikation der tatsächlich genutzten Anwendung unabhängig vom verwendeten Port (z. B. Erkennung einer Anwendung auf Port 443).</td></tr>
+<tr><td>User-Identity-Integration</td><td>Regeln können nicht nur auf IP-Adressen, sondern auf angemeldete Benutzer oder Benutzergruppen bezogen werden.</td></tr>
+<tr><td>Bedeutung für Kliniknetze</td><td>Ermöglicht granulare Kontrolle, welche Anwendungen und Benutzer mit welchen internen Systemen (z. B. Applikations- oder Datenbankserver) kommunizieren dürfen.</td></tr>
+</tbody></table>
+
+<h3 id="sec7">7. Architekturkonzepte</h3>
+<div class="diagram-box">
+<svg viewBox="0 0 820 220" width="100%" style="max-width:780px">
+  <g stroke="#1a5276" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="10" y="80" width="90" height="50" rx="6"/>
+    <rect x="150" y="80" width="90" height="50" rx="6"/>
+    <rect x="300" y="30" width="180" height="150" rx="8" stroke-dasharray="5 4"/>
+    <rect x="330" y="70" width="120" height="40" rx="4" fill="#eaf4f8"/>
+    <rect x="620" y="80" width="90" height="50" rx="6"/>
+    <rect x="720" y="80" width="90" height="50" rx="6"/>
+    <path d="M100 105 H150"/>
+    <path d="M240 105 H300"/>
+    <path d="M480 105 H620"/>
+    <path d="M710 105 H720"/>
+  </g>
+  <text x="55" y="110" font-size="11" text-anchor="middle" fill="#17324a">Internet</text>
+  <text x="195" y="110" font-size="11" text-anchor="middle" fill="#17324a">Firewall</text>
+  <text x="390" y="55" font-size="11" text-anchor="middle" fill="#17324a">DMZ</text>
+  <text x="390" y="95" font-size="10" text-anchor="middle" fill="#17324a">Bastion-Host</text>
+  <text x="390" y="150" font-size="10" text-anchor="middle" fill="#5b7080">(z. B. Web-/VPN-Gateway)</text>
+  <text x="665" y="110" font-size="11" text-anchor="middle" fill="#17324a">Firewall</text>
+  <text x="765" y="110" font-size="11" text-anchor="middle" fill="#17324a">Internes Netz</text>
+</svg>
+<div class="cap">Screened-Subnet-Architektur: zwei Firewalls umschließen eine demilitarisierte Zone (DMZ) mit exponierten Diensten (Bastion-Host).</div>
+</div>
+<table><thead><tr><th>Begriff</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Paketfilter-Router</td><td>Einfachste Architektur: ein Router mit Paketfilterregeln zwischen zwei Netzen.</td></tr>
+<tr><td>Screened Subnet / DMZ</td><td>Zwischen zwei Firewalls liegendes Netzsegment für Dienste, die von außen erreichbar sein müssen, ohne das interne Netz direkt zu exponieren.</td></tr>
+<tr><td>Bastion-Host</td><td>Speziell gehärtetes System innerhalb der DMZ, das exponierte Dienste (z. B. Webserver, VPN-Gateway) bereitstellt.</td></tr>
+<tr><td>Zonenkonzept</td><td>Aufteilung des Gesamtnetzes in mehrere Sicherheitszonen mit jeweils eigenem Vertrauensniveau und definierten Übergangsregeln.</td></tr>
+</tbody></table>
+
+<h3 id="sec8">8. Regelwerk (ACL)</h3>
+<table><thead><tr><th>Feld einer Regel</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>Quelle</td><td>IP-Adresse, Adressbereich oder Netzobjekt, von dem der Verkehr ausgeht.</td></tr>
+<tr><td>Ziel</td><td>IP-Adresse, Adressbereich oder Netzobjekt, an das der Verkehr gerichtet ist.</td></tr>
+<tr><td>Dienst/Port</td><td>Protokoll (TCP/UDP/ICMP) und Portnummer bzw. Anwendungserkennung bei NGFW.</td></tr>
+<tr><td>Aktion</td><td>Erlauben (Allow/Permit) oder Verwerfen (Deny/Drop), teils mit zusätzlicher Protokollierung.</td></tr>
+<tr><td>Reihenfolge/Priorität</td><td>Regeln werden i. d. R. von oben nach unten ausgewertet; die erste zutreffende Regel greift – die Reihenfolge ist damit sicherheitsrelevant.</td></tr>
+<tr><td>Default-Deny-Prinzip</td><td>Am Ende des Regelwerks steht eine abschließende Regel, die jeglichen nicht explizit erlaubten Verkehr verwirft.</td></tr>
+</tbody></table>
+
+<h3 id="sec9">9. Netzsegmentierung mit Firewalls</h3>
+<table><thead><tr><th>Zone</th><th>Beispielhafte Systeme</th><th>Typische Freigaben</th></tr></thead><tbody>
+<tr><td>Medizintechnik-VLAN</td><td>Medizingeräte, Gateways (vgl. Kapitel „Serielle Anbindung“)</td><td>Nur Kommunikation zum zugehörigen Geräteserver, keine direkte Internetverbindung</td></tr>
+<tr><td>Server-/Rechenzentrumszone</td><td>Geräteserver, Applikationsserver, Datenbankserver, Webserver</td><td>Kommunikation gemäß mehrschichtiger Architektur (siehe Kapitel „Serielle Anbindung“, Abschnitt 10)</td></tr>
+<tr><td>Klinik-IT-Zone</td><td>Arbeitsplatzrechner, KIS-/PDMS-Clients</td><td>Zugriff auf Webserver/Anwendungsschicht der Fachsysteme</td></tr>
+<tr><td>DMZ</td><td>Patientenportal, externe Fernwartungszugänge</td><td>Eingeschränkter, gefilterter Zugriff aus dem Internet, kein direkter Zugriff auf interne Zonen</td></tr>
+<tr><td>Gäste-/Internetzone</td><td>Gäste-WLAN, externe Netzanbindung</td><td>Vollständige Trennung von Medizintechnik- und internen Serverzonen</td></tr>
+</tbody></table>
+
+<h3 id="sec10">10. NAT und Firewall</h3>
+<table><thead><tr><th>Begriff</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>NAT (Network Address Translation)</td><td>Umsetzung privater, interner IP-Adressen auf öffentliche bzw. andere interne Adressen und umgekehrt.</td></tr>
+<tr><td>SNAT (Source NAT)</td><td>Ersetzt die Quelladresse ausgehender Pakete, typischerweise beim Übergang vom internen Netz ins Internet.</td></tr>
+<tr><td>DNAT (Destination NAT)</td><td>Ersetzt die Zieladresse eingehender Pakete, um externe Anfragen an einen internen Server weiterzuleiten (Port-Forwarding).</td></tr>
+<tr><td>Zusammenspiel mit Firewall-Regeln</td><td>NAT-Regeln und Firewall-Regeln werden gemeinsam ausgewertet; eine Portfreigabe allein genügt nicht ohne eine passende NAT-Regel und umgekehrt.</td></tr>
+</tbody></table>
+
+<h3 id="sec11">11. VPN und Firewall</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>IPsec-VPN</td><td>Verschlüsselter Tunnel auf Netzwerkebene, häufig für Standortkopplungen (Site-to-Site) genutzt.</td></tr>
+<tr><td>SSL-/TLS-VPN</td><td>Verschlüsselter Zugang für einzelne Benutzer oder externe Dienstleister, häufig browserbasiert oder über Client-Software.</td></tr>
+<tr><td>Fernwartung von Medizingeräten</td><td>Hersteller-Fernzugriffe auf bildgebende Systeme oder Gateways werden i. d. R. über ein dediziertes, zeitlich begrenztes und protokolliertes VPN-Segment geführt.</td></tr>
+<tr><td>Firewall-Rolle</td><td>Terminierung des VPN-Tunnels und anschließende Anwendung des regulären Regelwerks auf den entschlüsselten, internen Verkehr.</td></tr>
+</tbody></table>
+
+<h3 id="sec12">12. Firewalls in der Medizintechnik</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Schutzziel</td><td>Verhinderung, dass ein kompromittiertes System in einer Zone (z. B. Klinik-IT) auf sicherheitskritische Medizingeräte oder Server zugreifen kann.</td></tr>
+<tr><td>Mikrosegmentierung</td><td>Innerhalb des Medizintechnik-VLANs können granulare Regeln den Datenverkehr einzelner Gerätegruppen weiter einschränken.</td></tr>
+<tr><td>Beispielregel</td><td>Ein Beatmungsgerät bzw. dessen Gateway darf ausschließlich mit dem zugehörigen Geräteserver auf einem definierten Port kommunizieren – jeglicher weitere Verkehr wird verworfen.</td></tr>
+<tr><td>Regulatorischer Bezug</td><td>Netzsegmentierung und Firewall-Konzepte sind zentrale Bausteine im Risikomanagement vernetzter Medizinprodukte (u. a. im Sinne der Normenreihe zur IT-Netzwerksicherheit von Medizinprodukten) sowie im Rahmen von KRITIS-Anforderungen für Krankenhäuser.</td></tr>
+<tr><td>Zusammenspiel mit NAC/DHCP</td><td>Erst die Kombination aus Netzzugangskontrolle (NAC), automatisierter Adressvergabe (DHCP) und konsequenter Firewall-Segmentierung ergibt ein durchgängiges Sicherheitskonzept (vgl. Kapitel „Serielle Anbindung“ und „DHCP“).</td></tr>
+</tbody></table>
+
+<h3 id="sec13">13. Logging und Monitoring</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Regelprotokollierung</td><td>Jede zugelassene oder verworfene Verbindung kann protokolliert werden, inklusive Zeitstempel, Quelle, Ziel und angewandter Regel.</td></tr>
+<tr><td>SIEM-Anbindung</td><td>Zentrale Weiterleitung der Firewall-Logs an ein Security Information and Event Management System zur Korrelation mit anderen Sicherheitsereignissen.</td></tr>
+<tr><td>Audit</td><td>Regelmäßige Überprüfung des Regelwerks auf veraltete, zu weit gefasste oder widersprüchliche Regeln.</td></tr>
+<tr><td>Alarmierung</td><td>Automatisierte Benachrichtigung bei sicherheitsrelevanten Ereignissen, z. B. wiederholten Verbindungsversuchen aus dem Medizintechnik-Segment ins Internet.</td></tr>
+</tbody></table>
+
+<h3 id="sec14">14. Hochverfügbarkeit</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Active/Passive-Cluster</td><td>Eine zweite Firewall steht als Standby bereit und übernimmt bei Ausfall der aktiven Einheit automatisch deren Zustandstabelle und Konfiguration.</td></tr>
+<tr><td>Active/Active-Cluster</td><td>Mehrere Firewalls verarbeiten gleichzeitig Verkehr und teilen sich die Last, mit gegenseitiger Absicherung bei Ausfall einer Einheit.</td></tr>
+<tr><td>State-Synchronisation</td><td>Die Zustandstabelle aktiver Verbindungen wird zwischen den Cluster-Knoten repliziert, um Verbindungsabbrüche bei einem Failover zu vermeiden.</td></tr>
+<tr><td>Relevanz für Kliniknetze</td><td>Da Firewalls den gesamten Verkehr zu Geräte-, Applikations-, Datenbank- und Webservern kontrollieren, ist deren Hochverfügbarkeit Voraussetzung für einen unterbrechungsfreien klinischen Betrieb.</td></tr>
+</tbody></table>
+
+<h3 id="sec15">15. Typische Angriffsvektoren und Abwehr</h3>
+<table><thead><tr><th>Angriffsvektor</th><th>Beschreibung</th><th>Abwehrmaßnahme</th></tr></thead><tbody>
+<tr><td>Port-Scanning</td><td>Systematisches Abtasten von Systemen nach offenen Ports als Vorbereitung eines Angriffs</td><td>Restriktives Default-Deny-Regelwerk, Erkennung durch IPS</td></tr>
+<tr><td>Denial-of-Service (DoS/DDoS)</td><td>Überlastung eines Systems oder Dienstes durch massenhafte Anfragen</td><td>Rate-Limiting, IPS-Signaturen, ggf. vorgelagerte DDoS-Schutzdienste</td></tr>
+<tr><td>Lateral Movement</td><td>Ausbreitung eines Angreifers von einem kompromittierten System auf weitere interne Systeme</td><td>Konsequente Mikrosegmentierung und Zonentrennung</td></tr>
+<tr><td>Firewall-Fehlkonfiguration</td><td>Zu weit gefasste oder falsch priorisierte Regeln öffnen ungewollt Zugriffswege</td><td>Regelmäßige Regelwerk-Audits, Vier-Augen-Prinzip bei Änderungen</td></tr>
+<tr><td>Tunneling durch erlaubte Ports</td><td>Missbrauch offener, häufig erlaubter Ports (z. B. 443) zur Umgehung der Filterung</td><td>Application-Awareness und DPI einer NGFW</td></tr>
+</tbody></table>
+
+<h3 id="sec16">16. Fehleranalyse</h3>
+<table><thead><tr><th>Fehlerbild</th><th>Mögliche Ursache</th><th>Zu prüfende Bereiche</th></tr></thead><tbody>
+<tr><td>Verbindung wird blockiert</td><td>Fehlende oder falsch priorisierte Freigaberegel</td><td>Regelwerk, Reihenfolge der Regeln, Logging</td></tr>
+<tr><td>Verbindung bricht nach kurzer Zeit ab</td><td>Zu kurz konfigurierte Timeout-Werte der Zustandstabelle</td><td>Session-Timeout-Einstellungen</td></tr>
+<tr><td>Externer Dienst nicht erreichbar</td><td>Fehlende oder fehlerhafte NAT-Regel (DNAT/Port-Forwarding)</td><td>NAT-Konfiguration, Zielport</td></tr>
+<tr><td>Performance-Einbußen</td><td>Überlastung durch Deep Packet Inspection bei hohem Datenaufkommen</td><td>Hardwareauslastung, aktivierte NGFW-Funktionen</td></tr>
+<tr><td>Kein Failover bei Ausfall</td><td>Fehlerhafte Cluster-/State-Synchronisation</td><td>Cluster-Konfiguration, Heartbeat-Verbindung</td></tr>
+</tbody></table>
+
+<h3 id="sec17">17. Begriffe und Zusammenfassung</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>ACL</td><td>Access Control List; geordnetes Regelwerk einer Firewall.</td></tr>
+<tr><td>DMZ</td><td>Demilitarisierte Zone; Pufferzone zwischen unsicherem und internem Netz.</td></tr>
+<tr><td>Stateful Inspection</td><td>Zustandsbasierte Paketprüfung anhand einer Verbindungstabelle.</td></tr>
+<tr><td>NGFW</td><td>Next-Generation-Firewall mit Deep Packet Inspection und Anwendungserkennung.</td></tr>
+<tr><td>NAT</td><td>Network Address Translation; Umsetzung von IP-Adressen zwischen Netzsegmenten.</td></tr>
+<tr><td>Default-Deny</td><td>Sicherheitsprinzip, nach dem alles verboten ist, was nicht explizit erlaubt wurde.</td></tr>
+<tr><td>Mikrosegmentierung</td><td>Feingranulare Aufteilung eines Netzsegments in kleinere, streng kontrollierte Bereiche.</td></tr>
+</tbody></table>
+
+<div class="note">
+  <strong>Fazit:</strong> Firewalls sind ein zentraler Baustein der Netzwerksicherheit in Krankenhausumgebungen.
+  Erst das Zusammenspiel aus konsequenter Zonentrennung, einem sauber gepflegten Regelwerk, moderner
+  NGFW-Funktionalität sowie Hochverfügbarkeit gewährleistet den sicheren und unterbrechungsfreien Betrieb
+  vernetzter Medizingeräte und der zugehörigen Server-Infrastruktur.
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

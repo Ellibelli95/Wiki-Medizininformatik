@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DHCP – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* Absicherung: identische Tabellenformatierung wie auf den anderen Medizintechnik-Seiten */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2em 0 1.8em;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+  }
+  th, td {
+    border: 1px solid #d9e2ea;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  thead th {
+    background: #1a5276;
+    color: #fff;
+    border-color: #1a5276;
+    font-weight: 700;
+  }
+  tbody tr:nth-child(even) { background: #eaf4f8; }
+  tbody tr:hover { background: #dcedf5; }
+
+  /* Klickbare Einleitung / Inhaltsverzeichnis mit Icon-Grafiken */
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin: 1.2em 0 2em;
+  }
+  .toc-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    background: #fff;
+    border: 1px solid #d9e2ea;
+    border-radius: 10px;
+    padding: 14px 14px 16px;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 2px 8px rgba(16,42,67,.05);
+    transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  }
+  .toc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(16,42,67,.14);
+    border-color: #1a5276;
+  }
+  .toc-card svg {
+    width: 44px;
+    height: 44px;
+    stroke: #1a5276;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    margin-bottom: 4px;
+  }
+  .toc-card svg .fill { fill: #1a5276; stroke: none; }
+  .toc-card .toc-num {
+    font-size: .72em;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: #6a93ac;
+  }
+  .toc-card .toc-title {
+    font-weight: 700;
+    color: #17324a;
+    line-height: 1.25;
+  }
+  .toc-card .toc-desc {
+    font-size: .85em;
+    color: #5b7080;
+  }
+
+  /* Diagrammboxen */
+  .diagram-box {
+    background: #fff;
+    border: 1px solid #d9e2ea;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+    padding: 18px;
+    margin: 1.2em 0 1.8em;
+    overflow-x: auto;
+  }
+  .diagram-box svg { display:block; margin: 0 auto; }
+  .diagram-box .cap {
+    text-align: center;
+    font-size: .85em;
+    color: #5b7080;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../vernetzung/index.html">Vernetzung</a> /
+  DHCP
+</div>
+
+<div class="hero">
+  <h2>DHCP</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Dynamic Host Configuration Protocol – automatisierte Zuweisung von IP-Adressen und Netzwerkparametern an Clients</td></tr>
+      <tr><td>Protokollbasis</td><td>UDP-basiertes Client-Server-Protokoll (Ports 67/68), Weiterentwicklung von BOOTP</td></tr>
+      <tr><td>Kernprozess</td><td>DORA-Zyklus: Discover, Offer, Request, Acknowledge</td></tr>
+      <tr><td>Verwaltung</td><td>Lease-Zeiten, Reservierungen, Scopes, DHCP-Relay über Subnetzgrenzen hinweg</td></tr>
+      <tr><td>Sicherheit</td><td>DHCP-Snooping, Schutz vor Rogue-DHCP-Servern und DHCP-Starvation-Angriffen</td></tr>
+      <tr><td>Bezug Medizintechnik</td><td>Scope-Planung je VLAN, MAC-basierte Reservierungen für vernetzte Medizingeräte (siehe Kapitel „Gerätevernetzung“)</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist als vertiefendes technisches Vorlesungsskript für Informatikerinnen und Informatiker
+    aufgebaut. Sie behandelt DHCP protokolltechnisch im Detail und ordnet die Konzepte in den Kontext der Krankenhaus-IT ein.
+  </div>
+</div>
+
+<h3>Inhaltsverzeichnis</h3>
+<p>Klicken Sie auf eine Karte, um direkt zum jeweiligen Abschnitt zu springen.</p>
+<div class="toc-grid">
+
+  <a class="toc-card" href="#sec1">
+    <svg viewBox="0 0 48 48"><circle cx="14" cy="24" r="8"/><circle cx="34" cy="24" r="8"/><path d="M22 24 H26"/></svg>
+    <span class="toc-num">01</span>
+    <span class="toc-title">Definition und Zweck</span>
+    <span class="toc-desc">Was DHCP leistet</span>
+  </a>
+
+  <a class="toc-card" href="#sec2">
+    <svg viewBox="0 0 48 48"><line x1="6" y1="24" x2="42" y2="24"/><circle cx="12" cy="24" r="3" class="fill"/><circle cx="24" cy="24" r="3" class="fill"/><circle cx="36" cy="24" r="3" class="fill"/></svg>
+    <span class="toc-num">02</span>
+    <span class="toc-title">Historischer Kontext</span>
+    <span class="toc-desc">Von BOOTP zu DHCP</span>
+  </a>
+
+  <a class="toc-card" href="#sec3">
+    <svg viewBox="0 0 48 48"><rect x="6" y="18" width="14" height="12" rx="2"/><rect x="28" y="18" width="14" height="12" rx="2"/><path d="M20 24 H28"/></svg>
+    <span class="toc-num">03</span>
+    <span class="toc-title">Architektur &amp; Rollen</span>
+    <span class="toc-desc">Client, Server, Relay-Agent</span>
+  </a>
+
+  <a class="toc-card" href="#sec4">
+    <svg viewBox="0 0 48 48"><path d="M8 12 H20 M8 12 L8 20" /><path d="M40 20 H28 M40 20 L40 12"/><path d="M8 28 H20 M8 28 L8 36"/><path d="M40 36 H28 M40 36 L40 28"/></svg>
+    <span class="toc-num">04</span>
+    <span class="toc-title">Der DORA-Prozess</span>
+    <span class="toc-desc">Discover, Offer, Request, Ack</span>
+  </a>
+
+  <a class="toc-card" href="#sec5">
+    <svg viewBox="0 0 48 48"><rect x="8" y="14" width="32" height="20" rx="2"/><line x1="8" y1="20" x2="40" y2="20"/><line x1="8" y1="26" x2="40" y2="26"/></svg>
+    <span class="toc-num">05</span>
+    <span class="toc-title">Nachrichtentypen</span>
+    <span class="toc-desc">DISCOVER bis DECLINE</span>
+  </a>
+
+  <a class="toc-card" href="#sec6">
+    <svg viewBox="0 0 48 48"><rect x="6" y="10" width="36" height="28" rx="2"/><line x1="6" y1="18" x2="42" y2="18"/><line x1="6" y1="26" x2="42" y2="26"/><line x1="6" y1="32" x2="42" y2="32"/></svg>
+    <span class="toc-num">06</span>
+    <span class="toc-title">Paketaufbau im Detail</span>
+    <span class="toc-desc">Header-Felder des DHCP-Pakets</span>
+  </a>
+
+  <a class="toc-card" href="#sec7">
+    <svg viewBox="0 0 48 48"><rect x="10" y="8" width="28" height="10" rx="2"/><rect x="10" y="22" width="28" height="10" rx="2"/><rect x="10" y="36" width="28" height="6" rx="2"/></svg>
+    <span class="toc-num">07</span>
+    <span class="toc-title">DHCP-Optionen</span>
+    <span class="toc-desc">Option 1, 3, 6, 51, 53, 82 u. a.</span>
+  </a>
+
+  <a class="toc-card" href="#sec8">
+    <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M24 14 V24 L31 29"/></svg>
+    <span class="toc-num">08</span>
+    <span class="toc-title">Lease-Verwaltung</span>
+    <span class="toc-desc">T1, T2, Renewal, Rebinding</span>
+  </a>
+
+  <a class="toc-card" href="#sec9">
+    <svg viewBox="0 0 48 48"><rect x="4" y="18" width="10" height="12" rx="2"/><path d="M14 24 H22"/><rect x="22" y="14" width="10" height="20" rx="2"/><path d="M32 24 H40"/><rect x="34" y="18" width="10" height="12" rx="2"/></svg>
+    <span class="toc-num">09</span>
+    <span class="toc-title">DHCP-Relay</span>
+    <span class="toc-desc">Zuweisung über Subnetzgrenzen</span>
+  </a>
+
+  <a class="toc-card" href="#sec10">
+    <svg viewBox="0 0 48 48"><rect x="8" y="16" width="12" height="10" rx="2"/><text x="14" y="23" font-size="7" text-anchor="middle" fill="#1a5276" stroke="none">MAC</text><path d="M20 21 H28"/><rect x="28" y="16" width="12" height="10" rx="2"/><text x="34" y="23" font-size="7" text-anchor="middle" fill="#1a5276" stroke="none">IP</text></svg>
+    <span class="toc-num">10</span>
+    <span class="toc-title">Adresszuweisungsverfahren</span>
+    <span class="toc-desc">Dynamisch, automatisch, manuell</span>
+  </a>
+
+  <a class="toc-card" href="#sec11">
+    <svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="20" rx="2"/><path d="M16 36 L24 30 L32 36"/><circle cx="24" cy="18" r="4"/><path d="M18 25 a6 8 0 0 1 12 0"/></svg>
+    <span class="toc-num">11</span>
+    <span class="toc-title">DHCP in der Medizintechnik</span>
+    <span class="toc-desc">Scopes, Reservierungen, NAC</span>
+  </a>
+
+  <a class="toc-card" href="#sec12">
+    <svg viewBox="0 0 48 48"><rect x="6" y="16" width="14" height="16" rx="2"/><rect x="28" y="16" width="14" height="16" rx="2"/><path d="M20 24 H28" stroke-dasharray="3 3"/></svg>
+    <span class="toc-num">12</span>
+    <span class="toc-title">Hochverfügbarkeit</span>
+    <span class="toc-desc">Failover, Split-Scope, Cluster</span>
+  </a>
+
+  <a class="toc-card" href="#sec13">
+    <svg viewBox="0 0 48 48"><rect x="12" y="22" width="24" height="18" rx="2"/><path d="M17 22 V15 a7 7 0 0 1 14 0 v7"/><circle cx="24" cy="30" r="2.4" class="fill"/></svg>
+    <span class="toc-num">13</span>
+    <span class="toc-title">Sicherheitsaspekte</span>
+    <span class="toc-desc">Snooping, Rogue-Server, Starvation</span>
+  </a>
+
+  <a class="toc-card" href="#sec14">
+    <svg viewBox="0 0 48 48"><path d="M24 8 a12 12 0 0 1 12 12 v6 l4 6 H8 l4-6 v-6 a12 12 0 0 1 12-12 Z"/><path d="M20 36 a4 4 0 0 0 8 0"/></svg>
+    <span class="toc-num">14</span>
+    <span class="toc-title">Fehleranalyse</span>
+    <span class="toc-desc">Typische Störungsbilder</span>
+  </a>
+
+  <a class="toc-card" href="#sec15">
+    <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><text x="24" y="29" font-size="14" text-anchor="middle" fill="#1a5276" stroke="none">6</text></svg>
+    <span class="toc-num">15</span>
+    <span class="toc-title">Ausblick: DHCPv6</span>
+    <span class="toc-desc">Unterschiede zu DHCPv4</span>
+  </a>
+
+  <a class="toc-card" href="#sec16">
+    <svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/></svg>
+    <span class="toc-num">16</span>
+    <span class="toc-title">Begriffe und Zusammenfassung</span>
+    <span class="toc-desc">Glossar für die Praxis</span>
+  </a>
+
+</div>
+
+<h3 id="sec1">1. Definition und Zweck</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Definition</td><td>DHCP (Dynamic Host Configuration Protocol) ist ein Netzwerkprotokoll der Anwendungsschicht (nach OSI-Schicht 7, transportiert über UDP), das Endgeräten beim Verbindungsaufbau automatisch eine IP-Adresse sowie weitere Netzwerkkonfigurationsparameter zuweist.</td></tr>
+<tr><td>Standardisierung</td><td>DHCP ist in RFC 2131 (Protokoll) und RFC 2132 (Optionen) durch die IETF spezifiziert.</td></tr>
+<tr><td>Zweck</td><td>Vermeidung manueller IP-Konfiguration an jedem einzelnen Endgerät; zentrale, konsistente und skalierbare Verwaltung von Adressräumen.</td></tr>
+<tr><td>Transportprotokoll</td><td>UDP; der Server hört auf Port 67, der Client sendet und empfängt über Port 68.</td></tr>
+<tr><td>Übermittelte Parameter</td><td>Neben der IP-Adresse u. a. Subnetzmaske, Standardgateway, DNS-Server, Lease-Dauer und optionale herstellerspezifische Parameter.</td></tr>
+<tr><td>Bedeutung im Krankenhausnetz</td><td>Grundlage für die automatisierte Aufnahme vernetzter Endgeräte und Medizinprodukte in definierte Netzsegmente (vgl. Kapitel 11).</td></tr>
+</tbody></table>
+
+<h3 id="sec2">2. Historischer Kontext</h3>
+<table><thead><tr><th>Protokoll</th><th>Merkmale</th><th>Einordnung</th></tr></thead><tbody>
+<tr><td>RARP</td><td>Reverse Address Resolution Protocol; ermittelt zu einer bekannten MAC-Adresse die IP-Adresse</td><td>Frühe Vorstufe, sehr eingeschränkter Funktionsumfang</td></tr>
+<tr><td>BOOTP</td><td>Bootstrap Protocol (RFC 951); statische Zuordnung von MAC- zu IP-Adressen über eine Konfigurationsdatei</td><td>Direkter Vorgänger von DHCP; keine dynamische Vergabe oder Lease-Verwaltung</td></tr>
+<tr><td>DHCP</td><td>Erweiterung von BOOTP um dynamische Adressvergabe, Lease-Mechanismus und ein reichhaltiges Options-Feld</td><td>Heutiger De-facto-Standard; abwärtskompatibel zu BOOTP-Relay-Mechanismen</td></tr>
+</tbody></table>
+
+<h3 id="sec3">3. Architektur und Rollen</h3>
+<table><thead><tr><th>Rolle</th><th>Aufgabe</th><th>Typische Ausprägung</th></tr></thead><tbody>
+<tr><td><strong>DHCP-Client</strong></td><td>Endgerät, das beim Systemstart bzw. bei Verbindungsaufbau eine Konfiguration anfordert</td><td>PC, Server, Medizingerät, Gateway (vgl. Kapitel „Serielle Anbindung“)</td></tr>
+<tr><td><strong>DHCP-Server</strong></td><td>Verwaltet einen oder mehrere Adressbereiche (Scopes), beantwortet Anfragen und führt die Lease-Datenbank</td><td>Dedizierter Server, Firewall/Router mit DHCP-Funktion, redundantes Serverpaar</td></tr>
+<tr><td><strong>DHCP-Relay-Agent</strong></td><td>Leitet DHCP-Broadcasts aus einem Subnetz/VLAN ohne lokalen Server an einen zentralen DHCP-Server weiter</td><td>Layer-3-Switch oder Router mit „IP-Helper“-Funktion</td></tr>
+<tr><td><strong>Lease-Datenbank</strong></td><td>Persistente Speicherung aktiver, freier und reservierter Adressen samt Gültigkeitsdauer</td><td>Serverinterne Datenbank bzw. Datei</td></tr>
+</tbody></table>
+
+<h3 id="sec4">4. Der DORA-Prozess</h3>
+<p>Die initiale Adresszuweisung erfolgt in vier Schritten, die als DORA-Zyklus bezeichnet werden:</p>
+<div class="diagram-box">
+<svg viewBox="0 0 760 260" width="100%" style="max-width:720px">
+  <g stroke="#1a5276" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="20" y="20" width="120" height="50" rx="6"/>
+    <rect x="620" y="20" width="120" height="50" rx="6"/>
+    <path d="M140 45 H620" stroke-dasharray="6 5"/>
+    <polygon points="610,39 622,45 610,51" fill="#1a5276" stroke="none"/>
+    <path d="M620 100 H140" stroke-dasharray="6 5"/>
+    <polygon points="150,94 138,100 150,106" fill="#1a5276" stroke="none"/>
+    <path d="M140 155 H620" stroke-dasharray="6 5"/>
+    <polygon points="610,149 622,155 610,161" fill="#1a5276" stroke="none"/>
+    <path d="M620 210 H140" stroke-dasharray="6 5"/>
+    <polygon points="150,204 138,210 150,216" fill="#1a5276" stroke="none"/>
+  </g>
+  <text x="80" y="50" font-size="12" text-anchor="middle" fill="#17324a">Client</text>
+  <text x="680" y="50" font-size="12" text-anchor="middle" fill="#17324a">DHCP-Server</text>
+  <text x="380" y="35" font-size="11" text-anchor="middle" fill="#17324a">1. DHCPDISCOVER (Broadcast)</text>
+  <text x="380" y="90" font-size="11" text-anchor="middle" fill="#17324a">2. DHCPOFFER (Adressangebot)</text>
+  <text x="380" y="145" font-size="11" text-anchor="middle" fill="#17324a">3. DHCPREQUEST (Bestätigungsanfrage)</text>
+  <text x="380" y="200" font-size="11" text-anchor="middle" fill="#17324a">4. DHCPACK (Bestätigung, Lease aktiv)</text>
+</svg>
+<div class="cap">DORA-Zyklus: Discover → Offer → Request → Acknowledge.</div>
+</div>
+<table><thead><tr><th>Schritt</th><th>Nachricht</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>1</td><td>DHCPDISCOVER</td><td>Der Client sendet einen Layer-2-Broadcast (Ziel: 255.255.255.255, Quelle: 0.0.0.0), da er noch keine eigene IP-Adresse besitzt.</td></tr>
+<tr><td>2</td><td>DHCPOFFER</td><td>Jeder erreichbare DHCP-Server antwortet mit einem Adressangebot inklusive vorgeschlagener IP-Adresse und Konfigurationsparametern.</td></tr>
+<tr><td>3</td><td>DHCPREQUEST</td><td>Der Client wählt ein Angebot aus und bestätigt dies per Broadcast, sodass auch nicht ausgewählte Server über die Ablehnung informiert werden.</td></tr>
+<tr><td>4</td><td>DHCPACK</td><td>Der ausgewählte Server bestätigt die Zuweisung endgültig; der Client aktiviert die IP-Konfiguration und die Lease-Zeit beginnt zu laufen.</td></tr>
+</tbody></table>
+
+<h3 id="sec5">5. Nachrichtentypen im Detail</h3>
+<table><thead><tr><th>Nachrichtentyp</th><th>Richtung</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>DHCPDISCOVER</td><td>Client → Server (Broadcast)</td><td>Suche nach verfügbaren DHCP-Servern</td></tr>
+<tr><td>DHCPOFFER</td><td>Server → Client</td><td>Angebot einer IP-Adresse und Konfiguration</td></tr>
+<tr><td>DHCPREQUEST</td><td>Client → Server (Broadcast)</td><td>Bestätigungsanfrage für ein Angebot bzw. Erneuerung einer bestehenden Lease</td></tr>
+<tr><td>DHCPACK</td><td>Server → Client</td><td>Endgültige Bestätigung der Zuweisung</td></tr>
+<tr><td>DHCPNAK</td><td>Server → Client</td><td>Ablehnung, z. B. wenn die angeforderte Adresse nicht mehr gültig ist</td></tr>
+<tr><td>DHCPDECLINE</td><td>Client → Server</td><td>Der Client lehnt die zugewiesene Adresse ab, z. B. nach erkanntem Adresskonflikt (ARP-Prüfung)</td></tr>
+<tr><td>DHCPRELEASE</td><td>Client → Server</td><td>Der Client gibt seine Adresse vorzeitig zurück</td></tr>
+<tr><td>DHCPINFORM</td><td>Client → Server</td><td>Anfrage weiterer Konfigurationsparameter bei bereits vorhandener, manuell konfigurierter IP-Adresse</td></tr>
+</tbody></table>
+
+<h3 id="sec6">6. Paketaufbau im Detail</h3>
+<table><thead><tr><th>Feld</th><th>Länge</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>op</td><td>1 Byte</td><td>Nachrichtentyp: 1 = BOOTREQUEST (Client), 2 = BOOTREPLY (Server)</td></tr>
+<tr><td>htype / hlen</td><td>je 1 Byte</td><td>Hardware-Typ (z. B. 1 = Ethernet) und Länge der Hardware-Adresse</td></tr>
+<tr><td>hops</td><td>1 Byte</td><td>Anzahl der durchlaufenen Relay-Agenten</td></tr>
+<tr><td>xid</td><td>4 Byte</td><td>Transaktions-ID zur eindeutigen Zuordnung von Anfrage und Antwort</td></tr>
+<tr><td>secs</td><td>2 Byte</td><td>Vergangene Sekunden seit Beginn der Adressanforderung</td></tr>
+<tr><td>flags</td><td>2 Byte</td><td>U. a. das Broadcast-Flag, falls der Client noch keine Unicast-Antwort empfangen kann</td></tr>
+<tr><td>ciaddr</td><td>4 Byte</td><td>Aktuelle Client-IP-Adresse, falls bereits vorhanden (z. B. bei Renewal)</td></tr>
+<tr><td>yiaddr</td><td>4 Byte</td><td>„Your“ IP-Adresse – die dem Client zugewiesene bzw. angebotene Adresse</td></tr>
+<tr><td>siaddr</td><td>4 Byte</td><td>IP-Adresse des Servers für den nächsten Schritt (z. B. Boot-Server)</td></tr>
+<tr><td>giaddr</td><td>4 Byte</td><td>Gateway-/Relay-Agent-IP-Adresse, sofern das Paket über einen Relay-Agenten weitergeleitet wurde</td></tr>
+<tr><td>chaddr</td><td>16 Byte</td><td>Hardware-Adresse (MAC-Adresse) des Clients</td></tr>
+<tr><td>options</td><td>variabel</td><td>Erweiterbares Feld für DHCP-Optionen (siehe Kapitel 7)</td></tr>
+</tbody></table>
+
+<h3 id="sec7">7. DHCP-Optionen</h3>
+<table><thead><tr><th>Option</th><th>Bezeichnung</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>Option 1</td><td>Subnet Mask</td><td>Übermittelt die zum zugewiesenen Adressbereich gehörende Subnetzmaske</td></tr>
+<tr><td>Option 3</td><td>Router</td><td>Adresse des Standardgateways für das zugewiesene Subnetz</td></tr>
+<tr><td>Option 6</td><td>Domain Name Server</td><td>Liste der zu verwendenden DNS-Server</td></tr>
+<tr><td>Option 15</td><td>Domain Name</td><td>DNS-Suffix der Organisation</td></tr>
+<tr><td>Option 51</td><td>IP Address Lease Time</td><td>Gültigkeitsdauer der zugewiesenen Adresse in Sekunden</td></tr>
+<tr><td>Option 53</td><td>DHCP Message Type</td><td>Kennzeichnet den Nachrichtentyp (DISCOVER, OFFER, REQUEST, ACK usw.)</td></tr>
+<tr><td>Option 54</td><td>Server Identifier</td><td>Eindeutige Kennung des antwortenden DHCP-Servers</td></tr>
+<tr><td>Option 55</td><td>Parameter Request List</td><td>Liste der vom Client zusätzlich gewünschten Optionen</td></tr>
+<tr><td>Option 60</td><td>Vendor Class Identifier</td><td>Kennzeichnung des Geräte-/Herstellertyps, z. B. zur Zuordnung spezifischer Scopes für Medizingeräte</td></tr>
+<tr><td>Option 82</td><td>Relay Agent Information</td><td>Vom Relay-Agenten ergänzte Informationen (z. B. Switch-Port), nützlich für Sicherheits- und Zuordnungszwecke</td></tr>
+</tbody></table>
+
+<h3 id="sec8">8. Lease-Verwaltung</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>Lease</td><td>Zeitlich befristete „Miete“ einer IP-Adresse durch den Client; nach Ablauf muss die Adresse erneuert oder freigegeben werden.</td></tr>
+<tr><td>Lease-Zeit</td><td>Über Option 51 festgelegte Gültigkeitsdauer; typischerweise Stunden bis Tage, in Medizintechnik-Segmenten häufig lang oder als feste Reservierung konfiguriert.</td></tr>
+<tr><td>T1 (Renewal-Zeitpunkt)</td><td>Bei 50 % der Lease-Zeit erreicht; der Client sendet ein unicast DHCPREQUEST direkt an den ursprünglichen Server zur Verlängerung.</td></tr>
+<tr><td>T2 (Rebinding-Zeitpunkt)</td><td>Bei 87,5 % der Lease-Zeit erreicht, falls T1 erfolglos blieb; der Client sendet ein DHCPREQUEST per Broadcast an jeden verfügbaren Server.</td></tr>
+<tr><td>Lease-Ablauf</td><td>Antwortet kein Server bis zum Ablauf der Lease-Zeit, muss der Client die Adresse aufgeben und einen neuen DORA-Zyklus starten.</td></tr>
+</tbody></table>
+
+<h3 id="sec9">9. DHCP-Relay</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Problemstellung</td><td>DHCPDISCOVER wird als Layer-2-Broadcast gesendet und überschreitet damit keine Subnetz-/VLAN-Grenzen; ein zentraler Server außerhalb des Clientsegments würde die Anfrage nicht erhalten.</td></tr>
+<tr><td>Lösung</td><td>Ein DHCP-Relay-Agent (häufig als „IP-Helper-Adresse“ auf dem Layer-3-Switch/Router konfiguriert) wandelt den Broadcast in ein Unicast-Paket um und leitet es an den zentralen DHCP-Server weiter.</td></tr>
+<tr><td>giaddr</td><td>Der Relay-Agent trägt seine eigene IP-Adresse in das giaddr-Feld ein, damit der Server den korrekten Adressbereich (Scope) auswählen kann.</td></tr>
+<tr><td>Rückweg</td><td>Die Antwort des Servers wird an den Relay-Agenten zurückgesendet, der sie wiederum per Broadcast oder Unicast an den Client weiterleitet.</td></tr>
+<tr><td>Praxisrelevanz</td><td>Ermöglicht eine zentrale DHCP-Infrastruktur trotz zahlreicher VLANs, wie sie in Krankenhausnetzen für unterschiedliche Gerätekategorien typisch sind.</td></tr>
+</tbody></table>
+
+<h3 id="sec10">10. Adresszuweisungsverfahren</h3>
+<table><thead><tr><th>Verfahren</th><th>Beschreibung</th><th>Typischer Einsatz</th></tr></thead><tbody>
+<tr><td>Dynamische Zuweisung</td><td>Der Server vergibt eine freie Adresse aus dem Scope für die Dauer der Lease-Zeit; nach Ablauf kann dieselbe Adresse an ein anderes Gerät vergeben werden.</td><td>Arbeitsplatzrechner, mobile Endgeräte</td></tr>
+<tr><td>Automatische Zuweisung</td><td>Wie dynamisch, jedoch ohne zeitliche Begrenzung – die Adresse bleibt dem Client dauerhaft zugeordnet.</td><td>Selten genutzt, meist durch Reservierungen ersetzt</td></tr>
+<tr><td>Manuelle Zuweisung / Reservierung</td><td>Eine feste IP-Adresse wird an eine bestimmte MAC-Adresse gebunden; der DHCP-Server vergibt bei jeder Anfrage stets dieselbe Adresse.</td><td>Medizingeräte, Server, Drucker, Gateways</td></tr>
+</tbody></table>
+
+<h3 id="sec11">11. DHCP in der Medizintechnik</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Scope-Planung</td><td>Für jedes VLAN (z. B. Medizintechnik, Klinik-IT, Gäste-WLAN) wird ein eigener Adressbereich mit passender Lease-Zeit definiert.</td></tr>
+<tr><td>MAC-basierte Reservierung</td><td>Medizingeräte und deren Gateways erhalten in der Regel eine feste, MAC-gebundene IP-Adresse, damit sie nach jedem Neustart identisch erreichbar sind.</td></tr>
+<tr><td>Zusammenspiel mit NAC</td><td>Erst nach erfolgreicher Prüfung durch das Network-Access-Control-System (siehe Kapitel „Serielle Anbindung“, Abschnitt 4) wird der Port dem passenden VLAN zugeordnet, in dem anschließend die DHCP-Anfrage beantwortet wird.</td></tr>
+<tr><td>Dokumentation</td><td>Die Zuordnung von MAC-Adresse, IP-Adresse, Gerätetyp und Standort wird zusätzlich im IP-Adressmanagement (IPAM) bzw. der CMDB gepflegt.</td></tr>
+<tr><td>Option 60/82 in der Praxis</td><td>Vendor-Class-Informationen (Option 60) und Relay-Informationen (Option 82) können genutzt werden, um Geräte automatisiert dem korrekten Scope zuzuordnen.</td></tr>
+</tbody></table>
+
+<h3 id="sec12">12. Hochverfügbarkeit</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>DHCP-Failover</td><td>Zwei DHCP-Server gleichen ihre Lease-Datenbank laufend ab (Failover-Protokoll); fällt ein Server aus, übernimmt der Partner nahtlos.</td></tr>
+<tr><td>Split-Scope</td><td>Ein Adressbereich wird auf zwei unabhängige Server aufgeteilt (z. B. 80/20-Aufteilung), sodass bei Ausfall eines Servers weiterhin ein Teil der Adressen verfügbar bleibt.</td></tr>
+<tr><td>Clustering</td><td>Mehrere DHCP-Server-Instanzen arbeiten als logische Einheit mit gemeinsamer, replizierter Datenbank.</td></tr>
+<tr><td>Relevanz für Medizintechnik</td><td>In kritischen Bereichen (z. B. Intensivstation) ist die dauerhafte Erreichbarkeit des DHCP-Dienstes Voraussetzung für den unterbrechungsfreien Betrieb vernetzter Geräte.</td></tr>
+</tbody></table>
+
+<h3 id="sec13">13. Sicherheitsaspekte</h3>
+<table><thead><tr><th>Bedrohung / Maßnahme</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Rogue-DHCP-Server</td><td>Ein nicht autorisierter DHCP-Server im Netzwerk kann Clients falsche Konfigurationen (z. B. manipuliertes Gateway) zuweisen und so den Datenverkehr umleiten.</td></tr>
+<tr><td>DHCP-Snooping</td><td>Switch-Funktion, die DHCP-Nachrichten nur auf als „vertrauenswürdig“ konfigurierten Ports zulässt und so Rogue-Server verhindert.</td></tr>
+<tr><td>DHCP-Starvation-Angriff</td><td>Ein Angreifer fordert mit gefälschten MAC-Adressen systematisch alle verfügbaren Adressen eines Scopes an, um legitimen Geräten die Zuweisung zu verwehren (Denial of Service).</td></tr>
+<tr><td>Port-Security</td><td>Begrenzung der Anzahl zulässiger MAC-Adressen pro Switch-Port als ergänzende Abwehrmaßnahme.</td></tr>
+<tr><td>Kombination mit NAC/802.1X</td><td>Nur authentifizierte Geräte erhalten überhaupt Zugriff auf ein Netzsegment mit aktivem DHCP-Dienst (vgl. Kapitel „Serielle Anbindung“).</td></tr>
+</tbody></table>
+
+<h3 id="sec14">14. Fehleranalyse</h3>
+<table><thead><tr><th>Fehlerbild</th><th>Mögliche Ursache</th><th>Zu prüfende Bereiche</th></tr></thead><tbody>
+<tr><td>Client erhält keine Adresse (APIPA-Adresse 169.254.x.x)</td><td>Kein erreichbarer DHCP-Server, fehlende Relay-Konfiguration</td><td>IP-Helper-Adresse, Erreichbarkeit des Servers, Scope-Auslastung</td></tr>
+<tr><td>Scope erschöpft</td><td>Zu klein dimensionierter Adressbereich oder Starvation-Angriff</td><td>Scope-Größe, Lease-Zeiten, Sicherheitsprotokolle</td></tr>
+<tr><td>Adresskonflikt</td><td>Doppelte manuelle Konfiguration parallel zu einer DHCP-Reservierung</td><td>IPAM-Abgleich, ARP-Prüfung vor Vergabe</td></tr>
+<tr><td>Gerät erhält falsche Konfiguration</td><td>Rogue-DHCP-Server im Netzwerksegment</td><td>DHCP-Snooping-Konfiguration, Portüberwachung</td></tr>
+<tr><td>Verzögerte Adressvergabe</td><td>Hohe Serverlast oder Netzwerklatenz zum Relay-Agenten</td><td>Serverperformance, Netzwerkpfad zum DHCP-Server</td></tr>
+</tbody></table>
+
+<h3 id="sec15">15. Ausblick: DHCPv6</h3>
+<table><thead><tr><th>Aspekt</th><th>Unterschied zu DHCPv4</th></tr></thead><tbody>
+<tr><td>Adressraum</td><td>128-Bit-IPv6-Adressen statt 32-Bit-IPv4-Adressen; Adressknappheit als Motivation entfällt weitgehend.</td></tr>
+<tr><td>Autokonfiguration</td><td>IPv6 unterstützt zusätzlich SLAAC (Stateless Address Autoconfiguration); DHCPv6 kann ergänzend (Stateless) oder vollständig (Stateful) genutzt werden.</td></tr>
+<tr><td>Nachrichtenmodell</td><td>Andere Nachrichtennamen (Solicit, Advertise, Request, Reply) bei vergleichbarer Grundlogik zum DORA-Prozess.</td></tr>
+<tr><td>Relevanz</td><td>In Krankenhausnetzen aktuell überwiegend IPv4/DHCPv4 im produktiven Einsatz; DHCPv6 gewinnt im Rahmen von IPv6-Migrationsprojekten an Bedeutung.</td></tr>
+</tbody></table>
+
+<h3 id="sec16">16. Begriffe und Zusammenfassung</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>Scope</td><td>Ein definierter Adressbereich, den ein DHCP-Server für ein bestimmtes Subnetz/VLAN verwaltet.</td></tr>
+<tr><td>Lease</td><td>Zeitlich befristete Zuweisung einer IP-Adresse an einen Client.</td></tr>
+<tr><td>Reservierung</td><td>Feste Bindung einer IP-Adresse an eine bestimmte MAC-Adresse innerhalb eines Scopes.</td></tr>
+<tr><td>Relay-Agent</td><td>Netzwerkkomponente, die DHCP-Broadcasts über Subnetzgrenzen hinweg weiterleitet.</td></tr>
+<tr><td>DORA</td><td>Kurzform für den Ablauf Discover – Offer – Request – Acknowledge.</td></tr>
+<tr><td>Rogue-DHCP-Server</td><td>Nicht autorisierter DHCP-Server, der Sicherheitsrisiken birgt.</td></tr>
+<tr><td>IPAM</td><td>IP Address Management; zentrale Verwaltung und Dokumentation von IP-Adressen und deren Zuordnung.</td></tr>
+</tbody></table>
+
+<div class="note">
+  <strong>Fazit:</strong> DHCP ist die zentrale Grundlage für die automatisierte, konsistente und skalierbare
+  Netzwerkkonfiguration in modernen IT- und Medizintechnik-Umgebungen. Für den sicheren Betrieb in Krankenhausnetzen
+  ist das Zusammenspiel von Scope-Planung, Reservierungen, Hochverfügbarkeit und Sicherheitsmechanismen
+  (DHCP-Snooping, NAC) entscheidend.
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>
