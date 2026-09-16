@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Logging im Klinikum – zentrale Log-Pipeline, SIEM, Audit-Log vs. technisches Log, Manipulationssicherheit, mit vollständigem Praxisbeispiel Zugriffsprüfung.">
+<title>Logging – MedizinInformatik Wiki</title>
+<style>
+:root{--navy:#07335f;--navy-dark:#05284b;--blue:#0b6ebc;--line:#dfe6ec;--text:#18232d;--muted:#5f6b75;--bg:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:var(--bg);line-height:1.55}
+a{color:inherit;text-decoration:none}
+.header{background:linear-gradient(135deg,#062a4f,#0a3e70);color:#fff}
+.header-inner{max-width:1400px;margin:auto;display:flex;align-items:center;gap:22px;padding:18px 24px}
+.logo{display:flex;align-items:center;gap:12px;min-width:205px}
+.logo-mark{width:44px;height:44px;border:3px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700}
+.logo-title{font-size:18px;font-weight:800;line-height:1.05}
+.logo-subtitle{font-size:11px;opacity:.8;margin-top:4px}
+.nav{position:sticky;top:0;z-index:20;background:#062b50;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.nav-inner{max-width:1400px;margin:auto;display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:thin}
+.nav a{flex:0 0 auto;color:#fff;font-size:12px;font-weight:700;padding:13px 11px 12px;text-align:center;border-bottom:3px solid transparent;transition:.2s;white-space:nowrap}
+.nav a:hover,.nav a.active{background:#0b477b;border-bottom-color:#19a9ff}
+.nav-icon{display:block;font-size:18px;line-height:1;margin-bottom:5px}
+main{max-width:1400px;margin:auto}
+.breadcrumb{max-width:1000px;margin:16px auto 0;padding:0 24px;font-size:12.5px;color:var(--muted)}
+.breadcrumb a{color:var(--blue)}
+.intro{text-align:center;padding:32px 24px 16px}
+.intro h1{margin:0 0 10px;color:var(--navy);font-size:32px;line-height:1.2}
+.intro p{max-width:900px;margin:0 auto;color:#404a53;font-size:16px}
+.note{max-width:1000px;margin:20px auto 10px;padding:13px 18px;border-left:4px solid var(--blue);background:#f4f8fb;text-align:left;color:#3c4852;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:16px 28px 34px}
+.card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:24px 18px 20px;text-align:center;display:flex;flex-direction:column;min-height:225px;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 7px 20px rgba(5,40,75,.10);border-color:#b8ccdc}
+.icon{height:58px;display:grid;place-items:center;color:var(--navy);font-size:42px;font-weight:700;margin-bottom:6px}
+.card h2{font-size:16px;color:var(--navy);margin:2px 0 9px}
+.card p{font-size:13px;color:#3f484f;margin:0 auto 16px;max-width:260px}
+.btn{display:inline-block;align-self:center;margin-top:auto;background:var(--navy);color:#fff;padding:8px 14px;border-radius:2px;font-size:12px;font-weight:700}
+.btn:hover{background:#0b6ebc}
+.footer{background:linear-gradient(135deg,#062a4f,#083966);color:#fff;text-align:center;padding:18px 20px;font-size:13px}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}.logo{min-width:190px}.header-inner{padding:14px 18px}}
+@media(max-width:760px){.header-inner{justify-content:center}.logo{min-width:0}.logo-subtitle{display:none}.grid{grid-template-columns:repeat(2,1fr);padding:14px}.intro h1{font-size:26px}.nav a{font-size:11px;padding-inline:9px}}
+@media(max-width:500px){.grid{grid-template-columns:1fr}.card{min-height:205px}.intro{padding:26px 16px 12px}.intro p{font-size:14px}}
+
+/* ==== Ergänzungen für den Artikelbereich – gleiche Farbvariablen wie oben ==== */
+.article{max-width:1000px;margin:0 auto;padding:0 24px 40px}
+.article h2.section-title{color:var(--navy);border-bottom:2px solid var(--line);padding-bottom:7px;margin-top:42px;font-size:21px}
+.article h3.sub-title{color:var(--navy);margin:22px 0 8px;font-size:16px}
+table.info-table{width:100%;border-collapse:collapse;margin:14px 0 22px;font-size:13.5px}
+table.info-table th{background:var(--navy);color:#fff;text-align:left;padding:8px 10px}
+table.info-table td{border:1px solid var(--line);padding:8px 10px;vertical-align:top}
+table.info-table tr:nth-child(even) td{background:#f7fafc}
+.node-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0 22px}
+.node-box{border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:6px;padding:10px 12px;background:#fff;font-size:13px}
+.node-box strong{display:block;color:var(--navy);font-size:13.5px;margin-bottom:4px}
+.node-box code{background:#f4f8fb;padding:1px 4px;border-radius:3px}
+.flow-steps{counter-reset:step;margin:16px 0 24px;padding:0;list-style:none}
+.flow-steps li{position:relative;padding:9px 0 9px 44px;margin-bottom:6px;border-bottom:1px dashed var(--line);font-size:13.8px}
+.flow-steps li:last-child{border-bottom:none}
+.flow-steps li::before{counter-increment:step;content:counter(step);position:absolute;left:0;top:7px;width:27px;height:27px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+.klinik-beispiel{margin:16px 0;padding:14px 18px;border-left:4px solid #2e8b57;background:#f2f9f4;font-size:13.8px;color:#20362a;border-radius:0 6px 6px 0}
+.klinik-beispiel strong{color:#1f5c3c}
+.warnbox{margin:16px 0;padding:13px 18px;border-left:4px solid #b5551f;background:#fbf2ea;color:#5a3517;font-size:13.8px;border-radius:0 6px 6px 0}
+code.tag{background:#f4f8fb;border:1px solid var(--line);padding:1px 5px;border-radius:4px;font-family:Consolas,monospace;font-size:12.5px}
+.diagram-box{margin:18px 0;padding:16px 18px;background:var(--navy-dark);color:#eaf3fb;border-radius:8px;font-family:Consolas,monospace;font-size:12.6px;line-height:1.7;overflow-x:auto;white-space:pre}
+.toc-grid .card{min-height:150px}
+.toc-grid .icon{font-size:26px;height:40px}
+.hero-visual{max-width:1000px;margin:22px auto 8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 10px;box-shadow:0 3px 14px rgba(5,40,75,.06)}
+.hero-visual svg{width:100%;height:auto;display:block}
+.img-caption{text-align:center;color:var(--muted);font-size:12px;margin:6px 0 0}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="../index.html" aria-label="MedizinInformatik Wiki Startseite">
+      <span class="logo-mark">+</span>
+      <span><span class="logo-title">MedizinInformatik<br>WIKI</span><span class="logo-subtitle">Technische Dokumentation</span></span>
+    </a>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <div class="nav-inner">
+    <a href="../index.html"><span class="nav-icon">⌂</span>Startseite</a>
+    <a href="../medizintechnik/index.html"><span class="nav-icon">♧</span>Medizintechnik</a>
+    <a href="../vernetzung/index.html"><span class="nav-icon">⌘</span>Vernetzung</a>
+    <a href="../krankenhaus-it/index.html"><span class="nav-icon">▦</span>Krankenhaus-IT</a>
+    <a href="../klinische-informationssysteme/index.html"><span class="nav-icon">▣</span>KIS &amp; Systeme</a>
+    <a href="../datenfluesse/index.html"><span class="nav-icon">⇄</span>Datenflüsse</a>
+    <a href="../schnittstellen-standards/index.html"><span class="nav-icon">⇋</span>Standards</a>
+    <a href="../server-backend/index.html"><span class="nav-icon">▤</span>Server &amp; Backend</a>
+    <a class="active" href="../cybersecurity/index.html"><span class="nav-icon">♙</span>Cybersecurity</a>
+    <a href="../web-engineering/index.html"><span class="nav-icon">&lt;/&gt;</span>Web Engineering</a>
+    <a href="../praxis/index.html"><span class="nav-icon">✚</span>Praxis / Fallbeispiele</a>
+  </div>
+</nav>
+
+<main>
+  <div class="breadcrumb"><a href="../index.html">Startseite</a> / <a href="../cybersecurity/index.html">Cybersecurity</a> / Logging</div>
+
+  <section class="intro">
+    <h1>Logging im Klinikum</h1>
+    <p>Logging erfasst systematisch, was in der IT-Infrastruktur passiert – von technischen Fehlern auf dem <a href="../server-backend/webserver.html">Webserver</a> bis zu jedem einzelnen Zugriff auf eine Patientenakte. Diese Protokolle sind sowohl für die technische Fehleranalyse als auch für Datenschutz und Nachvollziehbarkeit unverzichtbar.</p>
+    <div class="note"><strong>Kernprinzip:</strong> Logging beantwortet im Nachhinein zwei unterschiedliche Fragen: „Was ist technisch schiefgelaufen?" (System-Log) und „Wer hat wann auf welche Daten zugegriffen?" (Audit-Log). Beide Logarten werden getrennt betrachtet, aber häufig zentral zusammengeführt.</div>
+  </section>
+
+  <div class="hero-visual">
+    <svg viewBox="0 0 820 260" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrowL" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#0b6ebc"/></marker>
+      </defs>
+      <text x="410" y="22" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700" fill="#07335f">Zentrale Log-Pipeline (SIEM)</text>
+
+      <g font-family="Arial" font-size="11">
+        <rect x="20" y="45" width="140" height="45" rx="7" fill="#f4f8fb" stroke="#0b6ebc"/>
+        <text x="90" y="72" text-anchor="middle" fill="#07335f" font-weight="700">KIS-Zugriffslog</text>
+
+        <rect x="20" y="100" width="140" height="45" rx="7" fill="#f4f8fb" stroke="#0b6ebc"/>
+        <text x="90" y="127" text-anchor="middle" fill="#07335f" font-weight="700">Webserver-Log</text>
+
+        <rect x="20" y="155" width="140" height="45" rx="7" fill="#f4f8fb" stroke="#0b6ebc"/>
+        <text x="90" y="182" text-anchor="middle" fill="#07335f" font-weight="700">Kommunikations-<tspan x="90" dy="12">server-Log</tspan></text>
+
+        <rect x="20" y="210" width="140" height="35" rx="7" fill="#f4f8fb" stroke="#0b6ebc"/>
+        <text x="90" y="232" text-anchor="middle" fill="#07335f" font-weight="700">Netzwerk-Log</text>
+
+        <line x1="160" y1="67" x2="330" y2="130" stroke="#0b6ebc" stroke-width="1.4"/>
+        <line x1="160" y1="122" x2="330" y2="130" stroke="#0b6ebc" stroke-width="1.4"/>
+        <line x1="160" y1="177" x2="330" y2="130" stroke="#0b6ebc" stroke-width="1.4"/>
+        <line x1="160" y1="227" x2="330" y2="130" stroke="#0b6ebc" stroke-width="1.4"/>
+
+        <rect x="335" y="90" width="170" height="80" rx="8" fill="#07335f"/>
+        <text x="420" y="125" text-anchor="middle" fill="#fff" font-weight="700" font-size="12.5">Zentrales Log-</text>
+        <text x="420" y="142" text-anchor="middle" fill="#fff" font-weight="700" font-size="12.5">Management (SIEM)</text>
+
+        <line x1="505" y1="130" x2="565" y2="130" stroke="#0b6ebc" stroke-width="2" marker-end="url(#arrowL)"/>
+
+        <rect x="570" y="70" width="180" height="50" rx="7" fill="#f2f9f4" stroke="#2e8b57"/>
+        <text x="660" y="100" text-anchor="middle" fill="#1f5c3c" font-weight="700">Auswertung / Reports</text>
+
+        <rect x="570" y="140" width="180" height="50" rx="7" fill="#fbf2ea" stroke="#b5551f"/>
+        <text x="660" y="170" text-anchor="middle" fill="#5a3517" font-weight="700">Alarmierung bei Anomalien</text>
+        <line x1="505" y1="120" x2="565" y2="95" stroke="#0b6ebc" stroke-width="1.4"/>
+        <line x1="505" y1="140" x2="565" y2="165" stroke="#0b6ebc" stroke-width="1.4"/>
+      </g>
+    </svg>
+  </div>
+  <p class="img-caption">Abb. 1: Verschiedene Logquellen laufen zentral in einem SIEM zusammen</p>
+
+  <section class="grid toc-grid" aria-label="Artikel-Überblick">
+    <a class="card" href="#grundlagen"><div class="icon">①</div><h2>Grundlagen</h2><p>System-Log vs. Audit-Log</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#komponenten"><div class="icon">②</div><h2>Log-Pipeline</h2><p>Quelle, Agent, zentrales Log-Management</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#einsatz"><div class="icon">③</div><h2>Einsatz im Klinikum</h2><p>Zugriffsprotokolle, Nachrichtenlogs, Fehlerlogs</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#sicherheit"><div class="icon">④</div><h2>Manipulationssicherheit</h2><p>WORM-Speicher, Aufbewahrungsfristen</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#fehleranalyse"><div class="icon">⑤</div><h2>Fehleranalyse</h2><p>Log-Flut, fehlende Zeitsynchronisation</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#praxisbeispiel"><div class="icon">⑥</div><h2>Praxisbeispiel</h2><p>Zugriffsprüfung Ende-zu-Ende</p><span class="btn">Zum Abschnitt →</span></a>
+  </section>
+
+  <div class="article">
+
+    <h2 class="section-title" id="grundlagen">① Grundlagen</h2>
+    <p>Man unterscheidet grundsätzlich zwei Logarten: Das <strong>technische System-Log</strong> protokolliert Fehler, Warnungen und Performance-Ereignisse (z. B. die im <a href="../server-backend/webserver.html">Webserver-Artikel</a> beschriebenen HTTP-Statuscodes). Das <strong>Audit-Log</strong> protokolliert dagegen, wer wann auf welche personenbezogenen Daten zugegriffen hat – im IHE-Umfeld standardisiert durch das <a href="../schnittstellen-standards/ihe.html">ATNA-Profil</a>.</p>
+
+    <h2 class="section-title" id="komponenten">② Log-Pipeline</h2>
+    <table class="info-table">
+    <tr><th>Baustein</th><th>Aufgabe</th></tr>
+    <tr><td>Logquelle</td><td>Erzeugt Log-Einträge, z. B. Betriebssystem, Applikationsserver, Netzwerkgerät</td></tr>
+    <tr><td>Log-Agent</td><td>Sammelt Log-Einträge lokal und überträgt sie an das zentrale System</td></tr>
+    <tr><td>Zentrales Log-Management (SIEM)</td><td>Führt alle Logs zusammen, ermöglicht Korrelation und Volltextsuche</td></tr>
+    <tr><td>Alarmierung</td><td>Erkennt anhand von Regeln verdächtige Muster und löst automatisch Warnungen aus</td></tr>
+    </table>
+
+    <h2 class="section-title" id="einsatz">③ Einsatz im Klinikum</h2>
+    <p>Typische Logquellen im Klinikum sind Zugriffsprotokolle des KIS (wer hat welche Akte geöffnet), das im <a href="../server-backend/kommunikationsserver.html">Kommunikationsserver-Artikel</a> beschriebene Mirth-Connect-Dashboard mit Nachrichtenstatus je Kanal, sowie technische Fehlerlogs des Webservers und Datenbankservers.</p>
+
+    <h2 class="section-title" id="sicherheit">④ Manipulationssicherheit</h2>
+    <ul>
+      <li><strong>WORM-Speicher (Write Once Read Many):</strong> Einmal geschriebene Log-Einträge können nicht mehr nachträglich verändert werden.</li>
+      <li><strong>Hash-Ketten:</strong> Jeder neue Log-Eintrag enthält eine Prüfsumme des vorherigen Eintrags – nachträgliche Manipulation wird dadurch erkennbar.</li>
+      <li><strong>Aufbewahrungsfristen:</strong> Audit-Logs zu Patientendaten unterliegen eigenen, oft mehrjährigen Aufbewahrungspflichten.</li>
+      <li><strong>Zugriffsschutz auf Logs selbst:</strong> Nur ein eng begrenzter Personenkreis (z. B. Datenschutzbeauftragter) darf Audit-Logs einsehen.</li>
+    </ul>
+
+    <h2 class="section-title" id="fehleranalyse">⑤ Fehleranalyse</h2>
+    <table class="info-table">
+    <tr><th>Symptom</th><th>Typische Ursache</th><th>Lösungsansatz</th></tr>
+    <tr><td>Wichtige Fehlermeldung geht unter</td><td>Log-Flut durch zu geringschwellige Protokollierung unwichtiger Ereignisse</td><td>Log-Level und Filterregeln überarbeiten</td></tr>
+    <tr><td>Ereignisse verschiedener Systeme lassen sich zeitlich nicht zuordnen</td><td>Fehlende oder abweichende Zeitsynchronisation (NTP) zwischen Systemen</td><td>Einheitliche Zeitquelle für alle Systeme sicherstellen</td></tr>
+    <tr><td>Audit-Log zeigt Lücken</td><td>Log-Agent zeitweise nicht aktiv, Speicherplatz erschöpft</td><td>Verfügbarkeit des Log-Agents und Speicherkapazität prüfen</td></tr>
+    </table>
+
+    <div class="warnbox"><strong>Praxishinweis:</strong> Ohne einheitliche Zeitsynchronisation (NTP) über alle Systeme hinweg lassen sich Ereignisse verschiedener Logquellen im Nachhinein nicht mehr zuverlässig in die richtige Reihenfolge bringen – ein häufig unterschätztes Problem bei der Störungsanalyse über mehrere Systeme hinweg.</div>
+
+    <h2 class="section-title" id="praxisbeispiel">⑥ Praxisbeispiel: Zugriffsprüfung Ende-zu-Ende</h2>
+    <p>Der Datenschutzbeauftragte des Klinikums prüft auf Anfrage, wer auf die Akte unseres Patientenfalls zugegriffen hat.</p>
+    <ol class="flow-steps">
+      <li>Der Datenschutzbeauftragte meldet sich mit erweiterten Rechten am zentralen Log-Management an (siehe <a href="iam.html">IAM-Artikel</a>).</li>
+      <li>Er filtert das Audit-Log nach der Patienten-ID unseres Falls.</li>
+      <li>Das System zeigt alle protokollierten Zugriffe: Anmeldung von Dr. Hoffmann am Befundmonitor, Zugriff der Kodierfachkraft auf die Diagnosedaten, Abfrage des niedergelassenen Arztes über das Zuweiserportal.</li>
+      <li>Jeder Eintrag ist mit Zeitstempel, Nutzeridentität und Art des Zugriffs versehen und dank Hash-Kette nachweislich unverändert.</li>
+      <li>Der Datenschutzbeauftragte bestätigt, dass alle Zugriffe im Rahmen der jeweiligen Rolle und Berechtigung erfolgten.</li>
+    </ol>
+    <div class="klinik-beispiel"><strong>Ergebnis für die Praxis:</strong> Erst das lückenlose, manipulationssichere Audit-Log macht eine solche nachträgliche Prüfung überhaupt möglich – unabhängig davon, über wie viele unterschiedliche Systeme (KIS, PACS, Webserver-Portal) der jeweilige Zugriff ursprünglich erfolgte.</div>
+
+  </div>
+</main>
+
+<footer class="footer">© 2025 MedizinInformatik Wiki – Alle Rechte vorbehalten.</footer>
+</body>
+</html>
