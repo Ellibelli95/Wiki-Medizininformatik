@@ -1,46 +1,164 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Intensivstation – MedizinInformatik Wiki</title>
-<link rel="stylesheet" href="../assets/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intensivstation – MedizinInformatik Wiki</title>
+  <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
-<header><div class="header-inner">
-<h1>MedizinInformatik Wiki</h1>
-<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
-</div></header>
-<nav><div class="nav-inner">
-<a href="../index.html">Startseite</a>
-<a href="../medizintechnik/index.html">Medizintechnik</a>
-<a href="../vernetzung/index.html">Vernetzung</a>
-<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
-<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
-<a href="../datenfluesse/index.html">Datenflüsse</a>
-<a href="../schnittstellen-standards/index.html">Standards</a>
-<a href="../server-backend/index.html">Server</a>
-<a href="../cybersecurity/index.html">Cybersecurity</a>
-<a href="../web-engineering/index.html">Web Engineering</a>
-<a href="../praxis/index.html">Praxis</a>
-</div></nav>
+<header>
+  <div class="header-inner">
+    <h1>MedizinInformatik Wiki</h1>
+    <p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html">Startseite</a>
+    <a href="../medizintechnik/index.html">Medizintechnik</a>
+    <a href="../vernetzung/index.html">Vernetzung</a>
+    <a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+    <a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+    <a href="../datenfluesse/index.html">Datenflüsse</a>
+    <a href="../schnittstellen-standards/index.html">Standards</a>
+    <a href="../server-backend/index.html">Server</a>
+    <a href="../cybersecurity/index.html">Cybersecurity</a>
+    <a href="../web-engineering/index.html">Web Engineering</a>
+    <a href="../praxis/index.html">Praxis</a>
+  </div>
+</nav>
+
 <main>
-<div class="breadcrumb"><a href="../index.html">Startseite</a> / Praxis / Fallbeispiele / Intensivstation</div>
-<div class="hero">
+  <div class="breadcrumb">
+    <a href="../index.html">Startseite</a> / Praxis / Fallbeispiele / Intensivstation
+  </div>
 
-<h2>Intensivstation</h2>
-<p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Intensivstation</strong> vorgesehen.</p>
-<div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
-<h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+  <div class="hero">
+    <h2>Intensivstation</h2>
+    <p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Intensivstation</strong> vorgesehen.</p>
+    <div class="note">
+      <strong>Dokumentationsstruktur:</strong>
+      Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.
+    </div>
 
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+    <h3>Grundlagen</h3>
+    <p>
+      Eine Intensivstation (ICU) ist ein hochspezialisierter Bereich eines Krankenhauses, in dem
+      <strong>Patienten mit lebensbedrohlichen Erkrankungen</strong> überwacht und behandelt werden.
+      Sie ist Teil der kritischen Infrastruktur und eng mit KIS, PDMS, Monitoring-Systemen und Medizingeräten vernetzt.
+    </p>
+    <p>
+      Typische Gründe für eine Aufnahme sind schwere Ateminsuffizienz, Kreislaufversagen, Sepsis,
+      Polytrauma, postoperative Überwachung nach großen Eingriffen und Multiorganversagen.
+    </p>
 
-</div>
+    <h3>Technischer Zusammenhang</h3>
+    <p>
+      Die Intensivstation besteht aus einer Kombination aus Medizingeräten, IT-Systemen und
+      Kommunikationsstandards. Dazu gehören Patientenmonitore, Beatmungsgeräte, Infusions- und
+      Spritzenpumpen, Dialysegeräte, Bettseitengeräte sowie die angebundenen IT-Systeme wie
+      PDMS, KIS, Monitoring-Server und Schnittstellen-Gateways.
+    </p>
+    <p>
+      Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege,
+      Serverrollen und Integrationsbeispiele erweitert.
+    </p>
+
+    <h3>Komponenten & Geräte</h3>
+
+    <h4>Patientenmonitoring</h4>
+    <p>
+      Typische Hersteller sind Dräger, Philips, GE, Nihon Kohden und Mindray. Patientenmonitore
+      erfassen EKG, Herzfrequenz, SpO₂, Atemfrequenz, Blutdruck (invasiv/nicht-invasiv),
+      Temperatur und Beatmungsparameter. Die Daten werden über HL7 v2.x, HL7 FHIR oder
+      proprietäre Protokolle an Monitoring-Server und PDMS übertragen.
+    </p>
+
+    <h4>Beatmungsgeräte</h4>
+    <p>
+      Beatmungsgeräte wie Dräger Evita, GE Engström oder Mindray SynoVent ermöglichen invasive
+      und nicht-invasive Beatmung, verschiedene Druck- und Volumenmodi sowie Alarmübertragung
+      an Monitore und IT-Systeme. Sie sind zentral für die Behandlung von Patienten mit
+      Ateminsuffizienz.
+    </p>
+
+    <h4>Infusions- und Spritzenpumpen</h4>
+    <p>
+      Pumpen von B. Braun, Fresenius Kabi, Mindray und anderen Herstellern geben Medikamente
+      (z. B. Katecholamine, Sedativa, Antibiotika) und Volumeninfusionen kontrolliert ab.
+      Moderne Systeme können über HL7, IHE-PCD oder proprietäre Schnittstellen an PDMS und
+      Monitoring angebunden werden.
+    </p>
+
+    <h4>Dialyse / CRRT</h4>
+    <p>
+      Dialysegeräte (z. B. Fresenius MultiFiltrate Pro, Baxter Prismaflex) werden zur
+      kontinuierlichen Nierenersatztherapie (CRRT) bei akutem Nierenversagen eingesetzt.
+      Sie sind häufig mit PDMS und Labor-Systemen vernetzt.
+    </p>
+
+    <h4>Bettseitige Geräte</h4>
+    <p>
+      Dazu gehören Absauggeräte, Wärmesysteme, Blutgasanalysatoren, Transportmonitore und
+      mobile Röntgengeräte. Viele dieser Geräte liefern Daten an zentrale Systeme oder werden
+      zumindest in der Dokumentation erfasst.
+    </p>
+
+    <h3>Wie werden Patienten auf der Intensivstation behandelt?</h3>
+
+    <h4>Aufnahmeprozess</h4>
+    <p>
+      Patienten werden aus Notaufnahme, OP oder Normalstation übernommen. Bei der Aufnahme
+      erfolgt die Erfassung im KIS/PDMS, die Zuordnung zu Bett und Monitor, das Anlegen von
+      Monitoring, die Anlage von Labor- und Diagnostikaufträgen sowie der Start von Beatmung
+      und Infusionstherapie.
+    </p>
+
+    <h4>Überwachung & Therapie</h4>
+    <p>
+      Die Behandlung ist kontinuierlich und erfolgt durch ein interdisziplinäres Team aus
+      Intensivmediziner:innen, Pflegekräften, Medizintechnik und IT. Therapien umfassen
+      Beatmung, Kreislaufunterstützung, Antibiotikatherapie, Schmerz- und Sedierungsmanagement,
+      Dialyse und Ernährung. Alle relevanten Daten werden im PDMS und KIS dokumentiert.
+    </p>
+
+    <h4>Dokumentation & IT-Systeme</h4>
+    <p>
+      Zentrale Systeme sind PDMS (z. B. MetaVision, Copra), KIS, Monitoring-Server (z. B.
+      Dräger Infinity Gateway, Philips IntelliBridge) und Schnittstellen-Gateways. Der
+      Datenfluss erfolgt über HL7, FHIR, IHE und DICOM zwischen Geräten, PDMS, KIS, Labor
+      und Radiologie.
+    </p>
+
+    <h4>Entlassung / Verlegung</h4>
+    <p>
+      Nach Stabilisierung, Weaning von der Beatmung und Reduktion der Medikation erfolgt die
+      Verlegung auf Normalstation oder in die Reha. Abschließend werden alle relevanten
+      Daten im PDMS/KIS dokumentiert und der Fall abgeschlossen.
+    </p>
+
+    <h3>Praxis und Fehleranalyse</h3>
+    <p>
+      Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und
+      Lösungsansätze. Dazu gehören Netzwerkprobleme, Schnittstellenfehler (HL7/FHIR),
+      defekte Sensoren, Pumpenalarme, Beatmungsalarme und Importfehler im PDMS.
+    </p>
+
+    <h4>Praxisbeispiel: Patient mit Ateminsuffizienz</h4>
+    <p>
+      Ein Patient mit schwerer Ateminsuffizienz wird aufgenommen, an Monitor und Beatmungsgerät
+      angeschlossen, Blutgasanalysen werden durchgeführt und die Therapie wird täglich anhand
+      der dokumentierten Daten und klinischen Befunde angepasst. Der gesamte Verlauf ist
+      im PDMS nachvollziehbar.
+    </p>
+
+  </div>
 </main>
-<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+
+<footer>
+  MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki
+</footer>
 </body>
 </html>
