@@ -5,12 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Notaufnahme – MedizinInformatik Wiki</title>
 <link rel="stylesheet" href="../assets/style.css">
+<style>
+.image-gallery {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+.image-gallery figure {
+  width: 30%;
+  background: #f7f7f7;
+  padding: 10px;
+  border-radius: 8px;
+}
+.image-gallery img {
+  width: 100%;
+  border-radius: 6px;
+}
+.image-gallery figcaption {
+  font-size: 0.9em;
+  margin-top: 5px;
+  text-align: center;
+}
+</style>
 </head>
+
 <body>
 <header><div class="header-inner">
 <h1>MedizinInformatik Wiki</h1>
 <p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
 </div></header>
+
 <nav><div class="nav-inner">
 <a href="../index.html">Startseite</a>
 <a href="../medizintechnik/index.html">Medizintechnik</a>
@@ -24,23 +49,148 @@
 <a href="../web-engineering/index.html">Web Engineering</a>
 <a href="../praxis/index.html">Praxis</a>
 </div></nav>
+
 <main>
 <div class="breadcrumb"><a href="../index.html">Startseite</a> / Praxis / Fallbeispiele / Notaufnahme</div>
+
 <div class="hero">
 
 <h2>Notaufnahme</h2>
 <p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Notaufnahme</strong> vorgesehen.</p>
 <div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
-<h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
 
+<!-- GRUNDLAGEN -->
+<h3>Grundlagen</h3>
+<p>
+Die Notaufnahme ist die zentrale Anlaufstelle für akut erkrankte oder verletzte Patienten.
+Sie dient der Erstdiagnostik, Stabilisierung und Einleitung der weiteren Behandlung.
+</p>
+<p>
+Typische Patienten:
+<ul>
+  <li>Trauma (Unfall, Sturz, Polytrauma)</li>
+  <li>Herz-Kreislauf-Notfälle (ACS, Rhythmusstörungen)</li>
+  <li>Schlaganfall</li>
+  <li>Atemnot / COPD / Asthma</li>
+  <li>Infektionen / Sepsis</li>
+  <li>Psychiatrische Notfälle</li>
+</ul>
+</p>
+
+<!-- BILDER: AUSSENBEREICH -->
+<h3>Bilder: Notaufnahme – Außenbereich</h3>
+<div class="image-gallery">
+  <figure>
+    <img src="https://images.unsplash.com/photo-1584433144859-1fc3ab64a6b1" alt="Rettungsdienst Notaufnahme">
+    <figcaption>Rettungsdienst vor der zentralen Notaufnahme</figcaption>
+  </figure>
+  <figure>
+    <img src="https://images.unsplash.com/photo-1576765607924-3aa2c6e4f3c7" alt="Krankenhaus Eingang">
+    <figcaption>Krankenhauseingang der Notaufnahme</figcaption>
+  </figure>
+  <figure>
+    <img src="https://images.unsplash.com/photo-1580281657527-47d4a6da2b6b" alt="Patiententransport">
+    <figcaption>Patiententransport durch Rettungsteam</figcaption>
+  </figure>
+</div>
+
+<!-- TRIAGE -->
+<h3>Triage-System</h3>
+<p>
+Die Ersteinschätzung erfolgt häufig nach dem Manchester‑Triage‑System (MTS).
+</p>
+<div class="image-gallery">
+  <figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Manchester_Triage_System.png/640px-Manchester_Triage_System.png" alt="Triage Kategorien">
+    <figcaption>Kategorien der Ersteinschätzung</figcaption>
+  </figure>
+  <figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Triage_Symbole.png/640px-Triage_Symbole.png" alt="Triage Farbcodes">
+    <figcaption>Farbcodes für Dringlichkeit</figcaption>
+  </figure>
+</div>
+
+<!-- SCHOCKRAUM -->
+<h3>Schockraum</h3>
+<p>
+Der Schockraum ist der technisch am besten ausgestattete Bereich der Notaufnahme.
+</p>
+<div class="image-gallery">
+  <figure>
+    <img src="https://images.unsplash.com/photo-1580281657527-47d4a6da2b6b" alt="Schockraum Ausstattung">
+    <figcaption>Moderner Schockraum mit Monitoring und Beatmung</figcaption>
+  </figure>
+  <figure>
+    <img src="https://images.unsplash.com/photo-1580281657527-47d4a6da2b6b" alt="Schockraum Beispiel">
+    <figcaption>Interdisziplinärer Schockraum</figcaption>
+  </figure>
+</div>
+
+<!-- TECHNISCHER ZUSAMMENHANG -->
+<h3>Technischer Zusammenhang</h3>
+<p>
+Die Notaufnahme ist stark von IT-Systemen abhängig. Dazu gehören:
+</p>
+<ul>
+  <li><strong>KIS</strong> – Patientenaufnahme, Fallanlage, Diagnostik</li>
+  <li><strong>PDMS</strong> – Dokumentation bei kritischen Patienten</li>
+  <li><strong>PACS/RIS</strong> – Radiologie (CT, Röntgen, Ultraschall)</li>
+  <li><strong>LIS</strong> – Laboranbindung</li>
+  <li><strong>Monitoring</strong> – EKG, SpO₂, Blutdruck</li>
+  <li><strong>POCT</strong> – Blutgas, Glukose, CRP</li>
+</ul>
+<p>
+Schnittstellen: HL7 v2.x, HL7 FHIR, DICOM, IHE‑Profile (ED, RAD, LAB).
+</p>
+
+<!-- DATENFLUSS -->
+<h3>Datenfluss</h3>
+<ol>
+  <li>Patient kommt über Rettungsdienst oder selbstständig.</li>
+  <li>Registrierung im KIS (Fallanlage).</li>
+  <li>Triage nach Manchester‑Triage‑System.</li>
+  <li>Diagnostik: Labor, EKG, Ultraschall, CT.</li>
+  <li>Therapie: Medikamente, Infusionen, Stabilisierung.</li>
+  <li>Entscheidung: Entlassung, Aufnahme auf Station, Intensivstation.</li>
+</ol>
+
+<!-- SICHERHEIT -->
+<h3>Sicherheit</h3>
+<ul>
+  <li>Getrennte VLANs für Medizingeräte</li>
+  <li>Firewall-Regeln für PACS, LIS, KIS</li>
+  <li>Alarmmanagement für Monitoring</li>
+  <li>Audit-Logs für Dokumentation</li>
+  <li>Datenschutz bei Trauma- und Polizeifällen</li>
+</ul>
+
+<!-- FEHLERANALYSE -->
 <h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+<ul>
+  <li>HL7-Fehler: Laborwerte kommen nicht an</li>
+  <li>PACS offline: CT-Bilder nicht sichtbar</li>
+  <li>Monitoring ohne Netzwerk: Alarme fehlen</li>
+  <li>Barcode-Probleme: Proben falsch zugeordnet</li>
+  <li>Überlastung: Triage falsch priorisiert</li>
+</ul>
+
+<!-- PRAXISBEISPIEL -->
+<h4>Praxisbeispiel: Polytrauma</h4>
+<p>
+Ein Patient wird nach Verkehrsunfall eingeliefert. Im Schockraum erfolgt:
+</p>
+<ul>
+  <li>ABCDE-Assessment</li>
+  <li>Monitoring (EKG, SpO₂, RR)</li>
+  <li>Ultraschall (FAST)</li>
+  <li>Blutgas (POCT)</li>
+  <li>CT-Ganzkörperdiagnostik</li>
+  <li>Stabilisierung und Übergabe an OP oder Intensivstation</li>
+</ul>
 
 </div>
 </main>
+
 <footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
 </body>
 </html>
