@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="LOINC im Klinikum – die sechs Achsen eines LOINC-Codes, Labor-Datenfluss vom Analysegerät bis zum KIS, HL7/FHIR-Mapping und ein vollständiges Praxisbeispiel.">
+<title>LOINC – MedizinInformatik Wiki</title>
+<style>
+:root{--navy:#07335f;--navy-dark:#05284b;--blue:#0b6ebc;--line:#dfe6ec;--text:#18232d;--muted:#5f6b75;--bg:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:var(--bg);line-height:1.55}
+a{color:inherit;text-decoration:none}
+.header{background:linear-gradient(135deg,#062a4f,#0a3e70);color:#fff}
+.header-inner{max-width:1400px;margin:auto;display:flex;align-items:center;gap:22px;padding:18px 24px}
+.logo{display:flex;align-items:center;gap:12px;min-width:205px}
+.logo-mark{width:44px;height:44px;border:3px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700}
+.logo-title{font-size:18px;font-weight:800;line-height:1.05}
+.logo-subtitle{font-size:11px;opacity:.8;margin-top:4px}
+.nav{position:sticky;top:0;z-index:20;background:#062b50;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.nav-inner{max-width:1400px;margin:auto;display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:thin}
+.nav a{flex:0 0 auto;color:#fff;font-size:12px;font-weight:700;padding:13px 11px 12px;text-align:center;border-bottom:3px solid transparent;transition:.2s;white-space:nowrap}
+.nav a:hover,.nav a.active{background:#0b477b;border-bottom-color:#19a9ff}
+.nav-icon{display:block;font-size:18px;line-height:1;margin-bottom:5px}
+main{max-width:1400px;margin:auto}
+.breadcrumb{max-width:1000px;margin:16px auto 0;padding:0 24px;font-size:12.5px;color:var(--muted)}
+.breadcrumb a{color:var(--blue)}
+.intro{text-align:center;padding:32px 24px 16px}
+.intro h1{margin:0 0 10px;color:var(--navy);font-size:32px;line-height:1.2}
+.intro p{max-width:900px;margin:0 auto;color:#404a53;font-size:16px}
+.note{max-width:1000px;margin:20px auto 10px;padding:13px 18px;border-left:4px solid var(--blue);background:#f4f8fb;text-align:left;color:#3c4852;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:16px 28px 34px}
+.card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:24px 18px 20px;text-align:center;display:flex;flex-direction:column;min-height:225px;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 7px 20px rgba(5,40,75,.10);border-color:#b8ccdc}
+.icon{height:58px;display:grid;place-items:center;color:var(--navy);font-size:42px;font-weight:700;margin-bottom:6px}
+.card h2{font-size:16px;color:var(--navy);margin:2px 0 9px}
+.card p{font-size:13px;color:#3f484f;margin:0 auto 16px;max-width:260px}
+.btn{display:inline-block;align-self:center;margin-top:auto;background:var(--navy);color:#fff;padding:8px 14px;border-radius:2px;font-size:12px;font-weight:700}
+.btn:hover{background:#0b6ebc}
+.footer{background:linear-gradient(135deg,#062a4f,#083966);color:#fff;text-align:center;padding:18px 20px;font-size:13px}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}.logo{min-width:190px}.header-inner{padding:14px 18px}}
+@media(max-width:760px){.header-inner{justify-content:center}.logo{min-width:0}.logo-subtitle{display:none}.grid{grid-template-columns:repeat(2,1fr);padding:14px}.intro h1{font-size:26px}.nav a{font-size:11px;padding-inline:9px}}
+@media(max-width:500px){.grid{grid-template-columns:1fr}.card{min-height:205px}.intro{padding:26px 16px 12px}.intro p{font-size:14px}}
+
+/* ==== Ergänzungen für den Artikelbereich – gleiche Farbvariablen wie oben ==== */
+.article{max-width:1000px;margin:0 auto;padding:0 24px 40px}
+.article h2.section-title{color:var(--navy);border-bottom:2px solid var(--line);padding-bottom:7px;margin-top:42px;font-size:21px}
+.article h3.sub-title{color:var(--navy);margin:22px 0 8px;font-size:16px}
+table.info-table{width:100%;border-collapse:collapse;margin:14px 0 22px;font-size:13.5px}
+table.info-table th{background:var(--navy);color:#fff;text-align:left;padding:8px 10px}
+table.info-table td{border:1px solid var(--line);padding:8px 10px;vertical-align:top}
+table.info-table tr:nth-child(even) td{background:#f7fafc}
+.node-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0 22px}
+.node-box{border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:6px;padding:10px 12px;background:#fff;font-size:13px}
+.node-box strong{display:block;color:var(--navy);font-size:13.5px;margin-bottom:4px}
+.node-box code{background:#f4f8fb;padding:1px 4px;border-radius:3px}
+.flow-steps{counter-reset:step;margin:16px 0 24px;padding:0;list-style:none}
+.flow-steps li{position:relative;padding:9px 0 9px 44px;margin-bottom:6px;border-bottom:1px dashed var(--line);font-size:13.8px}
+.flow-steps li:last-child{border-bottom:none}
+.flow-steps li::before{counter-increment:step;content:counter(step);position:absolute;left:0;top:7px;width:27px;height:27px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+.klinik-beispiel{margin:16px 0;padding:14px 18px;border-left:4px solid #2e8b57;background:#f2f9f4;font-size:13.8px;color:#20362a;border-radius:0 6px 6px 0}
+.klinik-beispiel strong{color:#1f5c3c}
+.warnbox{margin:16px 0;padding:13px 18px;border-left:4px solid #b5551f;background:#fbf2ea;color:#5a3517;font-size:13.8px;border-radius:0 6px 6px 0}
+code.tag{background:#f4f8fb;border:1px solid var(--line);padding:1px 5px;border-radius:4px;font-family:Consolas,monospace;font-size:12.5px}
+.diagram-box{margin:18px 0;padding:16px 18px;background:var(--navy-dark);color:#eaf3fb;border-radius:8px;font-family:Consolas,monospace;font-size:12.6px;line-height:1.7;overflow-x:auto;white-space:pre}
+.toc-grid .card{min-height:150px}
+.toc-grid .icon{font-size:26px;height:40px}
+.axis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0 22px}
+.axis-box{border:1px solid var(--line);border-radius:6px;padding:10px 12px;background:#fff;font-size:12.5px;text-align:center}
+.axis-box b{display:block;color:var(--navy);font-size:13.5px;margin-bottom:4px}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="../index.html" aria-label="MedizinInformatik Wiki Startseite">
+      <span class="logo-mark">+</span>
+      <span><span class="logo-title">MedizinInformatik<br>WIKI</span><span class="logo-subtitle">Technische Dokumentation</span></span>
+    </a>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <div class="nav-inner">
+    <a href="../index.html"><span class="nav-icon">⌂</span>Startseite</a>
+    <a href="../medizintechnik/index.html"><span class="nav-icon">♧</span>Medizintechnik</a>
+    <a href="../vernetzung/index.html"><span class="nav-icon">⌘</span>Vernetzung</a>
+    <a href="../krankenhaus-it/index.html"><span class="nav-icon">▦</span>Krankenhaus-IT</a>
+    <a href="../klinische-informationssysteme/index.html"><span class="nav-icon">▣</span>KIS &amp; Systeme</a>
+    <a href="../datenfluesse/index.html"><span class="nav-icon">⇄</span>Datenflüsse</a>
+    <a class="active" href="../schnittstellen-standards/index.html"><span class="nav-icon">⇋</span>Standards</a>
+    <a href="../server-backend/index.html"><span class="nav-icon">▤</span>Server &amp; Backend</a>
+    <a href="../cybersecurity/index.html"><span class="nav-icon">♙</span>Cybersecurity</a>
+    <a href="../web-engineering/index.html"><span class="nav-icon">&lt;/&gt;</span>Web Engineering</a>
+    <a href="../praxis/index.html"><span class="nav-icon">✚</span>Praxis / Fallbeispiele</a>
+  </div>
+</nav>
+
+<main>
+  <div class="breadcrumb"><a href="../index.html">Startseite</a> / <a href="../schnittstellen-standards/index.html">Schnittstellen &amp; Standards</a> / LOINC</div>
+
+  <section class="intro">
+    <h1>LOINC – Logical Observation Identifiers Names and Codes</h1>
+    <p>Während ICD beschreibt, <strong>welche Diagnose</strong> ein Patient hat, beschreibt LOINC, <strong>was genau gemessen oder beobachtet wurde</strong> – ein Laborwert, ein Vitalparameter, ein Score. LOINC ist damit der Standard, der Laborbefunde und klinische Messwerte weltweit eindeutig kennzeichnet, unabhängig davon, welches Analysegerät oder Labor sie erzeugt hat.</p>
+    <div class="note"><strong>Kernprinzip:</strong> Jeder Laborparameter – z. B. „Natrium im Serum" – bekommt einen einzigen, weltweit gültigen LOINC-Code. Dieser Code wird vom Analysegerät über das LIS bis ins KIS mitgeführt, sodass der Wert dort eindeutig zugeordnet und mit Referenzbereichen sowie Vorbefunden verglichen werden kann.</div>
+  </section>
+
+  <section class="grid toc-grid" aria-label="Artikel-Überblick">
+    <a class="card" href="#grundlagen"><div class="icon">①</div><h2>Grundlagen</h2><p>Was LOINC ist und wozu es dient</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#aufbau"><div class="icon">②</div><h2>Aufbau eines LOINC-Codes</h2><p>Die sechs Achsen im Detail</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#datenfluss"><div class="icon">③</div><h2>LOINC im Labor-Datenfluss</h2><p>Vom Analysegerät über das LIS ins KIS</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#schnittstellen"><div class="icon">④</div><h2>Schnittstellen</h2><p>HL7-OBX-Segment und FHIR Observation</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#mapping"><div class="icon">⑤</div><h2>Mapping &amp; Pflege</h2><p>Lokale Codes auf LOINC abbilden</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#sicherheit"><div class="icon">⑥</div><h2>Fehleranalyse</h2><p>Typische Mapping- und Einheitenfehler</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#praxisbeispiel"><div class="icon">⑦</div><h2>Komplettes Praxisbeispiel</h2><p>Laborwert Ende-zu-Ende</p><span class="btn">Zum Abschnitt →</span></a>
+  </section>
+
+  <div class="article">
+
+    <h2 class="section-title" id="grundlagen">① Grundlagen und Zweck</h2>
+    <p>LOINC wird vom <strong>Regenstrief Institute</strong> (USA) gepflegt und international kostenlos zur Verfügung gestellt. Ohne LOINC würde jedes Labor und jedes Analysegerät seine eigene, oft nur lokal verständliche Kurzbezeichnung für einen Messwert verwenden – „NA", „Natr.", „Sodium" könnten alle dasselbe meinen, ohne dass ein System das automatisch erkennt. LOINC löst das, indem es jedem Messwert genau einen eindeutigen Code zuweist, unabhängig von Hersteller, Sprache oder Labor.</p>
+    <p>LOINC deckt dabei nicht nur klassische Laborwerte ab, sondern auch klinische Beobachtungen wie Vitalzeichen, Score-Werte oder Fragebogenantworten – das Prinzip ist überall dasselbe.</p>
+
+    <h2 class="section-title" id="aufbau">② Aufbau eines LOINC-Codes: die sechs Achsen</h2>
+    <p>Ein LOINC-Code besteht aus einer Zahl mit Prüfziffer, z. B. <code class="tag">2951-2</code> für „Natrium im Serum/Plasma". Der Code selbst ist nur ein Schlüssel – seine Bedeutung ergibt sich aus sechs festgelegten Achsen (Teilen), die zusammen den vollständigen Namen bilden:</p>
+
+    <div class="axis-grid">
+      <div class="axis-box"><b>Component</b>Was wird gemessen (Natrium)</div>
+      <div class="axis-box"><b>Property</b>Art der Eigenschaft (Massenkonzentration)</div>
+      <div class="axis-box"><b>Time</b>Zeitbezug (Zeitpunkt vs. über Zeit gemittelt)</div>
+      <div class="axis-box"><b>System</b>Probenmaterial (Serum/Plasma)</div>
+      <div class="axis-box"><b>Scale</b>Skalentyp (quantitativ, qualitativ, ordinal)</div>
+      <div class="axis-box"><b>Method</b>Messmethode, falls relevant (z. B. ionenselektive Elektrode)</div>
+    </div>
+
+    <table class="info-table">
+    <tr><th>Achse</th><th>Wert im Beispiel 2951-2</th></tr>
+    <tr><td>Component</td><td>Sodium (Natrium)</td></tr>
+    <tr><td>Property</td><td>SCnc (Substance Concentration)</td></tr>
+    <tr><td>Time</td><td>Pt (Point in Time – Momentanwert)</td></tr>
+    <tr><td>System</td><td>Ser/Plas (Serum oder Plasma)</td></tr>
+    <tr><td>Scale</td><td>Qn (Quantitativ)</td></tr>
+    <tr><td>Method</td><td>nicht spezifiziert (methodenunabhängig)</td></tr>
+    </table>
+
+    <p>Diese Kombination macht LOINC deutlich detaillierter als z. B. ICD: Für „Natrium" existieren je nach Probenmaterial, Skalentyp und Zeitbezug mehrere unterschiedliche LOINC-Codes – etwa ein eigener Code für Natrium im Urin oder für einen 24-Stunden-Sammelwert.</p>
+
+    <h2 class="section-title" id="datenfluss">③ LOINC im Labor-Datenfluss</h2>
+    <p>Der typische Weg eines Laborwerts durchläuft mehrere Systeme, die alle denselben LOINC-Code mitführen müssen, damit der Wert am Ende eindeutig im KIS ankommt:</p>
+
+    <table class="info-table">
+    <tr><th>System</th><th>Rolle</th></tr>
+    <tr><td>Analysegerät</td><td>Misst den Rohwert, kennt meist nur einen internen/herstellerspezifischen Kanalcode</td></tr>
+    <tr><td>LIS (Laborinformationssystem)</td><td>Ordnet dem internen Kanalcode den passenden LOINC-Code zu (Mapping-Tabelle)</td></tr>
+    <tr><td>KIS</td><td>Empfängt den Befund inklusive LOINC-Code und zeigt ihn im Verlauf/Kurvenblatt des Patienten an</td></tr>
+    </table>
+
+    <div class="node-grid">
+      <div class="node-box"><strong>Analysegerät → LIS</strong>Herstellerspezifisches Protokoll, häufig proprietär oder POCT1-A.</div>
+      <div class="node-box"><strong>LIS → KIS</strong>Meist HL7 v2 (ORU^R01) oder FHIR <code class="tag">Observation</code>, jeweils mit LOINC-Code im Ergebnisfeld.</div>
+    </div>
+
+    <h2 class="section-title" id="schnittstellen">④ Schnittstellen: HL7 und FHIR</h2>
+    <p>In HL7 v2 wird ein Laborergebnis im <code class="tag">OBX</code>-Segment übertragen. Das Feld <code class="tag">OBX-3</code> enthält dabei den LOINC-Code, <code class="tag">OBX-5</code> den eigentlichen Messwert und <code class="tag">OBX-6</code> die Einheit (meist nach dem UCUM-Standard, z. B. „mmol/L").</p>
+
+    <table class="info-table">
+    <tr><th>Feld</th><th>Bedeutung</th><th>Beispielwert</th></tr>
+    <tr><td>OBX-3</td><td>Beobachtungskennung (LOINC-Code + Bezeichnung)</td><td>2951-2^Natrium^LN</td></tr>
+    <tr><td>OBX-5</td><td>Messwert</td><td>139</td></tr>
+    <tr><td>OBX-6</td><td>Einheit (UCUM)</td><td>mmol/L</td></tr>
+    <tr><td>OBX-7</td><td>Referenzbereich</td><td>136–145</td></tr>
+    <tr><td>OBX-8</td><td>Abnormal-Flag</td><td>N (normal) / H (hoch) / L (niedrig)</td></tr>
+    </table>
+
+    <p>In FHIR-basierten Schnittstellen entspricht dies einer <code class="tag">Observation</code>-Ressource, deren <code class="tag">code</code>-Element auf das LOINC-Codesystem verweist und deren <code class="tag">valueQuantity</code> Messwert und UCUM-Einheit trägt – strukturell dasselbe Prinzip wie beim HL7-OBX-Segment, nur als abfragbare REST-Ressource.</p>
+
+    <h2 class="section-title" id="mapping">⑤ Mapping und Pflege</h2>
+    <p>Da Analysegeräte selbst meist keine LOINC-Codes kennen, pflegt jedes Labor im LIS eine <strong>Mapping-Tabelle</strong>, die interne Testkürzel auf den korrekten LOINC-Code abbildet. Diese Zuordnung ist eine der wichtigsten und fehleranfälligsten Aufgaben bei der Einführung eines neuen Analysegeräts oder LIS – sie muss von Fachpersonal geprüft und bei jeder Methodenänderung (z. B. neues Testkit mit anderer Messmethode) aktualisiert werden. Das Regenstrief Institute veröffentlicht regelmäßig neue LOINC-Versionen mit zusätzlichen Codes.</p>
+
+    <div class="klinik-beispiel"><strong>Klinikum-Beispiel:</strong> Das Labor führt einen neuen Analysegeräte-Typ für die Blutgasanalyse ein. Bevor das Gerät produktiv geschaltet wird, muss die IT-Abteilung gemeinsam mit dem Labor jeden internen Testkanal des neuen Geräts einem passenden LOINC-Code zuordnen – wird dabei versehentlich ein falscher Code mit anderem Probenmaterial gewählt, erscheinen die Werte im KIS unter der falschen Bezeichnung.</div>
+
+    <h2 class="section-title" id="sicherheit">⑥ Fehleranalyse</h2>
+    <table class="info-table">
+    <tr><th>Symptom</th><th>Typische Ursache</th><th>Lösungsansatz</th></tr>
+    <tr><td>Laborwert erscheint im KIS unter falscher Bezeichnung</td><td>Fehlerhaftes LOINC-Mapping im LIS</td><td>Mapping-Tabelle gegen die aktuelle LOINC-Datenbank prüfen</td></tr>
+    <tr><td>Werte lassen sich im Verlauf nicht mit Vorbefunden vergleichen</td><td>Wechsel der Messmethode führte zu neuem LOINC-Code, ohne dass dies im KIS berücksichtigt wurde</td><td>Methoden-Achse im LOINC-Code prüfen, Verlaufsdarstellung im KIS anpassen</td></tr>
+    <tr><td>Falsche Einheit angezeigt</td><td>UCUM-Einheit im OBX-6-Feld nicht korrekt gesetzt</td><td>Einheitenkonfiguration im LIS-Interface korrigieren</td></tr>
+    <tr><td>Neuer Laborparameter wird im KIS gar nicht erst dargestellt</td><td>Für den neuen Test wurde noch kein LOINC-Code gemappt</td><td>Fehlendes Mapping ergänzen, bevor der Test produktiv genutzt wird</td></tr>
+    </table>
+
+    <div class="warnbox"><strong>Praxishinweis:</strong> Ein falsches oder fehlendes LOINC-Mapping fällt oft nicht sofort auf, da der Zahlenwert selbst korrekt übertragen wird – nur seine Zuordnung stimmt nicht. Deshalb sollte jedes neue Mapping vor dem produktiven Einsatz stichprobenartig gegen bekannte Referenzwerte geprüft werden.</div>
+
+    <h2 class="section-title" id="praxisbeispiel">⑦ Komplettes Praxisbeispiel: Laborwert Ende-zu-Ende</h2>
+    <p>Weiter im bereits bekannten Patientenfall: Bei der Aufnahme wegen Verdachts auf Pneumonie (siehe ICD-Artikel) wird zusätzlich eine Blutentnahme zur Bestimmung von Natrium und CRP veranlasst.</p>
+
+    <ol class="flow-steps">
+      <li><strong>Probenentnahme:</strong> Die Blutprobe wird auf Station entnommen und mit dem Patientenbarcode (Fallnummer) versehen.</li>
+      <li><strong>Analyse im Labor:</strong> Das Analysegerät misst u. a. Natrium; intern kennt es nur seinen eigenen Kanalcode „NA-1".</li>
+      <li><strong>LOINC-Zuordnung im LIS:</strong> Das LIS ordnet „NA-1" dem LOINC-Code <code class="tag">2951-2</code> („Natrium, Serum/Plasma, quantitativ") zu.</li>
+      <li><strong>Übertragung an das KIS:</strong> Das LIS sendet eine HL7-ORU^R01-Nachricht mit einem OBX-Segment: <code class="tag">OBX-3 = 2951-2^Natrium^LN</code>, <code class="tag">OBX-5 = 139</code>, <code class="tag">OBX-6 = mmol/L</code>, Referenzbereich 136–145, Flag „N" (normal).</li>
+      <li><strong>Anzeige im KIS:</strong> Der behandelnde Arzt sieht den Natriumwert im Kurvenblatt, korrekt beschriftet und im Verlauf mit früheren Natrium-Messungen desselben Patienten vergleichbar – möglich, weil alle Messungen denselben LOINC-Code tragen, unabhängig davon, mit welchem Gerät sie zu welchem Zeitpunkt gemessen wurden.</li>
+      <li><strong>Klinische Einordnung:</strong> Zusammen mit dem im ICD-Artikel dokumentierten Diabetes mellitus (Nebendiagnose) und dem CT-Befund (DICOM-Artikel) ergibt sich im KIS ein vollständiges Bild des Behandlungsfalls aus Bild-, Diagnose- und Laborinformation.</li>
+    </ol>
+
+    <div class="klinik-beispiel"><strong>Ergebnis für die Praxis:</strong> LOINC ist der stille, aber unverzichtbare Baustein, der dafür sorgt, dass ein Laborwert unabhängig vom messenden Gerät oder Labor immer gleich benannt und damit im Verlauf, in Auswertungen und in der elektronischen Patientenakte korrekt eingeordnet werden kann.</div>
+
+  </div>
+</main>
+
+<footer class="footer">© 2025 MedizinInformatik Wiki – Alle Rechte vorbehalten.</footer>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Applikationsserver im Klinikum – Geschäftslogik, Session-Verwaltung und Autorisierung zwischen Webserver und Datenbankserver, mit vollständigem Praxisbeispiel.">
+<title>Applikationsserver – MedizinInformatik Wiki</title>
+<style>
+:root{--navy:#07335f;--navy-dark:#05284b;--blue:#0b6ebc;--line:#dfe6ec;--text:#18232d;--muted:#5f6b75;--bg:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:var(--bg);line-height:1.55}
+a{color:inherit;text-decoration:none}
+.header{background:linear-gradient(135deg,#062a4f,#0a3e70);color:#fff}
+.header-inner{max-width:1400px;margin:auto;display:flex;align-items:center;gap:22px;padding:18px 24px}
+.logo{display:flex;align-items:center;gap:12px;min-width:205px}
+.logo-mark{width:44px;height:44px;border:3px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700}
+.logo-title{font-size:18px;font-weight:800;line-height:1.05}
+.logo-subtitle{font-size:11px;opacity:.8;margin-top:4px}
+.nav{position:sticky;top:0;z-index:20;background:#062b50;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.nav-inner{max-width:1400px;margin:auto;display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:thin}
+.nav a{flex:0 0 auto;color:#fff;font-size:12px;font-weight:700;padding:13px 11px 12px;text-align:center;border-bottom:3px solid transparent;transition:.2s;white-space:nowrap}
+.nav a:hover,.nav a.active{background:#0b477b;border-bottom-color:#19a9ff}
+.nav-icon{display:block;font-size:18px;line-height:1;margin-bottom:5px}
+main{max-width:1400px;margin:auto}
+.breadcrumb{max-width:1000px;margin:16px auto 0;padding:0 24px;font-size:12.5px;color:var(--muted)}
+.breadcrumb a{color:var(--blue)}
+.intro{text-align:center;padding:32px 24px 16px}
+.intro h1{margin:0 0 10px;color:var(--navy);font-size:32px;line-height:1.2}
+.intro p{max-width:900px;margin:0 auto;color:#404a53;font-size:16px}
+.note{max-width:1000px;margin:20px auto 10px;padding:13px 18px;border-left:4px solid var(--blue);background:#f4f8fb;text-align:left;color:#3c4852;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:16px 28px 34px}
+.card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:24px 18px 20px;text-align:center;display:flex;flex-direction:column;min-height:225px;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 7px 20px rgba(5,40,75,.10);border-color:#b8ccdc}
+.icon{height:58px;display:grid;place-items:center;color:var(--navy);font-size:42px;font-weight:700;margin-bottom:6px}
+.card h2{font-size:16px;color:var(--navy);margin:2px 0 9px}
+.card p{font-size:13px;color:#3f484f;margin:0 auto 16px;max-width:260px}
+.btn{display:inline-block;align-self:center;margin-top:auto;background:var(--navy);color:#fff;padding:8px 14px;border-radius:2px;font-size:12px;font-weight:700}
+.btn:hover{background:#0b6ebc}
+.footer{background:linear-gradient(135deg,#062a4f,#083966);color:#fff;text-align:center;padding:18px 20px;font-size:13px}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}.logo{min-width:190px}.header-inner{padding:14px 18px}}
+@media(max-width:760px){.header-inner{justify-content:center}.logo{min-width:0}.logo-subtitle{display:none}.grid{grid-template-columns:repeat(2,1fr);padding:14px}.intro h1{font-size:26px}.nav a{font-size:11px;padding-inline:9px}}
+@media(max-width:500px){.grid{grid-template-columns:1fr}.card{min-height:205px}.intro{padding:26px 16px 12px}.intro p{font-size:14px}}
+
+/* ==== Ergänzungen für den Artikelbereich – gleiche Farbvariablen wie oben ==== */
+.article{max-width:1000px;margin:0 auto;padding:0 24px 40px}
+.article h2.section-title{color:var(--navy);border-bottom:2px solid var(--line);padding-bottom:7px;margin-top:42px;font-size:21px}
+.article h3.sub-title{color:var(--navy);margin:22px 0 8px;font-size:16px}
+table.info-table{width:100%;border-collapse:collapse;margin:14px 0 22px;font-size:13.5px}
+table.info-table th{background:var(--navy);color:#fff;text-align:left;padding:8px 10px}
+table.info-table td{border:1px solid var(--line);padding:8px 10px;vertical-align:top}
+table.info-table tr:nth-child(even) td{background:#f7fafc}
+.node-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0 22px}
+.node-box{border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:6px;padding:10px 12px;background:#fff;font-size:13px}
+.node-box strong{display:block;color:var(--navy);font-size:13.5px;margin-bottom:4px}
+.node-box code{background:#f4f8fb;padding:1px 4px;border-radius:3px}
+.flow-steps{counter-reset:step;margin:16px 0 24px;padding:0;list-style:none}
+.flow-steps li{position:relative;padding:9px 0 9px 44px;margin-bottom:6px;border-bottom:1px dashed var(--line);font-size:13.8px}
+.flow-steps li:last-child{border-bottom:none}
+.flow-steps li::before{counter-increment:step;content:counter(step);position:absolute;left:0;top:7px;width:27px;height:27px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+.klinik-beispiel{margin:16px 0;padding:14px 18px;border-left:4px solid #2e8b57;background:#f2f9f4;font-size:13.8px;color:#20362a;border-radius:0 6px 6px 0}
+.klinik-beispiel strong{color:#1f5c3c}
+.warnbox{margin:16px 0;padding:13px 18px;border-left:4px solid #b5551f;background:#fbf2ea;color:#5a3517;font-size:13.8px;border-radius:0 6px 6px 0}
+code.tag{background:#f4f8fb;border:1px solid var(--line);padding:1px 5px;border-radius:4px;font-family:Consolas,monospace;font-size:12.5px}
+.diagram-box{margin:18px 0;padding:16px 18px;background:var(--navy-dark);color:#eaf3fb;border-radius:8px;font-family:Consolas,monospace;font-size:12.6px;line-height:1.7;overflow-x:auto;white-space:pre}
+.toc-grid .card{min-height:150px}
+.toc-grid .icon{font-size:26px;height:40px}
+.hero-visual{max-width:1000px;margin:22px auto 8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 10px;box-shadow:0 3px 14px rgba(5,40,75,.06)}
+.hero-visual svg{width:100%;height:auto;display:block}
+.img-caption{text-align:center;color:var(--muted);font-size:12px;margin:6px 0 0}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="../index.html" aria-label="MedizinInformatik Wiki Startseite">
+      <span class="logo-mark">+</span>
+      <span><span class="logo-title">MedizinInformatik<br>WIKI</span><span class="logo-subtitle">Technische Dokumentation</span></span>
+    </a>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <div class="nav-inner">
+    <a href="../index.html"><span class="nav-icon">⌂</span>Startseite</a>
+    <a href="../medizintechnik/index.html"><span class="nav-icon">♧</span>Medizintechnik</a>
+    <a href="../vernetzung/index.html"><span class="nav-icon">⌘</span>Vernetzung</a>
+    <a href="../krankenhaus-it/index.html"><span class="nav-icon">▦</span>Krankenhaus-IT</a>
+    <a href="../klinische-informationssysteme/index.html"><span class="nav-icon">▣</span>KIS &amp; Systeme</a>
+    <a href="../datenfluesse/index.html"><span class="nav-icon">⇄</span>Datenflüsse</a>
+    <a href="../schnittstellen-standards/index.html"><span class="nav-icon">⇋</span>Standards</a>
+    <a class="active" href="../server-backend/index.html"><span class="nav-icon">▤</span>Server &amp; Backend</a>
+    <a href="../cybersecurity/index.html"><span class="nav-icon">♙</span>Cybersecurity</a>
+    <a href="../web-engineering/index.html"><span class="nav-icon">&lt;/&gt;</span>Web Engineering</a>
+    <a href="../praxis/index.html"><span class="nav-icon">✚</span>Praxis / Fallbeispiele</a>
+  </div>
+</nav>
+
+<main>
+  <div class="breadcrumb"><a href="../index.html">Startseite</a> / <a href="../server-backend/index.html">Server &amp; Backend</a> / Applikationsserver</div>
+
+  <section class="intro">
+    <h1>Applikationsserver im Klinikum</h1>
+    <p>Der Applikationsserver bildet die mittlere Schicht der bereits im <a href="webserver.html">Webserver-Artikel</a> eingeführten Drei-Schichten-Architektur: Während der Webserver nur HTTP-Anfragen entgegennimmt und der <a href="datenbankserver.html">Datenbankserver</a> Daten dauerhaft speichert, liegt hier die eigentliche <strong>fachliche Logik</strong> einer Klinikanwendung – Berechtigungsprüfung, Geschäftsregeln, Datenverarbeitung.</p>
+    <div class="note"><strong>Kernprinzip:</strong> Der Applikationsserver „weiß", was eine Anfrage fachlich bedeutet. Er entscheidet, ob ein Nutzer etwas sehen darf, verarbeitet Daten inhaltlich und ist die einzige Schicht, die sowohl mit dem Webserver als auch mit dem Datenbankserver spricht.</div>
+  </section>
+
+  <div class="hero-visual">
+    <svg viewBox="0 0 860 250" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrowA" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#0b6ebc"/></marker>
+      </defs>
+      <text x="430" y="22" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700" fill="#07335f">Innenansicht des Applikationsservers</text>
+
+      <rect x="20" y="90" width="120" height="60" rx="8" fill="#f4f8fb" stroke="#0b6ebc" stroke-width="1.5"/>
+      <text x="80" y="125" text-anchor="middle" fill="#07335f" font-family="Arial" font-weight="700" font-size="12">Webserver</text>
+      <line x1="140" y1="120" x2="190" y2="120" stroke="#0b6ebc" stroke-width="2" marker-end="url(#arrowA)"/>
+
+      <rect x="195" y="45" width="470" height="150" rx="10" fill="#07335f"/>
+      <text x="430" y="68" text-anchor="middle" fill="#fff" font-family="Arial" font-weight="700" font-size="13">Applikationsserver</text>
+
+      <g font-family="Arial" font-size="11">
+        <rect x="215" y="80" width="130" height="50" rx="6" fill="#0b477b"/>
+        <text x="280" y="102" text-anchor="middle" fill="#fff" font-weight="700">Session-</text>
+        <text x="280" y="117" text-anchor="middle" fill="#fff" font-weight="700">Management</text>
+
+        <rect x="355" y="80" width="130" height="50" rx="6" fill="#0b477b"/>
+        <text x="420" y="102" text-anchor="middle" fill="#fff" font-weight="700">Autorisierung</text>
+        <text x="420" y="117" text-anchor="middle" fill="#fff" font-weight="700">(OAuth2)</text>
+
+        <rect x="495" y="80" width="150" height="50" rx="6" fill="#0b477b"/>
+        <text x="570" y="102" text-anchor="middle" fill="#fff" font-weight="700">Geschäftslogik /</text>
+        <text x="570" y="117" text-anchor="middle" fill="#fff" font-weight="700">Fachregeln</text>
+
+        <rect x="355" y="145" width="270" height="35" rx="6" fill="#0a3e70"/>
+        <text x="490" y="167" text-anchor="middle" fill="#fff" font-weight="700">Datenzugriffsschicht (SQL-Erzeugung)</text>
+      </g>
+
+      <line x1="665" y1="120" x2="715" y2="120" stroke="#0b6ebc" stroke-width="2" marker-end="url(#arrowA)"/>
+      <rect x="720" y="90" width="120" height="60" rx="8" fill="#f4f8fb" stroke="#0b6ebc" stroke-width="1.5"/>
+      <text x="780" y="115" text-anchor="middle" fill="#07335f" font-family="Arial" font-weight="700" font-size="12">Datenbank-</text>
+      <text x="780" y="130" text-anchor="middle" fill="#07335f" font-family="Arial" font-weight="700" font-size="12">server</text>
+    </svg>
+  </div>
+  <p class="img-caption">Abb. 1: Interne Bausteine des Applikationsservers zwischen Webserver und Datenbankserver</p>
+
+  <section class="grid toc-grid" aria-label="Artikel-Überblick">
+    <a class="card" href="#grundlagen"><div class="icon">①</div><h2>Grundlagen</h2><p>Die mittlere Schicht der Drei-Schichten-Architektur</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#komponenten"><div class="icon">②</div><h2>Interne Bausteine</h2><p>Session, Autorisierung, Geschäftslogik, Datenzugriff</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#einsatz"><div class="icon">③</div><h2>Einsatz im Klinikum</h2><p>KIS-Logikschicht, FHIR-Server, RIS-Regeln</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#sicherheit"><div class="icon">④</div><h2>Sicherheit &amp; Fehleranalyse</h2><p>Session-Handling, Thread-Pools, Timeouts</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#praxisbeispiel"><div class="icon">⑤</div><h2>Praxisbeispiel</h2><p>FHIR-Anfrage aus Applikationsserver-Sicht</p><span class="btn">Zum Abschnitt →</span></a>
+  </section>
+
+  <div class="article">
+
+    <h2 class="section-title" id="grundlagen">① Grundlagen</h2>
+    <p>Ein <strong>Applikationsserver</strong> stellt die Laufzeitumgebung für die fachliche Logik einer Anwendung bereit (z. B. Java-EE-Server, .NET-Laufzeitumgebung, ein FHIR-Referenzserver). Er nimmt vorverarbeitete Anfragen vom Webserver entgegen, wendet die eigentliche fachliche Verarbeitung an und greift dafür bei Bedarf auf den Datenbankserver zu. Diese Trennung erlaubt es, Präsentation, Logik und Datenhaltung unabhängig voneinander zu skalieren und auszutauschen.</p>
+
+    <h2 class="section-title" id="komponenten">② Interne Bausteine</h2>
+    <p>Wie in Abbildung 1 dargestellt, gliedert sich ein Applikationsserver typischerweise in folgende Bausteine:</p>
+    <table class="info-table">
+    <tr><th>Baustein</th><th>Aufgabe</th></tr>
+    <tr><td>Session-Management</td><td>Hält den Anmeldezustand eines Nutzers über mehrere Anfragen hinweg fest</td></tr>
+    <tr><td>Autorisierung</td><td>Prüft bei jeder Anfrage, ob der Nutzer die angefragte Aktion/das angefragte Datum sehen darf, häufig über OAuth2-Token</td></tr>
+    <tr><td>Geschäftslogik / Fachregeln</td><td>Setzt fachliche Regeln um, z. B. Plausibilitätsprüfungen bei der Diagnoseeingabe (siehe <a href="../schnittstellen-standards/icd.html">ICD-Artikel</a>)</td></tr>
+    <tr><td>Datenzugriffsschicht</td><td>Erzeugt aus der Fachlogik heraus die passenden SQL-Abfragen an den Datenbankserver</td></tr>
+    </table>
+
+    <h2 class="section-title" id="einsatz">③ Einsatz im Klinikum</h2>
+    <p>Applikationsserver bilden im Klinikum u. a. die Logikschicht des KIS, eines FHIR-Servers (siehe <a href="../schnittstellen-standards/loinc.html">LOINC-</a>/<a href="../schnittstellen-standards/icd.html">ICD-Artikel</a>) oder eines RIS mit eigenen Kodier- und Abrechnungsregeln. Auch der im <a href="../server-backend/kommunikationsserver.html">Kommunikationsserver-Artikel</a> beschriebene Mirth-Connect-Dienst enthält intern eine applikationsserverähnliche Logikschicht (Filter/Transformer), die JavaScript-Regeln ausführt.</p>
+
+    <h2 class="section-title" id="sicherheit">④ Sicherheit und Fehleranalyse</h2>
+    <ul>
+      <li><strong>Sichere Session-Verwaltung:</strong> Sessions laufen nach definierter Inaktivität ab, Session-Token werden verschlüsselt übertragen.</li>
+      <li><strong>Eingabevalidierung:</strong> Jede eingehende Anfrage wird auf Plausibilität geprüft, bevor sie die Geschäftslogik erreicht.</li>
+      <li><strong>Ressourcenbegrenzung:</strong> Thread-Pools und Verbindungs-Pools verhindern, dass eine einzelne fehlerhafte Anfrage den gesamten Server blockiert.</li>
+    </ul>
+    <table class="info-table">
+    <tr><th>Symptom</th><th>Typische Ursache</th><th>Lösungsansatz</th></tr>
+    <tr><td>Anwendung „hängt" unter Last</td><td>Thread-Pool des Applikationsservers erschöpft</td><td>Thread-Pool-Größe und lang laufende Anfragen analysieren</td></tr>
+    <tr><td>Nutzer werden unerwartet abgemeldet</td><td>Session-Timeout zu kurz konfiguriert oder Session-Speicher überlastet</td><td>Session-Konfiguration und Speicherauslastung prüfen</td></tr>
+    <tr><td>HTTP 403 trotz korrekter Anmeldung</td><td>Fehlerhafte Autorisierungsregel in der Geschäftslogik</td><td>Berechtigungsprüfung im Applikationsserver debuggen</td></tr>
+    <tr><td>Speicherverbrauch wächst stetig (Memory Leak)</td><td>Nicht freigegebene Datenbankverbindungen oder Objekte</td><td>Verbindungs- und Objektlebenszyklus im Code prüfen (siehe auch <a href="datenbankserver.html">Datenbankserver-Artikel</a> zu Connection-Pools)</td></tr>
+    </table>
+
+    <h2 class="section-title" id="praxisbeispiel">⑤ Praxisbeispiel: FHIR-Anfrage aus Applikationsserver-Sicht</h2>
+    <p>Ergänzend zum im <a href="webserver.html">Webserver-Artikel</a> beschriebenen Beispiel, diesmal mit Fokus auf die internen Schritte des Applikationsservers selbst:</p>
+    <ol class="flow-steps">
+      <li>Der Webserver reicht die Anfrage <code class="tag">GET /fhir/Observation?patient=4471123&amp;code=2951-2</code> an den Applikationsserver weiter.</li>
+      <li>Das Session-Management prüft das mitgesendete OAuth2-Token auf Gültigkeit.</li>
+      <li>Die Autorisierungskomponente prüft, ob der angefragte Nutzer (z. B. der behandelnde Arzt) auf Daten dieses Patienten zugreifen darf.</li>
+      <li>Die Geschäftslogik interpretiert die Anfrage fachlich: „aktuellster Natriumwert dieses Patienten".</li>
+      <li>Die Datenzugriffsschicht erzeugt daraus die passende SQL-Abfrage und sendet sie an den <a href="datenbankserver.html">Datenbankserver</a>.</li>
+      <li>Das Ergebnis wird von der Geschäftslogik in eine valide FHIR-<code class="tag">Observation</code>-Ressource umgewandelt.</li>
+      <li>Der Applikationsserver gibt die fertige Ressource an den Webserver zurück, der sie an den Client ausliefert.</li>
+    </ol>
+    <div class="klinik-beispiel"><strong>Ergebnis für die Praxis:</strong> Genau an dieser Stelle – zwischen Autorisierungsprüfung und Geschäftslogik – wird entschieden, ob ein niedergelassener Arzt wirklich nur die für ihn freigegebenen Patientendaten sieht. Diese Prüfung liegt bewusst im Applikationsserver und nicht im Webserver, da nur die Fachlogik weiß, welche Zugriffsregeln im konkreten Fall gelten.</div>
+
+  </div>
+</main>
+
+<footer class="footer">© 2025 MedizinInformatik Wiki – Alle Rechte vorbehalten.</footer>
+</body>
+</html>

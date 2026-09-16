@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Datenbankserver im Klinikum – Speicherung von KIS-/RIS-/PACS-Daten, Client-Server-Zugriff, Hochverfügbarkeit durch Replikation, mit vollständigem Praxisbeispiel.">
+<title>Datenbankserver – MedizinInformatik Wiki</title>
+<style>
+:root{--navy:#07335f;--navy-dark:#05284b;--blue:#0b6ebc;--line:#dfe6ec;--text:#18232d;--muted:#5f6b75;--bg:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:var(--bg);line-height:1.55}
+a{color:inherit;text-decoration:none}
+.header{background:linear-gradient(135deg,#062a4f,#0a3e70);color:#fff}
+.header-inner{max-width:1400px;margin:auto;display:flex;align-items:center;gap:22px;padding:18px 24px}
+.logo{display:flex;align-items:center;gap:12px;min-width:205px}
+.logo-mark{width:44px;height:44px;border:3px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700}
+.logo-title{font-size:18px;font-weight:800;line-height:1.05}
+.logo-subtitle{font-size:11px;opacity:.8;margin-top:4px}
+.nav{position:sticky;top:0;z-index:20;background:#062b50;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.nav-inner{max-width:1400px;margin:auto;display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:thin}
+.nav a{flex:0 0 auto;color:#fff;font-size:12px;font-weight:700;padding:13px 11px 12px;text-align:center;border-bottom:3px solid transparent;transition:.2s;white-space:nowrap}
+.nav a:hover,.nav a.active{background:#0b477b;border-bottom-color:#19a9ff}
+.nav-icon{display:block;font-size:18px;line-height:1;margin-bottom:5px}
+main{max-width:1400px;margin:auto}
+.breadcrumb{max-width:1000px;margin:16px auto 0;padding:0 24px;font-size:12.5px;color:var(--muted)}
+.breadcrumb a{color:var(--blue)}
+.intro{text-align:center;padding:32px 24px 16px}
+.intro h1{margin:0 0 10px;color:var(--navy);font-size:32px;line-height:1.2}
+.intro p{max-width:900px;margin:0 auto;color:#404a53;font-size:16px}
+.note{max-width:1000px;margin:20px auto 10px;padding:13px 18px;border-left:4px solid var(--blue);background:#f4f8fb;text-align:left;color:#3c4852;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:16px 28px 34px}
+.card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:24px 18px 20px;text-align:center;display:flex;flex-direction:column;min-height:225px;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 7px 20px rgba(5,40,75,.10);border-color:#b8ccdc}
+.icon{height:58px;display:grid;place-items:center;color:var(--navy);font-size:42px;font-weight:700;margin-bottom:6px}
+.card h2{font-size:16px;color:var(--navy);margin:2px 0 9px}
+.card p{font-size:13px;color:#3f484f;margin:0 auto 16px;max-width:260px}
+.btn{display:inline-block;align-self:center;margin-top:auto;background:var(--navy);color:#fff;padding:8px 14px;border-radius:2px;font-size:12px;font-weight:700}
+.btn:hover{background:#0b6ebc}
+.footer{background:linear-gradient(135deg,#062a4f,#083966);color:#fff;text-align:center;padding:18px 20px;font-size:13px}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}.logo{min-width:190px}.header-inner{padding:14px 18px}}
+@media(max-width:760px){.header-inner{justify-content:center}.logo{min-width:0}.logo-subtitle{display:none}.grid{grid-template-columns:repeat(2,1fr);padding:14px}.intro h1{font-size:26px}.nav a{font-size:11px;padding-inline:9px}}
+@media(max-width:500px){.grid{grid-template-columns:1fr}.card{min-height:205px}.intro{padding:26px 16px 12px}.intro p{font-size:14px}}
+
+/* ==== Ergänzungen für den Artikelbereich – gleiche Farbvariablen wie oben ==== */
+.article{max-width:1000px;margin:0 auto;padding:0 24px 40px}
+.article h2.section-title{color:var(--navy);border-bottom:2px solid var(--line);padding-bottom:7px;margin-top:42px;font-size:21px}
+.article h3.sub-title{color:var(--navy);margin:22px 0 8px;font-size:16px}
+table.info-table{width:100%;border-collapse:collapse;margin:14px 0 22px;font-size:13.5px}
+table.info-table th{background:var(--navy);color:#fff;text-align:left;padding:8px 10px}
+table.info-table td{border:1px solid var(--line);padding:8px 10px;vertical-align:top}
+table.info-table tr:nth-child(even) td{background:#f7fafc}
+.node-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0 22px}
+.node-box{border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:6px;padding:10px 12px;background:#fff;font-size:13px}
+.node-box strong{display:block;color:var(--navy);font-size:13.5px;margin-bottom:4px}
+.node-box code{background:#f4f8fb;padding:1px 4px;border-radius:3px}
+.flow-steps{counter-reset:step;margin:16px 0 24px;padding:0;list-style:none}
+.flow-steps li{position:relative;padding:9px 0 9px 44px;margin-bottom:6px;border-bottom:1px dashed var(--line);font-size:13.8px}
+.flow-steps li:last-child{border-bottom:none}
+.flow-steps li::before{counter-increment:step;content:counter(step);position:absolute;left:0;top:7px;width:27px;height:27px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+.klinik-beispiel{margin:16px 0;padding:14px 18px;border-left:4px solid #2e8b57;background:#f2f9f4;font-size:13.8px;color:#20362a;border-radius:0 6px 6px 0}
+.klinik-beispiel strong{color:#1f5c3c}
+.warnbox{margin:16px 0;padding:13px 18px;border-left:4px solid #b5551f;background:#fbf2ea;color:#5a3517;font-size:13.8px;border-radius:0 6px 6px 0}
+code.tag{background:#f4f8fb;border:1px solid var(--line);padding:1px 5px;border-radius:4px;font-family:Consolas,monospace;font-size:12.5px}
+.diagram-box{margin:18px 0;padding:16px 18px;background:var(--navy-dark);color:#eaf3fb;border-radius:8px;font-family:Consolas,monospace;font-size:12.6px;line-height:1.7;overflow-x:auto;white-space:pre}
+.toc-grid .card{min-height:150px}
+.toc-grid .icon{font-size:26px;height:40px}
+.hero-visual{max-width:1000px;margin:22px auto 8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 10px;box-shadow:0 3px 14px rgba(5,40,75,.06)}
+.hero-visual svg{width:100%;height:auto;display:block}
+.img-caption{text-align:center;color:var(--muted);font-size:12px;margin:6px 0 0}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="../index.html" aria-label="MedizinInformatik Wiki Startseite">
+      <span class="logo-mark">+</span>
+      <span><span class="logo-title">MedizinInformatik<br>WIKI</span><span class="logo-subtitle">Technische Dokumentation</span></span>
+    </a>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <div class="nav-inner">
+    <a href="../index.html"><span class="nav-icon">⌂</span>Startseite</a>
+    <a href="../medizintechnik/index.html"><span class="nav-icon">♧</span>Medizintechnik</a>
+    <a href="../vernetzung/index.html"><span class="nav-icon">⌘</span>Vernetzung</a>
+    <a href="../krankenhaus-it/index.html"><span class="nav-icon">▦</span>Krankenhaus-IT</a>
+    <a href="../klinische-informationssysteme/index.html"><span class="nav-icon">▣</span>KIS &amp; Systeme</a>
+    <a href="../datenfluesse/index.html"><span class="nav-icon">⇄</span>Datenflüsse</a>
+    <a href="../schnittstellen-standards/index.html"><span class="nav-icon">⇋</span>Standards</a>
+    <a class="active" href="../server-backend/index.html"><span class="nav-icon">▤</span>Server &amp; Backend</a>
+    <a href="../cybersecurity/index.html"><span class="nav-icon">♙</span>Cybersecurity</a>
+    <a href="../web-engineering/index.html"><span class="nav-icon">&lt;/&gt;</span>Web Engineering</a>
+    <a href="../praxis/index.html"><span class="nav-icon">✚</span>Praxis / Fallbeispiele</a>
+  </div>
+</nav>
+
+<main>
+  <div class="breadcrumb"><a href="../index.html">Startseite</a> / <a href="../server-backend/index.html">Server &amp; Backend</a> / Datenbankserver</div>
+
+  <section class="intro">
+    <h1>Datenbankserver im Klinikum</h1>
+    <p>Der Datenbankserver ist die unterste Schicht der in diesem Wiki bereits beschriebenen <a href="webserver.html">Drei-Schichten-Architektur</a>: Er speichert die eigentlichen Daten von KIS, RIS, LIS und PACS dauerhaft und stellt sie dem <a href="applikationsserver.html">Applikationsserver</a> über strukturierte Anfragen (SQL) zur Verfügung. Da ein Ausfall dieser Schicht den gesamten klinischen Betrieb betrifft, stehen Hochverfügbarkeit und Datensicherheit hier besonders im Fokus.</p>
+    <div class="note"><strong>Kernprinzip:</strong> Kein Fachsystem greift direkt auf die Festplatte zu – jeder Zugriff läuft über den Datenbankserver, der Konsistenz, Parallelzugriffe (Transaktionen) und dauerhafte Speicherung garantiert.</div>
+  </section>
+
+  <div class="hero-visual">
+    <svg viewBox="0 0 860 240" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrowD" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#0b6ebc"/></marker>
+      </defs>
+      <text x="430" y="24" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700" fill="#07335f">Hochverfügbarkeit durch Replikation</text>
+
+      <g font-family="Arial" font-size="12.5">
+        <rect x="20" y="90" width="140" height="60" rx="8" fill="#f4f8fb" stroke="#0b6ebc" stroke-width="1.5"/>
+        <text x="90" y="115" text-anchor="middle" fill="#07335f" font-weight="700">Applikations-</text>
+        <text x="90" y="131" text-anchor="middle" fill="#07335f" font-weight="700">server</text>
+
+        <line x1="160" y1="120" x2="330" y2="90" stroke="#0b6ebc" stroke-width="1.8" marker-end="url(#arrowD)"/>
+        <text x="245" y="90" text-anchor="middle" fill="#5f6b75" font-size="10.5">SQL (Schreib-/Lesezugriff)</text>
+
+        <rect x="335" y="50" width="150" height="70" rx="8" fill="#07335f"/>
+        <text x="410" y="78" text-anchor="middle" fill="#fff" font-weight="700">Primärer</text>
+        <text x="410" y="96" text-anchor="middle" fill="#fff" font-weight="700">Datenbankserver</text>
+
+        <line x1="410" y1="120" x2="410" y2="150" stroke="#0b6ebc" stroke-width="1.8" marker-end="url(#arrowD)"/>
+        <text x="470" y="140" text-anchor="middle" fill="#5f6b75" font-size="10.5">Replikation</text>
+
+        <rect x="335" y="155" width="150" height="65" rx="8" fill="#f4f8fb" stroke="#0b6ebc" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="410" y="182" text-anchor="middle" fill="#07335f" font-weight="700">Sekundärer</text>
+        <text x="410" y="198" text-anchor="middle" fill="#07335f" font-weight="700">Datenbankserver</text>
+
+        <line x1="160" y1="115" x2="330" y2="180" stroke="#0b6ebc" stroke-width="1.4" stroke-dasharray="3 3"/>
+        <text x="245" y="205" text-anchor="middle" fill="#5f6b75" font-size="10">Lesezugriff / Failover</text>
+
+        <rect x="620" y="90" width="150" height="60" rx="8" fill="#f4f8fb" stroke="#0b6ebc" stroke-width="1.5"/>
+        <text x="695" y="115" text-anchor="middle" fill="#07335f" font-weight="700">Speichersystem</text>
+        <text x="695" y="131" text-anchor="middle" fill="#07335f" font-weight="700">(SAN/NAS)</text>
+        <line x1="485" y1="85" x2="615" y2="105" stroke="#0b6ebc" stroke-width="1.6" marker-end="url(#arrowD)"/>
+        <line x1="485" y1="185" x2="615" y2="130" stroke="#0b6ebc" stroke-width="1.6" marker-end="url(#arrowD)"/>
+      </g>
+    </svg>
+  </div>
+  <p class="img-caption">Abb. 1: Primärer und sekundärer Datenbankserver mit Replikation auf gemeinsames Speichersystem</p>
+
+  <section class="grid toc-grid" aria-label="Artikel-Überblick">
+    <a class="card" href="#grundlagen"><div class="icon">①</div><h2>Grundlagen</h2><p>Rolle des Datenbankservers in der KIS-Architektur</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#aufbau"><div class="icon">②</div><h2>Aufbau &amp; Speicherstruktur</h2><p>Tabellen, Indizes, Tablespaces</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#hochverfuegbarkeit"><div class="icon">③</div><h2>Hochverfügbarkeit</h2><p>Replikation, Cluster, Failover</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#einsatz"><div class="icon">④</div><h2>Einsatz im Klinikum</h2><p>KIS-Datenbank, PACS-Metadaten, Data Warehouse</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#sicherheit"><div class="icon">⑤</div><h2>Sicherheit &amp; Fehleranalyse</h2><p>Zugriffsrechte, Deadlocks, Performance</p><span class="btn">Zum Abschnitt →</span></a>
+    <a class="card" href="#praxisbeispiel"><div class="icon">⑥</div><h2>Praxisbeispiel</h2><p>SQL-Abfrage Ende-zu-Ende</p><span class="btn">Zum Abschnitt →</span></a>
+  </section>
+
+  <div class="article">
+
+    <h2 class="section-title" id="grundlagen">① Grundlagen</h2>
+    <p>Ein <strong>Datenbankserver</strong> ist ein System, auf dem ein Datenbankmanagementsystem (DBMS, z. B. Microsoft SQL Server, Oracle, PostgreSQL) läuft und über das strukturierte Zugriffe auf gespeicherte Daten erfolgen. Fachanwendungen wie das KIS greifen nie direkt auf Dateien zu, sondern senden strukturierte Anfragen (SQL) an den Datenbankserver, der Konsistenz, Nebenläufigkeit (mehrere gleichzeitige Nutzer) und dauerhafte Speicherung sicherstellt. Den konzeptionellen Unterschied zwischen einer Datenbank als Datenmodell und dem Datenbankserver als Infrastruktur erläutert der <a href="../web-engineering/datenbanken.html">Datenbanken-Artikel</a>.</p>
+
+    <h2 class="section-title" id="aufbau">② Aufbau und Speicherstruktur</h2>
+    <table class="info-table">
+    <tr><th>Element</th><th>Bedeutung</th></tr>
+    <tr><td>Tabelle</td><td>Speichert gleichartige Datensätze in Zeilen und Spalten, z. B. eine Patiententabelle</td></tr>
+    <tr><td>Index</td><td>Zusätzliche Datenstruktur zur Beschleunigung von Suchanfragen auf bestimmten Spalten</td></tr>
+    <tr><td>Tablespace / Datendatei</td><td>Physischer Speicherbereich, in dem Tabellen und Indizes tatsächlich abgelegt werden</td></tr>
+    <tr><td>Transaktionslog</td><td>Protokolliert jede Änderung, bevor sie dauerhaft gespeichert wird – Grundlage für Wiederherstellung nach einem Absturz</td></tr>
+    </table>
+
+    <h2 class="section-title" id="hochverfuegbarkeit">③ Hochverfügbarkeit</h2>
+    <p>Da ein Ausfall des Datenbankservers unmittelbar KIS, RIS und PACS lahmlegt, wird er im Klinikum in aller Regel redundant ausgelegt (siehe Abb. 1):</p>
+    <div class="node-grid">
+      <div class="node-box"><strong>Replikation</strong>Alle Änderungen am primären Server werden laufend auf einen sekundären Server übertragen.</div>
+      <div class="node-box"><strong>Failover-Cluster</strong>Fällt der primäre Server aus, übernimmt der sekundäre automatisch dessen Rolle.</div>
+      <div class="node-box"><strong>Backup</strong>Zusätzlich zur Replikation sichern regelmäßige Backups gegen logische Fehler (siehe <a href="../krankenhaus-it/backup.html">Backup-Artikel</a>), da Replikation allein fehlerhafte Änderungen ebenfalls sofort mitspiegelt.</div>
+    </div>
+
+    <h2 class="section-title" id="einsatz">④ Einsatz im Klinikum</h2>
+    <p>Typische Datenbanken auf Klinik-Datenbankservern sind die KIS-Datenbank mit Patienten-, Fall- und Diagnosedaten (siehe <a href="../schnittstellen-standards/icd.html">ICD-Artikel</a>), die PACS-Metadatenbank mit Verweisen auf Bildstudien (siehe <a href="../schnittstellen-standards/dicom.html">DICOM-Artikel</a>), die LIS-Datenbank mit Laborwerten (siehe <a href="../schnittstellen-standards/loinc.html">LOINC-Artikel</a>) sowie ein Data Warehouse für Auswertungen und Qualitätssicherung.</p>
+
+    <h2 class="section-title" id="sicherheit">⑤ Sicherheit und Fehleranalyse</h2>
+    <ul>
+      <li><strong>Zugriffsrechte:</strong> Jeder Applikationsserver erhält nur die minimal nötigen Rechte auf „seine" Datenbank (Prinzip der geringsten Berechtigung).</li>
+      <li><strong>Verschlüsselung:</strong> Daten werden sowohl bei der Übertragung (TLS) als auch im Ruhezustand (Encryption at Rest) verschlüsselt.</li>
+      <li><strong>Auditing:</strong> Datenbankinterne Protokollierung dokumentiert, wer wann auf welche Daten zugegriffen hat.</li>
+    </ul>
+    <table class="info-table">
+    <tr><th>Symptom</th><th>Typische Ursache</th><th>Lösungsansatz</th></tr>
+    <tr><td>Anwendung reagiert plötzlich sehr langsam</td><td>Fehlender Index, ineffiziente Abfrage, hohe gleichzeitige Last</td><td>Ausführungsplan der Abfrage analysieren, Indizes prüfen</td></tr>
+    <tr><td>Deadlock-Fehler in der Anwendung</td><td>Zwei Transaktionen blockieren sich gegenseitig</td><td>Transaktionsreihenfolge im Applikationsserver vereinheitlichen</td></tr>
+    <tr><td>Connection-Pool erschöpft</td><td>Zu viele gleichzeitig offene, nicht freigegebene Verbindungen</td><td>Verbindungsverwaltung im Applikationsserver prüfen (siehe <a href="applikationsserver.html">Applikationsserver-Artikel</a>)</td></tr>
+    <tr><td>Failover schlägt fehl</td><td>Replikation war zum Ausfallzeitpunkt nicht aktuell</td><td>Replikationsverzögerung (Lag) regelmäßig überwachen</td></tr>
+    </table>
+
+    <div class="warnbox"><strong>Praxishinweis:</strong> Replikation schützt nicht vor fehlerhaften Änderungen oder Löschungen – diese werden ebenso zuverlässig auf den sekundären Server übertragen. Ein unabhängiges, zeitversetztes Backup bleibt deshalb auch bei hochverfügbaren Datenbankclustern zwingend erforderlich.</div>
+
+    <h2 class="section-title" id="praxisbeispiel">⑥ Praxisbeispiel: SQL-Abfrage Ende-zu-Ende</h2>
+    <p>Anknüpfend an das im <a href="webserver.html">Webserver-Artikel</a> beschriebene Beispiel fragt der FHIR-Applikationsserver nun konkret beim Datenbankserver den Laborwert unseres Patientenfalls ab:</p>
+    <ol class="flow-steps">
+      <li>Der Applikationsserver öffnet eine Verbindung aus seinem Connection-Pool zum Datenbankserver.</li>
+      <li>Er sendet eine SQL-Abfrage, die Patiententabelle, Falltabelle und Laborwerttabelle über die Patienten-ID verknüpft (JOIN).</li>
+      <li>Der Datenbankserver prüft die Zugriffsrechte des Applikationsservers auf die angefragten Tabellen.</li>
+      <li>Die Abfrage wird über den Ausführungsplan optimiert ausgeführt, passende Indizes auf der Patienten-ID beschleunigen die Suche.</li>
+      <li>Das Ergebnis – der Natriumwert samt Referenzbereich – wird an den Applikationsserver zurückgegeben.</li>
+      <li>Der Applikationsserver verpackt das Ergebnis als FHIR-<code class="tag">Observation</code> und sendet es über den Webserver an den anfragenden Client zurück.</li>
+    </ol>
+    <div class="klinik-beispiel"><strong>Ergebnis für die Praxis:</strong> Derselbe Datenbankserver, der im Alltag Tausende solcher Abfragen pro Minute bedient, ist damit der gemeinsame Datenspeicher, auf dem letztlich alle bisher in diesem Wiki beschriebenen Artikel – DICOM-Metadaten, ICD-Diagnosen, LOINC-Laborwerte – tatsächlich physisch abgelegt sind.</div>
+
+  </div>
+</main>
+
+<footer class="footer">© 2025 MedizinInformatik Wiki – Alle Rechte vorbehalten.</footer>
+</body>
+</html>
