@@ -29,15 +29,314 @@
 <div class="hero">
 
 <h2>JSON</h2>
-<p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>JSON</strong> vorgesehen.</p>
-<div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
-<h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+<p><strong>JSON (JavaScript Object Notation)</strong> ist ein leichtgewichtiges, textbasiertes Datenformat zur strukturierten Darstellung und Übertragung von Daten. In der Medizininformatik spielt JSON insbesondere bei Webanwendungen, REST-APIs, Microservices und der Kommunikation zwischen verschiedenen Softwaresystemen eine wichtige Rolle.</p>
+
+<div class="note">
+<strong>Vorlesungsübersicht:</strong>
+Grundlagen · Syntax · Datentypen · Objekte und Arrays · Verschachtelung · Datenzugriff · JSON und JavaScript · JSON im Web · REST-APIs · Medizinische Anwendungen · Validierung · Sicherheit · Fehleranalyse · Praxisbeispiele
+</div>
+
+<h3>1. Grundlagen</h3>
+<p>JSON steht für <strong>JavaScript Object Notation</strong>. Obwohl JSON ursprünglich aus dem JavaScript-Umfeld stammt, ist das Format heute unabhängig von einer bestimmten Programmiersprache. Viele Programmiersprachen stellen Bibliotheken bereit, mit denen JSON-Daten erzeugt, gelesen, verändert und verarbeitet werden können.</p>
+
+<p>Das zentrale Ziel von JSON ist es, strukturierte Informationen in einer für Menschen lesbaren und für Programme leicht verarbeitbaren Form darzustellen.</p>
+
+<h4>Typische Einsatzbereiche</h4>
+<ul>
+<li>Übertragung von Daten zwischen Browser und Server</li>
+<li>REST- und Web-APIs</li>
+<li>Kommunikation zwischen Softwarekomponenten</li>
+<li>Konfiguration von Anwendungen</li>
+<li>Speicherung strukturierter Daten</li>
+<li>Datenaustausch in vernetzten medizinischen Informationssystemen</li>
+</ul>
+
+<h3>2. Aufbau und Syntax</h3>
+<p>Ein JSON-Dokument besteht aus strukturierten Daten. Die wichtigsten Bausteine sind <strong>Objekte</strong>, <strong>Arrays</strong> und verschiedene primitive Datentypen.</p>
+
+<p>Ein Objekt wird mit geschweiften Klammern <strong>{ }</strong> dargestellt. Innerhalb eines Objekts werden Eigenschaften als Schlüssel-Wert-Paare angegeben:</p>
+
+<pre><code>{
+  "patientId": "P10025",
+  "name": "Max Mustermann",
+  "alter": 42
+}</code></pre>
+
+<p>Der Schlüssel steht in doppelten Anführungszeichen. Schlüssel und Wert werden durch einen Doppelpunkt getrennt. Mehrere Eigenschaften werden durch Kommata getrennt.</p>
+
+<div class="note">
+<strong>Merksatz:</strong> JSON beschreibt vor allem die Struktur von Daten – nicht deren fachliche Bedeutung. Die Bedeutung entsteht durch die Anwendung bzw. das verwendete Datenmodell.
+</div>
+
+<h3>3. Datentypen</h3>
+<p>JSON kennt eine kleine Anzahl klar definierter Datentypen:</p>
+
+<table>
+<tr><th>Datentyp</th><th>Beispiel</th><th>Bedeutung</th></tr>
+<tr><td>String</td><td><code>"Berlin"</code></td><td>Text</td></tr>
+<tr><td>Number</td><td><code>42</code></td><td>Zahl</td></tr>
+<tr><td>Boolean</td><td><code>true</code></td><td>Wahrheitswert</td></tr>
+<tr><td>Null</td><td><code>null</code></td><td>Kein Wert vorhanden</td></tr>
+<tr><td>Object</td><td><code>{ ... }</code></td><td>Struktur aus Schlüssel-Wert-Paaren</td></tr>
+<tr><td>Array</td><td><code>[ ... ]</code></td><td>Liste von Werten</td></tr>
+</table>
+
+<h3>4. Objekte</h3>
+<p>Objekte sind die wichtigste Struktur für benannte Informationen. Ein Objekt kann mehrere Eigenschaften enthalten:</p>
+
+<pre><code>{
+  "patient": {
+    "id": "P10025",
+    "geburtsjahr": 1982,
+    "station": "Kardiologie"
+  }
+}</code></pre>
+
+<p>Durch die Verschachtelung können komplexe Informationsstrukturen abgebildet werden. Dabei sollte die Struktur möglichst klar und konsistent bleiben.</p>
+
+<h3>5. Arrays</h3>
+<p>Ein Array ist eine geordnete Liste und wird mit eckigen Klammern <strong>[ ]</strong> dargestellt.</p>
+
+<pre><code>{
+  "diagnosen": [
+    "Hypertonie",
+    "Diabetes mellitus Typ 2",
+    "Vorhofflimmern"
+  ]
+}</code></pre>
+
+<p>Arrays können auch Objekte enthalten. Dadurch lassen sich beispielsweise mehrere Untersuchungen oder Messwerte darstellen:</p>
+
+<pre><code>{
+  "messungen": [
+    {
+      "zeit": "08:00",
+      "wert": 120,
+      "einheit": "mmHg"
+    },
+    {
+      "zeit": "12:00",
+      "wert": 125,
+      "einheit": "mmHg"
+    }
+  ]
+}</code></pre>
+
+<h3>6. Verschachtelte Datenstrukturen</h3>
+<p>Objekte und Arrays können miteinander kombiniert werden. Dadurch lassen sich auch umfangreiche Datenmodelle abbilden.</p>
+
+<pre><code>{
+  "patient": {
+    "id": "P10025",
+    "name": "Max Mustermann",
+    "aufenthalte": [
+      {
+        "station": "Innere Medizin",
+        "aufnahme": "2026-09-10"
+      },
+      {
+        "station": "Kardiologie",
+        "aufnahme": "2026-09-14"
+      }
+    ]
+  }
+}</code></pre>
+
+<div class="note">
+<strong>Prüfungsrelevant:</strong> Beim Lesen verschachtelter JSON-Strukturen muss immer zwischen Objektzugriff und Array-Zugriff unterschieden werden. Objekte besitzen benannte Schlüssel; Arrays besitzen Positionen bzw. Indizes.
+</div>
+
+<h3>7. JSON und JavaScript</h3>
+<p>JSON und JavaScript sind eng miteinander verwandt, aber nicht identisch. JSON ist ein Datenformat. JavaScript ist eine Programmiersprache.</p>
+
+<p>In JavaScript kann eine JSON-Zeichenkette mit <code>JSON.parse()</code> in ein JavaScript-Objekt umgewandelt werden:</p>
+
+<pre><code>const text = '{"name":"Anna","alter":30}';
+
+const daten = JSON.parse(text);
+
+console.log(daten.name);</code></pre>
+
+<p>Umgekehrt kann ein JavaScript-Objekt mit <code>JSON.stringify()</code> in eine JSON-Zeichenkette umgewandelt werden:</p>
+
+<pre><code>const daten = {
+  name: "Anna",
+  alter: 30
+};
+
+const text = JSON.stringify(daten);</code></pre>
+
+<h3>8. JSON im Web</h3>
+<p>Bei Webanwendungen wird JSON häufig verwendet, um Daten zwischen Frontend und Backend auszutauschen. Ein Browser kann beispielsweise eine Anfrage an einen Server senden und eine JSON-Antwort erhalten.</p>
+
+<pre><code>GET /api/patienten/P10025
+
+{
+  "id": "P10025",
+  "name": "Max Mustermann",
+  "status": "stationär"
+}</code></pre>
+
+<p>Dadurch können HTML-Oberfläche, JavaScript-Anwendung und Backend logisch voneinander getrennt werden.</p>
+
+<h3>9. JSON und REST-APIs</h3>
+<p>REST-APIs verwenden häufig HTTP zur Kommunikation und JSON als Format für die übertragenen Daten. Typische HTTP-Methoden sind:</p>
+
+<ul>
+<li><strong>GET</strong> – Daten abrufen</li>
+<li><strong>POST</strong> – neue Daten übertragen</li>
+<li><strong>PUT</strong> – vorhandene Daten vollständig aktualisieren</li>
+<li><strong>PATCH</strong> – vorhandene Daten teilweise aktualisieren</li>
+<li><strong>DELETE</strong> – Daten löschen</li>
+</ul>
+
+<p>Ein API-Aufruf kann beispielsweise strukturierte Patientendaten zurückgeben. Entscheidend ist dabei nicht nur das JSON-Format, sondern auch die fachliche Definition der enthaltenen Felder.</p>
+
+<h3>10. JSON in der Medizininformatik</h3>
+<p>In medizinischen IT-Systemen können JSON-basierte Schnittstellen beispielsweise für Webanwendungen, Terminverwaltung, Dokumentation, Geräteanbindung oder Integrationsplattformen eingesetzt werden.</p>
+
+<p>Ein einfaches, bewusst vereinfachtes Beispiel:</p>
+
+<pre><code>{
+  "patient": {
+    "id": "P10025"
+  },
+  "vitalwerte": {
+    "temperatur": {
+      "wert": 37.1,
+      "einheit": "°C"
+    },
+    "puls": {
+      "wert": 72,
+      "einheit": "bpm"
+    }
+  }
+}</code></pre>
+
+<div class="note">
+<strong>Wichtig:</strong> Dieses Beispiel ist ein vereinfachtes Lehrbeispiel und kein vollständiges medizinisches Datenmodell. In realen Systemen müssen definierte Standards, Profile, Terminologien, Datenschutz- und Sicherheitsanforderungen berücksichtigt werden.
+</div>
+
+<h3>11. JSON und medizinische Standards</h3>
+<p>JSON ist zunächst nur ein allgemeines Datenformat. Medizinische Interoperabilität benötigt zusätzlich festgelegte Strukturen, Bedeutungen und Regeln. Ein bekanntes Beispiel ist <strong>HL7 FHIR</strong>, das Ressourcen und deren Inhalte standardisiert und unter anderem JSON als Darstellungsformat unterstützt.</p>
+
+<p>Damit zwei Systeme medizinische Daten korrekt austauschen können, reicht es deshalb nicht aus, dass beide Systeme „JSON können“. Sie müssen sich auch über die Bedeutung, Struktur und zulässigen Werte der übertragenen Daten verständigen.</p>
+
+<h3>12. Validierung</h3>
+<p>Bei der Verarbeitung von JSON sollte überprüft werden, ob die Daten syntaktisch korrekt sind und ob sie dem erwarteten Datenmodell entsprechen.</p>
+
+<p>Ein syntaktisch gültiges JSON-Dokument kann trotzdem fachlich ungeeignet sein. Beispielsweise kann ein Feld fehlen, einen falschen Datentyp besitzen oder einen unerwarteten Wert enthalten.</p>
+
+<p>Für strukturierte Prüfungen kann beispielsweise ein Schema-Ansatz wie <strong>JSON Schema</strong> verwendet werden.</p>
+
+<h3>13. Häufige Syntaxfehler</h3>
+<ul>
+<li>fehlende oder überzählige Kommata</li>
+<li>einfache statt doppelte Anführungszeichen</li>
+<li>fehlende geschweifte oder eckige Klammern</li>
+<li>fehlender Doppelpunkt zwischen Schlüssel und Wert</li>
+<li>nicht korrekt geschachtelte Strukturen</li>
+<li>ungültige Werte</li>
+</ul>
+
+<p>Beispiel eines Fehlers:</p>
+
+<pre><code>{
+  "name": "Max Mustermann",
+  "alter": 42,
+}</code></pre>
+
+<p>Das abschließende Komma nach <code>42</code> ist in diesem JSON-Objekt nicht zulässig.</p>
+
+<h3>14. Sicherheit und Datenschutz</h3>
+<p>JSON selbst bietet keine automatische Verschlüsselung und keinen Datenschutz. Es ist lediglich ein Datenformat. Werden sensible medizinische Daten übertragen, müssen die Kommunikationswege, Zugriffsrechte, Authentifizierung, Protokollierung und Speicherung entsprechend abgesichert werden.</p>
+
+<p>Besonders bei Gesundheitsdaten ist darauf zu achten, dass personenbezogene Informationen nur im erforderlichen Umfang verarbeitet und geschützt werden.</p>
+
+<div class="note">
+<strong>Sicherheitsregel:</strong> Niemals davon ausgehen, dass Daten sicher sind, nur weil sie als JSON übertragen werden. Sicherheit entsteht durch die gesamte technische und organisatorische Infrastruktur.
+</div>
+
+<h3>15. Fehleranalyse und Debugging</h3>
+<p>Bei Problemen mit JSON sollte die Fehlersuche schrittweise erfolgen:</p>
+
+<ol>
+<li>Ist das JSON syntaktisch gültig?</li>
+<li>Entspricht die Struktur dem erwarteten Schema?</li>
+<li>Sind Datentypen korrekt?</li>
+<li>Sind alle erforderlichen Felder vorhanden?</li>
+<li>Wird das richtige API-Endpunkt angesprochen?</li>
+<li>Stimmen HTTP-Methode und Request-Header?</li>
+<li>Welche Antwort liefert der Server?</li>
+<li>Enthalten Logs Hinweise auf die Fehlerursache?</li>
+</ol>
+
+<h3>16. Praxisbeispiel: Anfrage und Antwort</h3>
+<p>Eine Webanwendung könnte eine Liste von Patienten über eine API abrufen. Das Backend liefert beispielsweise:</p>
+
+<pre><code>{
+  "patients": [
+    {
+      "id": "P10001",
+      "station": "A1"
+    },
+    {
+      "id": "P10002",
+      "station": "B2"
+    }
+  ]
+}</code></pre>
+
+<p>Das Frontend kann diese Daten anschließend einlesen und in einer Benutzeroberfläche darstellen.</p>
+
+<h3>17. JSON vs. XML</h3>
+<table>
+<tr><th>Merkmal</th><th>JSON</th><th>XML</th></tr>
+<tr><td>Darstellung</td><td>kompakt</td><td>meist ausführlicher</td></tr>
+<tr><td>Struktur</td><td>Objekte und Arrays</td><td>Elemente und Attribute</td></tr>
+<tr><td>Webentwicklung</td><td>sehr häufig</td><td>ebenfalls verbreitet</td></tr>
+<tr><td>Lesbarkeit</td><td>für viele Entwickler kompakt lesbar</td><td>stärker markup-orientiert</td></tr>
+<tr><td>Datentypen</td><td>klar definierte Grundtypen</td><td>weniger direkt im Format abgebildet</td></tr>
+</table>
+
+<p>Welches Format eingesetzt wird, hängt vom jeweiligen System, Standard und Anwendungsfall ab.</p>
+
+<h3>18. Zusammenfassung</h3>
+<ul>
+<li>JSON ist ein textbasiertes Format für strukturierte Daten.</li>
+<li>Die zentralen Strukturen sind Objekte und Arrays.</li>
+<li>JSON kann verschachtelte Datenstrukturen darstellen.</li>
+<li>Im Web wird JSON häufig zwischen Frontend und Backend übertragen.</li>
+<li>REST-APIs verwenden JSON sehr häufig als Austauschformat.</li>
+<li>JSON selbst definiert keine medizinische Bedeutung.</li>
+<li>Für medizinische Interoperabilität sind zusätzliche Standards und Datenmodelle erforderlich.</li>
+<li>JSON ist weder automatisch verschlüsselt noch automatisch sicher.</li>
+<li>Syntax und fachliche Struktur sollten validiert werden.</li>
+</ul>
+
+<h3>19. Lernfragen</h3>
+<ol>
+<li>Wofür steht die Abkürzung JSON?</li>
+<li>Welche sechs grundlegenden Datentypen unterstützt JSON?</li>
+<li>Was ist der Unterschied zwischen einem JSON-Objekt und einem JSON-Array?</li>
+<li>Wie werden verschachtelte Strukturen dargestellt?</li>
+<li>Was ist der Unterschied zwischen <code>JSON.parse()</code> und <code>JSON.stringify()</code>?</li>
+<li>Welche Rolle spielt JSON bei REST-APIs?</li>
+<li>Warum reicht JSON allein nicht für medizinische Interoperabilität aus?</li>
+<li>Welche Sicherheitsmaßnahmen müssen bei der Übertragung medizinischer Daten zusätzlich berücksichtigt werden?</li>
+</ol>
+
+<h3>20. Merksätze für die Vorlesung</h3>
+<div class="note">
+<strong>1.</strong> JSON ist ein Datenformat, keine Programmiersprache.<br><br>
+<strong>2.</strong> Objekte beschreiben benannte Eigenschaften, Arrays beschreiben geordnete Listen.<br><br>
+<strong>3.</strong> Syntaktisch gültiges JSON bedeutet nicht automatisch fachlich korrekte Daten.<br><br>
+<strong>4.</strong> JSON ermöglicht Datenaustausch – die fachliche Bedeutung muss durch ein Datenmodell oder einen Standard definiert werden.<br><br>
+<strong>5.</strong> JSON selbst sorgt nicht für Datenschutz oder Verschlüsselung.
+</div>
 
 <h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+<p>Bei der praktischen Arbeit sollte JSON zunächst als Datenstruktur betrachtet werden. Für die Fehlersuche sind Syntax, Struktur, Datentypen, Schnittstelle und fachliche Bedeutung getrennt zu überprüfen. Besonders bei medizinischen Anwendungen muss zusätzlich betrachtet werden, welche Daten verarbeitet werden, wer darauf zugreifen darf und welcher Standard für den Austausch verwendet wird.</p>
 
 </div>
 </main>
