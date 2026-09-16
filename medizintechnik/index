@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medizintechnik – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb"><a href="../index.html">Startseite</a> / Medizintechnik</div>
+<div class="hero">
+
+<h2>Medizintechnik</h2>
+<p>Dieser Bereich bündelt die wichtigsten Themen zu <strong>Medizintechnik</strong>. Wähle einen Artikel aus:</p>
+<div class="grid"><a class="card" href="medizinische-geraete.html"><h3>Medizinische Geräte</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a><a class="card" href="patientenmonitore.html"><h3>Patientenmonitore</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a><a class="card" href="beatmungsgeraete.html"><h3>Beatmungsgeräte</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a><a class="card" href="infusionspumpen.html"><h3>Infusionspumpen</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a><a class="card" href="anaesthesiegeraete.html"><h3>Anästhesiegeräte</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a><a class="card" href="laborgeraete.html"><h3>Laborgeräte</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a><a class="card" href="ekg.html"><h3>EKG</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a><a class="card" href="bildgebung.html"><h3>Bildgebung</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a><a class="card" href="weitere-geraete.html"><h3>Weitere Geräte</h3><p>Artikel öffnen und technische Zusammenhänge kennenlernen.</p></a></div>
+
+</div>
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>
