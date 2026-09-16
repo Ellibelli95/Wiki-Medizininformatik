@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laborgeräte – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* Absicherung: identische Tabellenformatierung wie auf den anderen Medizintechnik-Seiten */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2em 0 1.8em;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+  }
+  th, td {
+    border: 1px solid #d9e2ea;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  thead th {
+    background: #1a5276;
+    color: #fff;
+    border-color: #1a5276;
+    font-weight: 700;
+  }
+  tbody tr:nth-child(even) { background: #eaf4f8; }
+  tbody tr:hover { background: #dcedf5; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../medizintechnik/index.html">Medizintechnik</a> /
+  Laborgeräte
+</div>
+
+<div class="hero">
+  <h2>Laborgeräte</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Automatisierte oder manuelle Untersuchung von Patientenproben und Bereitstellung diagnostischer Messwerte</td></tr>
+      <tr><td>Gerätegruppen</td><td>Klinische Chemie, Hämatologie, Immunologie, Molekulardiagnostik, Blutgasanalyse und Präanalytik</td></tr>
+      <tr><td>Proben</td><td>Blut, Serum, Plasma, Urin, Liquor und weitere Untersuchungsmaterialien</td></tr>
+      <tr><td>Technik</td><td>Probenhandling, Sensorik, Photometrie, Elektrochemie, Fluoreszenz und automatisierte Prozesssteuerung</td></tr>
+      <tr><td>Vernetzung</td><td>Anbindung an LIS, Middleware und Krankenhausinformationssysteme</td></tr>
+      <tr><td>Sicherheit</td><td>Qualitätskontrolle, Kalibrierung, Plausibilitätsprüfung, Wartung und Rückverfolgbarkeit</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist eine technische und medizininformatische Dokumentation.
+    Die konkrete Diagnostik, Befundinterpretation und Freigabe von Laborergebnissen erfolgen nach
+    den geltenden Laborprozessen, Qualitätsvorgaben und durch qualifiziertes Fachpersonal.
+  </div>
+</div>
+
+<h3>1. Was ist ein Laborgerät?</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Grundfunktion</td><td>Laborgeräte unterstützen die Untersuchung biologischer Proben und erzeugen quantitative oder qualitative Messergebnisse für Diagnostik, Therapieüberwachung und Verlaufskontrolle.</td></tr>
+<tr><td>Automatisierung</td><td>Moderne Analysesysteme automatisieren Probenidentifikation, Probenhandling, Messung, Qualitätskontrolle und Ergebnisübertragung.</td></tr>
+<tr><td>Sicht der Medizininformatik</td><td>Laborgeräte sind vernetzte cyber-physische Systeme mit Sensorik, Steuerungssoftware, Datenbanken, Benutzerverwaltung und Schnittstellen zum Laborinformationssystem (LIS).</td></tr>
+<tr><td>Ziel</td><td>Reproduzierbare, nachvollziehbare und zeitgerechte Bereitstellung analytischer Messwerte.</td></tr>
+</tbody></table>
+
+<h3>2. Einsatzbereiche</h3>
+<table><thead><tr><th>Bereich</th><th>Typische Untersuchungen</th><th>Gerätebeispiele</th><th>Besonderheiten</th></tr></thead><tbody>
+<tr><td>Klinische Chemie</td><td>Elektrolyte, Enzyme, Stoffwechselparameter</td><td>Klinisch-chemischer Analysator</td><td>Hoher Probendurchsatz, zahlreiche Reagenzien</td></tr>
+<tr><td>Hämatologie</td><td>Blutbild und Zelldifferenzierung</td><td>Hämatologieanalysator</td><td>Zellzählung und Klassifikation</td></tr>
+<tr><td>Immunologie</td><td>Antikörper, Hormone, Proteine</td><td>Immunoassay-System</td><td>Häufig automatisierte Reagenz- und Inkubationsprozesse</td></tr>
+<tr><td>Molekulardiagnostik</td><td>Nukleinsäure- und Erregernachweise</td><td>PCR-System</td><td>Hohe Anforderungen an Kontaminationskontrolle</td></tr>
+<tr><td>Blutgasanalyse</td><td>pH, pCO₂, pO₂ und weitere Parameter</td><td>Blutgasanalysator</td><td>Schnelle patientennahe oder zentrale Messung</td></tr>
+<tr><td>Präanalytik</td><td>Sortieren, Zentrifugieren, Aliquotieren</td><td>Probenstraße / Automationssystem</td><td>Verknüpft verschiedene Analysestationen</td></tr>
+</tbody></table>
+
+<h3>3. Grundtypen und Komponenten</h3>
+<table><thead><tr><th>Komponente</th><th>Beschreibung</th><th>Typische Ausführung</th><th>Technische Merkmale</th></tr></thead><tbody>
+<tr><td><strong>Probenidentifikation</strong></td><td>Eindeutige Zuordnung der Probe zum Auftrag</td><td>Barcode- oder RFID-Leser</td><td>Unterstützt Rückverfolgbarkeit und automatische Zuordnung</td></tr>
+<tr><td><strong>Probenhandling</strong></td><td>Transport und Positionierung der Probe</td><td>Roboterarm, Rack- oder Probentransportsystem</td><td>Automatisierte Arbeitsabläufe und hoher Durchsatz</td></tr>
+<tr><td><strong>Messsystem</strong></td><td>Erfasst die analytische Messgröße</td><td>Photometer, Elektrode, Fluoreszenzdetektor</td><td>Abhängig vom analytischen Messprinzip</td></tr>
+<tr><td><strong>Reagenzsystem</strong></td><td>Lagert und dosiert Reagenzien</td><td>Gekühlte Reagenzkarussells, Pipettiersysteme</td><td>Chargen- und Haltbarkeitsverwaltung</td></tr>
+<tr><td><strong>Steuerungssoftware</strong></td><td>Koordiniert Messabläufe und Gerätezustände</td><td>Embedded Software / Bedienrechner</td><td>Workflow-, Fehler- und Alarmmanagement</td></tr>
+<tr><td><strong>Ausgabesystem</strong></td><td>Bereitet Messwerte für Anzeige und Übertragung auf</td><td>Geräte-GUI, LIS-Schnittstelle</td><td>Trends, Flags und Statusinformationen</td></tr>
+</tbody></table>
+
+<h3>4. Zentrale Laborparameter und Qualitätsbegriffe</h3>
+<table><thead><tr><th>Begriff</th><th>Abkürzung</th><th>Technische Bedeutung</th><th>Zusammenhang / Hinweis</th></tr></thead><tbody>
+<tr><td>Qualitätskontrolle</td><td><strong>QC</strong></td><td>Prüfung der analytischen Stabilität mit Kontrollmaterial</td><td>Ergebnisse werden vor oder während des Routinebetriebs bewertet.</td></tr>
+<tr><td>Laborinformationssystem</td><td><strong>LIS</strong></td><td>Zentrales Informationssystem für Aufträge und Laborergebnisse</td><td>Empfängt Aufträge und übernimmt Ergebnisse.</td></tr>
+<tr><td>Turnaround Time</td><td><strong>TAT</strong></td><td>Zeit zwischen definierten Prozesspunkten einer Laboruntersuchung</td><td>Wichtige Kennzahl für Prozessqualität und Verfügbarkeit.</td></tr>
+<tr><td>Kalibrierung</td><td><strong>CAL</strong></td><td>Zuordnung des Messsystems zu definierten Referenzwerten</td><td>Erforderlich entsprechend Methode und Herstellerangaben.</td></tr>
+<tr><td>Messbereich</td><td><strong>AMR</strong></td><td>Bereich, in dem ein Verfahren Messwerte zuverlässig ausgeben kann</td><td>Grenzen sind methoden- und gerätespezifisch.</td></tr>
+<tr><td>Plausibilitätsprüfung</td><td><strong>Flags</strong></td><td>Automatische Kennzeichnung auffälliger Mess- oder Prozesszustände</td><td>Unterstützt die fachliche Validierung.</td></tr>
+</tbody></table>
+
+<h3>5. Technische Messprinzipien</h3>
+<table><thead><tr><th>Messprinzip</th><th>Technische Grundlage</th><th>Typische Anwendung</th><th>Beispiel</th></tr></thead><tbody>
+<tr><td>Photometrie</td><td>Messung von Lichtabsorption oder -transmission</td><td>Klinische Chemie</td><td>Konzentrationsbestimmung über Extinktion</td></tr>
+<tr><td>Elektrochemie</td><td>Messung elektrischer Potentiale oder Ströme</td><td>Elektrolyte, Blutgase</td><td>Ionenselektive Elektroden</td></tr>
+<tr><td>Fluoreszenz</td><td>Detektion emittierten Lichts</td><td>Immunologie und Molekulardiagnostik</td><td>Fluoreszenzmarkierte Nachweisverfahren</td></tr>
+<tr><td>Durchflussmessung</td><td>Optische Analyse von Partikeln in einem Flüssigkeitsstrom</td><td>Hämatologie</td><td>Zellzählung und Zelldifferenzierung</td></tr>
+<tr><td>PCR</td><td>Zyklische Amplifikation von Nukleinsäuren</td><td>Molekulardiagnostik</td><td>Erreger- oder Genomnachweis</td></tr>
+</tbody></table>
+
+<h3>6. Technische Architektur eines modernen Laboranalysators</h3>
+<table><thead><tr><th>Subsystem</th><th>Aufgabe</th><th>Beispiele</th></tr></thead><tbody>
+<tr><td>Probenzufuhr</td><td>Übernahme und Identifikation von Proben</td><td>Barcode-Leser, Racks, Einzugssystem</td></tr>
+<tr><td>Fluidik</td><td>Transport und Dosierung von Flüssigkeiten</td><td>Pumpen, Ventile, Schläuche</td></tr>
+<tr><td>Pipettierung</td><td>Präzise Dosierung von Probe und Reagenzien</td><td>Pipettierarm, Einwegspitzen</td></tr>
+<tr><td>Messmodul</td><td>Erfassung der analytischen Signale</td><td>Photometer, Elektroden, Detektoren</td></tr>
+<tr><td>Temperatursteuerung</td><td>Stabilisierung definierter Prozessbedingungen</td><td>Inkubator, Kühlung, Heizung</td></tr>
+<tr><td>Steuerungssoftware</td><td>Koordination der Arbeitsabläufe</td><td>Workflow-Engine, Selbsttest-Logik</td></tr>
+<tr><td>Alarmmanagement</td><td>Erkennung von Fehlern und Grenzwertüberschreitungen</td><td>Reagenzmangel, Sensorfehler, Probenstau</td></tr>
+<tr><td>Datenkommunikation</td><td>Austausch von Aufträgen und Ergebnissen</td><td>LAN, Middleware, LIS-Schnittstellen</td></tr>
+</tbody></table>
+
+<h3>7. Präanalytik und Probenworkflow</h3>
+<table><thead><tr><th>Prozessschritt</th><th>Technische Aufgabe</th><th>Typische Fehlerquelle</th></tr></thead><tbody>
+<tr><td>Probenentnahme</td><td>Gewinnung und Kennzeichnung des Untersuchungsmaterials</td><td>Falsche Zuordnung oder ungeeignetes Probenmaterial</td></tr>
+<tr><td>Identifikation</td><td>Abgleich von Probe und Laborauftrag</td><td>Barcode nicht lesbar oder Zuordnungsfehler</td></tr>
+<tr><td>Transport</td><td>Weiterleitung zur Analytik</td><td>Verzögerung oder ungeeignete Transportbedingungen</td></tr>
+<tr><td>Vorbereitung</td><td>Zentrifugieren, Entkappen oder Aliquotieren</td><td>Fehlerhafte Prozessparameter</td></tr>
+<tr><td>Analyse</td><td>Durchführung der Messung</td><td>Reagenz-, Sensor- oder Kalibrierfehler</td></tr>
+<tr><td>Ergebnisübernahme</td><td>Übertragung an LIS und Validierungsworkflow</td><td>Schnittstellen- oder Plausibilitätsfehler</td></tr>
+</tbody></table>
+
+<h3>8. Vernetzung und Medizininformatik</h3>
+<table><thead><tr><th>Ebene</th><th>Beispiel</th><th>Medizininformatische Bedeutung</th></tr></thead><tbody>
+<tr><td>Geräteebene</td><td>Analysator mit Sensorik und Steuerungssoftware</td><td>Erzeugung von Mess- und Statusdaten</td></tr>
+<tr><td>Middleware</td><td>Labor-Middleware zwischen Gerät und LIS</td><td>Regelbasierte Verarbeitung und Geräteintegration</td></tr>
+<tr><td>LIS</td><td>Laborinformationssystem</td><td>Auftragsverwaltung, Ergebnisverwaltung und Dokumentation</td></tr>
+<tr><td>KIS</td><td>Krankenhausinformationssystem</td><td>Bereitstellung von Laborbefunden im klinischen Kontext</td></tr>
+<tr><td>Integration</td><td>HL7, ASTM oder herstellerspezifische Protokolle</td><td>Übertragung von Aufträgen, Ergebnissen und Statusinformationen</td></tr>
+</tbody></table>
+
+<h3>9. Typische Schnittstellen und Datenfluss</h3>
+<table><thead><tr><th>Quelle</th><th>Daten</th><th>Ziel</th><th>Beispiel</th></tr></thead><tbody>
+<tr><td>KIS / Order Entry</td><td>Laborauftrag</td><td>LIS</td><td>Auftragserfassung</td></tr>
+<tr><td>LIS</td><td>Arbeitsauftrag, Patienten- und Probeninformationen</td><td>Laborgerät / Middleware</td><td>Bidirektionale Geräteanbindung</td></tr>
+<tr><td>Laborgerät</td><td>Messwerte, Flags, Gerätestatus</td><td>LIS / Middleware</td><td>Automatische Ergebnisübertragung</td></tr>
+<tr><td>LIS</td><td>Validierte Ergebnisse</td><td>KIS / elektronische Patientenakte</td><td>Laborbefund</td></tr>
+</tbody></table>
+
+<h3>10. Sicherheit und Qualitätssicherung</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th><th>Technische Umsetzung</th></tr></thead><tbody>
+<tr><td>Interne Qualitätskontrolle</td><td>Überwachung der Messqualität mit Kontrollmaterial</td><td>QC-Messungen, Regeln und Freigabestatus</td></tr>
+<tr><td>Kalibrierung</td><td>Abgleich des Messsystems mit definierten Referenzen</td><td>Kalibratoren und gerätespezifische Kalibrierprotokolle</td></tr>
+<tr><td>Rückverfolgbarkeit</td><td>Nachvollziehbarkeit von Probe, Reagenz und Messung</td><td>Barcode, Chargenverwaltung, Audit Trail</td></tr>
+<tr><td>Benutzerverwaltung</td><td>Kontrolle von Zugriffsrechten</td><td>Rollen, Konten und Authentifizierung</td></tr>
+<tr><td>Wartung</td><td>Erhalt der technischen Funktionsfähigkeit</td><td>Wartungspläne und dokumentierte Serviceereignisse</td></tr>
+<tr><td>Cybersecurity</td><td>Schutz vernetzter Laborgeräte</td><td>Netzsegmentierung, Updates und Zugriffskontrolle</td></tr>
+</tbody></table>
+
+<h3>11. Typische Alarme und Fehlerbilder</h3>
+<table><thead><tr><th>Alarm / Fehler</th><th>Mögliche technische Ursache</th><th>Zu prüfende Bereiche</th></tr></thead><tbody>
+<tr><td>Probe nicht erkannt</td><td>Barcode beschädigt oder Lesefehler</td><td>Barcode, Scanner, Probenposition</td></tr>
+<tr><td>Reagenzfehler</td><td>Leerstand, Ablaufdatum oder Identifikationsproblem</td><td>Reagenzstatus und Chargendaten</td></tr>
+<tr><td>QC außerhalb Bereich</td><td>Analytische Instabilität</td><td>Kalibrierung, Reagenzien, Messsystem</td></tr>
+<tr><td>Probenstau</td><td>Mechanische oder organisatorische Blockierung</td><td>Transportweg und Sensorik</td></tr>
+<tr><td>Schnittstellenfehler</td><td>Kommunikationsunterbrechung</td><td>Netzwerk, Middleware, Protokollstatus</td></tr>
+<tr><td>Messfehler</td><td>Sensor-, Fluidik- oder optisches Problem</td><td>Messmodul und Wartungsstatus</td></tr>
+</tbody></table>
+
+<h3>12. Technische Vergleichskriterien für eine Geräteauswahl</h3>
+<table><thead><tr><th>Kategorie</th><th>Prüffrage</th><th>Warum relevant?</th></tr></thead><tbody>
+<tr><td>Analytisches Spektrum</td><td>Welche Parameter und Methoden werden unterstützt?</td><td>Bestimmt den fachlichen Einsatzbereich.</td></tr>
+<tr><td>Durchsatz</td><td>Wie viele Proben bzw. Tests können verarbeitet werden?</td><td>Relevant für Laborgröße und Spitzenlast.</td></tr>
+<tr><td>Automatisierung</td><td>Welche prä- und postanalytischen Prozesse sind integriert?</td><td>Beeinflusst Personalaufwand und Prozessstabilität.</td></tr>
+<tr><td>Probenarten</td><td>Welche Materialien und Röhrchentypen werden unterstützt?</td><td>Bestimmt Kompatibilität mit dem Laborworkflow.</td></tr>
+<tr><td>Qualitätskontrolle</td><td>Wie werden QC und Kalibrierung unterstützt?</td><td>Zentral für die analytische Qualität.</td></tr>
+<tr><td>Vernetzung</td><td>Welche LIS- und Middleware-Schnittstellen stehen zur Verfügung?</td><td>Relevant für Integration und Datenfluss.</td></tr>
+<tr><td>Service</td><td>Wie sind Wartung, Ersatzteile und Fernsupport organisiert?</td><td>Beeinflusst Verfügbarkeit und Lebenszykluskosten.</td></tr>
+<tr><td>Cybersecurity</td><td>Welche Update- und Zugriffskonzepte bestehen?</td><td>Vernetzte Laborgeräte sind Teil der IT-Sicherheitsarchitektur.</td></tr>
+</tbody></table>
+
+<h3>13. Wartung und Qualitätssicherung im Betrieb</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Herstellerangaben</td><td>Betrieb und Wartung erfolgen entsprechend den freigegebenen Herstellerunterlagen.</td></tr>
+<tr><td>Reinigung</td><td>Regelmäßige Reinigung und Dekontamination gemäß Prozess- und Hygienevorgaben.</td></tr>
+<tr><td>Kalibrierung</td><td>Durchführung nach Methode, Gerätezustand und vorgegebenen Intervallen.</td></tr>
+<tr><td>Qualitätskontrolle</td><td>Regelmäßige QC-Messungen und dokumentierte Bewertung der Ergebnisse.</td></tr>
+<tr><td>Wartung</td><td>Vorbeugende und korrektive Instandhaltung mit dokumentierten Serviceereignissen.</td></tr>
+<tr><td>Software-/Konfigurationsstand</td><td>Kontrolle der eingesetzten Versionen und freigegebenen Konfigurationen.</td></tr>
+</tbody></table>
+
+<h3>14. Begriffe für die Medizininformatik</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung im Kontext Labor</th></tr></thead><tbody>
+<tr><td>LIS</td><td>Laborinformationssystem zur Verwaltung von Laboraufträgen und Ergebnissen.</td></tr>
+<tr><td>Middleware</td><td>Integrations- und Verarbeitungsebene zwischen Laborgeräten und Informationssystemen.</td></tr>
+<tr><td>QC</td><td>Qualitätskontrolle zur Überwachung der analytischen Messqualität.</td></tr>
+<tr><td>Kalibrierung</td><td>Abgleich eines Messsystems mit definierten Referenzwerten.</td></tr>
+<tr><td>TAT</td><td>Turnaround Time; Prozesszeit einer Laboruntersuchung zwischen definierten Zeitpunkten.</td></tr>
+<tr><td>ASTM</td><td>In der Laborgerätekommunikation verwendete Familie historischer bzw. etablierter Schnittstellenspezifikationen.</td></tr>
+<tr><td>HL7</td><td>Standardfamilie für den Austausch medizinischer Informationen zwischen Informationssystemen.</td></tr>
+<tr><td>Audit Trail</td><td>Nachvollziehbare Protokollierung relevanter Ereignisse und Änderungen, sofern vom System unterstützt.</td></tr>
+</tbody></table>
+
+<h3>15. Weiterführende Hersteller- und Fachinformationen</h3>
+<table><thead><tr><th>Bereich</th><th>Dokumentationsart</th></tr></thead><tbody>
+<tr><td>Laboranalysatoren</td><td>Für konkrete technische Daten sind die jeweils aktuelle Gebrauchsanweisung, Produktinformation und Schnittstellendokumentation des Herstellers maßgeblich.</td></tr>
+<tr><td>LIS-Integration</td><td>Projektbezogene Schnittstellenspezifikationen, Middleware-Dokumentationen und freigegebene Integrationsprofile sind zu berücksichtigen.</td></tr>
+<tr><td>Qualität</td><td>Laborinterne Qualitätsmanagementdokumente und die für den jeweiligen Betrieb geltenden Anforderungen ergänzen die Gerätedokumentation.</td></tr>
+</tbody></table>
+
+<div class="note">
+  <strong>Stand der technischen Übersicht:</strong> September 2026.
+  Konkrete Gerätefunktionen, Softwarestände, Schnittstellen und Optionen sind hersteller- und konfigurationsabhängig.
+  Für Betrieb, Wartung und diagnostische Nutzung ist stets die aktuelle Dokumentation des konkreten Systems maßgeblich.
+</div>
+
+
+<h3>16. Bekannte Hersteller und Laborgeräte im deutschen Markt</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Schwerpunkt</th><th>Beispielgeräte / Plattformen</th><th>Typischer Einsatz</th></tr></thead>
+<tbody>
+<tr><td><strong>Roche Diagnostics</strong></td><td>Klinische Chemie, Immunologie, Molekulardiagnostik, POCT</td><td>cobas pro, cobas 8000, cobas e, cobas b 123</td><td>Zentrallabor, Spezialdiagnostik und patientennahe Diagnostik</td></tr>
+<tr><td><strong>Siemens Healthineers</strong></td><td>Labordiagnostik und Blutgasanalyse</td><td>Atellica Solution, RAPIDPoint-Serie</td><td>Zentrallabor, Notfall- und Akutdiagnostik</td></tr>
+<tr><td><strong>Abbott</strong></td><td>Klinische Chemie, Immunoassays und POCT</td><td>Alinity c, Alinity i, i-STAT</td><td>Zentrallabor und Point-of-Care</td></tr>
+<tr><td><strong>Sysmex</strong></td><td>Hämatologie und Urindiagnostik</td><td>XN-Serie, XQ-Serie, UF-Serie</td><td>Hämatologisches Labor und Urindiagnostik</td></tr>
+<tr><td><strong>Beckman Coulter Diagnostics</strong></td><td>Klinische Chemie, Immunologie, Hämatologie</td><td>DxC-, DxI- und DxH-Plattformen</td><td>Zentrallabor und automatisierte Laborlinien</td></tr>
+<tr><td><strong>bioMérieux</strong></td><td>Mikrobiologie und Infektionsdiagnostik</td><td>VITEK, BacT/ALERT</td><td>Mikrobiologisches Labor</td></tr>
+<tr><td><strong>Radiometer</strong></td><td>Blutgas- und Akutdiagnostik</td><td>ABL-Serie</td><td>Intensivmedizin, OP, Notaufnahme und POCT</td></tr>
+</tbody>
+</table>
+
+<h3>17. Zentrifugen</h3>
+<table>
+<thead><tr><th>Aspekt</th><th>Beschreibung</th><th>Technische Kennwerte / Hinweise</th></tr></thead>
+<tbody>
+<tr><td>Grundfunktion</td><td>Zentrifugen trennen Probenbestandteile anhand ihrer Sedimentation im Zentrifugalfeld, beispielsweise Zellen von Plasma oder Serum.</td><td>Drehzahl (rpm), relative Zentrifugalbeschleunigung (RCF/g), Laufzeit und Temperatur sind zentrale Parameter.</td></tr>
+<tr><td>Präanalytik</td><td>Die Zentrifugation ist ein wesentlicher Schritt der Probenvorbereitung vor vielen klinisch-chemischen und immunologischen Analysen.</td><td>Falsche Zeit-, Temperatur- oder RCF-Einstellungen können die Probenqualität beeinflussen.</td></tr>
+<tr><td>Sicherheitsfunktionen</td><td>Deckelverriegelung, Unwuchterkennung und Überwachung des Rotors reduzieren Risiken während des Betriebs.</td><td>Der Rotor darf erst nach vollständigem Stillstand geöffnet werden.</td></tr>
+<tr><td>Typen</td><td>Tischzentrifugen, Kühlzentrifugen, Mikrohämatokrit-Zentrifugen und Spezialzentrifugen.</td><td>Die Auswahl richtet sich nach Probenvolumen, erforderlicher RCF und Temperaturführung.</td></tr>
+</tbody>
+</table>
+
+<h3>18. Blutgasanalysatoren (BGA)</h3>
+<table>
+<thead><tr><th>Messgröße</th><th>Bedeutung</th><th>Typisches Messprinzip</th></tr></thead>
+<tbody>
+<tr><td>pH</td><td>Beurteilung des Säure-Basen-Status.</td><td>Elektrochemische Messung mit geeigneter pH-Sensorik.</td></tr>
+<tr><td>pCO₂</td><td>Beurteilung der respiratorischen Komponente des Säure-Basen-Haushalts.</td><td>Elektrochemische CO₂-Sensorik.</td></tr>
+<tr><td>pO₂</td><td>Beurteilung der Oxygenierung.</td><td>Elektrochemische bzw. systemspezifische Sensorik.</td></tr>
+<tr><td>Elektrolyte</td><td>Je nach Gerät z. B. Natrium, Kalium, Calcium und Chlorid.</td><td>Ionenselektive Elektroden.</td></tr>
+<tr><td>Metabolite</td><td>Je nach Konfiguration beispielsweise Glukose und Laktat.</td><td>Enzymatische bzw. elektrochemische Sensoren.</td></tr>
+</tbody>
+</table>
+<table>
+<thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead>
+<tbody>
+<tr><td>Einsatzbereiche</td><td>Zentrallabor, Intensivstation, OP, Notaufnahme und Point-of-Care-Testung (POCT).</td></tr>
+<tr><td>POCT</td><td>BGA-Systeme können dezentral patientennah betrieben werden und benötigen dafür geregelte Qualitätskontrolle, Benutzerverwaltung und Dokumentation.</td></tr>
+<tr><td>Vernetzung</td><td>Die Integration erfolgt je nach Umgebung über POCT-Middleware, LIS, KIS und herstellerspezifische Kommunikationsschnittstellen.</td></tr>
+<tr><td>Qualitätssicherung</td><td>Regelmäßige interne Qualitätskontrollen, Kalibrierungen und die Überwachung von Reagenzien bzw. Sensoren sind für einen zuverlässigen Betrieb erforderlich.</td></tr>
+</tbody>
+</table>
+
+<h3>19. Bekannte Hersteller und konkrete Systeme: Zentrifugen und BGA</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Gerätegruppe</th><th>Beispielplattform / Produktfamilie</th><th>Typischer Einsatz</th></tr></thead>
+<tbody>
+<tr><td><strong>Roche Diagnostics</strong></td><td>BGA / POCT</td><td>cobas b 123</td><td>Blutgasanalyse und patientennahe Diagnostik, je nach Konfiguration.</td></tr>
+<tr><td><strong>Radiometer</strong></td><td>BGA</td><td>ABL-Serie</td><td>Blutgasanalyse in Akutmedizin, Intensivmedizin und klinischen Laborbereichen.</td></tr>
+<tr><td><strong>Siemens Healthineers</strong></td><td>BGA</td><td>RAPIDPoint-Serie</td><td>Blutgas- und kritische Parameterdiagnostik.</td></tr>
+<tr><td><strong>Eppendorf</strong></td><td>Zentrifugen</td><td>Centrifuge 5425 R, 5810 R, 5910 Ri</td><td>Probenvorbereitung, klinisches und wissenschaftliches Labor.</td></tr>
+<tr><td><strong>Andreas Hettich</strong></td><td>Zentrifugen</td><td>ROTANTA 460, ROTIXA 500 RS</td><td>Klinische Labore, Blutproben und Probenaufbereitung.</td></tr>
+<tr><td><strong>Thermo Fisher Scientific</strong></td><td>Zentrifugen</td><td>Sorvall ST 8 / ST 16, Heraeus Megafuge</td><td>Klinische und wissenschaftliche Probenverarbeitung.</td></tr>
+</tbody>
+</table>
+
+<h3>20. Vergleich: Zentrifuge und BGA als Teil des Laborworkflows</h3>
+<table>
+<thead><tr><th>Merkmal</th><th>Zentrifuge</th><th>BGA-Gerät</th></tr></thead>
+<tbody>
+<tr><td>Hauptaufgabe</td><td>Physikalische Probenaufbereitung und Trennung von Bestandteilen.</td><td>Analytische Bestimmung physiologischer Messgrößen.</td></tr>
+<tr><td>Rolle im Workflow</td><td>Vor allem Präanalytik.</td><td>Analytik bzw. POCT.</td></tr>
+<tr><td>Zentrale Daten</td><td>Laufprogramm, RCF, Drehzahl, Zeit, Temperatur und ggf. Geräteereignisse.</td><td>Messwerte, Qualitätskontrollen, Kalibrierstatus, Benutzer- und Patientenbezug.</td></tr>
+<tr><td>Vernetzungsbedarf</td><td>Je nach Laborautomation und Geräteintegration.</td><td>Hoch, insbesondere bei POCT-Middleware und LIS/KIS-Anbindung.</td></tr>
+<tr><td>Sicherheitsaspekte</td><td>Unwucht, Rotorzustand, Deckelverriegelung und sichere Beladung.</td><td>Qualitätskontrolle, Probenidentifikation, Kalibrierung und sichere Ergebniszuordnung.</td></tr>
+</tbody>
+</table>
+
+<h3>21. Typischer Laborworkflow mit konkreten Geräten</h3>
+<table>
+<thead><tr><th>Workflow-Schritt</th><th>Gerätegruppe</th><th>Beispiele</th><th>IT-/Datenbezug</th></tr></thead>
+<tbody>
+<tr><td>Probenannahme</td><td>Barcode- und Probenidentifikation</td><td>Scanner, Probenverteiler, Automationslinie</td><td>Auftrag und Proben-ID aus LIS</td></tr>
+<tr><td>Präanalytik</td><td>Zentrifuge</td><td>Eppendorf 5810 R, Hettich ROTANTA 460</td><td>Je nach Automatisierung Geräte- und Prozessdaten</td></tr>
+<tr><td>Klinische Chemie</td><td>Chemieanalysator</td><td>Roche cobas pro, Abbott Alinity c</td><td>Bidirektionale Kommunikation mit LIS/Middleware</td></tr>
+<tr><td>Immunologie</td><td>Immunoassay-System</td><td>Roche cobas e, Abbott Alinity i</td><td>Auftragsübernahme und Ergebnisrückgabe</td></tr>
+<tr><td>Hämatologie</td><td>Hämatologieanalysator</td><td>Sysmex XN-Serie, Beckman Coulter DxH</td><td>Messwerte, Flags und Qualitätsdaten an LIS</td></tr>
+<tr><td>Akutdiagnostik</td><td>BGA-Gerät</td><td>Roche cobas b 123, Radiometer ABL, Siemens RAPIDPoint</td><td>POCT-Middleware, Benutzer- und Qualitätskontrolle</td></tr>
+<tr><td>Freigabe</td><td>LIS / Middleware</td><td>Regelbasierte technische und medizinische Validierung</td><td>Übertragung freigegebener Befunde an KIS/Patientenakte</td></tr>
+</tbody>
+</table>
+
+<div class="note">
+<strong>Hinweis zur Herstellerübersicht:</strong> Die genannten Systeme sind Beispiele für etablierte Produktfamilien. Verfügbarkeit, Softwareversion, Messmodule und Schnittstellen sind konfigurations- und standortabhängig. Für Beschaffung, Betrieb und Integration sind die aktuelle Herstellerdokumentation und die freigegebenen Schnittstellenspezifikationen maßgeblich.
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

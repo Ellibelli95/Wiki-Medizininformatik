@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerätevernetzung – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* Absicherung: identische Tabellenformatierung wie auf den anderen Medizintechnik-Seiten */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2em 0 1.8em;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+  }
+  th, td {
+    border: 1px solid #d9e2ea;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  thead th {
+    background: #1a5276;
+    color: #fff;
+    border-color: #1a5276;
+    font-weight: 700;
+  }
+  tbody tr:nth-child(even) { background: #eaf4f8; }
+  tbody tr:hover { background: #dcedf5; }
+
+  /* Klickbare Einleitung / Inhaltsverzeichnis mit Icon-Grafiken */
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin: 1.2em 0 2em;
+  }
+  .toc-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    background: #fff;
+    border: 1px solid #d9e2ea;
+    border-radius: 10px;
+    padding: 14px 14px 16px;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 2px 8px rgba(16,42,67,.05);
+    transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  }
+  .toc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(16,42,67,.14);
+    border-color: #1a5276;
+  }
+  .toc-card svg {
+    width: 44px;
+    height: 44px;
+    stroke: #1a5276;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    margin-bottom: 4px;
+  }
+  .toc-card svg .fill { fill: #1a5276; stroke: none; }
+  .toc-card .toc-num {
+    font-size: .72em;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: #6a93ac;
+  }
+  .toc-card .toc-title {
+    font-weight: 700;
+    color: #17324a;
+    line-height: 1.25;
+  }
+  .toc-card .toc-desc {
+    font-size: .85em;
+    color: #5b7080;
+  }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../vernetzung/index.html">Vernetzung</a> /
+  Gerätevernetzung
+</div>
+
+<div class="hero">
+  <h2>Gerätevernetzung</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Anbindung medizinischer Geräte (Beatmung, Narkose, Monitoring, EKG, EEG u. a.) an das Patientendatenmanagementsystem (PDMS)</td></tr>
+      <tr><td>Anbindungsarten</td><td>Direkte Netzwerkanbindung, serielle Schnittstellen (z. B. D-Sub, RJ45) und Gateway-/Middleware-Lösungen</td></tr>
+      <tr><td>Standards</td><td>HL7, DICOM, FHIR und IEEE 11073 zur herstellerübergreifenden Kommunikation</td></tr>
+      <tr><td>Datenfluss</td><td>Gerät → Interface/Gateway → Middleware → PDMS → Krankenhausinformationssystem (KIS)</td></tr>
+      <tr><td>Nutzen</td><td>Patientensicherheit, Zeitersparnis, zentrale Datensicht und Unterstützung klinischer Entscheidungen</td></tr>
+      <tr><td>Herausforderungen</td><td>Datenkompatibilität, Datensicherheit/DSGVO, technische Komplexität, Kosten und Personalakzeptanz</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist eine technische und medizininformatische Dokumentation.
+    Die konkrete Auswahl, Konfiguration und der Betrieb einer Gerätevernetzungslösung erfolgen nach
+    den geltenden IT-Sicherheits- und Datenschutzvorgaben sowie durch qualifiziertes Fachpersonal.
+  </div>
+</div>
+
+<h3>Inhaltsverzeichnis</h3>
+<p>Klicken Sie auf eine Karte, um direkt zum jeweiligen Abschnitt zu springen.</p>
+<div class="toc-grid">
+
+  <a class="toc-card" href="#sec1">
+    <svg viewBox="0 0 48 48"><circle cx="14" cy="14" r="6"/><circle cx="34" cy="34" r="6"/><line x1="18.5" y1="18.5" x2="29.5" y2="29.5"/></svg>
+    <span class="toc-num">01</span>
+    <span class="toc-title">Was ist Gerätevernetzung?</span>
+    <span class="toc-desc">Grundbegriff und Zielsetzung</span>
+  </a>
+
+  <a class="toc-card" href="#sec2">
+    <svg viewBox="0 0 48 48"><rect x="8" y="18" width="32" height="22" rx="1"/><path d="M8 18 L24 6 L40 18"/><rect x="20" y="26" width="8" height="14"/></svg>
+    <span class="toc-num">02</span>
+    <span class="toc-title">Ausgangslage im Krankenhaus</span>
+    <span class="toc-desc">PDMS, Gerätevielfalt, Hersteller</span>
+  </a>
+
+  <a class="toc-card" href="#sec3">
+    <svg viewBox="0 0 48 48"><rect x="6" y="20" width="14" height="10" rx="2"/><path d="M20 25 H30"/><rect x="30" y="16" width="12" height="18" rx="2"/><line x1="12" y1="20" x2="12" y2="14"/><line x1="18" y1="20" x2="18" y2="14"/></svg>
+    <span class="toc-num">03</span>
+    <span class="toc-title">Anbindungsmöglichkeiten</span>
+    <span class="toc-desc">Direkt, Gateway, seriell/Ethernet</span>
+  </a>
+
+  <a class="toc-card" href="#sec4">
+    <svg viewBox="0 0 48 48"><circle cx="18" cy="24" r="9"/><circle cx="18" cy="24" r="3" class="fill"/><path d="M27 24 H35 M35 24 L35 16 M35 24 L35 32 M35 16 H41 M35 32 H41"/></svg>
+    <span class="toc-num">04</span>
+    <span class="toc-title">Komponenten der Lösung</span>
+    <span class="toc-desc">Gerät, Interface, Gateway, PDMS</span>
+  </a>
+
+  <a class="toc-card" href="#sec5">
+    <svg viewBox="0 0 48 48"><rect x="8" y="10" width="14" height="18" rx="1"/><rect x="26" y="20" width="14" height="18" rx="1"/><line x1="9" y1="15" x2="19" y2="15"/><line x1="9" y1="19" x2="19" y2="19"/><line x1="27" y1="25" x2="37" y2="25"/><line x1="27" y1="29" x2="37" y2="29"/></svg>
+    <span class="toc-num">05</span>
+    <span class="toc-title">Schnittstellen &amp; Protokolle</span>
+    <span class="toc-desc">HL7, DICOM, FHIR, IEEE 11073</span>
+  </a>
+
+  <a class="toc-card" href="#sec6">
+    <svg viewBox="0 0 48 48"><path d="M6 24 H16"/><circle cx="20" cy="24" r="4"/><path d="M24 24 H30"/><rect x="30" y="18" width="12" height="12" rx="2"/></svg>
+    <span class="toc-num">06</span>
+    <span class="toc-title">Serielle Anbindung</span>
+    <span class="toc-desc">D-Sub, RJ45, Interface</span>
+  </a>
+
+  <a class="toc-card" href="#sec7">
+    <svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="7" rx="1"/><rect x="10" y="20.5" width="28" height="7" rx="1"/><rect x="10" y="31" width="28" height="7" rx="1"/></svg>
+    <span class="toc-num">07</span>
+    <span class="toc-title">Technische Architektur</span>
+    <span class="toc-desc">Subsysteme im Überblick</span>
+  </a>
+
+  <a class="toc-card" href="#sec8">
+    <svg viewBox="0 0 48 48"><circle cx="10" cy="24" r="4"/><path d="M14 24 H22"/><circle cx="26" cy="24" r="4"/><path d="M30 24 H38"/><circle cx="42" cy="24" r="4"/></svg>
+    <span class="toc-num">08</span>
+    <span class="toc-title">Datenfluss &amp; Workflow</span>
+    <span class="toc-desc">Von der Erfassung bis zur Anzeige</span>
+  </a>
+
+  <a class="toc-card" href="#sec9">
+    <svg viewBox="0 0 48 48"><circle cx="24" cy="10" r="4"/><circle cx="10" cy="34" r="4"/><circle cx="38" cy="34" r="4"/><line x1="24" y1="14" x2="12" y2="31"/><line x1="24" y1="14" x2="36" y2="31"/><line x1="14" y1="34" x2="34" y2="34"/></svg>
+    <span class="toc-num">09</span>
+    <span class="toc-title">Vernetzung &amp; Medizininformatik</span>
+    <span class="toc-desc">Geräte-, Gateway-, PDMS-, KIS-Ebene</span>
+  </a>
+
+  <a class="toc-card" href="#sec10">
+    <svg viewBox="0 0 48 48"><rect x="6" y="18" width="12" height="12" rx="1"/><rect x="30" y="18" width="12" height="12" rx="1"/><path d="M18 24 H30" marker-end="url(#arrow)"/><path d="M27 21 L30 24 L27 27"/></svg>
+    <span class="toc-num">10</span>
+    <span class="toc-title">Schnittstellen im Detail</span>
+    <span class="toc-desc">Quelle, Daten, Ziel, Standard</span>
+  </a>
+
+  <a class="toc-card" href="#sec11">
+    <svg viewBox="0 0 48 48"><path d="M24 6 L40 12 V24 C40 34 33 40 24 42 C15 40 8 34 8 24 V12 Z"/><path d="M17 24 L22 29 L32 18"/></svg>
+    <span class="toc-num">11</span>
+    <span class="toc-title">Vorteile der Integration</span>
+    <span class="toc-desc">Sicherheit, Zeit, Datensicht, CDSS</span>
+  </a>
+
+  <a class="toc-card" href="#sec12">
+    <svg viewBox="0 0 48 48"><path d="M24 6 L44 40 H4 Z"/><line x1="24" y1="18" x2="24" y2="28"/><circle cx="24" cy="33" r="1.6" class="fill"/></svg>
+    <span class="toc-num">12</span>
+    <span class="toc-title">Herausforderungen</span>
+    <span class="toc-desc">Kompatibilität, Sicherheit, Kosten</span>
+  </a>
+
+  <a class="toc-card" href="#sec13">
+    <svg viewBox="0 0 48 48"><rect x="12" y="22" width="24" height="18" rx="2"/><path d="M17 22 V15 a7 7 0 0 1 14 0 v7"/><circle cx="24" cy="30" r="2.4" class="fill"/></svg>
+    <span class="toc-num">13</span>
+    <span class="toc-title">Sicherheit &amp; Datenschutz</span>
+    <span class="toc-desc">Verschlüsselung, DSGVO, VLAN</span>
+  </a>
+
+  <a class="toc-card" href="#sec14">
+    <svg viewBox="0 0 48 48"><path d="M24 8 a12 12 0 0 1 12 12 v6 l4 6 H8 l4-6 v-6 a12 12 0 0 1 12-12 Z"/><path d="M20 36 a4 4 0 0 0 8 0"/></svg>
+    <span class="toc-num">14</span>
+    <span class="toc-title">Alarme &amp; Fehlerbilder</span>
+    <span class="toc-desc">Typische Störungsursachen</span>
+  </a>
+
+  <a class="toc-card" href="#sec15">
+    <svg viewBox="0 0 48 48"><line x1="24" y1="8" x2="24" y2="36"/><line x1="10" y1="14" x2="38" y2="14"/><path d="M10 14 L4 26 H16 Z"/><path d="M38 14 L32 26 H44 Z"/><line x1="16" y1="40" x2="32" y2="40"/></svg>
+    <span class="toc-num">15</span>
+    <span class="toc-title">Vergleichskriterien</span>
+    <span class="toc-desc">Auswahl einer Lösung</span>
+  </a>
+
+  <a class="toc-card" href="#sec16">
+    <svg viewBox="0 0 48 48"><path d="M30 10 a7 7 0 0 0 -9.9 9.9 L8 32 v6 h6 l12 -12.1 A7 7 0 0 0 36 16 l-5 5 -4-4 z"/></svg>
+    <span class="toc-num">16</span>
+    <span class="toc-title">Wartung &amp; Qualitätssicherung</span>
+    <span class="toc-desc">Betrieb, Konfiguration, Prüfung</span>
+  </a>
+
+  <a class="toc-card" href="#sec17">
+    <svg viewBox="0 0 48 48"><path d="M10 10 H30 a4 4 0 0 1 4 4 V38 H14 a4 4 0 0 1 -4 -4 Z"/><line x1="14" y1="18" x2="26" y2="18"/><line x1="14" y1="24" x2="26" y2="24"/></svg>
+    <span class="toc-num">17</span>
+    <span class="toc-title">Begriffe für die Medizininformatik</span>
+    <span class="toc-desc">PDMS, Gateway, HL7, FHIR u. a.</span>
+  </a>
+
+  <a class="toc-card" href="#sec18">
+    <svg viewBox="0 0 48 48"><path d="M14 6 H30 L38 14 V42 H14 Z"/><path d="M30 6 V14 H38"/><line x1="19" y1="24" x2="33" y2="24"/><line x1="19" y1="30" x2="33" y2="30"/><line x1="19" y1="36" x2="28" y2="36"/></svg>
+    <span class="toc-num">18</span>
+    <span class="toc-title">Hersteller- &amp; Fachinformationen</span>
+    <span class="toc-desc">PDF-Datenblätter, Schulungsvideo</span>
+  </a>
+
+  <a class="toc-card" href="#sec19">
+    <svg viewBox="0 0 48 48"><path d="M6 40 V20 L16 14 V40 M16 40 V10 L26 4 V40 M26 40 V16 L38 22 V40 Z"/><line x1="4" y1="40" x2="44" y2="40"/></svg>
+    <span class="toc-num">19</span>
+    <span class="toc-title">Bekannte Hersteller &amp; Lösungen</span>
+    <span class="toc-desc">GE, Philips, Dräger, iMDsoft u. a.</span>
+  </a>
+
+  <a class="toc-card" href="#sec20">
+    <svg viewBox="0 0 48 48"><rect x="4" y="8" width="12" height="8" rx="1"/><rect x="18" y="20" width="12" height="8" rx="1"/><rect x="32" y="32" width="12" height="8" rx="1"/><path d="M10 16 V20 M24 28 V32"/></svg>
+    <span class="toc-num">20</span>
+    <span class="toc-title">Typischer Workflow</span>
+    <span class="toc-desc">Konkrete Systeme im Einsatz</span>
+  </a>
+
+</div>
+
+<h3 id="sec1">1. Was ist Gerätevernetzung?</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Grundfunktion</td><td>Gerätevernetzung bezeichnet die technische Anbindung medizinischer Geräte an zentrale Informationssysteme, insbesondere an das Patientendatenmanagementsystem (PDMS), zur automatisierten Erfassung, Speicherung und Auswertung von Patientendaten.</td></tr>
+<tr><td>Ausgangslage</td><td>Krankenhäuser setzen PDMS-Systeme für Dokumentation, Verlaufsdaten und Patientenakten ein. Die angeschlossenen Geräte – Beatmungsgeräte, Narkosegeräte, Überwachungsmonitore, EKG, EEG und weitere – stammen häufig von unterschiedlichen Herstellern.</td></tr>
+<tr><td>Ziel</td><td>Automatisierte und sichere Übertragung von Gerätedaten in das PDMS, ohne manuelle Übertragung durch das Pflege- oder ärztliche Personal.</td></tr>
+<tr><td>Sicht der Medizininformatik</td><td>Gerätevernetzung ist die Integrationsebene zwischen medizintechnischer Sensorik und klinischen Informationssystemen und damit ein zentrales Element der digitalen Krankenhausinfrastruktur.</td></tr>
+</tbody></table>
+
+<h3 id="sec2">2. Ausgangslage und Motivation im Krankenhaus</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Gerätevielfalt</td><td>Beatmungsgeräte, Narkosegeräte, Überwachungsmonitore, EKG- und EEG-Geräte, Infusionspumpen und weitere Systeme sind typischerweise gleichzeitig im Einsatz.</td></tr>
+<tr><td>Herstellervielfalt</td><td>Geräte unterschiedlicher Hersteller nutzen teils proprietäre Datenformate und Schnittstellen.</td></tr>
+<tr><td>Zielsystem</td><td>Das PDMS führt Verlaufsparameter, Vitaldaten, Beatmungs- und Narkoseparameter sowie weitere Messdaten in der digitalen Patientenakte zusammen.</td></tr>
+<tr><td>Motivation</td><td>Reduzierung manueller Übertragungsfehler, Zeitersparnis für das Personal und lückenlose, zeitgestempelte Dokumentation.</td></tr>
+</tbody></table>
+
+<h3 id="sec3">3. Anbindungsmöglichkeiten der Geräte</h3>
+<table><thead><tr><th>Anbindungsart</th><th>Beschreibung</th><th>Typischer Einsatz</th><th>Besonderheiten</th></tr></thead><tbody>
+<tr><td><strong>Direkte Netzwerkanbindung</strong></td><td>Geräte werden direkt über das Netzwerk oder herstellerseitige Schnittstellen an das PDMS angebunden.</td><td>Moderne, netzwerkfähige Geräte mit standardisierten Schnittstellen</td><td>Geringerer Integrationsaufwand, abhängig von Geräte- und PDMS-Kompatibilität</td></tr>
+<tr><td><strong>Gateway-Lösung</strong></td><td>Geräte werden über einen dedizierten Gateway-Server in das Krankenhausnetzwerk und anschließend in das PDMS eingebunden.</td><td>Heterogene Geräteumgebungen mit vielen Herstellern</td><td>Zentrale Protokollumsetzung und Datenstandardisierung</td></tr>
+<tr><td><strong>Serielle oder Ethernet-Anbindung</strong></td><td>Daten werden über geräteseitige Treiber oder ein Interface/Gateway in das Netzwerk geleitet.</td><td>Ältere oder nicht nativ netzwerkfähige Geräte (z. B. Beatmungsgeräte, Monitore)</td><td>Physische Schnittstellen wie D-Sub (z. B. D89) oder RJ45 erforderlich</td></tr>
+</tbody></table>
+
+<h3 id="sec4">4. Grundtypen und Komponenten einer Vernetzungslösung</h3>
+<table><thead><tr><th>Komponente</th><th>Aufgabe</th><th>Typische Ausführung</th><th>Technische Merkmale</th></tr></thead><tbody>
+<tr><td><strong>Medizinisches Gerät</strong></td><td>Erzeugt die zu übertragenden Mess- und Statusdaten</td><td>Beatmungsgerät, Narkosegerät, Monitor, EKG/EEG-Gerät</td><td>Herstellerspezifisches Ausgabeformat und Schnittstelle</td></tr>
+<tr><td><strong>Schnittstelle / Interface</strong></td><td>Physische Verbindung zwischen Gerät und Netzwerk</td><td>Serielle Schnittstelle (D-Sub), Ethernet (RJ45), WLAN</td><td>Übertragungsgeschwindigkeit und Verbindungsstabilität sind kritisch</td></tr>
+<tr><td><strong>Gateway / Middleware</strong></td><td>Protokollumsetzung, Datenstandardisierung und Weiterleitung</td><td>Medizinisches Device-Gateway, Integrationsserver</td><td>Unterstützung mehrerer Hersteller- und Kommunikationsprotokolle</td></tr>
+<tr><td><strong>Netzwerksegment</strong></td><td>Transport der standardisierten Daten im Krankenhausnetzwerk</td><td>Medizintechnik-VLAN, gesichertes Netzsegment</td><td>Segmentierung zur Erhöhung von Stabilität und Sicherheit</td></tr>
+<tr><td><strong>PDMS / Anwendung</strong></td><td>Zentrale Erfassung, Speicherung und Darstellung der Patientendaten</td><td>Patientendatenmanagementsystem</td><td>Zeitstempel- und geräte-ID-bezogene Dokumentation</td></tr>
+</tbody></table>
+
+<div class="flow">Medizinisches Gerät → Interface/Schnittstelle → Gateway/Middleware → Netzwerksegment → PDMS → KIS</div>
+
+<h3 id="sec5">5. Technische Umsetzung: Schnittstellen und Kommunikationsprotokolle</h3>
+<table><thead><tr><th>Standard</th><th>Einsatzbereich</th><th>Technische Bedeutung</th></tr></thead><tbody>
+<tr><td><strong>HL7</strong></td><td>Austausch klinischer und administrativer Daten zwischen Informationssystemen</td><td>Nachrichtenbasierter Standard (z. B. HL7 v2, HL7 FHIR) für Auftrags-, Ergebnis- und Patientendaten</td></tr>
+<tr><td><strong>DICOM</strong></td><td>Übertragung und Speicherung medizinischer Bilddaten und Kurvendaten</td><td>Auch für EKG-Kurvendaten (DICOM Waveform) relevant, sofern vom Gerät unterstützt</td></tr>
+<tr><td><strong>FHIR</strong></td><td>Moderner, webbasierter Standard für den Austausch strukturierter Gesundheitsdaten</td><td>RESTful-Schnittstellen, zunehmend auch für Gerätedaten und mobile Anwendungen genutzt</td></tr>
+<tr><td><strong>IEEE 11073</strong></td><td>Standardisierte Kommunikation zwischen medizinischen Geräten und Informationssystemen (Point-of-Care-Geräte)</td><td>Definiert Geräteklassen, Datenmodelle und Übertragungsmechanismen für die Interoperabilität am Behandlungsort</td></tr>
+</tbody></table>
+
+<h3 id="sec6">6. Serielle Anbindung von Geräten</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Betroffene Gerätegruppen</td><td>Insbesondere Beatmungsgeräte und Überwachungsmonitore ohne native Netzwerkfähigkeit.</td></tr>
+<tr><td>Physische Schnittstellen</td><td>Serielle Verbindungen wie D-Sub-Anschlüsse (z. B. D89) oder Ethernet-Anschlüsse (RJ45) zum Interface bzw. Gateway.</td></tr>
+<tr><td>Datenweg</td><td>Gerät → serielle Schnittstelle → Interface/Gateway → Krankenhausnetzwerk → PDMS.</td></tr>
+<tr><td>Vorteil</td><td>Ermöglicht die Einbindung auch älterer, nicht nativ netzwerkfähiger Bestandsgeräte.</td></tr>
+<tr><td>Quelle</td><td>Herstellerinformationen zu seriellen Schnittstellen und Gateway-Anbindung: <a href="https://www.gehealthcare.com/-/jssmedia/50270cf669814d6e93b6f57ffa45e6f0.pdf" target="_blank" rel="noopener">GE HealthCare – technisches Dokument (PDF)</a>.</td></tr>
+</tbody></table>
+
+<h3 id="sec7">7. Technische Architektur einer Gerätevernetzungslösung</h3>
+<table><thead><tr><th>Subsystem</th><th>Aufgabe</th><th>Beispiele</th></tr></thead><tbody>
+<tr><td>Geräteschnittstelle</td><td>Physische und protokollseitige Anbindung des Geräts</td><td>Serielle Schnittstelle, Ethernet, WLAN, herstellerspezifische API</td></tr>
+<tr><td>Protokollumsetzung</td><td>Übersetzung herstellerspezifischer Datenformate in Standardformate</td><td>Gateway-/Middleware-Software</td></tr>
+<tr><td>Datenvalidierung</td><td>Plausibilitätsprüfung und Filterung von Mess- und Statusdaten</td><td>Middleware-interne Regeln</td></tr>
+<tr><td>Netzwerktransport</td><td>Sichere Übertragung im Krankenhausnetzwerk</td><td>Medizintechnik-VLAN, verschlüsselte Verbindungen</td></tr>
+<tr><td>Zielsystem-Anbindung</td><td>Übernahme der Daten in PDMS bzw. KIS</td><td>HL7-/FHIR-Schnittstellen zum PDMS</td></tr>
+<tr><td>Alarmierung</td><td>Weiterleitung geräteseitiger Alarme an Überwachungssysteme</td><td>Zentrale Alarmserver, Pflegeruf-/Alarmierungssysteme</td></tr>
+</tbody></table>
+
+<h3 id="sec8">8. Datenfluss und Workflow</h3>
+<table><thead><tr><th>Prozessschritt</th><th>Technische Aufgabe</th><th>Typische Fehlerquelle</th></tr></thead><tbody>
+<tr><td>Geräteanbindung</td><td>Physische und logische Verbindung des Geräts mit Interface/Gateway</td><td>Falsche Kabelverbindung, inkompatible Schnittstelle</td></tr>
+<tr><td>Protokollumsetzung</td><td>Umwandlung herstellerspezifischer Daten in Standardformate</td><td>Fehlkonfiguration der Middleware</td></tr>
+<tr><td>Datenübertragung</td><td>Transport der Daten durch das Krankenhausnetzwerk</td><td>Netzwerkunterbrechung, unzureichende Bandbreite</td></tr>
+<tr><td>Datenübernahme ins PDMS</td><td>Zuordnung der Daten zum richtigen Patienten und Zeitpunkt</td><td>Fehlerhafte Patientenzuordnung, Zeitstempelabweichung</td></tr>
+<tr><td>Dokumentation und Anzeige</td><td>Darstellung der Verlaufsdaten in der digitalen Patientenakte</td><td>Darstellungs- oder Synchronisationsfehler</td></tr>
+</tbody></table>
+
+<h3 id="sec9">9. Vernetzung und Medizininformatik</h3>
+<table><thead><tr><th>Ebene</th><th>Beispiel</th><th>Medizininformatische Bedeutung</th></tr></thead><tbody>
+<tr><td>Geräteebene</td><td>Beatmungsgerät, Monitor, EKG/EEG-Gerät</td><td>Erzeugung von Vital- und Statusdaten</td></tr>
+<tr><td>Gateway-/Middleware-Ebene</td><td>Medizinisches Device-Gateway</td><td>Protokollumsetzung und Datenstandardisierung</td></tr>
+<tr><td>PDMS</td><td>Patientendatenmanagementsystem</td><td>Zentrale Erfassung und Verlaufsdokumentation</td></tr>
+<tr><td>KIS</td><td>Krankenhausinformationssystem</td><td>Bereitstellung der Daten im klinischen Gesamtkontext</td></tr>
+<tr><td>CDSS</td><td>Clinical Decision Support System</td><td>Nutzung der Gerätedaten zur klinischen Entscheidungsunterstützung</td></tr>
+</tbody></table>
+
+<h3 id="sec10">10. Schnittstellen und Datenfluss im Detail</h3>
+<table><thead><tr><th>Quelle</th><th>Daten</th><th>Ziel</th><th>Standard / Beispiel</th></tr></thead><tbody>
+<tr><td>Medizinisches Gerät</td><td>Vitalparameter, Alarme, Gerätestatus</td><td>Gateway/Middleware</td><td>IEEE 11073, herstellerspezifisches Protokoll</td></tr>
+<tr><td>Gateway/Middleware</td><td>Standardisierte Mess- und Verlaufsdaten</td><td>PDMS</td><td>HL7, FHIR</td></tr>
+<tr><td>Bildgebende/Kurvendaten-Geräte</td><td>Kurven- und Bilddaten</td><td>PDMS / PACS</td><td>DICOM</td></tr>
+<tr><td>PDMS</td><td>Verlaufsdokumentation, validierte Werte</td><td>KIS / elektronische Patientenakte</td><td>HL7-Nachrichten</td></tr>
+</tbody></table>
+
+<h3 id="sec11">11. Vorteile der Integration</h3>
+<table><thead><tr><th>Vorteil</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Verbesserte Patientensicherheit</td><td>Automatische Datenerfassung reduziert Übertragungsfehler und beschleunigt die Alarmerkennung.</td></tr>
+<tr><td>Zeitersparnis für das Personal</td><td>Pflegekräfte und Ärzte müssen Vitalwerte oder Messergebnisse nicht mehr manuell eintragen.</td></tr>
+<tr><td>Zentrale Datensicht</td><td>Alle relevanten Informationen sind in der digitalen Patientenakte verfügbar.</td></tr>
+<tr><td>Unterstützung klinischer Entscheidungen</td><td>Daten können in Clinical Decision Support Systeme (CDSS) einfließen.</td></tr>
+<tr><td>Nachvollziehbarkeit und Dokumentation</td><td>Jede Messung wird automatisch mit Zeitstempel und Geräte-ID dokumentiert.</td></tr>
+</tbody></table>
+
+<h3 id="sec12">12. Herausforderungen</h3>
+<table><thead><tr><th>Herausforderung</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Datenkompatibilität</td><td>Unterschiedliche Hersteller verwenden oft proprietäre Formate, was die Interoperabilität erschwert.</td></tr>
+<tr><td>Datensicherheit</td><td>Systeme müssen datenschutzkonform (u. a. DSGVO) betrieben werden, mit Verschlüsselung und Zugriffskontrollen.</td></tr>
+<tr><td>Technische Komplexität</td><td>Die Integration vieler Systeme erfordert Expertise und sorgfältige Planung.</td></tr>
+<tr><td>Kosten und Wartung</td><td>Anschaffung, Implementierung und Updates verursachen erhebliche Kosten.</td></tr>
+<tr><td>Akzeptanz des Personals</td><td>Schulungen und Change-Management sind entscheidend für den Erfolg der Integration.</td></tr>
+</tbody></table>
+
+<h3 id="sec13">13. Sicherheit und Datenschutz</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th><th>Technische Umsetzung</th></tr></thead><tbody>
+<tr><td>Verschlüsselung</td><td>Schutz der Daten während der Übertragung</td><td>TLS-verschlüsselte Verbindungen zwischen Gateway und PDMS</td></tr>
+<tr><td>Zugriffskontrolle</td><td>Kontrolle, wer auf Gerätedaten und Konfigurationen zugreifen darf</td><td>Rollen- und Rechtekonzepte, Authentifizierung</td></tr>
+<tr><td>Netzsegmentierung</td><td>Trennung medizintechnischer Netzwerke vom übrigen IT-Netz</td><td>Dediziertes Medizintechnik-VLAN</td></tr>
+<tr><td>Datenschutz (DSGVO)</td><td>Rechtmäßige Verarbeitung personenbezogener Gesundheitsdaten</td><td>Datenschutzkonzepte, Zweckbindung, Löschkonzepte</td></tr>
+<tr><td>Cybersecurity</td><td>Schutz vernetzter medizinischer Geräte vor unbefugtem Zugriff</td><td>Patch- und Schwachstellenmanagement, Monitoring</td></tr>
+</tbody></table>
+
+<h3 id="sec14">14. Typische Alarme und Fehlerbilder</h3>
+<table><thead><tr><th>Alarm / Fehler</th><th>Mögliche technische Ursache</th><th>Zu prüfende Bereiche</th></tr></thead><tbody>
+<tr><td>Keine Datenübertragung</td><td>Unterbrochene Kabel- oder Netzwerkverbindung</td><td>Physische Verbindung, Interface, Netzwerkstatus</td></tr>
+<tr><td>Fehlende Patientenzuordnung</td><td>Fehlerhafte oder fehlende Zuordnung von Gerät und Patient</td><td>PDMS-Konfiguration, Bettenzuordnung</td></tr>
+<tr><td>Zeitstempelabweichung</td><td>Unsynchronisierte Systemzeiten zwischen Gerät und PDMS</td><td>Zeitserver-/NTP-Konfiguration</td></tr>
+<tr><td>Protokollfehler</td><td>Inkompatible oder fehlerhafte Konfiguration der Middleware</td><td>Gateway-/Middleware-Konfiguration</td></tr>
+<tr><td>Datenverlust bei Spitzenlast</td><td>Überlastung von Netzwerk oder Middleware</td><td>Netzwerkkapazität, Middleware-Performance</td></tr>
+</tbody></table>
+
+<h3 id="sec15">15. Technische Vergleichskriterien für eine Lösungsauswahl</h3>
+<table><thead><tr><th>Kategorie</th><th>Prüffrage</th><th>Warum relevant?</th></tr></thead><tbody>
+<tr><td>Geräteunterstützung</td><td>Welche Gerätetypen und Hersteller werden nativ unterstützt?</td><td>Bestimmt den Integrationsaufwand für den Gerätepark.</td></tr>
+<tr><td>Standardkonformität</td><td>Werden HL7, FHIR, DICOM und IEEE 11073 unterstützt?</td><td>Relevant für Interoperabilität und Zukunftssicherheit.</td></tr>
+<tr><td>Skalierbarkeit</td><td>Wie viele Geräte und Standorte können angebunden werden?</td><td>Relevant für den Ausbau auf weitere Stationen oder Standorte.</td></tr>
+<tr><td>Ausfallsicherheit</td><td>Welche Redundanz- und Pufferungsmechanismen bestehen bei Netzwerkausfall?</td><td>Wichtig für die Datenintegrität bei Störungen.</td></tr>
+<tr><td>Sicherheit</td><td>Welche Verschlüsselungs- und Zugriffskonzepte werden unterstützt?</td><td>Zentral für Datenschutz und Cybersecurity.</td></tr>
+<tr><td>Service</td><td>Wie sind Wartung, Konfiguration und Support organisiert?</td><td>Beeinflusst Verfügbarkeit und Betriebskosten.</td></tr>
+</tbody></table>
+
+<h3 id="sec16">16. Wartung und Qualitätssicherung im Betrieb</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Herstellerangaben</td><td>Betrieb und Wartung von Gateway/Middleware erfolgen entsprechend den freigegebenen Herstellerunterlagen.</td></tr>
+<tr><td>Konfigurationsmanagement</td><td>Dokumentierte Verwaltung der Geräte-, Protokoll- und Netzwerkkonfiguration.</td></tr>
+<tr><td>Funktionsprüfung</td><td>Regelmäßige Prüfung der Datenübertragung auf Vollständigkeit und Plausibilität.</td></tr>
+<tr><td>Software-/Konfigurationsstand</td><td>Kontrolle der eingesetzten Versionen und freigegebenen Konfigurationen.</td></tr>
+<tr><td>Dokumentation</td><td>Nachvollziehbare Protokollierung von Wartungs- und Änderungsereignissen.</td></tr>
+</tbody></table>
+
+<h3 id="sec17">17. Begriffe für die Medizininformatik</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung im Kontext Gerätevernetzung</th></tr></thead><tbody>
+<tr><td>PDMS</td><td>Patientendatenmanagementsystem zur Erfassung und Dokumentation klinischer Verlaufsdaten.</td></tr>
+<tr><td>Gateway</td><td>System zur Protokollumsetzung und Weiterleitung von Gerätedaten in Zielsysteme.</td></tr>
+<tr><td>Middleware</td><td>Integrations- und Verarbeitungsebene zwischen Geräten und Informationssystemen.</td></tr>
+<tr><td>HL7</td><td>Standardfamilie für den Austausch klinischer und administrativer Daten.</td></tr>
+<tr><td>FHIR</td><td>Moderner, webbasierter HL7-Standard für strukturierte Gesundheitsdaten.</td></tr>
+<tr><td>IEEE 11073</td><td>Standard für die Interoperabilität medizinischer Geräte am Behandlungsort.</td></tr>
+<tr><td>CDSS</td><td>Clinical Decision Support System zur klinischen Entscheidungsunterstützung.</td></tr>
+<tr><td>Audit Trail</td><td>Nachvollziehbare Protokollierung relevanter Ereignisse und Änderungen, sofern vom System unterstützt.</td></tr>
+</tbody></table>
+
+<h3 id="sec18">18. Weiterführende Hersteller- und Fachinformationen</h3>
+<table><thead><tr><th>Bereich</th><th>Dokumentationsart</th></tr></thead><tbody>
+<tr><td>Geräte-Gateways</td><td>Für konkrete technische Daten zu seriellen und netzwerkbasierten Anbindungen ist die jeweils aktuelle Gebrauchsanweisung und das <strong>Produktdatenblatt (PDF)</strong> des Herstellers maßgeblich, z. B. <a href="https://www.gehealthcare.com/-/jssmedia/50270cf669814d6e93b6f57ffa45e6f0.pdf" target="_blank" rel="noopener">GE HealthCare – technisches Dokument (PDF)</a>.</td></tr>
+<tr><td>PDMS-Integration</td><td>Projektbezogene Schnittstellenspezifikationen (HL7, FHIR, IEEE 11073), Middleware-Dokumentationen und freigegebene Integrationsprofile sind zu berücksichtigen.</td></tr>
+<tr><td>Schulungsmaterial</td><td>Ergänzend steht ein <a href="https://www.youtube.com/watch?v=7Lm1qGMn680" target="_blank" rel="noopener">Schulungsvideo</a> zur praktischen Einführung in die Geräteintegration zur Verfügung.</td></tr>
+</tbody></table>
+
+<div class="note">
+  <strong>Stand der technischen Übersicht:</strong> September 2026.
+  Konkrete Gerätefunktionen, Softwarestände, Schnittstellen und Optionen sind hersteller- und konfigurationsabhängig.
+  Für Betrieb, Wartung und Integration ist stets die aktuelle Dokumentation des konkreten Systems maßgeblich.
+</div>
+
+<h3 id="sec19">19. Bekannte Hersteller und Lösungen für Gerätevernetzung/Middleware</h3>
+<table>
+<thead><tr><th>Hersteller / Anbieter</th><th>Lösung / Produktlinie</th><th>Schwerpunkt</th><th>Typischer Einsatz</th></tr></thead>
+<tbody>
+<tr><td><strong>GE HealthCare</strong></td><td>Mural Virtual Care Solution, CARESCAPE Gateway</td><td>Zentrale Überwachung und Geräteanbindung</td><td>Intensiv- und Überwachungsstationen</td></tr>
+<tr><td><strong>Philips</strong></td><td>Capsule Medical Device Information Platform, IntelliBridge</td><td>Herstellerübergreifende Gerätevernetzung</td><td>Klinik- und PDMS-Integration verschiedenster Gerätetypen</td></tr>
+<tr><td><strong>Dräger</strong></td><td>Innovian (PDMS), Infinity Gateway</td><td>PDMS und Geräteanbindung für Anästhesie und Intensivmedizin</td><td>OP, Intensivstation und Anästhesie</td></tr>
+<tr><td><strong>iMDsoft</strong></td><td>MetaVision (PDMS)</td><td>Patientendatenmanagement mit Geräteintegration</td><td>Intensivstation, OP und Notaufnahme</td></tr>
+<tr><td><strong>Ascom</strong></td><td>Ascom Healthcare Platform</td><td>Alarmierung und Integration medizinischer Geräte</td><td>Stationäre Überwachung und Pflegeruf-/Alarmierungssysteme</td></tr>
+<tr><td><strong>Getinge</strong></td><td>Geräteintegration für Beatmung und Intensivmedizin</td><td>Beatmungsgeräte und Intensivmedizintechnik</td><td>Intensivstation</td></tr>
+</tbody>
+</table>
+
+<h3 id="sec20">20. Typischer Workflow mit konkreten Systemen</h3>
+<table>
+<thead><tr><th>Workflow-Schritt</th><th>Gerätegruppe</th><th>Beispiele</th><th>IT-/Datenbezug</th></tr></thead>
+<tbody>
+<tr><td>Vitaldatenerfassung</td><td>Überwachungsmonitor</td><td>GE CARESCAPE, Philips IntelliVue</td><td>Anbindung über Gateway an PDMS</td></tr>
+<tr><td>Beatmung/Anästhesie</td><td>Beatmungs- und Narkosegerät</td><td>Dräger-Beatmungsgeräte mit Infinity Gateway</td><td>Verlaufsdaten an Innovian/PDMS</td></tr>
+<tr><td>Rhythmusüberwachung</td><td>EKG-Gerät / Telemetrie</td><td>Anbindung gemäß Kapitel „EKG"</td><td>Kurvendaten an CVIS und PDMS</td></tr>
+<tr><td>Zentrale Dokumentation</td><td>PDMS</td><td>iMDsoft MetaVision, Dräger Innovian</td><td>Zusammenführung aller Geräteparameter mit Zeitstempel und Geräte-ID</td></tr>
+<tr><td>Alarmierung</td><td>Alarmierungssystem</td><td>Ascom Healthcare Platform</td><td>Weiterleitung kritischer Alarme an das Pflegepersonal</td></tr>
+<tr><td>Klinische Gesamtsicht</td><td>KIS / elektronische Patientenakte</td><td>Übernahme validierter Verlaufsdaten aus dem PDMS</td><td>HL7-/FHIR-Schnittstellen zum KIS</td></tr>
+</tbody>
+</table>
+
+<div class="note">
+<strong>Fazit:</strong> Die Integration medizinischer Geräte in das PDMS ist ein zentraler Schritt zum digitalen Krankenhaus. Sie ermöglicht eine effiziente, sichere und umfassende Nutzung medizinischer Daten. Trotz technischer und organisatorischer Herausforderungen – insbesondere bei Datenkompatibilität, Datensicherheit und Personalakzeptanz – überwiegen die Vorteile deutlich und führen langfristig zu einer neuen Qualität in der medizinischen Versorgung.
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

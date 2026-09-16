@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infusionspumpen – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* Absicherung: identische Tabellenformatierung wie auf der Beatmungsgeräte-Seite */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2em 0 1.8em;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+  }
+  th, td {
+    border: 1px solid #d9e2ea;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  thead th {
+    background: #1a5276;
+    color: #fff;
+    border-color: #1a5276;
+    font-weight: 700;
+  }
+  tbody tr:nth-child(even) { background: #eaf4f8; }
+  tbody tr:hover { background: #dcedf5; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../medizintechnik/index.html">Medizintechnik</a> /
+  Infusionspumpen
+</div>
+
+<div class="hero">
+  <h2>Infusionspumpen</h2>
+  <table>
+  <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+  <tbody>
+  <tr><td>Pumpentypen</td><td>Spritzenpumpen, volumetrische Infusionspumpen und PCA-Pumpen</td></tr>
+  <tr><td>Infusionsparameter</td><td>Flussrate, Dosierung, Bolus, VTBI, Konzentration und weitere Kenngrößen</td></tr>
+  <tr><td>Sicherheitssysteme</td><td>Dose Error Reduction Software (DERS) und Medikamentenbibliotheken</td></tr>
+  <tr><td>Technik</td><td>Gerätearchitektur und Vernetzung mit KIS/PDMS</td></tr>
+  <tr><td>Marktüberblick</td><td>Bekannte Hersteller im deutschen Markt</td></tr>
+  </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist eine technische und informatische
+    Dokumentation. Konkrete Infusions- und Dosiereinstellungen müssen immer
+    anhand der medizinischen Situation, der Gebrauchsanweisung und durch
+    qualifiziertes Fachpersonal festgelegt werden.
+  </div>
+</div>
+
+<h3>1. Was ist eine Infusionspumpe?</h3>
+<table>
+<thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead>
+<tbody>
+<tr><td>Grundfunktion</td><td>Eine Infusionspumpe ist ein Medizinprodukt, das Flüssigkeiten, Medikamente, Blut oder Blutprodukte kontrolliert und dosiert über einen definierten Zugang (meist intravenös) verabreicht.</td></tr>
+<tr><td>Antrieb</td><td>Je nach Bauart wird das Fördervolumen über einen Spritzenschieber oder über ein peristaltisches Pumpwerk mit definierter Förderrate erzeugt.</td></tr>
+<tr><td>Sicht der Medizininformatik</td><td>Eine moderne Infusionspumpe besteht aus Antriebseinheit, Sensorik, Alarmmanagement, einer Medikamentenbibliothek (Drug Library) und häufig aus Schnittstellen zu PDMS, KIS und Apothekensystemen.</td></tr>
+<tr><td>Patientensicherheit</td><td>Zentrales Ziel ist die Vermeidung von Medikationsfehlern durch Dose-Error-Reduction-Systeme (DERS), die Dosierungen gegen hinterlegte Grenzwerte prüfen.</td></tr>
+</tbody>
+</table>
+
+<h3>2. Einsatzbereiche</h3>
+<table>
+<thead><tr><th>Einsatzbereich</th><th>Typische Patientengruppe</th><th>Pumpentyp</th><th>Besonderheiten</th></tr></thead>
+<tbody>
+<tr><td>Intensivstation (ICU)</td><td>Erwachsene, Pädiatrie</td><td>Spritzenpumpe, volumetrische Pumpe</td><td>Mehrkanalige Katecholamin- und Sedierungstherapie, engmaschiges Monitoring</td></tr>
+<tr><td>Neonatologie</td><td>Früh- und Neugeborene</td><td>Spritzenpumpe</td><td>Sehr kleine Flussraten, hohe Anforderungen an Bolusgenauigkeit</td></tr>
+<tr><td>Anästhesie / OP</td><td>OP-Patienten</td><td>Spritzenpumpe (TCI)</td><td>Zielgesteuerte Infusion (Target Controlled Infusion), Integration in Anästhesiearbeitsplatz</td></tr>
+<tr><td>Normalstation</td><td>Erwachsene</td><td>Volumetrische Pumpe</td><td>Standardinfusionen, Antibiotika, parenterale Ernährung</td></tr>
+<tr><td>Schmerztherapie</td><td>Postoperative und onkologische Patienten</td><td>PCA-Pumpe</td><td>Patientengesteuerte Bolusgabe mit Sperrzeit (Lockout)</td></tr>
+<tr><td>Onkologie</td><td>Erwachsene, Pädiatrie</td><td>Volumetrische Pumpe, elastomere Pumpe</td><td>Zytostatika-Protokolle, strikte Dosiskontrolle</td></tr>
+<tr><td>Außerklinisch / Homecare</td><td>Chronisch kranke Patienten</td><td>Ambulante Pumpe, Ernährungspumpe</td><td>Mobilität, Akku, Telemonitoring</td></tr>
+</tbody>
+</table>
+
+<h3>3. Grundtypen der Infusionstechnik</h3>
+<table>
+<thead><tr><th>Typ</th><th>Beschreibung</th><th>Typische Anwendung</th><th>Technische Merkmale</th></tr></thead>
+<tbody>
+<tr><td><strong>Spritzenpumpe</strong></td><td>Fördert Medikamente aus einer Spritze über einen mechanischen Schieber</td><td>Katecholamine, Sedierung, Kleinvolumentherapie, Neonatologie</td><td>Sehr präzise Förderung kleiner Volumina (typ. 0,1–200 ml/h)</td></tr>
+<tr><td><strong>Volumetrische Pumpe</strong></td><td>Fördert über ein Schlauchpumpwerk größere Volumina aus Infusionsbeuteln oder -flaschen</td><td>Infusionslösungen, Antibiotika, parenterale Ernährung</td><td>Größerer Förderbereich (typ. 1–1.500 ml/h), Tropfen-/Luftsensorik</td></tr>
+<tr><td><strong>PCA-Pumpe</strong></td><td>Patientenkontrollierte Analgesie mit definiertem Bolus und Sperrzeit</td><td>Postoperative und onkologische Schmerztherapie</td><td>Bolusanforderung per Tasterdruck, Lockout-Zeit, Dokumentation der Anforderungen</td></tr>
+<tr><td><strong>Ambulante / elastomere Pumpe</strong></td><td>Kompakte, oft batteriebetriebene oder mechanisch angetriebene Pumpe für den mobilen Einsatz</td><td>Außerklinische Chemotherapie, Heimtherapie, Schmerztherapie</td><td>Kleine Bauform, teils ohne Elektronik (elastomerer Ballon als Antrieb)</td></tr>
+<tr><td><strong>Ernährungspumpe</strong></td><td>Speziell für enterale oder parenterale Ernährungslösungen ausgelegt</td><td>Enterale Ernährung über Sonde, parenterale Ernährung</td><td>Angepasste Flussratenbereiche, spezielle Sonden-/Beutelsysteme</td></tr>
+</tbody>
+</table>
+
+<h3>4. Zentrale Infusionsparameter</h3>
+<table>
+<thead><tr><th>Parameter</th><th>Abkürzung</th><th>Technische Bedeutung</th><th>Zusammenhang / Hinweis</th></tr></thead>
+<tbody>
+<tr><td>Flussrate</td><td><strong>Rate</strong></td><td>Fördergeschwindigkeit in Milliliter pro Stunde</td><td>Zentraler Einstellparameter jeder Infusion; Basis für Dosisberechnung.</td></tr>
+<tr><td>Zu infundierendes Volumen</td><td><strong>VTBI</strong></td><td>Volume To Be Infused – geplantes Gesamtvolumen der Infusion</td><td>Bestimmt zusammen mit der Rate die Infusionsdauer.</td></tr>
+<tr><td>Dosierung</td><td><strong>Dose</strong></td><td>Medikamentenmenge pro Zeit- oder Gewichtseinheit</td><td>Wird häufig in µg/kg/min, mg/h oder ähnlichen Einheiten angegeben und in eine Flussrate umgerechnet.</td></tr>
+<tr><td>Konzentration</td><td><strong>Conc.</strong></td><td>Wirkstoffmenge pro Volumeneinheit der Zubereitung</td><td>Grundlage für die Umrechnung zwischen Dosierung und Flussrate.</td></tr>
+<tr><td>Bolus</td><td><strong>Bolus</strong></td><td>Einmalige, meist schnellere Gabe einer definierten Menge</td><td>Kann manuell, ärztlich angeordnet oder patientengesteuert (PCA) ausgelöst werden.</td></tr>
+<tr><td>Sperrzeit</td><td><strong>Lockout</strong></td><td>Mindestzeit zwischen zwei PCA-Bolusanforderungen</td><td>Sicherheitsmechanismus gegen Überdosierung bei PCA.</td></tr>
+<tr><td>Erhaltungsrate</td><td><strong>KVO</strong></td><td>Keep Vein Open – minimale Flussrate zum Offenhalten des Zugangs</td><td>Wird häufig automatisch nach Ende einer Infusion aktiviert.</td></tr>
+<tr><td>Medikamentenname</td><td><strong>Drug</strong></td><td>Auswahl des Wirkstoffs aus der hinterlegten Medikamentenbibliothek</td><td>Verknüpft die Infusion mit hinterlegten Grenzwerten der Drug Library.</td></tr>
+<tr><td>Restlaufzeit</td><td><strong>Time to complete</strong></td><td>Verbleibende Zeit bis zum Erreichen des VTBI</td><td>Ergibt sich aus VTBI, bereits infundiertem Volumen und aktueller Rate.</td></tr>
+<tr><td>Okklusionsdruck</td><td><strong>Occlusion Pressure</strong></td><td>Grenzwert für den Leitungsdruck, ab dem ein Verschlussalarm ausgelöst wird</td><td>Schützt vor unerkannten Leitungsverschlüssen.</td></tr>
+<tr><td>Bolustokolyse / Titration</td><td><strong>Titration</strong></td><td>Schrittweise Anpassung der Rate anhand des klinischen Effekts</td><td>Häufig bei Katecholaminen und Sedierung; Titrationsschritte oft in der Drug Library begrenzt.</td></tr>
+</tbody>
+</table>
+
+<h3>5. Beispiel: Medikations- und Dosierparameter</h3>
+<table>
+<thead><tr><th>Hinweis</th><th>Erläuterung</th></tr></thead>
+<tbody>
+<tr><td>Zweck der Tabelle</td><td>Zeigt beispielhaft, wie Medikamentenname, Konzentration, Dosierung, resultierende Flussrate und Bolusvorgabe in einer Medikamentenbibliothek zusammenhängen.</td></tr>
+<tr><td>Gültigkeit</td><td>Die Werte sind rein illustrativ und ersetzen keine Fachinformation oder klinische Anordnung.</td></tr>
+</tbody>
+</table>
+<table>
+<thead><tr><th>Medikament</th><th>Übliche Konzentration</th><th>Dosierung</th><th>Beispiel-Flussrate</th><th>Bolus</th><th>Typischer Einsatz</th></tr></thead>
+<tbody>
+<tr><td>Noradrenalin</td><td>1 mg / 50 ml</td><td>µg/kg/min (gewichtsbasiert)</td><td>geräte- und protokollabhängig, aus Dosierung berechnet</td><td>i. d. R. kein Bolus vorgesehen</td><td>Kreislaufunterstützung auf der Intensivstation</td></tr>
+<tr><td>Propofol</td><td>10 mg/ml oder 20 mg/ml</td><td>mg/kg/h bzw. µg/kg/min</td><td>aus Dosierung und Körpergewicht berechnet</td><td>ärztlich angeordneter Induktionsbolus möglich</td><td>Sedierung, Anästhesie (u. a. TCI-Verfahren)</td></tr>
+<tr><td>Heparin</td><td>z. B. 25.000 IE / 50 ml</td><td>IE/h</td><td>direkt als ml/h programmierbar</td><td>ärztlich angeordneter Initialbolus möglich</td><td>Antikoagulation</td></tr>
+<tr><td>Kaliumchlorid</td><td>z. B. 20 mmol / 100 ml</td><td>mmol/h</td><td>streng nach Fachinformation und Klinikstandard</td><td>kein Bolus</td><td>Elektrolytsubstitution unter Monitoring</td></tr>
+<tr><td>Insulin (kurzwirksam)</td><td>1 IE/ml</td><td>IE/h</td><td>sehr niedrige Flussraten (ml/h-Bereich)</td><td>i. d. R. kein Bolus über Perfusor</td><td>Blutzuckereinstellung auf der Intensivstation</td></tr>
+<tr><td>Piritramid / Morphin (PCA)</td><td>protokollabhängig</td><td>mg pro Bolus</td><td>keine Dauerrate oder niedrige Basalrate</td><td>patientengesteuerter Bolus mit Sperrzeit (Lockout)</td><td>Postoperative Schmerztherapie</td></tr>
+</tbody>
+</table>
+
+<h3>6. Sicherheits- und Dosierkontrollsysteme</h3>
+<table>
+<thead><tr><th>Konzept</th><th>Beschreibung</th><th>Beispiele</th></tr></thead>
+<tbody>
+<tr><td>Dose Error Reduction Software (DERS)</td><td>Prüft eine programmierte Infusion gegen hinterlegte Ober- und Untergrenzen, bevor die Infusion startet</td><td>Guardrails (BD Alaris), Vigilant Master Med (Fresenius Kabi), DERS (Baxter Sigma Spectrum)</td></tr>
+<tr><td>Medikamentenbibliothek (Drug Library)</td><td>Zentral gepflegte Liste von Medikamenten mit zulässigen Konzentrationen, Dosisbereichen und Behandlungsbereichen</td><td>Master Drug Library, klinikspezifisch konfiguriert je Pflegebereich</td></tr>
+<tr><td>Harte / weiche Grenzwerte</td><td>Weiche Grenzwerte können vom Personal überschritten werden, harte Grenzwerte verhindern den Start der Infusion</td><td>Konfigurierbar je Medikament und Pflegebereich</td></tr>
+<tr><td>Okklusionserkennung</td><td>Erkennung von Leitungsverschlüssen über Druckmessung</td><td>Einstellbare Okklusionsdruckgrenzen</td></tr>
+<tr><td>Luft-in-Leitung-Erkennung</td><td>Sensorik zur Erkennung von Luftblasen in der Infusionsleitung</td><td>Air-in-Line-Detektoren bei volumetrischen Pumpen</td></tr>
+<tr><td>Freiflusssperre</td><td>Mechanischer oder elektronischer Schutz gegen unkontrollierten Flüssigkeitsaustritt beim Entnehmen der Leitung</td><td>Sicherheitsclip-Systeme in Einmalsets</td></tr>
+</tbody>
+</table>
+
+<h3>7. Technische Architektur einer modernen Infusionspumpe</h3>
+<table>
+<thead><tr><th>Subsystem</th><th>Aufgabe</th><th>Beispiele</th></tr></thead>
+<tbody>
+<tr><td>Antriebseinheit</td><td>Erzeugung der Förderbewegung</td><td>Spritzenschieber (Spritzenpumpe), peristaltisches Pumpwerk (volumetrische Pumpe)</td></tr>
+<tr><td>Drucksensorik</td><td>Überwachung des Leitungsdrucks zur Okklusionserkennung</td><td>Drucksensor am Pumpenausgang</td></tr>
+<tr><td>Tropfen-/Luftsensorik</td><td>Erkennung von Luft in der Leitung bzw. Tropfenzählung</td><td>Optische oder Ultraschallsensoren</td></tr>
+<tr><td>Medikamentenbibliothek / Software</td><td>Hinterlegung von Grenzwerten und Berechnung der Flussrate aus Dosierung</td><td>DERS-Module, klinikspezifische Datensätze</td></tr>
+<tr><td>Alarmmanagement</td><td>Erkennung und Signalisierung sicherheitsrelevanter Zustände</td><td>Okklusion, Luft, leerer Behälter, niedriger Akku</td></tr>
+<tr><td>Display / GUI</td><td>Bedienung, Programmierung und Statusanzeige</td><td>Touchscreen oder Tasten-/Drehknopfbedienung</td></tr>
+<tr><td>Kommunikationsmodul</td><td>Übertragung von Infusionsdaten und Empfang von Bibliotheks-Updates</td><td>WLAN, dockingbasierte Netzwerkmodule</td></tr>
+<tr><td>Stromversorgung</td><td>Netzbetrieb und Akkubetrieb für Transport und Mobilität</td><td>Netzteil, wiederaufladbarer Lithium-Ionen-Akku</td></tr>
+</tbody>
+</table>
+
+<h3>8. Vernetzung und Medizininformatik</h3>
+<table>
+<thead><tr><th>Hinweis</th><th>Erläuterung</th></tr></thead>
+<tbody>
+<tr><td>Bedeutung</td><td>Für eine moderne Krankenhausumgebung ist die Integration von Infusionspumpen in Apotheken-, Dokumentations- und Informationssysteme ein wesentlicher Baustein der Medikationssicherheit.</td></tr>
+</tbody>
+</table>
+<table>
+<thead><tr><th>Ebene</th><th>Beispiel</th><th>Medizininformatische Bedeutung</th></tr></thead>
+<tbody>
+<tr><td>Geräteebene</td><td>Infusionspumpe(n) am Bett</td><td>Erfassung von Infusionsdaten, Alarmen und Bibliotheksversion</td></tr>
+<tr><td>Pumpennetzwerk</td><td>WLAN-Anbindung mehrerer Pumpen</td><td>Zentrale Verteilung und Aktualisierung der Medikamentenbibliothek</td></tr>
+<tr><td>PDMS</td><td>Patientendatenmanagementsystem</td><td>Automatische Dokumentation von Infusionsverläufen statt manueller Erfassung</td></tr>
+<tr><td>KIS / eMAR</td><td>Krankenhausinformationssystem, elektronische Medikationsdokumentation</td><td>Abgleich von Verordnung und tatsächlich verabreichter Infusion (Closed-Loop-Medikation)</td></tr>
+<tr><td>Apothekensystem</td><td>Zentrale Datensatz-/Bibliotheksverwaltung</td><td>Pflege und Freigabe der Medikamentenbibliothek durch die Klinikapotheke</td></tr>
+<tr><td>Integration</td><td>HL7 / IHE PCD (Point-of-Care Device)</td><td>Standardisierte Übertragung von Geräte- und Infusionsdaten</td></tr>
+</tbody>
+</table>
+
+<h3>9. Bekannte Hersteller und Infusionspumpen im deutschen Markt</h3>
+<table>
+<thead><tr><th>Hinweis</th><th>Erläuterung</th></tr></thead>
+<tbody>
+<tr><td>Marktkontext</td><td>Die folgende Tabelle zeigt etablierte Hersteller bzw. Plattformen, die im deutschen klinischen und außerklinischen Umfeld verbreitet sind. Fresenius Kabi und B. Braun sind deutsche Hersteller; weitere internationale Anbieter sind ebenfalls im deutschen Markt vertreten.</td></tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+  <th>Hersteller</th>
+  <th>Herkunft / Deutschlandbezug</th>
+  <th>Beispielgerät</th>
+  <th>Bereich</th>
+  <th>Technische Schwerpunkte</th>
+  <th>PDF / Hersteller-Dokumentation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Fresenius Kabi</strong></td>
+  <td>Deutschland</td>
+  <td>Agilia® SP / VP (Spritzen- und Volumetrische Pumpe)</td>
+  <td>ICU, OP, Normalstation</td>
+  <td>TCI-Funktionen, Vigilant Master Med (DERS), Vigilant Centerium für Flottenüberwachung</td>
+  <td><a href="https://www.fresenius-kabi.com/de/portfolio/medizinprodukte/applikationstechnik-und-systeme/applikationstechnik-und-systeme-fuer-die-infusion/infusionstechnik/agilia/agilia-sp-tiva" target="_blank" rel="noopener">Fresenius Kabi – Agilia SP TIVA</a></td>
+</tr>
+<tr>
+  <td><strong>B. Braun</strong></td>
+  <td>Deutschland</td>
+  <td>Perfusor® Space / Infusomat® Space</td>
+  <td>ICU, OP, Normalstation, PCA</td>
+  <td>Einheitliches Bedienkonzept für Spritzen- und Volumenpumpe, SpaceStation-Verbund, Bolustokolyse, TCI, PCA in einer Plattform</td>
+  <td><a href="https://catalogs.bbraun.com/en-01/c/PRODUCTS0000000575/space-system" target="_blank" rel="noopener">B. Braun – Space System Übersicht</a></td>
+</tr>
+<tr>
+  <td><strong>BD (ehem. CareFusion)</strong></td>
+  <td>USA; international im deutschen Klinikmarkt vertreten</td>
+  <td>BD Alaris™ System (PC Unit + Module)</td>
+  <td>ICU, Normalstation, PCA</td>
+  <td>Modulares System (Pumpe, Spritze, PCA, Atemmonitoring), Guardrails™-Sicherheitssoftware, WLAN-Anbindung</td>
+  <td><a href="https://www.bd.com/de-de/products-and-solutions/products/product-brands/alaris" target="_blank" rel="noopener">BD – Alaris™ System</a></td>
+</tr>
+<tr>
+  <td><strong>Baxter</strong></td>
+  <td>USA; international / Deutschland</td>
+  <td>Sigma Spectrum Infusionssystem</td>
+  <td>Normalstation, ICU</td>
+  <td>Konfigurierbares DERS, automatische Titrationsprüfung, Master Drug Library, WLAN-Konnektivität</td>
+  <td><a href="https://www.baxter.com" target="_blank" rel="noopener">Baxter – Produktinformationen</a></td>
+</tr>
+</tbody>
+</table>
+
+<h3>10. Vergleich ausgewählter Plattformen</h3>
+<table>
+<thead><tr><th>System</th><th>Spritzenpumpe</th><th>Volumetrische Pumpe</th><th>PCA</th><th>Drug Library / DERS</th><th>Vernetzung / Daten</th></tr></thead>
+<tbody>
+<tr><td>Fresenius Kabi Agilia SP/VP</td><td>✓</td><td>✓</td><td>Modell-/Konfigurationsabhängig</td><td>✓, Vigilant Master Med</td><td>✓, Vigilant Centerium / Bridge</td></tr>
+<tr><td>B. Braun Perfusor/Infusomat Space</td><td>✓</td><td>✓</td><td>✓</td><td>✓, klinikspezifische Datensätze</td><td>✓, SpaceStation-Verbund</td></tr>
+<tr><td>BD Alaris System</td><td>✓, Spritzenmodul</td><td>✓, Pumpenmodul</td><td>✓, PCA-Modul</td><td>✓, Guardrails Suite MX</td><td>✓, WLAN, zentrale Analytik</td></tr>
+<tr><td>Baxter Sigma Spectrum</td><td>–</td><td>✓</td><td>Konfigurationsabhängig</td><td>✓, konfigurierbares DERS</td><td>✓, optionale WLAN-Konnektivität</td></tr>
+</tbody>
+</table>
+
+<h3>11. Technische Vergleichskriterien für eine Geräteauswahl</h3>
+<table>
+<thead><tr><th>Kategorie</th><th>Prüffrage</th><th>Warum relevant?</th></tr></thead>
+<tbody>
+<tr><td>Pumpentyp</td><td>Spritzenpumpe, volumetrische Pumpe, PCA oder Kombisystem?</td><td>Bestimmt Einsatzbereich und Genauigkeitsanforderungen.</td></tr>
+<tr><td>Flussratenbereich</td><td>Welche minimale und maximale Rate wird unterstützt?</td><td>Entscheidend für Neonatologie, Katecholamintherapie und Standardinfusionen.</td></tr>
+<tr><td>Medikamentenbibliothek</td><td>Wie viele Einträge, Pflegebereiche und Sprachversionen sind möglich?</td><td>Bestimmt Abdeckung der klinischen Anwendungsfälle.</td></tr>
+<tr><td>DERS / Sicherheitssoftware</td><td>Harte und weiche Grenzwerte konfigurierbar?</td><td>Zentral für Medikationssicherheit.</td></tr>
+<tr><td>Alarmmanagement</td><td>Welche Alarme, Prioritäten und Eskalationsstufen existieren?</td><td>Wichtig für Patientensicherheit und Stationsworkflow.</td></tr>
+<tr><td>Akku</td><td>Welche Laufzeit und Wechselmöglichkeiten?</td><td>Wichtig bei Transport und Stromausfall.</td></tr>
+<tr><td>Vernetzung</td><td>Welche Schnittstellen (HL7/IHE PCD) und Bibliotheksverteilung?</td><td>Relevant für PDMS, eMAR und zentrale Flottenverwaltung.</td></tr>
+<tr><td>Dokumentation</td><td>Welche Trends, Logs und Exportformate?</td><td>Relevant für Closed-Loop-Medikation und Audit.</td></tr>
+<tr><td>Cybersecurity</td><td>Welche Authentifizierung, Updates und Netzwerkmechanismen?</td><td>Infusionspumpen sind sicherheitskritische vernetzte Systeme.</td></tr>
+<tr><td>Service</td><td>Kalibrierung, Wartung, Ersatzteile, Einmalartikel-Kompatibilität?</td><td>Beeinflusst Verfügbarkeit und Lebenszykluskosten.</td></tr>
+</tbody>
+</table>
+
+<h3>12. Typische Alarme</h3>
+<table>
+<thead><tr><th>Alarm</th><th>Mögliche technische Ursache</th><th>Zu überwachende Größen</th></tr></thead>
+<tbody>
+<tr><td>Okklusion / Verschluss</td><td>Geknickte Leitung, geschlossene Klemme, Katheterverschluss</td><td>Leitungsdruck, Okklusionsgrenze</td></tr>
+<tr><td>Luft in der Leitung</td><td>Unvollständig entlüftetes System, leerer Behälter</td><td>Luftsensor, Behälterfüllstand</td></tr>
+<tr><td>Behälter leer / Ende der Infusion</td><td>VTBI erreicht oder Behälter aufgebraucht</td><td>Restvolumen, VTBI-Status</td></tr>
+<tr><td>Batterie schwach</td><td>Längerer Netzausfall oder Transport ohne Netzanschluss</td><td>Akkukapazität, Netzstatus</td></tr>
+<tr><td>Grenzwertüberschreitung (DERS)</td><td>Programmierte Dosierung außerhalb der Bibliotheksgrenzen</td><td>Dosierung, Konzentration, Flussrate</td></tr>
+<tr><td>Freifluss / Fehlbedienung</td><td>Leitung ohne aktive Sicherung aus der Pumpe entnommen</td><td>Klemmstatus, Sicherheitsclip</td></tr>
+</tbody>
+</table>
+
+<h3>13. Wartung und Qualitätssicherung</h3>
+<table>
+<thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead>
+<tbody>
+<tr><td>Rechtlicher Rahmen</td><td>Infusionspumpen müssen entsprechend Herstellerangaben, Betreiberpflichten und den geltenden Medizinproduktevorgaben betrieben und gewartet werden.</td></tr>
+<tr><td>Funktionsprüfung</td><td>Regelmäßige Prüfung der korrekten Förderfunktion und Genauigkeit.</td></tr>
+<tr><td>Drucksensorprüfung</td><td>Kontrolle der Okklusionsdruck- und Alarmschwellen.</td></tr>
+<tr><td>Alarmprüfung</td><td>Überprüfung der Alarmfunktionen (Okklusion, Luft, Batterie).</td></tr>
+<tr><td>Bibliotheksaktualisierung</td><td>Regelmäßige Pflege und Verteilung der Medikamentenbibliothek durch die Apotheke.</td></tr>
+<tr><td>Reinigung/Aufbereitung</td><td>Hygienische Aufbereitung gemäß Herstellervorgaben.</td></tr>
+<tr><td>Software-/Konfigurationsstand</td><td>Kontrolle der eingesetzten Software- und Bibliotheksversionen je Gerät.</td></tr>
+</tbody>
+</table>
+
+<h3>14. Begriffe für die Medizininformatik</h3>
+<table>
+<thead><tr><th>Begriff</th><th>Bedeutung im Kontext Infusionstherapie</th></tr></thead>
+<tbody>
+<tr><td>DERS</td><td>Dose Error Reduction Software; prüft Programmierungen gegen hinterlegte Grenzwerte.</td></tr>
+<tr><td>Drug Library / MDL</td><td>(Master) Drug Library – zentral gepflegte Medikamentenbibliothek mit Grenzwerten je Pflegebereich.</td></tr>
+<tr><td>VTBI</td><td>Volume To Be Infused – geplantes Gesamtvolumen einer Infusion.</td></tr>
+<tr><td>KVO</td><td>Keep Vein Open – minimale Erhaltungsrate zum Offenhalten des venösen Zugangs.</td></tr>
+<tr><td>PCA</td><td>Patient Controlled Analgesia – patientengesteuerte Schmerzmittelgabe mit Bolus und Sperrzeit.</td></tr>
+<tr><td>eMAR</td><td>Electronic Medication Administration Record – elektronische Dokumentation der Medikamentengabe.</td></tr>
+<tr><td>Closed-Loop-Medikation</td><td>Durchgängiger digitaler Prozess von Verordnung über Bereitstellung bis zur dokumentierten Infusion.</td></tr>
+<tr><td>IHE PCD</td><td>Integrationsprofil „Patient Care Device" für die standardisierte Anbindung medizinischer Geräte.</td></tr>
+<tr><td>Trenddaten</td><td>Zeitliche Verläufe von Infusionsraten, Alarmen und Ereignissen.</td></tr>
+<tr><td>Audit Trail</td><td>Nachvollziehbare Protokollierung von Programmierungen und Änderungen, sofern vom System unterstützt.</td></tr>
+</tbody>
+</table>
+
+<h3>15. Hersteller-Dokumentation und weiterführende Quellen</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Quelle</th></tr></thead>
+<tbody>
+<tr><td>Fresenius Kabi</td><td><a href="https://www.fresenius-kabi.com/de/portfolio/medizinprodukte/applikationstechnik-und-systeme/applikationstechnik-und-systeme-fuer-die-infusion/infusionstechnik/agilia/agilia-sp-mc" target="_blank" rel="noopener">Agilia® SP MC Produktseite</a></td></tr>
+<tr><td>Fresenius Kabi</td><td><a href="https://www.fresenius-kabi.com/content/dam/fresenius-kabi/de/documents/medizinprodukte-downloads/applikation-infusion/produktkataloge/Produktkatalog%20Applikationstechnik%20u.Monitoringssysteme%20Infusion.pdf" target="_blank" rel="noopener">PDF: Produktkatalog Applikationstechnik &amp; Monitoringsysteme Infusion</a></td></tr>
+<tr><td>B. Braun</td><td><a href="https://catalogs.bbraun.com/en-01/p/PRID00001229/infusomat-space" target="_blank" rel="noopener">Infusomat® Space Produktseite</a></td></tr>
+<tr><td>B. Braun</td><td><a href="https://www.bbraunusa.com/content/dam/catalog/bbraun/bbraunProductCatalog/S/AEM2015/en-us/b3/perfusor-space-syringepump-nextgenerationsoftwareu.pdf" target="_blank" rel="noopener">PDF: Perfusor® Space Instructions for Use</a></td></tr>
+<tr><td>BD</td><td><a href="https://www.bd.com/en-us/products-and-solutions/products/product-families/bd-alaris-pc-unit" target="_blank" rel="noopener">BD Alaris™ PC Unit</a></td></tr>
+<tr><td>BD</td><td><a href="https://www.bd.com/content/dam/bd-assets/na/medication-management-solutions/documents/instructions-for-use/Alaris-System-8015.pdf" target="_blank" rel="noopener">PDF: Alaris™ System 8015 User Manual</a></td></tr>
+<tr><td>Baxter</td><td><a href="https://www.baxter.com" target="_blank" rel="noopener">Baxter – Sigma Spectrum Infusionssystem</a></td></tr>
+</tbody>
+</table>
+
+<div class="note">
+  <strong>Stand der Herstellerübersicht:</strong> September 2026.
+  Produktverfügbarkeit, Softwarestände, Optionen und PDF-Dokumente können sich
+  ändern. Für den praktischen Betrieb ist immer die zum konkreten Gerät
+  gehörende aktuelle Herstellerdokumentation maßgeblich.
+</div>
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

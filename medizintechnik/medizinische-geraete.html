@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medizinische Geräte – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb"><a href="../index.html">Startseite</a> / Medizintechnik / Medizinische Geräte</div>
+<div class="hero">
+
+<h2>Medizinische Geräte</h2>
+<p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Medizinische Geräte</strong> vorgesehen.</p>
+<div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
+<h3>Grundlagen</h3>
+<p>Ein <strong>Medizinprodukt</strong> ist – vereinfacht gesagt – jedes Instrument, Gerät, jede Software oder jeder Stoff, der für medizinische Zwecke am oder im menschlichen Körper eingesetzt wird (z. B. Diagnose, Überwachung, Behandlung, Linderung oder Kompensation von Krankheiten und Verletzungen), ohne dass die Hauptwirkung auf pharmakologischem, immunologischem oder metabolischem Weg erzielt wird – das unterscheidet Medizinprodukte von Arzneimitteln. Der Begriff reicht von einfachen Hilfsmitteln (Verbandsmaterial, Rollstuhl) über bildgebende und diagnostische Geräte (Ultraschall, CT, Laborautomaten) bis zu aktiven Implantaten (Herzschrittmacher) und eigenständiger Medizinproduktesoftware (MDSW), etwa Entscheidungsunterstützungssystemen oder Apps mit medizinischer Zweckbestimmung.</p>
+<p>In der Medizininformatik sind medizinische Geräte typischerweise in die IT-Infrastruktur eingebunden: über Netzwerkschnittstellen (z. B. DICOM, HL7/FHIR), Gerätegateways oder Middleware werden Mess- und Bilddaten an KIS, PACS oder PDMS übergeben. Damit rücken neben der medizintechnischen Sicherheit auch IT-Sicherheit, Interoperabilität und Datenschutz in den Vordergrund.</p>
+
+<h3>Klassifizierung von Medizinprodukten</h3>
+<p>In der EU erfolgt die Einstufung von Medizinprodukten (ohne In-vitro-Diagnostika) nach den Klassifizierungsregeln in Anhang VIII der <strong>Medizinprodukteverordnung (EU) 2017/745 – Medical Device Regulation (MDR)</strong>. Grundlage der Einteilung ist das von einem Produkt ausgehende Risiko, unter anderem abhängig von Anwendungsdauer, Invasivität, Körperregion und ob eine aktive Energiequelle beteiligt ist.</p>
+<div class="note">
+<strong>Risikoklassen nach MDR:</strong>
+<ul>
+<li><strong>Klasse I</strong> – geringes Risiko (z. B. Rollstühle, nicht-elektronische Gehhilfen, Verbandmaterial); Unterklassen <strong>Ir</strong> (wiederverwendbare chirurgische Instrumente), <strong>Im</strong> (Messfunktion) und <strong>Is</strong> (steril) benötigen zusätzlich eine Benannte Stelle.</li>
+<li><strong>Klasse IIa</strong> – mittleres Risiko (z. B. Ultraschallgeräte, Hörgeräte, Röntgenbildaufzeichnung, viele diagnoseunterstützende Software).</li>
+<li><strong>Klasse IIb</strong> – erhöhtes/hohes Risiko (z. B. Beatmungsgeräte, Infusionspumpen, Dialysegeräte).</li>
+<li><strong>Klasse III</strong> – höchstes Risiko (z. B. Herzschrittmacher, Herzklappen, aktive Implantate, lebenserhaltende Produkte).</li>
+</ul>
+Für In-vitro-Diagnostika gilt nach der <strong>IVDR (EU) 2017/746</strong> eine eigene, vierstufige Klassifizierung in die Klassen A, B, C und D (A = geringstes, D = höchstes Risiko).
+</div>
+<p>Ab Klasse I aufwärts (mit Ausnahme reiner Klasse-I-Produkte ohne Sonderfunktion) muss eine <strong>Benannte Stelle</strong> im Rahmen der Konformitätsbewertung eingebunden werden, bevor ein Produkt die CE-Kennzeichnung erhält. Eine eigene Regel (Regel 11 in Anhang VIII MDR) betrifft Software: Medizinproduktesoftware, die Informationen für diagnostische oder therapeutische Entscheidungen liefert, wird mindestens Klasse IIa zugeordnet, bei Gefahr eines Todesfalls oder einer irreversiblen Verschlechterung Klasse III.</p>
+
+<h3>Rechtliche Grundlagen</h3>
+<p>Der rechtliche Rahmen für Medizinprodukte besteht aus unmittelbar geltendem EU-Recht sowie ergänzendem nationalem Recht:</p>
+<ul>
+<li><strong>Verordnung (EU) 2017/745 – MDR</strong>: zentrale EU-Verordnung für Medizinprodukte, gilt seit dem 26.05.2021 unmittelbar in allen Mitgliedstaaten und hat die frühere Richtlinie 93/42/EWG (MDD) abgelöst.</li>
+<li><strong>Verordnung (EU) 2017/746 – IVDR</strong>: entsprechende EU-Verordnung für In-vitro-Diagnostika, seit 26.05.2022 anwendbar.</li>
+<li><strong>Medizinprodukterecht-Durchführungsgesetz (MPDG)</strong>: deutsches Bundesgesetz zur Durchführung und Ergänzung von MDR und IVDR (u. a. Zuständigkeiten von BfArM/PEI/Landesbehörden, klinische Prüfungen, Straf- und Bußgeldvorschriften); hat das frühere Medizinproduktegesetz (MPG) weitgehend abgelöst.</li>
+<li><strong>Medizinprodukte-Betreiberverordnung (MPBetreibV)</strong>: regelt Errichtung, Betrieb, Anwendung und Instandhaltung von Medizinprodukten in Einrichtungen wie Krankenhäusern – zentral für den Krankenhaus-IT- und Medizintechnik-Alltag.</li>
+<li>Weitere begleitende Verordnungen zum MPDG, z. B. zu Sicherheitsbeauftragten, klinischen Prüfungen oder Anzeigepflichten (u. a. MPAV, MPAMIV).</li>
+</ul>
+<p>Für die Praxis in der Medizininformatik ist besonders relevant, dass die MPBetreibV Anforderungen an sicherheitstechnische Kontrollen, Einweisungen und ein Bestandsverzeichnis stellt – Aspekte, die eng mit Themen wie Gerätevernetzung, Wartung und IT-Sicherheit in dieser Wissensdatenbank zusammenhängen.</p>
+
+<h3>Technischer Zusammenhang</h3>
+<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+
+<h3>Praxis und Fehleranalyse</h3>
+<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+
+</div>
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EKG – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* Absicherung: identische Tabellenformatierung wie auf den anderen Medizintechnik-Seiten */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2em 0 1.8em;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+  }
+  th, td {
+    border: 1px solid #d9e2ea;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  thead th {
+    background: #1a5276;
+    color: #fff;
+    border-color: #1a5276;
+    font-weight: 700;
+  }
+  tbody tr:nth-child(even) { background: #eaf4f8; }
+  tbody tr:hover { background: #dcedf5; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../medizintechnik/index.html">Medizintechnik</a> /
+  EKG
+</div>
+
+<div class="hero">
+  <h2>EKG</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Erfassung, Verstärkung, Digitalisierung und Auswertung der elektrischen Herzaktivität über Oberflächenelektroden</td></tr>
+      <tr><td>Gerätegruppen</td><td>Ruhe-EKG, Belastungs-EKG (Ergometrie), Langzeit-EKG (Holter), Monitoring-/Überwachungs-EKG und Telemetrie</td></tr>
+      <tr><td>Ableitungen</td><td>Extremitätenableitungen nach Einthoven und Goldberger sowie Brustwandableitungen nach Wilson (12-Kanal-Standard)</td></tr>
+      <tr><td>Technik</td><td>Bioelektrische Signalerfassung, Verstärkung, Filterung, Digitalisierung, Artefaktunterdrückung und automatisierte Befundvorschläge</td></tr>
+      <tr><td>Vernetzung</td><td>Anbindung an Kardiologie-Informationssysteme (CVIS), Zentralmonitoring, KIS und elektronische Patientenakte</td></tr>
+      <tr><td>Sicherheit</td><td>Elektrische Patientensicherheit, Signalqualität, Kalibrierung, sicherheitstechnische Kontrolle und Rückverfolgbarkeit</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist eine technische und medizininformatische Dokumentation.
+    Die konkrete Diagnostik, Befundinterpretation und ärztliche Freigabe von EKG-Befunden erfolgen nach
+    den geltenden klinischen Prozessen, Leitlinien und durch qualifiziertes Fachpersonal.
+  </div>
+</div>
+
+<h3>1. Was ist ein EKG-Gerät?</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Grundfunktion</td><td>EKG-Geräte erfassen die elektrische Aktivität des Herzens über Oberflächenelektroden und stellen sie als Kurvenverlauf für Diagnostik, Therapieüberwachung und Verlaufskontrolle dar.</td></tr>
+<tr><td>Automatisierung</td><td>Moderne EKG-Systeme automatisieren Signalerfassung, Filterung, Vermessung charakteristischer Zeitintervalle und liefern computergestützte Befundvorschläge.</td></tr>
+<tr><td>Sicht der Medizininformatik</td><td>EKG-Geräte sind vernetzte medizinische Messsysteme mit Sensorik (Elektroden), Signalverarbeitung, Steuerungssoftware, Datenspeicherung und Schnittstellen zu Kardiologie- und Krankenhausinformationssystemen.</td></tr>
+<tr><td>Ziel</td><td>Reproduzierbare, artefaktarme und zeitgerechte Bereitstellung der Herzstromkurve samt abgeleiteter Messwerte.</td></tr>
+</tbody></table>
+
+<h3>2. Einsatzbereiche</h3>
+<table><thead><tr><th>Bereich</th><th>Typische Untersuchungen</th><th>Gerätebeispiele</th><th>Besonderheiten</th></tr></thead><tbody>
+<tr><td>Ruhe-EKG</td><td>12-Kanal-Standarddiagnostik in Ruhe</td><td>EKG-Gerät / Elektrokardiograph</td><td>Kurzzeitige Ableitung, hohe Standardisierung</td></tr>
+<tr><td>Belastungs-EKG</td><td>Ergometrie unter körperlicher Belastung</td><td>Ergometrie-System mit EKG-Modul</td><td>Kontinuierliche Ableitung bei steigender Belastungsstufe</td></tr>
+<tr><td>Langzeit-EKG</td><td>Rhythmusüberwachung über 24–48 Stunden oder länger</td><td>Holter-Rekorder</td><td>Ambulante Aufzeichnung mit nachgelagerter Auswertung</td></tr>
+<tr><td>Monitoring-EKG</td><td>Kontinuierliche Überwachung auf Station/Intensivstation</td><td>Patientenmonitor mit EKG-Modul</td><td>Integration in Zentralmonitoring und Alarmierung</td></tr>
+<tr><td>Telemetrie-EKG</td><td>Drahtlose Rhythmusüberwachung mobiler Patienten</td><td>Telemetriesender mit Zentralstation</td><td>Funkübertragung, ortsunabhängige Überwachung im Klinikbereich</td></tr>
+<tr><td>Notfall-/Rettungsdienst-EKG</td><td>Akutdiagnostik prähospital und in der Notaufnahme</td><td>Mobiles EKG-/Defibrillationsgerät</td><td>Robuste Bauform, schnelle Verfügbarkeit, teils mit Telemetrie an Zielklinik</td></tr>
+</tbody></table>
+
+<h3>3. Grundtypen und Komponenten</h3>
+<table><thead><tr><th>Komponente</th><th>Beschreibung</th><th>Typische Ausführung</th><th>Technische Merkmale</th></tr></thead><tbody>
+<tr><td><strong>Elektroden</strong></td><td>Erfassen die bioelektrischen Potenziale an der Körperoberfläche</td><td>Klebeelektroden, Saugelektroden, Klemmelektroden</td><td>Übergangswiderstand und Hautkontakt beeinflussen die Signalqualität</td></tr>
+<tr><td><strong>Ableitungskabel / Patientenkabel</strong></td><td>Verbindet Elektroden mit dem Verstärkereingang</td><td>Mehradriges, abgeschirmtes Kabel</td><td>Hohe Anfälligkeit für Bewegungsartefakte und Kabelbruch</td></tr>
+<tr><td><strong>Vorverstärker / Signalaufbereitung</strong></td><td>Verstärkt und filtert das schwache Herzsignal</td><td>Differenzverstärker mit galvanischer Trennung</td><td>Unterdrückung von Netzbrumm und Gleichtaktstörungen</td></tr>
+<tr><td><strong>Analog-Digital-Wandler</strong></td><td>Digitalisiert das analoge EKG-Signal</td><td>ADC mit definierter Abtastrate und Auflösung</td><td>Abtastrate typischerweise mehrere hundert Hz bis wenige kHz</td></tr>
+<tr><td><strong>Steuerungs- und Analysesoftware</strong></td><td>Koordiniert Ableitung, Vermessung und Befundvorschlag</td><td>Embedded Software / Bedienrechner</td><td>Rhythmuserkennung, Intervallvermessung, Alarmmanagement</td></tr>
+<tr><td><strong>Ausgabesystem</strong></td><td>Bereitet Kurven und Messwerte für Anzeige, Druck und Übertragung auf</td><td>Geräte-Display, Thermodrucker, CVIS-/KIS-Schnittstelle</td><td>Standardisierte Kurvendarstellung, digitale Befundübermittlung</td></tr>
+</tbody></table>
+
+<h3>4. Zentrale EKG-Parameter und Begriffe</h3>
+<table><thead><tr><th>Begriff</th><th>Abkürzung</th><th>Technische Bedeutung</th><th>Zusammenhang / Hinweis</th></tr></thead><tbody>
+<tr><td>Herzfrequenz</td><td><strong>HR</strong></td><td>Anzahl der Herzschläge pro Minute, abgeleitet aus dem R-Zacken-Abstand</td><td>Grundlage vieler Rhythmus- und Alarmauswertungen.</td></tr>
+<tr><td>PQ-Zeit</td><td><strong>PQ</strong></td><td>Zeit von Beginn der P-Welle bis zum Beginn des QRS-Komplexes</td><td>Kennzeichnet die atrioventrikuläre Überleitungszeit.</td></tr>
+<tr><td>QRS-Dauer</td><td><strong>QRS</strong></td><td>Dauer der ventrikulären Erregungsausbreitung</td><td>Relevant für die Beurteilung intraventrikulärer Leitungsverzögerungen.</td></tr>
+<tr><td>QT-/QTc-Zeit</td><td><strong>QT / QTc</strong></td><td>Zeit von Beginn des QRS-Komplexes bis Ende der T-Welle, frequenzkorrigiert (QTc)</td><td>Wird automatisiert vermessen und ist gerätespezifisch algorithmusabhängig.</td></tr>
+<tr><td>ST-Strecke</td><td><strong>ST</strong></td><td>Abschnitt zwischen QRS-Komplex und T-Welle</td><td>Automatische ST-Analyse ist Bestandteil vieler Belastungs- und Monitoring-Systeme.</td></tr>
+<tr><td>Ableitungen</td><td><strong>I–III, aVR/aVL/aVF, V1–V6</strong></td><td>Definierte Elektrodenkombinationen zur räumlichen Erfassung der Herzerregung</td><td>Bilden zusammen das 12-Kanal-Standard-EKG.</td></tr>
+</tbody></table>
+
+<h3>5. Technische Messprinzipien</h3>
+<table><thead><tr><th>Messprinzip</th><th>Technische Grundlage</th><th>Typische Anwendung</th><th>Beispiel</th></tr></thead><tbody>
+<tr><td>Bioelektrische Potenzialmessung</td><td>Erfassung von Spannungsdifferenzen zwischen Hautelektroden</td><td>Alle EKG-Verfahren</td><td>Grundprinzip jeder Elektrokardiografie</td></tr>
+<tr><td>Ableitungssystem nach Einthoven</td><td>Bipolare Extremitätenableitungen I, II, III</td><td>Ruhe- und Monitoring-EKG</td><td>Klassisches Dreiecksschema</td></tr>
+<tr><td>Ableitungssystem nach Goldberger</td><td>Unipolare, verstärkte Extremitätenableitungen aVR, aVL, aVF</td><td>Ruhe-EKG</td><td>Ergänzt die Einthoven-Ableitungen</td></tr>
+<tr><td>Ableitungssystem nach Wilson</td><td>Unipolare Brustwandableitungen V1–V6</td><td>Ruhe- und Belastungs-EKG</td><td>Horizontale Erfassung der Herzerregung</td></tr>
+<tr><td>Verstärkung und Filterung</td><td>Differenzverstärkung mit Hoch-, Tief- und Netzfilter</td><td>Alle EKG-Geräte</td><td>Unterdrückung von Muskel-, Bewegungs- und Netzartefakten</td></tr>
+<tr><td>Digitalisierung</td><td>Zeit- und wertdiskrete Abtastung des Analogsignals</td><td>Alle digitalen EKG-Systeme</td><td>Grundlage für Speicherung, Analyse und digitale Übertragung</td></tr>
+</tbody></table>
+
+<h3>6. Technische Architektur eines modernen EKG-Geräts</h3>
+<table><thead><tr><th>Subsystem</th><th>Aufgabe</th><th>Beispiele</th></tr></thead><tbody>
+<tr><td>Elektroden / Patientenkabel</td><td>Erfassung und Übertragung der bioelektrischen Signale</td><td>Klebeelektroden, geschirmtes Ableitungskabel</td></tr>
+<tr><td>Eingangsschutz / galvanische Trennung</td><td>Schutz von Patient und Gerät vor elektrischen Gefährdungen</td><td>Isolationsverstärker, Defibrillationsschutz</td></tr>
+<tr><td>Vorverstärker</td><td>Verstärkung des schwachen Herzsignals</td><td>Differenzverstärker mit hoher Gleichtaktunterdrückung</td></tr>
+<tr><td>Signalfilterung</td><td>Unterdrückung von Störsignalen</td><td>Hochpass-, Tiefpass- und Netzfrequenzfilter</td></tr>
+<tr><td>Analog-Digital-Wandlung</td><td>Digitalisierung des gefilterten Signals</td><td>ADC mit definierter Abtastrate</td></tr>
+<tr><td>Interpretationssoftware</td><td>Vermessung von Intervallen und automatischer Befundvorschlag</td><td>Rhythmus- und Morphologiealgorithmen</td></tr>
+<tr><td>Alarmmanagement</td><td>Erkennung von Rhythmusstörungen und technischen Fehlerzuständen</td><td>Elektrodenabfall, Tachykardie-/Bradykardiealarm, Asystolie</td></tr>
+<tr><td>Datenkommunikation</td><td>Austausch von Aufträgen, Kurven und Befunden</td><td>LAN/WLAN, Zentralstation, CVIS-/KIS-Schnittstellen</td></tr>
+</tbody></table>
+
+<h3>7. Ableitungsvorbereitung und Signalworkflow</h3>
+<table><thead><tr><th>Prozessschritt</th><th>Technische Aufgabe</th><th>Typische Fehlerquelle</th></tr></thead><tbody>
+<tr><td>Hautvorbereitung</td><td>Reduzierung des Übergangswiderstands an der Elektrodenposition</td><td>Unzureichende Hautreinigung oder Rasur</td></tr>
+<tr><td>Elektrodenplatzierung</td><td>Positionierung gemäß Standardschema (Extremitäten und Brustwand)</td><td>Vertauschte oder falsch platzierte Elektroden</td></tr>
+<tr><td>Signalerfassung</td><td>Kontinuierliche Ableitung der bioelektrischen Potenziale</td><td>Wackel- oder Bewegungsartefakte</td></tr>
+<tr><td>Verstärkung und Filterung</td><td>Aufbereitung des Rohsignals für die Weiterverarbeitung</td><td>Netzbrumm oder Muskelartefakte</td></tr>
+<tr><td>Digitalisierung und Vermessung</td><td>Umwandlung in digitale Werte und Bestimmung der Zeitintervalle</td><td>Fehlerkennung von Zacken bei starker Artefaktbelastung</td></tr>
+<tr><td>Befund- und Datenübernahme</td><td>Übertragung an CVIS/KIS und ärztliche Validierung</td><td>Schnittstellen- oder Zuordnungsfehler</td></tr>
+</tbody></table>
+
+<h3>8. Vernetzung und Medizininformatik</h3>
+<table><thead><tr><th>Ebene</th><th>Beispiel</th><th>Medizininformatische Bedeutung</th></tr></thead><tbody>
+<tr><td>Geräteebene</td><td>EKG-Gerät bzw. Patientenmonitor mit EKG-Modul</td><td>Erzeugung von Kurven-, Mess- und Statusdaten</td></tr>
+<tr><td>Zentralmonitoring</td><td>Zentralstation für Monitoring- und Telemetriedaten</td><td>Zusammenführung mehrerer Patientendatenströme</td></tr>
+<tr><td>CVIS</td><td>Kardiologie-Informationssystem</td><td>Verwaltung, Archivierung und Befundung von EKG-Daten</td></tr>
+<tr><td>KIS</td><td>Krankenhausinformationssystem</td><td>Bereitstellung von EKG-Befunden im klinischen Kontext</td></tr>
+<tr><td>Integration</td><td>HL7, DICOM oder herstellerspezifische Protokolle</td><td>Übertragung von Aufträgen, Kurvendaten und Befunden</td></tr>
+</tbody></table>
+
+<h3>9. Typische Schnittstellen und Datenfluss</h3>
+<table><thead><tr><th>Quelle</th><th>Daten</th><th>Ziel</th><th>Beispiel</th></tr></thead><tbody>
+<tr><td>KIS / Order Entry</td><td>EKG-Auftrag</td><td>CVIS</td><td>Auftragserfassung</td></tr>
+<tr><td>CVIS</td><td>Arbeitsauftrag, Patienteninformationen</td><td>EKG-Gerät</td><td>Anbindung über HL7 oder Worklist-Mechanismen</td></tr>
+<tr><td>EKG-Gerät</td><td>Kurvendaten, Messwerte, Alarme</td><td>CVIS / Zentralstation</td><td>Standards wie HL7 aECG, DICOM Waveform oder SCP-ECG</td></tr>
+<tr><td>CVIS</td><td>Validierte Befunde</td><td>KIS / elektronische Patientenakte</td><td>EKG-Befund mit Kurvenreferenz</td></tr>
+</tbody></table>
+
+<h3>10. Sicherheit und Qualitätssicherung</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th><th>Technische Umsetzung</th></tr></thead><tbody>
+<tr><td>Elektrische Patientensicherheit</td><td>Schutz vor elektrischen Gefährdungen bei direktem Patientenkontakt</td><td>Galvanische Trennung, Defibrillationsschutz, Ableitstromgrenzen</td></tr>
+<tr><td>Signalqualität</td><td>Sicherstellung eines auswertbaren, artefaktarmen Signals</td><td>Impedanzüberwachung der Elektroden, Filterkonzepte</td></tr>
+<tr><td>Kalibrierung</td><td>Abgleich der Amplituden- und Zeitachse des Geräts</td><td>Definierte Kalibriersignale und Prüfprotokolle</td></tr>
+<tr><td>Rückverfolgbarkeit</td><td>Nachvollziehbarkeit von Messung, Gerät und Patientenzuordnung</td><td>Zeitstempel, Geräte-ID, Audit Trail</td></tr>
+<tr><td>Benutzerverwaltung</td><td>Kontrolle von Zugriffsrechten</td><td>Rollen, Konten und Authentifizierung</td></tr>
+<tr><td>Wartung / STK</td><td>Erhalt der technischen und sicherheitstechnischen Funktionsfähigkeit</td><td>Wartungspläne, sicherheitstechnische Kontrollen, dokumentierte Serviceereignisse</td></tr>
+<tr><td>Cybersecurity</td><td>Schutz vernetzter EKG- und Monitoringsysteme</td><td>Netzsegmentierung, Updates und Zugriffskontrolle</td></tr>
+</tbody></table>
+
+<h3>11. Typische Alarme und Fehlerbilder</h3>
+<table><thead><tr><th>Alarm / Fehler</th><th>Mögliche technische Ursache</th><th>Zu prüfende Bereiche</th></tr></thead><tbody>
+<tr><td>Elektrode abgefallen / lose</td><td>Unzureichender Hautkontakt oder gelöste Elektrode</td><td>Elektrodenposition, Hautvorbereitung, Klebeelektroden</td></tr>
+<tr><td>Starke Artefakte / Rauschen</td><td>Bewegungs- oder Muskelartefakte</td><td>Kabelführung, Patientenlagerung, Elektrodenkontakt</td></tr>
+<tr><td>Netzbrumm</td><td>Unzureichende Schirmung oder Erdung</td><td>Kabelschirmung, Umgebungsgeräte, Filtereinstellungen</td></tr>
+<tr><td>Kabelbruch</td><td>Mechanische Beschädigung des Ableitungskabels</td><td>Patientenkabel und Steckverbindungen</td></tr>
+<tr><td>Falsch-positiver Arrhythmiealarm</td><td>Fehlinterpretation von Artefakten als Rhythmusstörung</td><td>Algorithmuskonfiguration und Signalqualität</td></tr>
+<tr><td>Schnittstellenfehler</td><td>Kommunikationsunterbrechung zu CVIS/Zentralstation</td><td>Netzwerk, Middleware, Protokollstatus</td></tr>
+</tbody></table>
+
+<h3>12. Technische Vergleichskriterien für eine Geräteauswahl</h3>
+<table><thead><tr><th>Kategorie</th><th>Prüffrage</th><th>Warum relevant?</th></tr></thead><tbody>
+<tr><td>Kanalzahl</td><td>Wie viele Ableitungen werden simultan erfasst?</td><td>Bestimmt die diagnostische Aussagekraft (z. B. 12-Kanal-Standard).</td></tr>
+<tr><td>Einsatzbereich</td><td>Ruhe-, Belastungs-, Langzeit- oder Monitoring-EKG?</td><td>Bestimmt Bauform, Software und Zubehörbedarf.</td></tr>
+<tr><td>Interpretationssoftware</td><td>Welche automatische Rhythmus- und Morphologieanalyse steht zur Verfügung?</td><td>Beeinflusst Unterstützung der ärztlichen Befundung.</td></tr>
+<tr><td>Mobilität / Akkulaufzeit</td><td>Ist das Gerät für mobilen oder ambulanten Einsatz geeignet?</td><td>Relevant für Notfall-, Visiten- und Langzeiteinsatz.</td></tr>
+<tr><td>Vernetzung</td><td>Welche CVIS-, KIS- und Standard-Schnittstellen (HL7, DICOM) werden unterstützt?</td><td>Relevant für Integration und digitalen Datenfluss.</td></tr>
+<tr><td>Speicher- und Übertragungsformate</td><td>Welche Kurvenformate (z. B. SCP-ECG) werden unterstützt?</td><td>Beeinflusst Archivierung und Weiterverarbeitung.</td></tr>
+<tr><td>Service</td><td>Wie sind Wartung, Ersatzteile und Fernsupport organisiert?</td><td>Beeinflusst Verfügbarkeit und Lebenszykluskosten.</td></tr>
+<tr><td>Cybersecurity</td><td>Welche Update- und Zugriffskonzepte bestehen?</td><td>Vernetzte EKG-Systeme sind Teil der IT-Sicherheitsarchitektur.</td></tr>
+</tbody></table>
+
+<h3>13. Wartung und Qualitätssicherung im Betrieb</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Herstellerangaben</td><td>Betrieb und Wartung erfolgen entsprechend den freigegebenen Herstellerunterlagen.</td></tr>
+<tr><td>Elektroden- und Kabelprüfung</td><td>Regelmäßige Sichtprüfung von Patientenkabeln, Steckverbindungen und Elektrodenmaterial.</td></tr>
+<tr><td>Kalibrierung</td><td>Durchführung nach Gerätezustand und vorgegebenen Intervallen mit definierten Kalibriersignalen.</td></tr>
+<tr><td>Sicherheitstechnische Kontrolle</td><td>Regelmäßige elektrische Sicherheitsprüfung gemäß den geltenden betreiberrechtlichen Vorgaben.</td></tr>
+<tr><td>Software-/Konfigurationsstand</td><td>Kontrolle der eingesetzten Versionen und freigegebenen Konfigurationen.</td></tr>
+<tr><td>Dokumentation</td><td>Nachvollziehbare Protokollierung von Wartungs- und Prüfereignissen.</td></tr>
+</tbody></table>
+
+<h3>14. Begriffe für die Medizininformatik</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung im Kontext EKG</th></tr></thead><tbody>
+<tr><td>CVIS</td><td>Kardiologie-Informationssystem zur Verwaltung, Archivierung und Befundung von EKG- und weiteren kardiologischen Daten.</td></tr>
+<tr><td>HL7 aECG</td><td>HL7-Standard zur strukturierten Übertragung digitaler EKG-Kurvendaten (annotated ECG).</td></tr>
+<tr><td>DICOM Waveform</td><td>DICOM-Erweiterung zur Speicherung und Übertragung physiologischer Kurvendaten wie EKG-Signale.</td></tr>
+<tr><td>SCP-ECG</td><td>Standardisiertes Speicherformat für digitale EKG-Kurven und Messwerte.</td></tr>
+<tr><td>Holter</td><td>Umgangssprachliche Bezeichnung für das Langzeit-EKG bzw. den zugehörigen Rekorder.</td></tr>
+<tr><td>Telemetrie</td><td>Drahtlose Übertragung von EKG-/Rhythmusdaten an eine Zentralstation.</td></tr>
+<tr><td>STK</td><td>Sicherheitstechnische Kontrolle zur Prüfung der elektrischen Sicherheit medizinischer Geräte.</td></tr>
+<tr><td>Audit Trail</td><td>Nachvollziehbare Protokollierung relevanter Ereignisse und Änderungen, sofern vom System unterstützt.</td></tr>
+</tbody></table>
+
+<h3>15. Weiterführende Hersteller- und Fachinformationen</h3>
+<table><thead><tr><th>Bereich</th><th>Dokumentationsart</th></tr></thead><tbody>
+<tr><td>EKG-Geräte</td><td>Für konkrete technische Daten, Kanalzahl, Abtastrate, Speicherformate und Interpretationsalgorithmen sind die jeweils aktuelle Gebrauchsanweisung und das <strong>Produktdatenblatt (PDF)</strong> des Herstellers maßgeblich.</td></tr>
+<tr><td>CVIS-/KIS-Integration</td><td>Projektbezogene Schnittstellenspezifikationen (HL7, DICOM), Middleware-Dokumentationen und freigegebene Integrationsprofile sind zu berücksichtigen.</td></tr>
+<tr><td>Aktuelle Gerätemodelle</td><td>Die Modellpalette und Softwarestände der Hersteller werden fortlaufend aktualisiert; die <strong>aktuell gültige Herstellerbroschüre bzw. das technische Datenblatt (PDF)</strong> auf der jeweiligen Herstellerseite bildet den verbindlichen Stand ab.</td></tr>
+</tbody></table>
+
+<div class="note">
+  <strong>Stand der technischen Übersicht:</strong> September 2026.
+  Konkrete Gerätefunktionen, Softwarestände, Schnittstellen und Optionen sind hersteller- und konfigurationsabhängig.
+  Für Betrieb, Wartung und diagnostische Nutzung ist stets die aktuelle Dokumentation (Gebrauchsanweisung und Produkt-PDF) des konkreten Systems maßgeblich.
+</div>
+
+
+<h3>16. Bekannte Hersteller und EKG-Geräte im deutschen Markt</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Schwerpunkt</th><th>Beispielgeräte / Plattformen</th><th>Typischer Einsatz</th></tr></thead>
+<tbody>
+<tr><td><strong>GE Healthcare</strong></td><td>Ruhe-, Belastungs- und Monitoring-EKG</td><td>MAC-Serie (u. a. MAC 2000, MAC 5500), CASE-Ergometriesystem</td><td>Praxis, Funktionsdiagnostik und Klinik</td></tr>
+<tr><td><strong>Philips</strong></td><td>Ruhe-EKG und Patientenmonitoring</td><td>PageWriter-Serie, IntelliVue-Patientenmonitore mit EKG-Modul</td><td>Praxis, Notaufnahme, Intensiv- und Überwachungsstation</td></tr>
+<tr><td><strong>Schiller</strong></td><td>Ruhe-, Belastungs- und Langzeit-EKG</td><td>CARDIOVIT-Serie (u. a. AT-Modelle), CS-200 Ergo-Spiro-System</td><td>Praxis, Funktionsdiagnostik und Kardiologie</td></tr>
+<tr><td><strong>Mortara Instrument (Hillrom / Welch Allyn)</strong></td><td>Ruhe- und Belastungs-EKG</td><td>ELI-Serie</td><td>Praxis, Klinik und Funktionsdiagnostik</td></tr>
+<tr><td><strong>Nihon Kohden</strong></td><td>Ruhe-EKG und Monitoring</td><td>Cardiofax-Serie, Life Scope-Patientenmonitore</td><td>Klinik, Intensiv- und Überwachungsbereich</td></tr>
+<tr><td><strong>Mindray</strong></td><td>Ruhe-EKG und Patientenmonitoring</td><td>BeneHeart-Serie, ePM-Patientenmonitore mit EKG-Modul</td><td>Klinik, Notaufnahme und Überwachungsstation</td></tr>
+<tr><td><strong>custo med</strong></td><td>Ruhe-, Belastungs- und Langzeit-EKG</td><td>custo cardio-Serie</td><td>Praxis und ambulante kardiologische Diagnostik</td></tr>
+<tr><td><strong>Bosch + Sohn (boso)</strong></td><td>Ruhe-EKG für die Praxis</td><td>boso-EKG-Geräteserie</td><td>Hausarzt- und Facharztpraxis</td></tr>
+</tbody>
+</table>
+
+<h3>17. Belastungs-EKG-Systeme (Ergometrie)</h3>
+<table>
+<thead><tr><th>Aspekt</th><th>Beschreibung</th><th>Technische Kennwerte / Hinweise</th></tr></thead>
+<tbody>
+<tr><td>Grundfunktion</td><td>Belastungs-EKG-Systeme erfassen die Herzstromkurve kontinuierlich während einer standardisiert ansteigenden körperlichen Belastung, meist an Fahrradergometer oder Laufband.</td><td>Belastungsstufen, Wattzahl bzw. Geschwindigkeit/Steigung sowie Herzfrequenz und Blutdruck sind zentrale Steuerungsparameter.</td></tr>
+<tr><td>Signalverarbeitung</td><td>Aufgrund der Bewegung ist eine wirksame Filterung von Muskel- und Bewegungsartefakten besonders wichtig.</td><td>Adaptive Filteralgorithmen unterstützen eine stabile Kurvendarstellung unter Belastung.</td></tr>
+<tr><td>Sicherheitsfunktionen</td><td>Kontinuierliche Überwachung von Herzfrequenz, Rhythmus und ST-Strecke mit Alarmfunktion.</td><td>Abbruchkriterien werden nach ärztlicher Vorgabe konfiguriert.</td></tr>
+<tr><td>Integration</td><td>Häufig gekoppelt mit Ergometer- oder Laufbandsteuerung sowie Blutdruckmessung.</td><td>Datenübernahme in CVIS zur Dokumentation des Belastungsprotokolls.</td></tr>
+</tbody>
+</table>
+
+<h3>18. Langzeit-EKG (Holter)</h3>
+<table>
+<thead><tr><th>Aspekt</th><th>Bedeutung</th><th>Typisches Merkmal</th></tr></thead>
+<tbody>
+<tr><td>Aufzeichnungsdauer</td><td>Kontinuierliche ambulante Erfassung über typischerweise 24 bis 48 Stunden, je nach Fragestellung auch länger.</td><td>Batteriebetriebener, tragbarer Rekorder.</td></tr>
+<tr><td>Kanalzahl</td><td>Reduzierte Ableitungszahl gegenüber dem 12-Kanal-Ruhe-EKG.</td><td>Meist 2- bis 3-Kanal- oder erweiterte Ableitungssysteme.</td></tr>
+<tr><td>Datenspeicherung</td><td>Speicherung der kontinuierlichen Kurvendaten auf internem Speicher oder Speicherkarte.</td><td>Nachgelagerte Auswertung am Auswertungsarbeitsplatz.</td></tr>
+<tr><td>Auswertung</td><td>Halbautomatische Rhythmusanalyse mit anschließender ärztlicher Validierung.</td><td>Erkennung von Extrasystolen, Pausen und Rhythmusstörungen über den Aufzeichnungszeitraum.</td></tr>
+<tr><td>Patiententagebuch</td><td>Ergänzende Dokumentation von Symptomen und Aktivitäten durch den Patienten.</td><td>Unterstützt die Korrelation von Symptomen mit Rhythmusereignissen.</td></tr>
+</tbody>
+</table>
+<table>
+<thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead>
+<tbody>
+<tr><td>Einsatzbereiche</td><td>Kardiologische Praxis, Funktionsdiagnostik und ambulante Rhythmusabklärung.</td></tr>
+<tr><td>Vernetzung</td><td>Übertragung der Aufzeichnungsdaten an Auswertungsstationen und Anbindung an CVIS/KIS.</td></tr>
+<tr><td>Qualitätssicherung</td><td>Regelmäßige Funktionsprüfung von Elektroden, Kabeln und Rekordern ist für zuverlässige Aufzeichnungen erforderlich.</td></tr>
+</tbody>
+</table>
+
+<h3>19. Bekannte Hersteller und konkrete Systeme: Belastungs-EKG und Langzeit-EKG</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Gerätegruppe</th><th>Beispielplattform / Produktfamilie</th><th>Typischer Einsatz</th></tr></thead>
+<tbody>
+<tr><td><strong>GE Healthcare</strong></td><td>Belastungs-EKG</td><td>CASE-Ergometriesystem</td><td>Ergometrie in Praxis und Klinik.</td></tr>
+<tr><td><strong>Schiller</strong></td><td>Belastungs-EKG</td><td>CS-200 Ergo-Spiro</td><td>Ergometrie und Spiroergometrie.</td></tr>
+<tr><td><strong>custo med</strong></td><td>Belastungs- und Langzeit-EKG</td><td>custo cardio ergo, custo flash-Serie</td><td>Ambulante kardiologische Funktionsdiagnostik.</td></tr>
+<tr><td><strong>GE Healthcare</strong></td><td>Langzeit-EKG</td><td>SEER-Serie</td><td>Ambulante Rhythmusaufzeichnung.</td></tr>
+<tr><td><strong>Philips</strong></td><td>Langzeit-EKG</td><td>DigiTrak-Serie</td><td>Ambulante Rhythmusaufzeichnung und Auswertung.</td></tr>
+<tr><td><strong>Mortara Instrument (Hillrom)</strong></td><td>Langzeit-EKG</td><td>H12+-Rekorder</td><td>Klinische und ambulante Langzeit-Rhythmusdiagnostik.</td></tr>
+</tbody>
+</table>
+
+<h3>20. Vergleich: Belastungs-EKG und Langzeit-EKG als Teil des kardiologischen Workflows</h3>
+<table>
+<thead><tr><th>Merkmal</th><th>Belastungs-EKG</th><th>Langzeit-EKG</th></tr></thead>
+<tbody>
+<tr><td>Hauptaufgabe</td><td>Beurteilung der Herzfunktion unter definierter körperlicher Belastung.</td><td>Erfassung von Rhythmusereignissen über einen längeren Zeitraum im Alltag.</td></tr>
+<tr><td>Rolle im Workflow</td><td>Funktionsdiagnostische Akutuntersuchung unter ärztlicher Aufsicht.</td><td>Ambulante Langzeitaufzeichnung mit nachgelagerter Auswertung.</td></tr>
+<tr><td>Zentrale Daten</td><td>Belastungsstufe, Herzfrequenz, ST-Strecke und Abbruchkriterien.</td><td>Kontinuierliche Rhythmusdaten, Ereigniszeitpunkte und Patiententagebuch.</td></tr>
+<tr><td>Vernetzungsbedarf</td><td>Kopplung mit Ergometer-/Laufbandsteuerung und CVIS-Dokumentation.</td><td>Übertragung an Auswertungsarbeitsplatz und CVIS/KIS.</td></tr>
+<tr><td>Sicherheitsaspekte</td><td>Kontinuierliche Überwachung mit definierten Abbruchkriterien.</td><td>Zuverlässige Aufzeichnung über den gesamten Tragezeitraum und Rückverfolgbarkeit der Daten.</td></tr>
+</tbody>
+</table>
+
+<h3>21. Typischer EKG-Workflow mit konkreten Geräten</h3>
+<table>
+<thead><tr><th>Workflow-Schritt</th><th>Gerätegruppe</th><th>Beispiele</th><th>IT-/Datenbezug</th></tr></thead>
+<tbody>
+<tr><td>Terminierung/Auftrag</td><td>KIS / Order Entry</td><td>Auftragserfassung im KIS</td><td>Auftrag und Patienten-ID aus KIS an CVIS</td></tr>
+<tr><td>Ruhe-EKG</td><td>Elektrokardiograph</td><td>GE MAC 5500, Schiller CARDIOVIT, Mortara ELI</td><td>Kurvendaten und Befundvorschlag an CVIS</td></tr>
+<tr><td>Belastungsdiagnostik</td><td>Ergometrie-System</td><td>GE CASE, Schiller CS-200</td><td>Belastungsprotokoll und Kurvendaten an CVIS</td></tr>
+<tr><td>Ambulante Rhythmusabklärung</td><td>Holter-Rekorder</td><td>GE SEER, Philips DigiTrak, Mortara H12+</td><td>Aufzeichnungsdaten zur nachgelagerten Auswertung</td></tr>
+<tr><td>Stationäre Überwachung</td><td>Patientenmonitor mit EKG-Modul</td><td>Philips IntelliVue, Nihon Kohden Life Scope, Mindray ePM</td><td>Kontinuierliche Daten an Zentralstation und CVIS</td></tr>
+<tr><td>Befundung</td><td>CVIS / Befundarbeitsplatz</td><td>Ärztliche Validierung des automatisierten Befundvorschlags</td><td>Übertragung freigegebener Befunde an KIS/Patientenakte</td></tr>
+</tbody>
+</table>
+
+<div class="note">
+<strong>Hinweis zur Herstellerübersicht:</strong> Die genannten Systeme sind Beispiele für etablierte Produktfamilien. Verfügbarkeit, Softwareversion, Kanalzahl und Schnittstellen sind konfigurations- und standortabhängig. Für Beschaffung, Betrieb und Integration sind die aktuelle Herstellerdokumentation, das jeweilige Produktdatenblatt (PDF) sowie die freigegebenen Schnittstellenspezifikationen maßgeblich.
+</div>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

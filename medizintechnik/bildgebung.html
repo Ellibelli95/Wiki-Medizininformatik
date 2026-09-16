@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bildgebung – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* Absicherung: identische Tabellenformatierung wie auf den anderen Medizintechnik-Seiten */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2em 0 1.8em;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+  }
+  th, td {
+    border: 1px solid #d9e2ea;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  thead th {
+    background: #1a5276;
+    color: #fff;
+    border-color: #1a5276;
+    font-weight: 700;
+  }
+  tbody tr:nth-child(even) { background: #eaf4f8; }
+  tbody tr:hover { background: #dcedf5; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../medizintechnik/index.html">Medizintechnik</a> /
+  Bildgebung
+</div>
+
+<div class="hero">
+  <h2>Bildgebung</h2>
+  <table>
+    <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+    <tbody>
+      <tr><td>Grundfunktion</td><td>Erzeugung diagnostischer oder therapierelevanter Bilddaten mittels Röntgenstrahlung, Kernspinresonanz, Radionukliden oder Ultraschall</td></tr>
+      <tr><td>Modalitäten</td><td>Röntgen, Computertomographie (CT), Angiographie, Magnetresonanztomographie (MRT), Linearbeschleuniger (Strahlentherapie), Nuklearmedizin (SPECT/PET) und Ultraschall</td></tr>
+      <tr><td>Technik</td><td>Strahlungserzeugung bzw. Signalgewinnung, Detektion, Bildrekonstruktion, Nachverarbeitung und Befundung</td></tr>
+      <tr><td>Vernetzung</td><td>Anbindung an RIS, PACS, KIS und Bestrahlungsplanungssysteme über DICOM und HL7</td></tr>
+      <tr><td>Prüfungen</td><td>Konstanzprüfung, Sachverständigenprüfung, Abnahmeprüfung/-protokoll und Anforderungen an Befundmonitore</td></tr>
+      <tr><td>Verantwortlichkeiten</td><td>Medizinprodukte-Sicherheitsbeauftragter (MPSB) und IT-Sicherheitsbeauftragter im Bildgebungsumfeld</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist eine technische und medizininformatische Dokumentation.
+    Die konkrete Indikationsstellung, Untersuchungsdurchführung, Strahlenschutzbewertung und Befundung erfolgen nach
+    den geltenden rechtlichen Vorgaben (u. a. Strahlenschutzgesetz/-verordnung, Medizinprodukterecht) und durch qualifiziertes Fachpersonal.
+  </div>
+</div>
+
+<h3>1. Was ist eine bildgebende Diagnostikanlage?</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Grundfunktion</td><td>Bildgebende Systeme erzeugen anatomische, funktionelle oder molekulare Bilddaten des menschlichen Körpers zur Diagnostik, Verlaufskontrolle oder Therapieplanung/-durchführung.</td></tr>
+<tr><td>Bandbreite</td><td>Von der einfachen Röntgenaufnahme bis zu komplexen Schnittbild-, Hybrid- und Bestrahlungssystemen mit hoher Rechenleistung.</td></tr>
+<tr><td>Sicht der Medizininformatik</td><td>Bildgebungsgeräte sind vernetzte, softwaregesteuerte Systeme mit Detektoren, Rekonstruktionsrechnern, Bildarchivierung und Schnittstellen zu RIS, PACS und KIS.</td></tr>
+<tr><td>Ziel</td><td>Reproduzierbare, dosis- bzw. energiesparende und qualitätsgesicherte Bereitstellung diagnostisch verwertbarer Bilddaten.</td></tr>
+</tbody></table>
+
+<h3>2. Modalitäten im Überblick</h3>
+<table><thead><tr><th>Modalität</th><th>Messprinzip</th><th>Typische Indikation</th><th>Besonderheit</th></tr></thead><tbody>
+<tr><td>Röntgen (konventionell)</td><td>Durchstrahlung mit Abschwächung durch Gewebe</td><td>Skelett, Thorax, Abdomenübersicht</td><td>Kurze Untersuchungszeit, geringe Strahlendosis</td></tr>
+<tr><td>Computertomographie (CT)</td><td>Rotierende Röntgenröhre mit Detektorring, Schnittbildrekonstruktion</td><td>Trauma, Onkologie, Gefäßdiagnostik</td><td>Hohe räumliche Auflösung, höhere Strahlendosis</td></tr>
+<tr><td>Angiographie</td><td>Röntgendurchleuchtung mit Kontrastmittel und Subtraktionstechnik (DSA)</td><td>Gefäßdiagnostik und interventionelle Eingriffe</td><td>Kombination aus Bildgebung und Intervention</td></tr>
+<tr><td>Magnetresonanztomographie (MRT)</td><td>Kernspinresonanz in starkem Magnetfeld</td><td>Weichteil-, Neuro- und muskuloskelettale Diagnostik</td><td>Keine Röntgenstrahlung, hoher Weichteilkontrast</td></tr>
+<tr><td>Linearbeschleuniger</td><td>Elektronenbeschleunigung und Erzeugung hochenergetischer Photonen-/Elektronenstrahlung</td><td>Perkutane Strahlentherapie bei Tumorerkrankungen</td><td>Therapeutisches statt diagnostisches Gerät, hohe Dosen</td></tr>
+<tr><td>Nuklearmedizin (SPECT/PET)</td><td>Detektion von Gammastrahlung applizierter Radionuklide</td><td>Funktionelle und molekulare Diagnostik, Onkologie, Kardiologie</td><td>Häufig als Hybridsystem (SPECT/CT, PET/CT, PET/MRT)</td></tr>
+<tr><td>Ultraschall (Sonographie)</td><td>Aussendung und Empfang hochfrequenter Schallwellen (piezoelektrischer Effekt)</td><td>Abdomen, Kardiologie, Gefäße, Schwangerschaftsdiagnostik</td><td>Strahlungsfrei, echtzeitfähig, mobil einsetzbar</td></tr>
+</tbody></table>
+
+<h3>3. Grundtypen und Komponenten</h3>
+<table><thead><tr><th>Komponente</th><th>Beschreibung</th><th>Typische Ausführung</th><th>Technische Merkmale</th></tr></thead><tbody>
+<tr><td><strong>Strahler / Generator</strong></td><td>Erzeugt Röntgenstrahlung bzw. bei MRT das Hochfrequenzsignal, bei Linac hochenergetische Strahlung</td><td>Röntgenröhre, Hochfrequenzsender, Beschleunigerstruktur</td><td>Energie- und Dosisleistung sind zentrale Kenngrößen</td></tr>
+<tr><td><strong>Detektor</strong></td><td>Erfasst die durchdringende, reflektierte oder emittierte Strahlung/Signale</td><td>Flachdetektor, Detektorring, Gammakamera, Ultraschallwandler</td><td>Auflösung, Empfindlichkeit und Dynamikumfang bestimmen die Bildqualität</td></tr>
+<tr><td><strong>Gantry / Statik</strong></td><td>Mechanische Trägerstruktur für Strahler, Detektor bzw. Magnet</td><td>Rotierende Gantry (CT), C-Bogen (Angio), Magnettunnel (MRT)</td><td>Bewegungspräzision beeinflusst Bildqualität und Sicherheit</td></tr>
+<tr><td><strong>Rekonstruktionsrechner</strong></td><td>Berechnet aus Rohdaten die diagnostischen Bilddaten</td><td>Rechencluster, GPU-gestützte Rekonstruktion</td><td>Rechenleistung bestimmt Rekonstruktionsgeschwindigkeit</td></tr>
+<tr><td><strong>Bedienkonsole / Steuerungssoftware</strong></td><td>Steuerung von Protokollen, Aufnahmeparametern und Patientendaten</td><td>Bedienarbeitsplatz mit Aufnahme- und Nachverarbeitungssoftware</td><td>Protokollverwaltung, Dosisanzeige, Qualitätskontrolle</td></tr>
+<tr><td><strong>Netzwerk- und Archivanbindung</strong></td><td>Übertragung der Bilddaten an nachgelagerte Systeme</td><td>DICOM-Schnittstelle, PACS-Anbindung</td><td>Standardisierte Bildformate und Übertragungsprotokolle</td></tr>
+</tbody></table>
+
+<h3>4. Zentrale Begriffe und Parameter</h3>
+<table><thead><tr><th>Begriff</th><th>Abkürzung</th><th>Modalität</th><th>Technische Bedeutung</th></tr></thead><tbody>
+<tr><td>Röhrenspannung</td><td><strong>kV</strong></td><td>Röntgen, CT, Angio</td><td>Bestimmt die Energie bzw. Durchdringungsfähigkeit der Röntgenstrahlung.</td></tr>
+<tr><td>Röhrenstrom-Zeit-Produkt</td><td><strong>mAs</strong></td><td>Röntgen, CT, Angio</td><td>Beeinflusst Strahlungsmenge und Bildrauschen.</td></tr>
+<tr><td>Dosisflächenprodukt</td><td><strong>DFP</strong></td><td>Röntgen, Angio</td><td>Kenngröße zur Abschätzung der Patientenexposition.</td></tr>
+<tr><td>Volumen-Computertomographie-Dosisindex</td><td><strong>CTDIvol</strong></td><td>CT</td><td>Standardisierte Dosiskenngröße für CT-Untersuchungen.</td></tr>
+<tr><td>Repetitions-/Echozeit</td><td><strong>TR / TE</strong></td><td>MRT</td><td>Steuern Bildkontrast und Gewichtung der MRT-Sequenz.</td></tr>
+<tr><td>Monitoreinheit</td><td><strong>MU</strong></td><td>Linearbeschleuniger</td><td>Steuergröße für die abgegebene Strahlendosis am Beschleuniger.</td></tr>
+<tr><td>Energiedosis</td><td><strong>Gy (Gray)</strong></td><td>Linearbeschleuniger</td><td>Maß für die im Gewebe applizierte Strahlentherapiedosis.</td></tr>
+<tr><td>Aktivität</td><td><strong>MBq</strong></td><td>Nuklearmedizin</td><td>Menge des applizierten Radionuklids.</td></tr>
+<tr><td>Standardized Uptake Value</td><td><strong>SUV</strong></td><td>PET</td><td>Halbquantitatives Maß für den Stoffwechselumsatz im Gewebe.</td></tr>
+<tr><td>Sendefrequenz</td><td><strong>MHz</strong></td><td>Ultraschall</td><td>Bestimmt Eindringtiefe und räumliche Auflösung.</td></tr>
+</tbody></table>
+
+<h3>5. Technische Messprinzipien je Modalität</h3>
+<table><thead><tr><th>Modalität</th><th>Technische Grundlage</th><th>Bildentstehung</th></tr></thead><tbody>
+<tr><td>Röntgen</td><td>Gewebeabhängige Abschwächung von Röntgenstrahlung</td><td>Projektionsbild auf Flachdetektor</td></tr>
+<tr><td>CT</td><td>Rotierende Röntgenaufnahmen aus vielen Winkeln</td><td>Mathematische Rekonstruktion von Schnittbildern (z. B. gefilterte Rückprojektion, iterative Rekonstruktion)</td></tr>
+<tr><td>Angiographie</td><td>Kontrastmittelgestützte Durchleuchtung</td><td>Digitale Subtraktionsangiographie (DSA) zur Gefäßdarstellung</td></tr>
+<tr><td>MRT</td><td>Anregung von Wasserstoffkernen im Magnetfeld und Messung der Relaxation</td><td>Ortskodierung über Gradientenfelder und Fourier-Transformation</td></tr>
+<tr><td>Linearbeschleuniger</td><td>Beschleunigung von Elektronen und Erzeugung von Bremsstrahlung bzw. Elektronenstrahlung</td><td>Kein Bild im engeren Sinn; bildgestützte Lagerungskontrolle über integrierte Bildgebung (z. B. Cone-Beam-CT)</td></tr>
+<tr><td>Nuklearmedizin (SPECT/PET)</td><td>Detektion von Gammaquanten applizierter Radionuklide</td><td>Rekonstruktion funktioneller Schnittbilder aus Detektionsereignissen</td></tr>
+<tr><td>Ultraschall</td><td>Piezoelektrische Erzeugung und Empfang von Schallwellen, Laufzeit- und Echointensitätsmessung</td><td>Echtzeit-Bildaufbau aus reflektierten Schallwellen</td></tr>
+</tbody></table>
+
+<h3>6. Technische Architektur eines bildgebenden Systems</h3>
+<table><thead><tr><th>Subsystem</th><th>Aufgabe</th><th>Beispiele</th></tr></thead><tbody>
+<tr><td>Strahlungs-/Signalquelle</td><td>Erzeugung der für die Bildgebung notwendigen Energie</td><td>Röntgenröhre, HF-Sender, Beschleunigerstruktur, Ultraschallwandler</td></tr>
+<tr><td>Detektionssystem</td><td>Erfassung der Mess- bzw. Bildsignale</td><td>Flachdetektor, Detektorring, Gammakamera, Schallkopf</td></tr>
+<tr><td>Mechanik / Statik</td><td>Positionierung von Patient, Strahler und Detektor</td><td>Gantry, C-Bogen, Patiententisch, Magnettunnel</td></tr>
+<tr><td>Bildrekonstruktion</td><td>Umwandlung von Rohdaten in diagnostische Bilder</td><td>Rekonstruktionsalgorithmen, GPU-Cluster</td></tr>
+<tr><td>Steuerungs- und Sicherheitssoftware</td><td>Steuerung von Protokollen, Dosis- und Sicherheitsüberwachung</td><td>Interlock-Systeme, Dosismanagementsoftware</td></tr>
+<tr><td>Nachverarbeitung</td><td>Bildoptimierung, 3D-Rekonstruktion, Quantifizierung</td><td>Workstation mit Nachverarbeitungssoftware</td></tr>
+<tr><td>Datenkommunikation</td><td>Übertragung an nachgelagerte Systeme</td><td>DICOM, HL7, RIS-/PACS-Anbindung</td></tr>
+</tbody></table>
+
+<h3>7. Untersuchungsworkflow</h3>
+<table><thead><tr><th>Prozessschritt</th><th>Technische Aufgabe</th><th>Typische Fehlerquelle</th></tr></thead><tbody>
+<tr><td>Terminierung/Auftrag</td><td>Übernahme des Untersuchungsauftrags aus dem RIS</td><td>Fehlende oder fehlerhafte Modality-Worklist-Daten</td></tr>
+<tr><td>Patientenidentifikation</td><td>Abgleich von Patient und Auftrag am Gerät</td><td>Verwechslung oder fehlerhafte ID-Zuordnung</td></tr>
+<tr><td>Protokollwahl</td><td>Auswahl des Untersuchungsprotokolls entsprechend Fragestellung</td><td>Falsches Protokoll, unnötige Dosis- oder Kontrastmittelexposition</td></tr>
+<tr><td>Akquisition</td><td>Durchführung der eigentlichen Bildaufnahme</td><td>Bewegungsartefakte, technische Störungen</td></tr>
+<tr><td>Rekonstruktion und Nachverarbeitung</td><td>Erzeugung und Optimierung der diagnostischen Bilddaten</td><td>Rekonstruktionsfehler, Artefakte</td></tr>
+<tr><td>Befundung und Archivierung</td><td>Übertragung an PACS/Befundarbeitsplatz und ärztliche Befundung</td><td>Schnittstellen- oder Übertragungsfehler</td></tr>
+</tbody></table>
+
+<h3>8. Vernetzung und Medizininformatik</h3>
+<table><thead><tr><th>Ebene</th><th>Beispiel</th><th>Medizininformatische Bedeutung</th></tr></thead><tbody>
+<tr><td>Geräteebene</td><td>Modalität (Röntgen, CT, MRT, Linac, Nuklearmedizin, Ultraschall)</td><td>Erzeugung von Bild-, Dosis- und Statusdaten</td></tr>
+<tr><td>RIS</td><td>Radiologie-Informationssystem</td><td>Auftrags-, Termin- und Befundverwaltung</td></tr>
+<tr><td>PACS</td><td>Picture Archiving and Communication System</td><td>Zentrale Archivierung, Verteilung und Anzeige von Bilddaten</td></tr>
+<tr><td>Bestrahlungsplanungssystem</td><td>Onkologisches Planungssystem für die Strahlentherapie</td><td>Übernahme von Bild- und Konturdaten zur Therapieplanung</td></tr>
+<tr><td>KIS</td><td>Krankenhausinformationssystem</td><td>Bereitstellung von Befunden im klinischen Gesamtkontext</td></tr>
+</tbody></table>
+
+<h3>9. Schnittstellen und Datenübertragung</h3>
+<table><thead><tr><th>Quelle</th><th>Daten</th><th>Ziel</th><th>Standard / Beispiel</th></tr></thead><tbody>
+<tr><td>RIS</td><td>Untersuchungsauftrag, Patientendaten</td><td>Modalität</td><td>Modality Worklist (MWL) über HL7/DICOM</td></tr>
+<tr><td>Modalität</td><td>Untersuchungsstatus, Beginn/Ende der Akquisition</td><td>RIS</td><td>Modality Performed Procedure Step (MPPS)</td></tr>
+<tr><td>Modalität</td><td>Bilddaten, Dosisinformationen</td><td>PACS</td><td>DICOM-Bildobjekte, DICOM Dose Structured Report</td></tr>
+<tr><td>PACS</td><td>Bilddaten zur Befundung</td><td>Befundarbeitsplatz</td><td>DICOM-Verteilung an Befundmonitore</td></tr>
+<tr><td>RIS/PACS</td><td>Validierter Befund</td><td>KIS / elektronische Patientenakte</td><td>HL7-Befundübermittlung</td></tr>
+<tr><td>Bildgebung</td><td>Bild- und Konturdaten</td><td>Bestrahlungsplanungssystem</td><td>DICOM-RT (RT Image, RT Structure Set, RT Dose, RT Plan)</td></tr>
+</tbody></table>
+
+<h3>10. Strahlenschutz und Patientensicherheit</h3>
+<table><thead><tr><th>Konzept</th><th>Beschreibung</th><th>Technische Umsetzung</th></tr></thead><tbody>
+<tr><td>Rechtfertigende Indikation</td><td>Ärztliche Bewertung von Nutzen und Risiko vor jeder Anwendung ionisierender Strahlung</td><td>Dokumentation im RIS/KIS</td></tr>
+<tr><td>Dosismanagement</td><td>Erfassung, Auswertung und Optimierung applizierter Dosen</td><td>Dosismonitoring-Software, Referenzwerte (diagnostische Referenzwerte)</td></tr>
+<tr><td>Strahlenschutzbereiche</td><td>Baulicher und organisatorischer Schutz von Personal und Patienten</td><td>Abschirmung, Zugangskontrolle, Warnsignale</td></tr>
+<tr><td>MRT-Sicherheit</td><td>Schutz vor Gefährdungen durch das starke Magnetfeld</td><td>Zugangskontrollzonen, Metallausschluss, Notabschaltung (Quench)</td></tr>
+<tr><td>Strahlentherapie-Sicherheit</td><td>Verhinderung von Fehlbestrahlungen</td><td>Interlock-Systeme, bildgestützte Lagerungskontrolle, Bestrahlungsplanverifikation</td></tr>
+<tr><td>Cybersecurity</td><td>Schutz vernetzter Bildgebungssysteme</td><td>Netzsegmentierung, Updatemanagement, Zugriffskontrolle</td></tr>
+</tbody></table>
+
+<h3>11. Typische Alarme und Fehlerbilder</h3>
+<table><thead><tr><th>Alarm / Fehler</th><th>Mögliche technische Ursache</th><th>Zu prüfende Bereiche</th></tr></thead><tbody>
+<tr><td>Bildartefakte</td><td>Bewegung, Metallobjekte, Rekonstruktionsfehler</td><td>Patientenlagerung, Protokoll, Detektor</td></tr>
+<tr><td>Detektorfehler</td><td>Defekte Detektorelemente oder Kalibrierabweichung</td><td>Detektorkalibrierung und Wartungsstatus</td></tr>
+<tr><td>Dosisabweichung</td><td>Fehlerhafte Belichtungsautomatik oder Protokollparameter</td><td>Belichtungsautomatik, Dosismonitoring</td></tr>
+<tr><td>Kühl-/Magnetfehler (MRT)</td><td>Störung der Kühlung oder Feldhomogenität</td><td>Kühlsystem, Magnetstatus</td></tr>
+<tr><td>Interlock-Auslösung (Linac)</td><td>Sicherheitsrelevante Abweichung während der Bestrahlung</td><td>Positionierung, Strahlparameter, Türsicherung</td></tr>
+<tr><td>Schnittstellenfehler</td><td>Kommunikationsunterbrechung zu RIS/PACS</td><td>Netzwerk, DICOM-/HL7-Konfiguration</td></tr>
+</tbody></table>
+
+<h3>12. Technische Vergleichskriterien für eine Geräteauswahl</h3>
+<table><thead><tr><th>Kategorie</th><th>Prüffrage</th><th>Warum relevant?</th></tr></thead><tbody>
+<tr><td>Bildqualität/Auflösung</td><td>Welche räumliche und zeitliche Auflösung wird erreicht?</td><td>Bestimmt die diagnostische Aussagekraft.</td></tr>
+<tr><td>Dosis- bzw. Energieeffizienz</td><td>Wie ist das Verhältnis von Bildqualität zu applizierter Dosis?</td><td>Relevant für Strahlenschutz und Betriebskosten.</td></tr>
+<tr><td>Durchsatz</td><td>Wie viele Untersuchungen können pro Zeiteinheit durchgeführt werden?</td><td>Relevant für Patientenaufkommen und Auslastung.</td></tr>
+<tr><td>Softwarefunktionen</td><td>Welche Rekonstruktions-, Nachverarbeitungs- und KI-Funktionen stehen zur Verfügung?</td><td>Beeinflusst Befundungsunterstützung und Workflow.</td></tr>
+<tr><td>Vernetzung</td><td>Welche RIS-, PACS- und Planungssystem-Schnittstellen werden unterstützt?</td><td>Relevant für Integration und Datenfluss.</td></tr>
+<tr><td>Service</td><td>Wie sind Wartung, Ersatzteile und Fernsupport organisiert?</td><td>Beeinflusst Verfügbarkeit und Lebenszykluskosten.</td></tr>
+<tr><td>Cybersecurity</td><td>Welche Update- und Zugriffskonzepte bestehen?</td><td>Vernetzte Bildgebungssysteme sind Teil der IT-Sicherheitsarchitektur.</td></tr>
+</tbody></table>
+
+<h3>13. Wartung, Instandhaltung und technische Qualitätssicherung</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Herstellerangaben</td><td>Betrieb und Wartung erfolgen entsprechend den freigegebenen Herstellerunterlagen.</td></tr>
+<tr><td>Vorbeugende Wartung</td><td>Regelmäßige, herstellerseitig vorgegebene Wartungsintervalle für Strahler, Detektor und Mechanik.</td></tr>
+<tr><td>Kalibrierung</td><td>Abgleich von Detektor- und Messsystemen nach definierten Intervallen.</td></tr>
+<tr><td>Sicherheitstechnische Kontrolle</td><td>Regelmäßige elektrische und mechanische Sicherheitsprüfung.</td></tr>
+<tr><td>Software-/Konfigurationsstand</td><td>Kontrolle der eingesetzten Versionen und freigegebenen Konfigurationen.</td></tr>
+<tr><td>Dokumentation</td><td>Nachvollziehbare Protokollierung von Wartungs- und Prüfereignissen.</td></tr>
+</tbody></table>
+
+<h3>14. Begriffe für die Medizininformatik</h3>
+<table><thead><tr><th>Begriff</th><th>Bedeutung im Kontext Bildgebung</th></tr></thead><tbody>
+<tr><td>RIS</td><td>Radiologie-Informationssystem zur Verwaltung von Aufträgen, Terminen und Befunden.</td></tr>
+<tr><td>PACS</td><td>System zur Archivierung, Verteilung und Anzeige medizinischer Bilddaten.</td></tr>
+<tr><td>DICOM</td><td>Standardformat und Kommunikationsprotokoll für medizinische Bilddaten.</td></tr>
+<tr><td>DICOM-RT</td><td>Erweiterung von DICOM für Objekte der Strahlentherapie (Bild, Struktur, Dosis, Plan).</td></tr>
+<tr><td>MWL</td><td>Modality Worklist; elektronische Auftragsliste an der Modalität.</td></tr>
+<tr><td>MPPS</td><td>Modality Performed Procedure Step; Rückmeldung des Untersuchungsstatus an das RIS.</td></tr>
+<tr><td>SUV</td><td>Standardized Uptake Value; quantitativer Parameter der PET-Bildgebung.</td></tr>
+<tr><td>Audit Trail</td><td>Nachvollziehbare Protokollierung relevanter Ereignisse und Änderungen, sofern vom System unterstützt.</td></tr>
+</tbody></table>
+
+<div class="note">
+  <strong>Stand der technischen Übersicht:</strong> September 2026.
+  Konkrete Gerätefunktionen, Softwarestände, Schnittstellen und Optionen sind hersteller- und konfigurationsabhängig.
+  Für Betrieb, Wartung und diagnostische Nutzung ist stets die aktuelle Dokumentation (Gebrauchsanweisung und Produkt-PDF) des konkreten Systems maßgeblich.
+</div>
+
+<h3>15. Röntgen – Geräte, Hersteller und Datenblätter</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Beispielgeräte / Produktlinie</th><th>Typischer Einsatz</th><th>Herstellerinformation</th></tr></thead>
+<tbody>
+<tr><td><strong>Siemens Healthineers</strong></td><td>MULTIX Impact, Multitom Rax, MOBILETT Elara Max, MAMMOMAT Revelation</td><td>Skelett-, Thorax-, Mammographie- und mobile Röntgendiagnostik</td><td>Herstellerbroschüre „Imaging &amp; Therapy Product Overview" (PDF) auf siemens-healthineers.com</td></tr>
+<tr><td><strong>GE HealthCare</strong></td><td>Definium-Serie, Optima XR-Serie, Senographe (Mammographie)</td><td>Digitale Radiographie und Mammographie</td><td>Produktdatenblätter im Download-Bereich von gehealthcare.com</td></tr>
+<tr><td><strong>Philips</strong></td><td>DigitalDiagnost-Serie, MobileDiagnost</td><td>Stationäre und mobile digitale Radiographie</td><td>Produktseiten und Datenblätter auf philips.com/healthcare</td></tr>
+<tr><td><strong>Canon Medical Systems</strong></td><td>CXDI-Serie (Flachdetektoren), RADREX-Serie</td><td>Digitale Radiographie</td><td>Produktinformationen auf de.medical.canon</td></tr>
+<tr><td><strong>Fujifilm</strong></td><td>FDR-Serie</td><td>Digitale Radiographie</td><td>Produktdatenblätter auf fujifilm.com/healthcare</td></tr>
+</tbody>
+</table>
+
+<h3>16. Computertomographie (CT) – Geräte, Hersteller und Datenblätter</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Beispielgeräte / Produktlinie</th><th>Typischer Einsatz</th><th>Herstellerinformation</th></tr></thead>
+<tbody>
+<tr><td><strong>Siemens Healthineers</strong></td><td>SOMATOM Drive, SOMATOM X.cite, SOMATOM go.-Serie</td><td>Onkologische, kardiale und Notfalldiagnostik</td><td>Herstellerbroschüre „Imaging &amp; Therapy Product Overview" (PDF), siemens-healthineers.com</td></tr>
+<tr><td><strong>GE HealthCare</strong></td><td>Revolution-Serie</td><td>Kardio-CT, Onkologie und Traumadiagnostik</td><td>Produktdatenblätter im Download-Bereich von gehealthcare.com</td></tr>
+<tr><td><strong>Philips</strong></td><td>Incisive CT, Spectral CT 7500</td><td>Spektrale und Routine-CT-Diagnostik</td><td>Produktseiten und Datenblätter auf philips.com/healthcare</td></tr>
+<tr><td><strong>Canon Medical Systems</strong></td><td>Aquilion-Serie</td><td>Ganzkörper- und kardiovaskuläre CT-Diagnostik</td><td>Produktinformationen auf de.medical.canon</td></tr>
+</tbody>
+</table>
+
+<h3>17. Angiographie – Geräte, Hersteller und Datenblätter</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Beispielgeräte / Produktlinie</th><th>Typischer Einsatz</th><th>Herstellerinformation</th></tr></thead>
+<tbody>
+<tr><td><strong>Siemens Healthineers</strong></td><td>ARTIS icono-Serie, Cios Select/Spin (mobile C-Bögen)</td><td>Kardiologische und neurovaskuläre Interventionen</td><td>Herstellerbroschüre „Imaging &amp; Therapy Product Overview" (PDF), siemens-healthineers.com</td></tr>
+<tr><td><strong>Philips</strong></td><td>Azurion-Serie</td><td>Interventionelle Kardiologie und Radiologie</td><td>Produktseiten und Datenblätter auf philips.com/healthcare</td></tr>
+<tr><td><strong>GE HealthCare</strong></td><td>Allia-Serie</td><td>Interventionelle Angiographie</td><td>Produktdatenblätter im Download-Bereich von gehealthcare.com</td></tr>
+<tr><td><strong>Canon Medical Systems</strong></td><td>Alphenix-Serie</td><td>Interventionelle Angiographie</td><td>Produktinformationen auf de.medical.canon</td></tr>
+</tbody>
+</table>
+
+<h3>18. Magnetresonanztomographie (MRT) – Geräte, Hersteller und Datenblätter</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Beispielgeräte / Produktlinie</th><th>Typischer Einsatz</th><th>Herstellerinformation</th></tr></thead>
+<tbody>
+<tr><td><strong>Siemens Healthineers</strong></td><td>MAGNETOM Altea, MAGNETOM Vida, MAGNETOM Free.Max</td><td>Neuro-, muskuloskelettale und kardiale MRT-Diagnostik</td><td>Herstellerbroschüre „Imaging &amp; Therapy Product Overview" (PDF), siemens-healthineers.com</td></tr>
+<tr><td><strong>GE HealthCare</strong></td><td>SIGNA-Serie</td><td>Ganzkörper- und Spezialdiagnostik</td><td>Produktdatenblätter im Download-Bereich von gehealthcare.com</td></tr>
+<tr><td><strong>Philips</strong></td><td>Ingenia-Serie</td><td>Ganzkörper-MRT-Diagnostik</td><td>Produktseiten und Datenblätter auf philips.com/healthcare</td></tr>
+<tr><td><strong>Canon Medical Systems</strong></td><td>Vantage-Serie</td><td>Ganzkörper-MRT-Diagnostik</td><td>Produktinformationen auf de.medical.canon</td></tr>
+</tbody>
+</table>
+
+<h3>19. Linearbeschleuniger (Strahlentherapie) – Geräte, Hersteller und Datenblätter</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Beispielgeräte / Produktlinie</th><th>Typischer Einsatz</th><th>Herstellerinformation</th></tr></thead>
+<tbody>
+<tr><td><strong>Varian (a Siemens Healthineers Company)</strong></td><td>TrueBeam, Halcyon, Ethos</td><td>Perkutane Strahlentherapie, IMRT/VMAT, adaptive Strahlentherapie</td><td>Produktinformationen auf varian.com bzw. siemens-healthineers.com</td></tr>
+<tr><td><strong>Elekta</strong></td><td>Versa HD, Elekta Unity (MR-Linac)</td><td>Konventionelle und bildgeführte Strahlentherapie, MR-geführte Bestrahlung</td><td>Produktdatenblätter auf elekta.com</td></tr>
+<tr><td><strong>Accuray</strong></td><td>CyberKnife, TomoTherapy</td><td>Stereotaktische Radiochirurgie und helikale Strahlentherapie</td><td>Produktinformationen auf accuray.com</td></tr>
+</tbody>
+</table>
+
+<h3>20. Nuklearmedizin (SPECT/PET) – Geräte, Hersteller und Datenblätter</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Beispielgeräte / Produktlinie</th><th>Typischer Einsatz</th><th>Herstellerinformation</th></tr></thead>
+<tbody>
+<tr><td><strong>Siemens Healthineers</strong></td><td>Biograph Vision (PET/CT), Symbia Intevo (SPECT/CT)</td><td>Onkologische, kardiologische und neurologische Funktionsdiagnostik</td><td>Herstellerbroschüre „Imaging &amp; Therapy Product Overview" (PDF), siemens-healthineers.com</td></tr>
+<tr><td><strong>GE HealthCare</strong></td><td>Discovery-Serie (PET/CT), Discovery NM/CT</td><td>Molekulare und funktionelle Bildgebung</td><td>Produktdatenblätter im Download-Bereich von gehealthcare.com</td></tr>
+<tr><td><strong>Philips</strong></td><td>Vereos (PET/CT)</td><td>Digitale PET/CT-Bildgebung</td><td>Produktseiten und Datenblätter auf philips.com/healthcare</td></tr>
+<tr><td><strong>Mediso</strong></td><td>AnyScan-Serie (SPECT/CT)</td><td>Nuklearmedizinische Funktionsdiagnostik</td><td>Produktinformationen auf mediso.com</td></tr>
+</tbody>
+</table>
+
+<h3>21. Ultraschall (Sonographie) – Geräte, Hersteller und Datenblätter</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Beispielgeräte / Produktlinie</th><th>Typischer Einsatz</th><th>Herstellerinformation</th></tr></thead>
+<tbody>
+<tr><td><strong>GE HealthCare</strong></td><td>Voluson-Serie (Gynäkologie), LOGIQ-Serie</td><td>Geburtshilfe/Gynäkologie, Abdomen- und Gefäßdiagnostik</td><td>Produktdatenblätter im Download-Bereich von gehealthcare.com</td></tr>
+<tr><td><strong>Philips</strong></td><td>EPIQ-Serie, Affiniti-Serie</td><td>Kardiologie, Abdomen- und Gefäßdiagnostik</td><td>Produktseiten und Datenblätter auf philips.com/healthcare</td></tr>
+<tr><td><strong>Siemens Healthineers</strong></td><td>ACUSON Sequoia, ACUSON Juniper, ACUSON NX3</td><td>Allgemeine und spezialisierte Ultraschalldiagnostik</td><td>Herstellerbroschüre „Imaging &amp; Therapy Product Overview" (PDF), siemens-healthineers.com</td></tr>
+<tr><td><strong>Canon Medical Systems</strong></td><td>Aplio-Serie</td><td>Abdomen-, Gefäß- und Kardiodiagnostik</td><td>Produktinformationen auf de.medical.canon</td></tr>
+<tr><td><strong>Samsung Medison</strong></td><td>RS85-Serie, HERA-Serie</td><td>Radiologische und geburtshilfliche Diagnostik</td><td>Produktinformationen auf samsunghealthcare.com</td></tr>
+<tr><td><strong>Mindray</strong></td><td>Resona-Serie</td><td>Allgemeine Ultraschalldiagnostik</td><td>Produktinformationen auf mindray.com</td></tr>
+</tbody>
+</table>
+
+<div class="note">
+<strong>Hinweis zur Herstellerübersicht:</strong> Die genannten Systeme sind Beispiele für etablierte Produktfamilien. Ein umfassendes, aktuelles Herstellerdokument mit Übersicht über Röntgen, CT, Angiographie, MRT, Molekulare Bildgebung und Ultraschall ist die Broschüre „Siemens Healthineers Imaging &amp; Therapy Products" (PDF): 
+<a href="https://marketing.webassets.siemens-healthineers.com/aa3a7dfca68c77d0/fd13a9f25150/Siemens-Healthineers_Imaging-and-Therapy-Products_Brochure_2025-2026.pdf" target="_blank" rel="noopener">Imaging &amp; Therapy Product Overview 2025–2026 (PDF)</a>.
+Für alle anderen Hersteller gilt: Verfügbarkeit, Softwareversion und Konfiguration sind standortabhängig; das jeweils aktuelle Produktdatenblatt (PDF) findet sich im Produkt- bzw. Download-Bereich der genannten Herstellerwebsite.
+</div>
+
+<h3>22. Notwendige Prüfungen im Überblick</h3>
+<table>
+<thead><tr><th>Prüfungsart</th><th>Zweck</th><th>Turnus (typisch)</th><th>Rechtlicher Rahmen</th></tr></thead>
+<tbody>
+<tr><td>Abnahmeprüfung</td><td>Nachweis der Erfüllung der Spezifikation bei Erstinbetriebnahme oder nach wesentlicher Änderung</td><td>Einmalig bei Inbetriebnahme</td><td>Strahlenschutzrecht / Medizinprodukterecht, herstellerseitige Vorgaben</td></tr>
+<tr><td>Konstanzprüfung</td><td>Laufende Überwachung der Bildqualität und sicherheitsrelevanter Parameter im Betrieb</td><td>Täglich, wöchentlich oder monatlich, je nach Modalität</td><td>Strahlenschutzrecht, einschlägige Normen (z. B. DIN-Normenreihe zur Konstanzprüfung)</td></tr>
+<tr><td>Sachverständigenprüfung</td><td>Unabhängige externe Prüfung von Anlage und Strahlenschutzeinrichtungen</td><td>In der Regel alle 5 Jahre bzw. nach Vorgabe der zuständigen Behörde</td><td>Strahlenschutzgesetz/-verordnung</td></tr>
+<tr><td>Sicherheitstechnische Kontrolle (STK)</td><td>Prüfung der elektrischen und mechanischen Sicherheit medizinischer Geräte</td><td>Herstellerabhängig, meist jährlich</td><td>Medizinprodukte-Betreiberrecht</td></tr>
+<tr><td>Messtechnische Kontrolle (MTK)</td><td>Prüfung der Messgenauigkeit dosisrelevanter Messeinrichtungen</td><td>Herstellerabhängig</td><td>Medizinprodukte-Betreiberrecht</td></tr>
+</tbody>
+</table>
+
+<h3>23. Konstanzprüfung</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Ziel</td><td>Frühzeitiges Erkennen von Abweichungen in Bildqualität, Dosisleistung oder sicherheitsrelevanten Parametern gegenüber dem Referenzzustand der Abnahmeprüfung.</td></tr>
+<tr><td>Durchführung</td><td>Erfolgt durch geschultes Fachpersonal (z. B. Radiologiefachkraft, Medizinphysikexperte) anhand definierter Prüfkörper und Prüfabläufe.</td></tr>
+<tr><td>Prüfparameter</td><td>Je nach Modalität u. a. Bildkontrast, Ortsauflösung, Dosisanzeige, Bildrauschen und Homogenität.</td></tr>
+<tr><td>Dokumentation</td><td>Ergebnisse werden protokolliert und mit definierten Toleranzgrenzen verglichen; Abweichungen erfordern Ursachenklärung und ggf. Serviceeinsatz.</td></tr>
+<tr><td>Modalitätsspezifik</td><td>Prüfintervalle und -inhalte unterscheiden sich zwischen Röntgen, CT, MRT, Angiographie, Nuklearmedizin und Linearbeschleunigern.</td></tr>
+</tbody></table>
+
+<h3>24. Sachverständigenprüfung (Abnahme- und Wiederholungsprüfung)</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Durchführende Stelle</td><td>Unabhängiger, behördlich anerkannter Sachverständiger für Strahlenschutz bzw. Medizinprodukte.</td></tr>
+<tr><td>Prüfumfang</td><td>Bauliche und technische Strahlenschutzeinrichtungen, Anlagensicherheit, Einhaltung der Betriebsbedingungen.</td></tr>
+<tr><td>Anlässe</td><td>Erstprüfung vor Inbetriebnahme, wiederkehrende Prüfung in festgelegten Abständen sowie nach wesentlichen Änderungen an der Anlage.</td></tr>
+<tr><td>Ergebnis</td><td>Prüfbericht mit Feststellung der Betriebssicherheit bzw. Auflagen zur Mängelbeseitigung.</td></tr>
+<tr><td>Zusammenwirken</td><td>Ergänzt die betriebsinterne Konstanzprüfung um eine unabhängige, umfassendere externe Bewertung.</td></tr>
+</tbody></table>
+
+<h3>25. Abnahmeprüfung und Abnahmeprotokoll</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Zeitpunkt</td><td>Vor der erstmaligen klinischen Nutzung einer Anlage oder nach wesentlichen technischen Änderungen.</td></tr>
+<tr><td>Inhalt der Prüfung</td><td>Erfassung von Referenzwerten für Bildqualität, Dosisleistung und sicherheitsrelevante Parameter als Ausgangsbasis für spätere Konstanzprüfungen.</td></tr>
+<tr><td>Abnahmeprotokoll</td><td>Schriftliche Dokumentation aller gemessenen Werte, Prüfbedingungen, verwendeten Prüfkörper und beteiligten Personen.</td></tr>
+<tr><td>Verantwortlichkeit</td><td>Erfolgt in der Regel gemeinsam durch Medizinphysikexperten, Hersteller/Servicetechniker und den Betreiber.</td></tr>
+<tr><td>Bedeutung für den Betrieb</td><td>Bildet die verbindliche Referenz, gegen die alle nachfolgenden Konstanzprüfungen bewertet werden.</td></tr>
+</tbody></table>
+
+<h3>26. Befundmonitore und Anforderungen</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Zweck</td><td>Befundmonitore dienen der primären ärztlichen Befundung digitaler Bilddaten und müssen definierte Qualitätsanforderungen erfüllen.</td></tr>
+<tr><td>Technische Anforderungen</td><td>Ausreichende Leuchtdichte, Kontrast, Ortsauflösung und Homogenität, abgestimmt auf die jeweilige Modalität (z. B. höhere Anforderungen für Mammographie).</td></tr>
+<tr><td>Regelmäßige Prüfung</td><td>Konstanzprüfung der Bildwiedergabesysteme nach den einschlägigen Vorgaben (z. B. Normenreihe zur Qualitätssicherung von Bildwiedergabegeräten).</td></tr>
+<tr><td>Kalibrierung</td><td>Regelmäßige Kalibrierung auf die Grauwertskala (z. B. nach DICOM Grayscale Standard Display Function).</td></tr>
+<tr><td>Dokumentation</td><td>Prüfergebnisse werden protokolliert; Abweichungen erfordern Nachkalibrierung oder Austausch.</td></tr>
+</tbody></table>
+
+<h3>27. Medizinprodukte-Sicherheitsbeauftragter (MPSB)</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Funktion</td><td>Zentrale Ansprechperson für die Sicherheit von Medizinprodukten innerhalb der Einrichtung.</td></tr>
+<tr><td>Aufgaben</td><td>Erfassung und Bewertung von Vorkommnissen und Beinahe-Vorkommnissen, Koordination von Rückrufen und Sicherheitsinformationen der Hersteller.</td></tr>
+<tr><td>Meldewesen</td><td>Weiterleitung meldepflichtiger Vorkommnisse an die zuständige Behörde gemäß Medizinprodukterecht.</td></tr>
+<tr><td>Zusammenarbeit</td><td>Enge Abstimmung mit Medizintechnik, Anwendern, Herstellern und – bei vernetzten Systemen – dem IT-Sicherheitsbeauftragten.</td></tr>
+<tr><td>Bezug zur Bildgebung</td><td>Relevant u. a. bei Software-Updates, Interlock-Ereignissen an Linearbeschleunigern oder sicherheitsrelevanten Abweichungen an bildgebenden Systemen.</td></tr>
+</tbody></table>
+
+<h3>28. IT-Sicherheitsbeauftragter in der Bildgebung</h3>
+<table><thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>Funktion</td><td>Verantwortlich für die Informationssicherheit vernetzter Systeme, einschließlich bildgebender Modalitäten, RIS und PACS.</td></tr>
+<tr><td>Aufgaben</td><td>Netzsegmentierung, Schwachstellen- und Patchmanagement, Zugriffskontrolle sowie Reaktion auf sicherheitsrelevante Ereignisse.</td></tr>
+<tr><td>Besonderheit Medizintechnik</td><td>Bildgebungssysteme unterliegen oft eingeschränkten Update-Zyklen durch Herstellerzulassungen; Absicherung erfolgt zusätzlich über Netzwerksegmentierung und Monitoring.</td></tr>
+<tr><td>Zusammenarbeit</td><td>Abstimmung mit MPSB, Medizintechnik und Herstellern, insbesondere bei sicherheitsrelevanten Software-Updates.</td></tr>
+<tr><td>Regulatorischer Bezug</td><td>Berücksichtigung einschlägiger Vorgaben zur IT-Sicherheit in Gesundheitseinrichtungen (u. a. branchenspezifische Sicherheitsstandards).</td></tr>
+</tbody></table>
+
+<h3>29. Weiterführende Hersteller- und Fachinformationen</h3>
+<table><thead><tr><th>Bereich</th><th>Dokumentationsart</th></tr></thead><tbody>
+<tr><td>Bildgebende Systeme</td><td>Für konkrete technische Daten, Dosiswerte, Sequenzparameter und Softwarefunktionen sind die jeweils aktuelle Gebrauchsanweisung und das <strong>Produktdatenblatt (PDF)</strong> des Herstellers maßgeblich.</td></tr>
+<tr><td>RIS-/PACS-Integration</td><td>Projektbezogene Schnittstellenspezifikationen (DICOM, HL7), Middleware-Dokumentationen und freigegebene Integrationsprofile sind zu berücksichtigen.</td></tr>
+<tr><td>Prüfungen</td><td>Aktuelle Prüfanweisungen für Konstanz- und Sachverständigenprüfungen richten sich nach den geltenden rechtlichen Vorgaben und den Angaben des jeweiligen Geräteherstellers.</td></tr>
+</tbody></table>
+
+<h3>30. Typischer Bildgebungs-Workflow mit konkreten Geräten</h3>
+<table>
+<thead><tr><th>Workflow-Schritt</th><th>Gerätegruppe</th><th>Beispiele</th><th>IT-/Datenbezug</th></tr></thead>
+<tbody>
+<tr><td>Terminierung/Auftrag</td><td>RIS</td><td>Auftragserfassung im RIS</td><td>Modality Worklist an die Modalität</td></tr>
+<tr><td>Skelett-/Thoraxdiagnostik</td><td>Röntgen</td><td>Siemens Multitom Rax, GE Definium, Philips DigitalDiagnost</td><td>DICOM-Bilddaten an PACS</td></tr>
+<tr><td>Schnittbilddiagnostik</td><td>CT</td><td>Siemens SOMATOM, GE Revolution, Canon Aquilion</td><td>DICOM-Bilddaten und Dosisreport an PACS</td></tr>
+<tr><td>Interventionelle Diagnostik</td><td>Angiographie</td><td>Philips Azurion, Siemens ARTIS icono</td><td>DICOM-Bilddaten, Dokumentation der Intervention</td></tr>
+<tr><td>Weichteildiagnostik</td><td>MRT</td><td>Siemens MAGNETOM, GE SIGNA, Philips Ingenia</td><td>DICOM-Bilddaten an PACS</td></tr>
+<tr><td>Strahlentherapie</td><td>Linearbeschleuniger</td><td>Varian TrueBeam/Halcyon, Elekta Versa HD</td><td>DICOM-RT-Daten an Bestrahlungsplanungssystem</td></tr>
+<tr><td>Funktionsdiagnostik</td><td>Nuklearmedizin</td><td>Siemens Biograph Vision, GE Discovery</td><td>DICOM-Bilddaten und quantitative Werte (z. B. SUV) an PACS</td></tr>
+<tr><td>Point-of-Care-Sonographie</td><td>Ultraschall</td><td>GE Voluson/LOGIQ, Philips EPIQ/Affiniti</td><td>DICOM-Bilddaten und Videosequenzen an PACS</td></tr>
+<tr><td>Befundung</td><td>PACS / Befundarbeitsplatz</td><td>Ärztliche Validierung auf zertifiziertem Befundmonitor</td><td>Übertragung freigegebener Befunde an KIS/Patientenakte</td></tr>
+</tbody>
+</table>
+
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

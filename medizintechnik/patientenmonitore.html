@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patientenmonitore – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb"><a href="../index.html">Startseite</a> / Medizintechnik / Patientenmonitore</div>
+<div class="hero">
+
+<h2>Patientenmonitore</h2>
+<p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Patientenmonitore</strong> vorgesehen.</p>
+<div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
+<h3>Grundlagen</h3>
+<p>Ein <strong>Patientenmonitor</strong> (Vitaldatenmonitor, engl. <em>bedside monitor</em>) ist ein aktives, nicht-implantierbares Medizinprodukt zur kontinuierlichen Erfassung, Anzeige, Speicherung, Alarmierung und Weiterleitung physiologischer Messwerte eines Patienten. Er kommt bettseitig auf Intensiv- und Intermediate-Care-Stationen, im OP, im Aufwachraum, in der Notaufnahme und – in reduzierter Form – auf Normalstationen sowie beim innerklinischen Transport zum Einsatz. Nach MDR-Klassifizierung fällt ein Standard-Multiparameter-Patientenmonitor in aller Regel in <strong>Klasse IIb</strong> (siehe Artikel <a href="../medizintechnik/medizinische-geraete.html">Medizinische Geräte</a>).</p>
+<p>Technisch besteht ein Patientenmonitor aus einer Basiseinheit (Recheneinheit, Display) und austauschbaren Messmodulen bzw. Patientendatenmodulen (PDM), die je nach Versorgungsbereich (Erwachsene, Pädiatrie, Neonatologie) konfiguriert werden. Die Monitore sind in der Regel per LAN/WLAN in ein herstellerspezifisches Überwachungsnetzwerk (z. B. Dräger Infinity Network, GE CARESCAPE Network, Philips IntelliVue Guardian/PIIC-Netzwerk, Mindray BeneVision-Netzwerk) eingebunden und laufen dort auf einer Zentrale (Central Station) zusammen.</p>
+
+<h3>Hauptanbieter und aktuelle Produkte</h3>
+<p>Der Markt für Patientenmonitoring wird international von wenigen Herstellern dominiert. Die folgende Übersicht zeigt je Anbieter ein aktuelles, marktrelevantes Modell mit Verweis auf das jeweilige technische Datenblatt/Produktinformation (PDF).</p>
+
+<div class="note">
+<strong>1. Dräger – Infinity M540 / Vista-Serie</strong><br>
+Der <strong>Infinity M540</strong> ist der aktuelle modulare Multiparameter-Monitor von Dräger für Bett und Transport; er dockt an die Infinity M500 Docking Station und lässt sich als eigenständiger Monitor oder als Bestandteil des Infinity Acute Care Systems (Medical Cockpit) betreiben. Für Normal- und Intermediate-Care-Stationen setzt Dräger auf die <strong>Vista-300-Serie</strong>. Datenintegration ins KIS erfolgt u. a. über HL7 und die WinAccess-API.<br>
+PDF-Produktinformation: <a href="https://www.draeger.com/Content/Documents/Products/M540-Monitor-M500-DockingStation-ds-9068721-de-de.pdf" target="_blank" rel="noopener">Infinity M540 / M500 Docking Station – Datenblatt (draeger.com)</a>
+</div>
+
+<div class="note">
+<strong>2. GE HealthCare – CARESCAPE Monitor B650</strong><br>
+Der <strong>CARESCAPE B650</strong> ist ein modularer Monitor für OP, ICU und Intermediate Care, kombinierbar mit dem CARESCAPE ONE Monitor bzw. dem Patient Data Module (PDM). Die Plattform ist auf offene Standards ausgelegt und wird über das CARESCAPE Network sowie das S/5-Netzwerk mit Zentralen und dem KIS verbunden.<br>
+PDF-Produktinformation: <a href="https://www.gehealthcare.com/-/jssmedia/e4c9c6ed549f43a0b2efdba2adfe2687.pdf?la=en-us" target="_blank" rel="noopener">CARESCAPE Monitor B650 – Datasheet (gehealthcare.com)</a>
+</div>
+
+<div class="note">
+<strong>3. Philips – IntelliVue MX-Serie (u. a. MX750/MX850)</strong><br>
+Die <strong>IntelliVue-MX-Serie</strong> (MX400/450/500/550 sowie die High-End-Modelle MX750/MX850) bildet das aktuelle Portfolio von Philips für ICU, OP und Notaufnahme. Die Monitore nutzen die modulare Multi-Measurement-Module-Familie (MMS) und werden über das IntelliVue-Netzwerk an die Zentrale PIIC iX sowie über HL7-Schnittstellen an das KIS angebunden.<br>
+PDF-Produktinformation: <a href="https://www.boehm-elektromedizin-gmbh.de/wp-content/uploads/2020/01/IntelliVue_MX750_und_MX850_Patientenmonitore_Rev._N.01_-_TDS_GER.pdf" target="_blank" rel="noopener">IntelliVue MX750 und MX850 – Technisches Datenblatt (DE)</a>
+</div>
+
+<div class="note">
+<strong>4. Mindray – BeneVision N-Serie (N19/N22)</strong><br>
+Die <strong>BeneVision N19/N22</strong> sind Mindrays aktuelle High-Acuity-Monitore für Notaufnahme, Intensivstation und OP, basierend auf der offenen iView-Plattform. Über das N1-Modul ist ein nahtloser Übergang zwischen Bett- und Transportmonitoring möglich; externe Geräte (Beatmungsgerät, Anästhesiegerät, Infusionspumpen) lassen sich über das BeneLink-Kommunikationsmodul einbinden.<br>
+PDF-Produktinformation: <a href="https://www.mindray.com/content/dam/xpace/de/products/patient-monitoring/continuous-patient-monitoring/benevision-n22-n19/pdf/Mindray_N19-N22_Brosch%C3%BCre_Ansicht.pdf" target="_blank" rel="noopener">BeneVision N19/N22 – Broschüre (DE, mindray.com)</a>
+</div>
+
+<div class="note">
+<strong>5. Nihon Kohden – Life Scope G5/G7 (Nachfolger der G9-Serie)</strong><br>
+Die <strong>Life-Scope-G-Serie</strong> (aktuell G5/G5Max sowie das High-End-Modell G7, als Weiterentwicklung der etablierten G9-Plattform) ist Nihon Kohdens Bedside-Monitor-Reihe für Intensiv- und OP-Bereiche. Der G7 nutzt eine separate Data Acquisition Unit und ist über das BSM-1700-Transportmonitor-Konzept auf einen durchgängigen Datensatz vom Bett bis zum Transport ausgelegt. Integration ins Krankenhaussystem erfolgt über ein Gateway mit HL7-Protokoll.<br>
+PDF-Produktinformation: <a href="https://us.nihonkohden.com/media/1595/g5_g5max-and-g7-brochure-dec-2022-compressed.pdf" target="_blank" rel="noopener">Life Scope G5/G5Max und G7 – Broschüre (nihonkohden.com)</a>
+</div>
+
+<h3>Vitalparameter</h3>
+<p>Je nach Versorgungsbereich und Modulausstattung erfassen Patientenmonitore eine Auswahl bzw. die volle Bandbreite folgender Vitalparameter:</p>
+<ul>
+<li><strong>EKG (ECG)</strong> – 3-, 5- oder 12-Kanal-Ableitung; Herzfrequenz (HF/PLS), Arrhythmie- und ST-Streckenanalyse</li>
+<li><strong>SpO₂</strong> – periphere Sauerstoffsättigung (Pulsoxymetrie), inkl. Pulsfrequenz und Perfusionsindex</li>
+<li><strong>NIBP</strong> – nicht-invasive Blutdruckmessung (oszillometrisch, systolisch/diastolisch/MAD)</li>
+<li><strong>IBP</strong> – invasive (arterielle/zentralvenöse) Blutdruckmessung über liegenden Katheter, meist 1–4 Kanäle</li>
+<li><strong>Atemfrequenz (RESP)</strong> – i. d. R. über Impedanzmessung an den EKG-Elektroden, ggf. Apnoe-Erkennung</li>
+<li><strong>Temperatur</strong> – meist 1–2 Kanäle (Haut-, Körperkern- oder Ösophagustemperatur)</li>
+<li><strong>etCO₂/CO₂ (Kapnometrie)</strong> – endexspiratorisches CO₂ und Atemgaskonzentration, mainstream oder sidestream</li>
+<li><strong>Narkosegase (Anästhesiegase)</strong> – z. B. Sevofluran, Desfluran, N₂O sowie inspiratorisches/exspiratorisches O₂ (v. a. Anästhesie-Konfigurationen)</li>
+<li><strong>Herzzeitvolumen/Cardiac Output (CO/HZV)</strong> – z. B. Thermodilution oder kontinuierliche Verfahren, teils inkl. SvO₂</li>
+<li><strong>Neuromonitoring-Parameter</strong> – z. B. BIS (Bispektralindex) zur Narkosetiefenmessung, teils EEG</li>
+<li>Ergänzend, modulabhängig: neuromuskuläres Monitoring (NMT/Relaxometrie), regionale Sauerstoffsättigung (rSO₂/NIRS), Blutzucker- und Laborwertanbindung</li>
+</ul>
+<p>Die genaue Parameterauswahl und Grenzwerte für Alarme werden am Monitor je Versorgungsbereich (Profil) konfiguriert; Fehlalarme werden bei modernen Systemen zusätzlich durch Algorithmen (z. B. iAlarm bei Mindray, SmartAlarm/Arrhythmia-Alarme bei GE/Philips) reduziert.</p>
+
+<h3>Technischer Zusammenhang</h3>
+<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+<p>Kurz zur <strong>Datenübertragung</strong>: Patientenmonitore senden ihre Vitaldaten in der Regel zunächst über ein herstellereigenes, proprietäres Protokoll (z. B. Dräger Infinity Network, GE CARESCAPE/S5-Netzwerk, Philips IntelliVue-Protokoll, Mindray-Netzwerk) an eine Monitoring-Zentrale bzw. ein Gateway. Von dort erfolgt die Weitergabe an übergeordnete klinische Systeme meist über den Nachrichtenstandard <strong>HL7</strong> (v2.x, zunehmend auch FHIR) oder über ein PDMS/Middleware-Gateway, das die Werte normalisiert und dem KIS bzw. PDMS zur Verfügung stellt. Alternative bzw. herstellerübergreifende Ansätze nutzen den Gerätekommunikationsstandard <strong>IEEE 11073 (SDC)</strong>. Die genauen Datenflüsse, Schnittstellenarchitekturen und die Einbindung in KIS/PDMS werden ausführlich im Artikel <a href="../klinische-informationssysteme/index.html">KIS &amp; Systeme</a> beschrieben.</p>
+
+<h3>Praxis und Fehleranalyse</h3>
+<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+
+</div>
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

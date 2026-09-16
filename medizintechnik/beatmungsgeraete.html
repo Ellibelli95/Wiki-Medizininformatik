@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beatmungsgeräte – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* Absicherung: identische Tabellenformatierung wie auf der Infusionspumpen-Seite */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2em 0 1.8em;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+  }
+  th, td {
+    border: 1px solid #d9e2ea;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  thead th {
+    background: #1a5276;
+    color: #fff;
+    border-color: #1a5276;
+    font-weight: 700;
+  }
+  tbody tr:nth-child(even) { background: #eaf4f8; }
+  tbody tr:hover { background: #dcedf5; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../medizintechnik/index.html">Medizintechnik</a> /
+  Beatmungsgeräte
+</div>
+
+<div class="hero">
+  <h2>Beatmungsgeräte</h2>
+  <table>
+  <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+  <tbody>
+  <tr><td>Beatmungsformen</td><td>Invasive und nicht-invasive Beatmung, CPAP, High Flow</td></tr>
+  <tr><td>Beatmungsparameter</td><td>Zentrale Größen wie VT, PEEP, FiO₂, Ppeak und weitere Kenngrößen</td></tr>
+  <tr><td>Beatmungsmodi</td><td>VCV, PCV, PSV, SIMV, APRV, PRVC, ASV und weitere</td></tr>
+  <tr><td>Technik</td><td>Gerätearchitektur, Monitoring und Vernetzung mit PDMS/KIS</td></tr>
+  <tr><td>Marktüberblick</td><td>Bekannte Hersteller im deutschen Markt</td></tr>
+  </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist eine technische und informatische
+    Dokumentation. Konkrete Beatmungseinstellungen müssen immer anhand der
+    medizinischen Situation, der Gebrauchsanweisung und durch qualifiziertes
+    Fachpersonal festgelegt werden.
+  </div>
+</div>
+
+<h3>1. Was ist ein Beatmungsgerät?</h3>
+<table>
+<thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead>
+<tbody>
+<tr><td>Grundfunktion</td><td>Ein Beatmungsgerät ist ein Medizinprodukt, das die Atmung eines Patienten unterstützt oder teilweise bzw. vollständig übernimmt.</td></tr>
+<tr><td>Gaszufuhr</td><td>Moderne Systeme können Atemgas mit definiertem Druck, Volumen, Flow und Sauerstoffanteil zuführen.</td></tr>
+<tr><td>Überwachung</td><td>Gleichzeitig werden Atemdruck, Flow, Volumen und weitere physiologische Größen überwacht.</td></tr>
+<tr><td>Sicht der Medizininformatik</td><td>Ein Beatmungsgerät ist nicht nur ein pneumatisches System, sondern besteht aus Sensorik, Aktorik, Echtzeitsoftware, Benutzeroberfläche, Alarmmanagement und Datenspeicherung.</td></tr>
+<tr><td>Schnittstellen</td><td>Häufig bestehen Schnittstellen zu Patientenmonitoren und klinischen Informationssystemen.</td></tr>
+</tbody>
+</table>
+
+<h3>2. Einsatzbereiche</h3>
+<table>
+<thead><tr><th>Einsatzbereich</th><th>Typische Patientengruppe</th><th>Beatmungsform</th><th>Besonderheiten</th></tr></thead>
+<tbody>
+<tr><td>Intensivstation (ICU)</td><td>Erwachsene, Pädiatrie</td><td>Invasiv / NIV / High Flow</td><td>Viele Modi, umfangreiches Monitoring, Alarme, Datenexport</td></tr>
+<tr><td>Neonatologie</td><td>Früh- und Neugeborene</td><td>Invasiv / NIV / nCPAP</td><td>Sehr kleine Atemzugvolumina, hohe Anforderungen an Flow- und Druckmessung</td></tr>
+<tr><td>Anästhesie</td><td>OP-Patienten</td><td>Invasiv</td><td>Integration in Anästhesiearbeitsplatz und Gasversorgung</td></tr>
+<tr><td>Notfall / Transport</td><td>Akutpatienten</td><td>Invasiv / NIV</td><td>Kompakte Bauform, Akku, robuste Bedienung</td></tr>
+<tr><td>Außerklinische Beatmung</td><td>Chronisch beatmete Patienten</td><td>NIV / invasiv</td><td>Mobilität, Akku, Telemonitoring, Homecare-Daten</td></tr>
+<tr><td>Weaning</td><td>Patienten nach längerer Beatmung</td><td>PSV / CPAP / spontane Modi</td><td>Unterstützung der schrittweisen Entwöhnung</td></tr>
+</tbody>
+</table>
+
+<h3>3. Grundtypen der Beatmung</h3>
+<table>
+<thead><tr><th>Typ</th><th>Beschreibung</th><th>Typische Anwendung</th><th>Technische Merkmale</th></tr></thead>
+<tbody>
+<tr><td><strong>Invasive Beatmung</strong></td><td>Beatmung über Endotrachealtubus oder Trachealkanüle</td><td>Schwere respiratorische Insuffizienz, OP, Intensivmedizin</td><td>Geschlossener Atemweg, präzise Druck-/Flow-/Volumensteuerung</td></tr>
+<tr><td><strong>NIV</strong></td><td>Nicht-invasive Beatmung über Maske oder vergleichbaren Zugang</td><td>COPD, akute respiratorische Insuffizienz, außerklinische Beatmung</td><td>Leckagekompensation, Triggerung und Synchronisation besonders wichtig</td></tr>
+<tr><td><strong>CPAP</strong></td><td>Konstanter positiver Atemwegsdruck bei Spontanatmung</td><td>Schlafmedizin, Atemwegsstabilisierung, bestimmte Weaning-Situationen</td><td>Keine klassische mandatorische Atemzugvorgabe</td></tr>
+<tr><td><strong>High Flow</strong></td><td>Beheiztes und befeuchtetes Gas mit hohem Flow</td><td>O2-Therapie und Atemunterstützung</td><td>Hohe Gasflüsse, Befeuchtung, FiO2-Regelung</td></tr>
+</tbody>
+</table>
+
+<h3>4. Zentrale Beatmungsparameter</h3>
+<table>
+<thead><tr><th>Parameter</th><th>Abkürzung</th><th>Technische Bedeutung</th><th>Zusammenhang / Hinweis</th></tr></thead>
+<tbody>
+<tr><td>Atemzugvolumen</td><td><strong>VT / Vt</strong></td><td>Volumen pro Atemzug</td><td>Wird bei volumenkontrollierten oder zielvolumenorientierten Verfahren direkt bzw. als Zielgröße verwendet.</td></tr>
+<tr><td>Atemfrequenz</td><td><strong>RR / f</strong></td><td>Atemzüge pro Minute</td><td>Beeinflusst zusammen mit VT die Minutenventilation.</td></tr>
+<tr><td>Minutenventilation</td><td><strong>VE / MV</strong></td><td>Ventiliertes Volumen pro Minute</td><td><strong>VE = VT × RR</strong></td></tr>
+<tr><td>Sauerstoffkonzentration</td><td><strong>FiO₂</strong></td><td>Anteil des Sauerstoffs im inspiratorischen Gas</td><td>Je nach Gerät typischerweise von Umgebungsluft bis zu hoher O2-Konzentration einstellbar.</td></tr>
+<tr><td>PEEP</td><td><strong>PEEP</strong></td><td>Positiver Druck am Ende der Exspiration</td><td>Beeinflusst unter anderem Alveolenrekrutierung und Atemwegsdruck.</td></tr>
+<tr><td>Inspiratorischer Druck</td><td><strong>Pinsp</strong></td><td>Druck während der Inspiration</td><td>Besonders relevant bei druckkontrollierten Verfahren.</td></tr>
+<tr><td>Spitzendruck</td><td><strong>Ppeak</strong></td><td>Maximaler gemessener Atemwegsdruck</td><td>Überwachung der Atemwegsmechanik und möglicher Druckspitzen.</td></tr>
+<tr><td>Plateaudruck</td><td><strong>Pplat</strong></td><td>Druck nach Inspirationspause</td><td>Wird zur Beurteilung der statischen Atemmechanik verwendet.</td></tr>
+<tr><td>Driving Pressure</td><td><strong>ΔP</strong></td><td>Druckdifferenz zwischen Pplat und PEEP</td><td><strong>ΔP = Pplat − PEEP</strong></td></tr>
+<tr><td>Inspirationszeit</td><td><strong>Ti</strong></td><td>Dauer der Inspiration</td><td>Beeinflusst I:E-Verhältnis und Atemzyklus.</td></tr>
+<tr><td>I:E-Verhältnis</td><td><strong>I:E</strong></td><td>Verhältnis von Inspirations- zu Exspirationszeit</td><td>Relevant für Atemzyklus und Exspirationszeit.</td></tr>
+<tr><td>Inspiratorischer Flow</td><td><strong>Flow</strong></td><td>Gasfluss während der Inspiration</td><td>Beeinflusst Atemarbeit, Komfort und Patientengeräte-Synchronisation.</td></tr>
+<tr><td>Trigger</td><td><strong>Trigger</strong></td><td>Erkennung eines spontanen Atemversuchs</td><td>Flow- oder Drucktrigger sind verbreitet.</td></tr>
+<tr><td>Pressure Support</td><td><strong>PS / ASB</strong></td><td>Druckunterstützung eines spontanen Atemzuges</td><td>Wichtig bei PSV und Weaning.</td></tr>
+<tr><td>Compliance</td><td><strong>Crs / Cstat</strong></td><td>Dehnbarkeit des respiratorischen Systems</td><td>Kann aus Druck- und Volumeninformationen abgeleitet bzw. angezeigt werden.</td></tr>
+<tr><td>Resistance</td><td><strong>Raw</strong></td><td>Atemwegswiderstand</td><td>Relevant bei Obstruktion und zur Beurteilung der Atemmechanik.</td></tr>
+<tr><td>EtCO₂</td><td><strong>EtCO₂</strong></td><td>Endtidales Kohlendioxid</td><td>Kann über ein integriertes oder externes CO₂-Modul überwacht werden.</td></tr>
+<tr><td>SpO₂</td><td><strong>SpO₂</strong></td><td>Peripher gemessene Sauerstoffsättigung</td><td>Häufig über externen Patientenmonitor bzw. integrierte Schnittstelle.</td></tr>
+</tbody>
+</table>
+
+<h3>5. Wichtige Beatmungsmodi</h3>
+<table>
+<thead><tr><th>Modus / Konzept</th><th>Steuergröße</th><th>Charakteristik</th><th>Typischer Kontext</th></tr></thead>
+<tbody>
+<tr><td>VCV</td><td>Volumen</td><td>Vorgegebenes Atemzugvolumen; Druck ergibt sich aus der Atemmechanik</td><td>Kontrollierte Beatmung</td></tr>
+<tr><td>PCV</td><td>Druck</td><td>Vorgegebener Inspirationsdruck; resultierendes Volumen hängt von Compliance und Resistance ab</td><td>Intensivmedizin</td></tr>
+<tr><td>PSV / ASB</td><td>Druckunterstützung</td><td>Patient löst Atemzüge aus; Gerät unterstützt sie</td><td>Spontanatmung / Weaning</td></tr>
+<tr><td>SIMV</td><td>Hybrid</td><td>Synchronisierte mandatorische Atemzüge plus spontane Atemzüge</td><td>Bestimmte Übergangs- und Weaning-Situationen</td></tr>
+<tr><td>CPAP</td><td>Basisdruck</td><td>Kontinuierlicher positiver Atemwegsdruck</td><td>Spontanatmung</td></tr>
+<tr><td>APRV</td><td>Zwei Druckniveaus</td><td>Längere Hochdruckphase mit kurzen Druckentlastungen</td><td>Spezialisierte Intensivbeatmung</td></tr>
+<tr><td>PRVC / zielvolumenorientierte Druckregelung</td><td>Zielvolumen</td><td>Druck wird automatisch angepasst, um ein Zielvolumen zu erreichen</td><td>Lungenschonende kontrollierte Beatmung, je nach Gerät unterschiedlich umgesetzt</td></tr>
+<tr><td>ASV / Closed Loop</td><td>Algorithmisch</td><td>Automatische Anpassung von Beatmungsparametern anhand gemessener Patientendaten</td><td>Geräteabhängig, z. B. adaptive Unterstützung</td></tr>
+<tr><td>NIV</td><td>Modusübergreifend</td><td>Beatmung über Maske mit Leckagekompensation</td><td>Akut- und außerklinische Beatmung</td></tr>
+</tbody>
+</table>
+
+<h3>6. Technische Architektur eines modernen Beatmungsgeräts</h3>
+<table>
+<thead><tr><th>Subsystem</th><th>Aufgabe</th><th>Beispiele</th></tr></thead>
+<tbody>
+<tr><td>Gasversorgung</td><td>Bereitstellung von Luft und Sauerstoff</td><td>Wandgas, Druckluft, O₂, interne Turbine/Blower</td></tr>
+<tr><td>Blower / Turbine</td><td>Erzeugung des Atemgasflusses</td><td>Elektrisch angetriebener Verdichter</td></tr>
+<tr><td>Ventile</td><td>Steuerung von inspiratorischem und exspiratorischem Gasfluss</td><td>Proportionalventile, Exspirationsventil</td></tr>
+<tr><td>Flow-Sensor</td><td>Messung des Atemgasflusses</td><td>Messung inspiratorisch/exspiratorisch</td></tr>
+<tr><td>Drucksensoren</td><td>Messung des Atemwegsdrucks</td><td>Paw, PEEP, Ppeak</td></tr>
+<tr><td>O₂-Sensor</td><td>Überwachung der Sauerstoffkonzentration</td><td>Paramagnetisch oder elektrochemisch, geräteabhängig</td></tr>
+<tr><td>CO₂-Sensor</td><td>Messung von CO₂</td><td>EtCO₂ / Kapnographie, falls integriert</td></tr>
+<tr><td>Regelungssoftware</td><td>Berechnung und Regelung der Beatmung</td><td>Closed-Loop-Regelung, Moduslogik, Alarmalgorithmen</td></tr>
+<tr><td>Display / GUI</td><td>Bedienung und Visualisierung</td><td>Touchscreen, Kurven, Loops, Trends</td></tr>
+<tr><td>Alarmmanagement</td><td>Erkennung und Signalisierung gefährlicher Zustände</td><td>Apnoe, Druck, Volumen, FiO₂, Diskonnektion</td></tr>
+<tr><td>Datenkommunikation</td><td>Übertragung von Therapie- und Monitoringdaten</td><td>LAN, serielle Schnittstellen, HL7/IHE-Umgebungen, Herstellerprotokolle</td></tr>
+<tr><td>Stromversorgung</td><td>Netzbetrieb und Ausfallsicherheit</td><td>Netzteil, Akku, ggf. externe Stromversorgung</td></tr>
+</tbody>
+</table>
+
+<h3>7. Monitoring und Kurven</h3>
+<table>
+<thead><tr><th>Hinweis</th><th>Erläuterung</th></tr></thead>
+<tbody>
+<tr><td>Bedeutung</td><td>Moderne Beatmungsgeräte stellen nicht nur numerische Werte, sondern auch zeitabhängige Kurven und Schleifen dar. Dadurch kann die Interaktion zwischen Patient und Gerät beurteilt werden.</td></tr>
+</tbody>
+</table>
+<table>
+<thead><tr><th>Darstellung</th><th>Typische Information</th><th>Nutzen</th></tr></thead>
+<tbody>
+<tr><td>Druck-Zeit-Kurve</td><td>Atemwegsdruck über der Zeit</td><td>Erkennung von Druckverlauf, Triggerung und Atemzyklus</td></tr>
+<tr><td>Flow-Zeit-Kurve</td><td>Inspiratorischer / exspiratorischer Flow</td><td>Beurteilung von Exspiration und Synchronisation</td></tr>
+<tr><td>Volumen-Zeit-Kurve</td><td>Volumenänderung</td><td>Darstellung des Atemzugvolumens</td></tr>
+<tr><td>Druck-Volumen-Loop</td><td>Zusammenhang von Druck und Volumen</td><td>Atemmechanik und Rekrutierungs-/Überdehnungsbeurteilung</td></tr>
+<tr><td>Flow-Volumen-Loop</td><td>Zusammenhang von Flow und Volumen</td><td>Beurteilung des Atemflusses</td></tr>
+<tr><td>Trends</td><td>Verlauf über Minuten, Stunden oder Tage</td><td>Erkennung von Veränderungen im Therapieverlauf</td></tr>
+</tbody>
+</table>
+
+<h3>8. Vernetzung und Medizininformatik</h3>
+<table>
+<thead><tr><th>Hinweis</th><th>Erläuterung</th></tr></thead>
+<tbody>
+<tr><td>Bedeutung</td><td>Für eine moderne Krankenhausumgebung ist die Datenintegration ein wesentlicher Teil der Geräteauswahl. Beatmungsgeräte können – je nach Hersteller und Konfiguration – Messwerte, Einstellungen, Alarme und Trends an zentrale Systeme übertragen.</td></tr>
+</tbody>
+</table>
+<table>
+<thead><tr><th>Ebene</th><th>Beispiel</th><th>Medizininformatische Bedeutung</th></tr></thead>
+<tbody>
+<tr><td>Geräteebene</td><td>Beatmungsgerät + Sensoren</td><td>Erfassung von Roh- und Therapiedaten</td></tr>
+<tr><td>Bettplatz</td><td>Beatmungsgerät + Patientenmonitor</td><td>Kombination von Vital- und Beatmungsdaten</td></tr>
+<tr><td>PDMS</td><td>Patientendatenmanagementsystem</td><td>Dokumentation und klinische Verlaufskontrolle</td></tr>
+<tr><td>KIS</td><td>Krankenhausinformationssystem</td><td>Übernahme ausgewählter Daten in die Patientenakte</td></tr>
+<tr><td>Integration</td><td>HL7 / IHE / Hersteller-Gateway</td><td>Standardisierung und sichere Systemkommunikation</td></tr>
+<tr><td>Homecare / Cloud</td><td>Telemonitoring</td><td>Fernübertragung von Therapie- und Gerätedaten</td></tr>
+</tbody>
+</table>
+
+<h3>9. Bekannte Hersteller und Beatmungsgeräte im deutschen Markt</h3>
+<table>
+<thead><tr><th>Hinweis</th><th>Erläuterung</th></tr></thead>
+<tbody>
+<tr><td>Marktkontext</td><td>Die folgende Tabelle unterscheidet nicht nur nach Unternehmenssitz, sondern nach relevanten Herstellern bzw. Plattformen, die in Deutschland im klinischen oder außerklinischen Umfeld bekannt sind. Dräger und Löwenstein sind deutsche Hersteller; weitere internationale Anbieter sind ebenfalls im deutschen Markt vertreten.</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th>Hersteller</th>
+  <th>Herkunft / Deutschlandbezug</th>
+  <th>Beispielgerät</th>
+  <th>Bereich</th>
+  <th>Technische Schwerpunkte</th>
+  <th>PDF / Hersteller-Dokumentation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Dräger</strong></td>
+  <td>Deutschland</td>
+  <td>Evita V800</td>
+  <td>ICU</td>
+  <td>Invasive/NIV-Beatmung, umfangreiches Monitoring, SmartCare, APRV, AutoFlow</td>
+  <td><a href="https://www.draeger.com/Content/Documents/Content/quick-guide-evita-v800-v600-br-9109744-de-master.pdf" target="_blank" rel="noopener">PDF: Kurzanleitung Evita V800/V600</a></td>
+</tr>
+<tr>
+  <td><strong>Löwenstein Medical</strong></td>
+  <td>Deutschland</td>
+  <td>prisma VENT50 / LUISA</td>
+  <td>Außerklinisch / Homecare</td>
+  <td>NIV, invasive Beatmung, Akku-/Mobilitätskonzepte, Telemonitoring</td>
+  <td><a href="https://loewensteinmedical.com/media/user_upload/pdf/datenblatt/prisma-vent-50-home-ventilation-datasheet-deutsch.pdf" target="_blank" rel="noopener">PDF: Datenblatt prisma VENT50</a></td>
+</tr>
+<tr>
+  <td><strong>Hamilton Medical</strong></td>
+  <td>Schweiz; stark im deutschen Klinikmarkt vertreten</td>
+  <td>HAMILTON-C6</td>
+  <td>ICU / Transport</td>
+  <td>ASV, INTELLiVENT-ASV, Lung Monitoring, invasive/NIV/High Flow</td>
+  <td><a href="https://www.hamilton-medical.com/dam/jcr%3Ab7f0937a-600f-41fd-9995-f299b54c8080/HAMILTON-C6_ops-manual_v1.x.x_de_624946.01.pdf" target="_blank" rel="noopener">PDF: Bedienungshandbuch HAMILTON-C6</a></td>
+</tr>
+<tr>
+  <td><strong>Getinge</strong></td>
+  <td>Schweden; in Deutschland klinisch etabliert</td>
+  <td>SERVO-u</td>
+  <td>ICU / Neonatologie</td>
+  <td>Lungenschutz, Weaning, NIV, High Flow, NAVA je nach Konfiguration</td>
+  <td><a href="https://www.getinge.com/de/produkte/beatmungsgeraet-servo-u/" target="_blank" rel="noopener">Herstellerseite mit Broschüren/PDF</a></td>
+</tr>
+<tr>
+  <td><strong>GE HealthCare</strong></td>
+  <td>USA; international / Deutschland</td>
+  <td>CARESCAPE R860</td>
+  <td>ICU</td>
+  <td>SpiroDynamics, FRC-INview, PEEP-INview, invasive/NIV/O₂-Therapie</td>
+  <td><a href="https://www.gehealthcare.com/-/media/global/products/images/corporate/icu-v-u-r-phase5/carescape-r860-ventilator-clinical-accessories-guide_jb79010xx.pdf" target="_blank" rel="noopener">PDF: CARESCAPE R860 Zubehör-/Clinical Guide</a></td>
+</tr>
+<tr>
+  <td><strong>Mindray</strong></td>
+  <td>China; Deutschland-Niederlassung / Marktpräsenz</td>
+  <td>SV800 / SV600</td>
+  <td>ICU / Neonatologie</td>
+  <td>Monitoring, Lung Recruitment, Weaning Tools, SpO₂/CO₂-Optionen</td>
+  <td><a href="https://www.mindray.com/content/dam/xpace/en/resources/brochure/SV800_Ventilator_Product_Brochure.pdf" target="_blank" rel="noopener">PDF: SV800/SV600 Produktbroschüre</a></td>
+</tr>
+<tr>
+  <td><strong>Nihon Kohden</strong></td>
+  <td>Japan; europäische/deutsche Präsenz</td>
+  <td>NKV-550</td>
+  <td>ICU / Neonatologie</td>
+  <td>Invasive/NIV/High Flow, integriertes SpO₂-/CO₂-Monitoring, Lungenschutz</td>
+  <td><a href="https://eu.nihonkohden.com/media/vG3PMT2VIcfhGiQfL437tGOeiMKptUnzZR6pmjoN6o1CertFgyFqz8UofMSEJKW4zkQXeamJz83mGbHO/BrochureNKV-550VentilationSystem_UK.pdf" target="_blank" rel="noopener">PDF: NKV-550 Broschüre</a></td>
+</tr>
+<tr>
+  <td><strong>Medtronic</strong></td>
+  <td>USA; Deutschland</td>
+  <td>Puritan Bennett 980</td>
+  <td>ICU / Neonatologie</td>
+  <td>VC+, PAV+, NIV+, Trends und umfangreiche Softwareoptionen</td>
+  <td><a href="https://asiapac.medtronic.com/content/dam/covidien/library/us/en/product/acute-care-ventilation/PuritanBennett980Ventilator_OperatorsManual_en_OUS_PT00100763A00.pdf" target="_blank" rel="noopener">PDF: PB980 Bedienungshandbuch</a></td>
+</tr>
+<tr>
+  <td><strong>Philips Respironics</strong></td>
+  <td>Niederlande/USA; Deutschland</td>
+  <td>Trilogy Evo</td>
+  <td>Homecare / Transport</td>
+  <td>Portable Life Support, NIV, invasive Beatmung, Datenmanagement</td>
+  <td><a href="https://images.philips.com/is/content/PhilipsConsumer/Campaigns/HC20140401_DG/Documents/HC20221214-Trilogy-Evo-Manual-Clinical-EN-DOM.pdf" target="_blank" rel="noopener">PDF: Trilogy Evo Clinical Manual</a></td>
+</tr>
+</tbody>
+</table>
+
+<h3>10. Vergleich ausgewählter Plattformen</h3>
+<table>
+<thead><tr><th>Gerät</th><th>ICU</th><th>NIV</th><th>High Flow</th><th>Neonatologie</th><th>Closed-Loop / adaptive Funktionen</th><th>Vernetzung / Daten</th></tr></thead>
+<tbody>
+<tr><td>Dräger Evita V800</td><td>✓</td><td>✓</td><td>Geräte-/Konfigurationsabhängig</td><td>Je nach Konfiguration</td><td>✓, z. B. AutoFlow / SmartCare</td><td>✓</td></tr>
+<tr><td>Löwenstein prisma VENT50</td><td>Außerklinisch</td><td>✓</td><td>Modellabhängig</td><td>–</td><td>Modell-/Modusabhängig</td><td>✓, Homecare/Cloud</td></tr>
+<tr><td>Hamilton C6</td><td>✓</td><td>✓</td><td>✓</td><td>Je nach Konfiguration</td><td>✓, ASV / INTELLiVENT-ASV</td><td>✓</td></tr>
+<tr><td>Getinge SERVO-u</td><td>✓</td><td>✓</td><td>✓</td><td>Mit passenden Varianten</td><td>✓, je nach Optionen</td><td>✓</td></tr>
+<tr><td>GE CARESCAPE R860</td><td>✓</td><td>✓</td><td>✓</td><td>Geräte-/Konfigurationsabhängig</td><td>Mess- und regelungsunterstützende Funktionen</td><td>✓</td></tr>
+<tr><td>Mindray SV800</td><td>✓</td><td>✓</td><td>Modusabhängig</td><td>✓</td><td>✓, z. B. adaptive Funktionen</td><td>✓</td></tr>
+<tr><td>Nihon Kohden NKV-550</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓, Gentle Lung / Assistenzfunktionen</td><td>✓</td></tr>
+<tr><td>Puritan Bennett 980</td><td>✓</td><td>✓</td><td>Modell-/Optionabhängig</td><td>✓</td><td>✓, VC+, PAV+</td><td>✓</td></tr>
+<tr><td>Philips Trilogy Evo</td><td>Schwerpunkt außerklinisch</td><td>✓</td><td>Modellabhängig</td><td>–</td><td>Modusabhängig</td><td>✓</td></tr>
+</tbody>
+</table>
+
+<h3>11. Technische Vergleichskriterien für eine Geräteauswahl</h3>
+<table>
+<thead><tr><th>Kategorie</th><th>Prüffrage</th><th>Warum relevant?</th></tr></thead>
+<tbody>
+<tr><td>Patientengruppe</td><td>Erwachsene, Pädiatrie, Neonatologie?</td><td>Bestimmt Sensorik, Mindestvolumen und zulässige Regelbereiche.</td></tr>
+<tr><td>Beatmungsmodi</td><td>VCV, PCV, PSV, SIMV, APRV, PRVC, ASV?</td><td>Bestimmt klinische Einsatzmöglichkeiten.</td></tr>
+<tr><td>NIV</td><td>Leckagekompensation und NIV-Modi?</td><td>Entscheidend für maskenbasierte Beatmung.</td></tr>
+<tr><td>High Flow</td><td>Ist High Flow integriert?</td><td>Erlaubt Wechsel zwischen Therapieformen ohne zusätzliches System.</td></tr>
+<tr><td>Monitoring</td><td>Druck, Flow, Volumen, CO₂, SpO₂, Compliance?</td><td>Beeinflusst diagnostische und therapeutische Möglichkeiten.</td></tr>
+<tr><td>Alarmmanagement</td><td>Welche Alarme und Prioritäten existieren?</td><td>Wichtig für Patientensicherheit und Stationsworkflow.</td></tr>
+<tr><td>Akku</td><td>Welche Laufzeit und Wechselmöglichkeiten?</td><td>Wichtig bei Transport und Stromausfall.</td></tr>
+<tr><td>Vernetzung</td><td>Welche Schnittstellen und Protokolle?</td><td>Relevant für PDMS, KIS und zentrale Überwachung.</td></tr>
+<tr><td>Datenspeicherung</td><td>Welche Trends, Logs und Exportformate?</td><td>Relevant für Dokumentation und Forschung.</td></tr>
+<tr><td>Cybersecurity</td><td>Welche Authentifizierung, Updates und Netzwerkmechanismen?</td><td>Beatmungsgeräte sind sicherheitskritische vernetzte Systeme.</td></tr>
+<tr><td>Service</td><td>Kalibrierung, Wartung, Ersatzteile?</td><td>Beeinflusst Verfügbarkeit und Lebenszykluskosten.</td></tr>
+</tbody>
+</table>
+
+<h3>12. Typische Alarme</h3>
+<table>
+<thead><tr><th>Alarm</th><th>Mögliche technische Ursache</th><th>Zu überwachende Größen</th></tr></thead>
+<tbody>
+<tr><td>Hoher Atemwegsdruck</td><td>Obstruktion, Sekret, geknicktes Schlauchsystem, veränderte Atemmechanik</td><td>Ppeak, Flow, Druckkurve</td></tr>
+<tr><td>Niedriges Atemzugvolumen</td><td>Leckage, Diskonnektion, Veränderung der Compliance</td><td>VT, VE, Leckage</td></tr>
+<tr><td>Apnoe</td><td>Keine erkannte spontane Atmung</td><td>Trigger, Atemfrequenz, Apnoezeit</td></tr>
+<tr><td>FiO₂ außerhalb Bereich</td><td>Gasversorgung oder Sensorproblem</td><td>FiO₂, O₂-Versorgung</td></tr>
+<tr><td>PEEP zu hoch/niedrig</td><td>Ventil-, Schlauch- oder Regelungsproblem</td><td>PEEP, Paw</td></tr>
+<tr><td>Strom-/Akkualarm</td><td>Netzausfall oder niedriger Akkustand</td><td>Netzstatus, Akkukapazität</td></tr>
+</tbody>
+</table>
+
+<h3>13. Wartung und Qualitätssicherung</h3>
+<table>
+<thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead>
+<tbody>
+<tr><td>Rechtlicher Rahmen</td><td>Beatmungsgeräte müssen entsprechend Herstellerangaben, Betreiberpflichten und den für die jeweilige Einrichtung geltenden Medizinproduktevorgaben betrieben und gewartet werden.</td></tr>
+<tr><td>Funktionsprüfung</td><td>Regelmäßige Prüfung der korrekten Gerätefunktion.</td></tr>
+<tr><td>Sensorprüfung</td><td>Kontrolle der Mess- und Sensorgenauigkeit.</td></tr>
+<tr><td>Alarmprüfung</td><td>Überprüfung der Alarmfunktionen und -schwellen.</td></tr>
+<tr><td>Dichtigkeitsprüfung</td><td>Kontrolle des Atemsystems auf Leckagen.</td></tr>
+<tr><td>Filterwechsel</td><td>Turnusmäßiger Austausch von Filtern.</td></tr>
+<tr><td>Reinigung/Aufbereitung</td><td>Hygienische Aufbereitung gemäß Herstellervorgaben.</td></tr>
+<tr><td>Software-/Konfigurationsstand</td><td>Kontrolle der eingesetzten Software- und Konfigurationsversionen.</td></tr>
+</tbody>
+</table>
+
+<h3>14. Begriffe für die Medizininformatik</h3>
+<table>
+<thead><tr><th>Begriff</th><th>Bedeutung im Kontext Beatmung</th></tr></thead>
+<tbody>
+<tr><td>PDMS</td><td>Patientendatenmanagementsystem zur Erfassung und Dokumentation klinischer Daten.</td></tr>
+<tr><td>KIS</td><td>Krankenhausinformationssystem; übergeordnete klinische Informationsplattform.</td></tr>
+<tr><td>HL7</td><td>Standardfamilie für den Austausch medizinischer Informationen.</td></tr>
+<tr><td>IHE</td><td>Integrationsprofile für die interoperable Nutzung medizinischer IT-Systeme.</td></tr>
+<tr><td>Device Gateway</td><td>Zwischensystem zur Anbindung medizinischer Geräte an klinische IT.</td></tr>
+<tr><td>Telemonitoring</td><td>Übertragung von Geräte- und Therapiedaten zur Fernbetreuung.</td></tr>
+<tr><td>Closed Loop</td><td>Automatische Regelung auf Basis gemessener Patientendaten.</td></tr>
+<tr><td>Trenddaten</td><td>Zeitliche Verläufe von Messwerten und Einstellungen.</td></tr>
+<tr><td>Audit Trail</td><td>Nachvollziehbare Protokollierung von Ereignissen bzw. Änderungen, sofern vom System unterstützt.</td></tr>
+</tbody>
+</table>
+
+<h3>15. Hersteller-Dokumentation und weiterführende Quellen</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Quelle</th></tr></thead>
+<tbody>
+<tr><td>Dräger</td><td><a href="https://www.draeger.com/de_de/Products/Evita-V800" target="_blank" rel="noopener">Evita V800 Produktseite und Downloads</a></td></tr>
+<tr><td>Löwenstein Medical</td><td><a href="https://loewensteinmedical.com/de-de/ausserklinische-beatmung/" target="_blank" rel="noopener">Außerklinische Beatmung</a></td></tr>
+<tr><td>Hamilton Medical</td><td><a href="https://www.hamilton-medical.com/de/Products/HAMILTON-C6/variants/variant-0.html" target="_blank" rel="noopener">HAMILTON-C6 und Dokumentation</a></td></tr>
+<tr><td>Getinge</td><td><a href="https://www.getinge.com/de/produkte/beatmungsgeraet-servo-u/" target="_blank" rel="noopener">SERVO-u</a></td></tr>
+<tr><td>Mindray</td><td><a href="https://www.mindray.com/de/products/ventilators" target="_blank" rel="noopener">Mindray Deutschland – Beatmungsgeräte</a></td></tr>
+<tr><td>Nihon Kohden</td><td><a href="https://eu.nihonkohden.com/de/products/ventilation/nkv-550" target="_blank" rel="noopener">NKV-550</a></td></tr>
+<tr><td>Medtronic</td><td><a href="https://www.medtronic.com/covidien/de-de/products/mechanical-ventilation/puritan-bennett-980-ventilator.html" target="_blank" rel="noopener">Puritan Bennett 980</a></td></tr>
+<tr><td>Philips</td><td><a href="https://www.philips.com/a-w/about/news/media-library/20180914-Philips-Trilogy-Evo.html" target="_blank" rel="noopener">Trilogy Evo</a></td></tr>
+</tbody>
+</table>
+
+<div class="note">
+  <strong>Stand der Herstellerübersicht:</strong> September 2026.
+  Produktverfügbarkeit, Softwarestände, Optionen und PDF-Dokumente können sich
+  ändern. Für den praktischen Betrieb ist immer die zum konkreten Gerät
+  gehörende aktuelle Herstellerdokumentation maßgeblich.
+</div>
+</main>
+
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>

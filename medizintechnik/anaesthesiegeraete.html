@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anästhesiegeräte – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* Absicherung: identische Tabellenformatierung wie auf den anderen Medizintechnik-Seiten */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2em 0 1.8em;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(16,42,67,.05);
+  }
+  th, td {
+    border: 1px solid #d9e2ea;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  thead th {
+    background: #1a5276;
+    color: #fff;
+    border-color: #1a5276;
+    font-weight: 700;
+  }
+  tbody tr:nth-child(even) { background: #eaf4f8; }
+  tbody tr:hover { background: #dcedf5; }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb">
+  <a href="../index.html">Startseite</a> /
+  <a href="../medizintechnik/index.html">Medizintechnik</a> /
+  Anästhesiegeräte
+</div>
+
+<div class="hero">
+  <h2>Anästhesiegeräte</h2>
+  <table>
+  <thead><tr><th>Themenbereich</th><th>Inhalt dieser Seite</th></tr></thead>
+  <tbody>
+  <tr><td>Grundfunktion</td><td>Narkosegas-Dosierung, Atemsystem und maschinelle Beatmung im OP</td></tr>
+  <tr><td>Parameter</td><td>Frischgasflow, MAC, endtidale Konzentration, O₂/Luft/N₂O-Mischung</td></tr>
+  <tr><td>Beispielsubstanzen</td><td>Sevofluran, Desfluran, Isofluran, Propofol (TIVA/TCI)</td></tr>
+  <tr><td>Sicherheit</td><td>Sauerstoff-Fail-Safe, CO₂-Absorber, Low-/Minimal-Flow-Sicherheitssysteme</td></tr>
+  <tr><td>Technik</td><td>Gerätearchitektur, Monitoring und Vernetzung mit KIS/PDMS</td></tr>
+  <tr><td>Marktüberblick</td><td>Bekannte Hersteller im deutschen Markt</td></tr>
+  </tbody>
+  </table>
+  <div class="note">
+    <strong>Hinweis:</strong> Diese Seite ist eine technische und informatische
+    Dokumentation. Konkrete Narkoseführung, Gasdosierung und Geräteeinstellungen
+    müssen immer anhand der medizinischen Situation, der Gebrauchsanweisung und
+    durch qualifiziertes Fachpersonal (Anästhesie) festgelegt werden.
+  </div>
+</div>
+
+<h3>1. Was ist ein Anästhesiegerät?</h3>
+<table>
+<thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead>
+<tbody>
+<tr><td>Grundfunktion</td><td>Ein Anästhesiegerät (Narkosegerät, Anästhesiearbeitsplatz) versorgt den Patienten während einer Operation kontrolliert mit Frischgas, Sauerstoff und volatilen Anästhetika und übernimmt gleichzeitig die maschinelle Beatmung.</td></tr>
+<tr><td>Kombigerät</td><td>Es vereint Gasdosiereinheit, Verdampfer (Vaporizer), Atemsystem mit CO₂-Absorber und einen Beatmungsventilator in einem Arbeitsplatz.</td></tr>
+<tr><td>Sicht der Medizininformatik</td><td>Moderne Anästhesiearbeitsplätze bestehen aus Sensorik, Aktorik, Regelungssoftware, Alarmmanagement, Datenspeicherung und Schnittstellen zu Patientenmonitor, PDMS und Anästhesie-Informationsmanagementsystem (AIMS).</td></tr>
+<tr><td>Ziel</td><td>Sichere und steuerbare Aufrechterhaltung von Narkosetiefe, Beatmung und Kreislaufstabilität während des gesamten Eingriffs.</td></tr>
+</tbody>
+</table>
+
+<h3>2. Einsatzbereiche</h3>
+<table>
+<thead><tr><th>Einsatzbereich</th><th>Typische Patientengruppe</th><th>Anästhesieform</th><th>Besonderheiten</th></tr></thead>
+<tbody>
+<tr><td>Allgemeinchirurgie (OP)</td><td>Erwachsene</td><td>Balancierte Anästhesie, TIVA</td><td>Standardarbeitsplatz mit vollem Funktionsumfang</td></tr>
+<tr><td>Kinderanästhesie</td><td>Pädiatrie, Neugeborene</td><td>Balancierte Anästhesie</td><td>Sehr kleine Volumina, spezielle Atemsysteme und Tuben</td></tr>
+<tr><td>Ambulantes Operieren</td><td>Erwachsene, kurze Eingriffe</td><td>TIVA, balancierte Anästhesie</td><td>Schnelle Aufwachzeiten, kompakte Geräte</td></tr>
+<tr><td>Herz-/Thoraxchirurgie</td><td>Erwachsene mit kardiovaskulärem Risiko</td><td>Balancierte Anästhesie</td><td>Erweiterte Kreislaufüberwachung, ggf. Ein-Lungen-Beatmung</td></tr>
+<tr><td>Notfall- / Schockraumanästhesie</td><td>Akutpatienten</td><td>Rapid Sequence Induction</td><td>Schnelle Verfügbarkeit, robuste Bedienung</td></tr>
+<tr><td>Intensivtransport (selten)</td><td>Kritisch kranke Patienten</td><td>Fortführung der Sedierung/Beatmung</td><td>Kompakte, transportfähige Anästhesiesysteme</td></tr>
+</tbody>
+</table>
+
+<h3>3. Grundtypen und Komponenten</h3>
+<table>
+<thead><tr><th>Komponente</th><th>Beschreibung</th><th>Typische Ausführung</th><th>Technische Merkmale</th></tr></thead>
+<tbody>
+<tr><td><strong>Gasdosiereinheit</strong></td><td>Mischt Sauerstoff, Druckluft und ggf. Lachgas zum Frischgas</td><td>Elektronische Durchflussmesser, Proportionalventile</td><td>Präzise FiO₂- und Flow-Einstellung, Fail-Safe-Systeme</td></tr>
+<tr><td><strong>Verdampfer (Vaporizer)</strong></td><td>Dosiert volatile Anästhetika in das Frischgas</td><td>Agenzspezifische Vapor-Einheiten (z. B. für Sevofluran, Desfluran, Isofluran)</td><td>Auto-Exclusion-Stecksysteme verhindern Fehlbestückung</td></tr>
+<tr><td><strong>Atemsystem (Kreissystem)</strong></td><td>Führt Atemgas zwischen Patient und Gerät im geschlossenen Kreislauf</td><td>Zirkelsystem mit Inspirations-/Exspirationsventil</td><td>Ermöglicht Low- und Minimal-Flow-Anästhesie</td></tr>
+<tr><td><strong>CO₂-Absorber</strong></td><td>Bindet ausgeatmetes CO₂ zur Rückatmung von Frischgas</td><td>Atemkalk-Kanister (Einweg- oder Wechselsystem)</td><td>Farbindikator zeigt Erschöpfung des Absorbers an</td></tr>
+<tr><td><strong>Beatmungsventilator</strong></td><td>Übernimmt die maschinelle Beatmung im Anästhesiearbeitsplatz</td><td>Elektronisch geregelter Ventilator, z. B. Turbinen- oder Kolbenprinzip</td><td>Unterstützt kontrollierte und unterstützende Beatmungsmodi</td></tr>
+<tr><td><strong>TIVA-Modul</strong></td><td>Ermöglicht die rein intravenöse Anästhesie ohne volatile Anästhetika</td><td>Integration von Spritzenpumpen mit TCI-Funktion</td><td>Zielgesteuerte Propofol-/Opioid-Infusion</td></tr>
+</tbody>
+</table>
+
+<h3>4. Zentrale Anästhesieparameter</h3>
+<table>
+<thead><tr><th>Parameter</th><th>Abkürzung</th><th>Technische Bedeutung</th><th>Zusammenhang / Hinweis</th></tr></thead>
+<tbody>
+<tr><td>Frischgasflow</td><td><strong>FGF</strong></td><td>Gasmenge, die dem Atemsystem pro Zeiteinheit zugeführt wird</td><td>Bestimmt, ob Low-Flow (ca. 0,5–1 l/min) oder High-Flow-Anästhesie vorliegt.</td></tr>
+<tr><td>Inspiratorische Sauerstoffkonzentration</td><td><strong>FiO₂</strong></td><td>Sauerstoffanteil im zugeführten Frischgas</td><td>Wird durch die Gasdosiereinheit geregelt und kontinuierlich gemessen.</td></tr>
+<tr><td>Endtidale Anästhetikakonzentration</td><td><strong>EtAA</strong></td><td>Gemessene Konzentration des volatilen Anästhetikums am Ende der Exspiration</td><td>Korreliert mit der Narkosetiefe; Zielgröße bei endtidal gesteuerten Systemen.</td></tr>
+<tr><td>Minimale alveoläre Konzentration</td><td><strong>MAC</strong></td><td>Konzentration eines Inhalationsanästhetikums, bei der 50 % der Patienten auf einen Hautschnitt nicht reagieren</td><td>Dient als Referenzgröße zur Einschätzung der Narkosetiefe.</td></tr>
+<tr><td>Vaporizer-Einstellung</td><td><strong>Vol %</strong></td><td>Am Verdampfer eingestellte Konzentration des volatilen Anästhetikums</td><td>Unterscheidet sich von der tatsächlichen endtidalen Konzentration (Auswaschzeit).</td></tr>
+<tr><td>Sauerstoff-Frischgasanteil</td><td><strong>O₂-Flow</strong></td><td>Anteil des Sauerstoffs am Gesamt-Frischgasflow</td><td>Sicherheitsrelevant zur Vermeidung hypoxischer Gasgemische.</td></tr>
+<tr><td>Atemzugvolumen</td><td><strong>VT</strong></td><td>Volumen pro Atemzug während der maschinellen Beatmung</td><td>Wird wie in der Intensivbeatmung gewichtsadaptiert eingestellt.</td></tr>
+<tr><td>PEEP</td><td><strong>PEEP</strong></td><td>Positiver endexspiratorischer Druck</td><td>Wird zur Atelektasenprophylaxe während der Anästhesie eingesetzt.</td></tr>
+<tr><td>Beatmungsdruck</td><td><strong>Paw</strong></td><td>Atemwegsdruck während der Beatmung</td><td>Überwachung von Spitzen- und Plateaudruck wie bei der Intensivbeatmung.</td></tr>
+<tr><td>Propofol-Zielkonzentration</td><td><strong>Ce / Cp (TCI)</strong></td><td>Ziel-Effektkompartiment- bzw. Plasmakonzentration bei Target Controlled Infusion</td><td>Wird bei TIVA über pharmakokinetische Modelle berechnet.</td></tr>
+</tbody>
+</table>
+
+<h3>5. Beispiel: Narkosemittel und Dosierparameter</h3>
+<table>
+<thead><tr><th>Hinweis</th><th>Erläuterung</th></tr></thead>
+<tbody>
+<tr><td>Zweck der Tabelle</td><td>Zeigt beispielhaft, wie Substanz, übliche Konzentrationsangabe, Dosiergröße und Anwendungskontext bei gängigen Anästhetika zusammenhängen.</td></tr>
+<tr><td>Gültigkeit</td><td>Die Werte sind rein illustrativ und ersetzen keine Fachinformation oder klinische Anordnung.</td></tr>
+</tbody>
+</table>
+<table>
+<thead><tr><th>Substanz</th><th>Applikationsart</th><th>Typische Dosiergröße</th><th>Beispielhafte Zielgröße</th><th>Bolus</th><th>Typischer Einsatz</th></tr></thead>
+<tbody>
+<tr><td>Sevofluran</td><td>Inhalativ über Vaporizer</td><td>Vol % am Verdampfer</td><td>MAC-basierte endtidale Konzentration</td><td>Kein klassischer Bolus; Erhöhung der Vol %-Einstellung</td><td>Ein- und Aufrechterhaltung der Narkose, häufig bei Kindern (Maskeneinleitung)</td></tr>
+<tr><td>Desfluran</td><td>Inhalativ über spezifischen elektrisch beheizten Vaporizer</td><td>Vol % am Verdampfer</td><td>MAC-basierte endtidale Konzentration</td><td>Kein klassischer Bolus</td><td>Aufrechterhaltung der Narkose, schnelle Auswaschzeit bei Ausleitung</td></tr>
+<tr><td>Isofluran</td><td>Inhalativ über Vaporizer</td><td>Vol % am Verdampfer</td><td>MAC-basierte endtidale Konzentration</td><td>Kein klassischer Bolus</td><td>Aufrechterhaltung der Narkose</td></tr>
+<tr><td>Propofol (TIVA/TCI)</td><td>Intravenös über Spritzenpumpe</td><td>mg/kg/h bzw. Zielkonzentration (µg/ml)</td><td>Ce/Cp-Zielwert je nach TCI-Modell</td><td>Ärztlich angeordneter Induktionsbolus</td><td>Totale intravenöse Anästhesie (TIVA), Sedierung</td></tr>
+<tr><td>Remifentanil</td><td>Intravenös über Spritzenpumpe</td><td>µg/kg/min bzw. Zielkonzentration</td><td>Effektkompartiment-Zielkonzentration bei TCI</td><td>Kleine Bolusgaben je nach Protokoll möglich</td><td>Analgesie im Rahmen von TIVA/balancierter Anästhesie</td></tr>
+</tbody>
+</table>
+
+<h3>6. Sicherheitssysteme</h3>
+<table>
+<thead><tr><th>Konzept</th><th>Beschreibung</th><th>Beispiele</th></tr></thead>
+<tbody>
+<tr><td>Sauerstoff-Fail-Safe</td><td>Mechanismus, der bei Ausfall der Sauerstoffversorgung automatisch die Zufuhr anderer Gase reduziert oder stoppt</td><td>Druckabhängige Ventilkopplung O₂/N₂O bzw. O₂/Luft</td></tr>
+<tr><td>Hypoxie-Schutz</td><td>Verhindert die Einstellung eines Frischgasgemisches mit zu niedrigem Sauerstoffanteil</td><td>Mindest-O₂-Konzentration technisch limitiert</td></tr>
+<tr><td>Auto-Exclusion für Vaporizer</td><td>Verhindert die gleichzeitige Aktivierung mehrerer Verdampfer</td><td>Mechanische Verriegelung zwischen Vapor-Steckplätzen</td></tr>
+<tr><td>Dichtigkeits- und Selbsttest</td><td>Automatisierte Prüfung von Atemsystem, Sensorik und Gasversorgung vor Nutzung</td><td>Zeitgesteuerter, vollautomatischer Systemcheck beim Einschalten</td></tr>
+<tr><td>Endtidale Zielsteuerung</td><td>Automatisierte Regelung von Frischgasflow und Vaporizer zur Erreichung eingestellter Zielkonzentrationen</td><td>End-tidal-Control-Funktionen, automatische Gaskontrolle</td></tr>
+<tr><td>Atemkalk-Überwachung</td><td>Anzeige des Erschöpfungsgrads des CO₂-Absorbers</td><td>Farbindikator, teils elektronische CO₂-Messung im Inspirationsschenkel</td></tr>
+</tbody>
+</table>
+
+<h3>7. Technische Architektur eines modernen Anästhesiearbeitsplatzes</h3>
+<table>
+<thead><tr><th>Subsystem</th><th>Aufgabe</th><th>Beispiele</th></tr></thead>
+<tbody>
+<tr><td>Gasversorgung</td><td>Bereitstellung von Sauerstoff, Druckluft und ggf. Lachgas</td><td>Wandgasanschluss, Reserveflaschen, interne Druckregler</td></tr>
+<tr><td>Elektronische Flowsteuerung</td><td>Regelung des Frischgasflows und der Gaszusammensetzung</td><td>Elektromagnetische Proportionalventile</td></tr>
+<tr><td>Vaporizer-Schnittstelle</td><td>Aufnahme und Ansteuerung der Verdampfereinheiten</td><td>Steckplätze mit Auto-Exclusion-Mechanik</td></tr>
+<tr><td>Atemsystem / Kreisteil</td><td>Führung des Atemgases zwischen Gerät und Patient</td><td>Zirkelsystem, Ventile, Atembeutel/Balg</td></tr>
+<tr><td>Beatmungsventilator</td><td>Erzeugung der maschinellen Beatmung</td><td>Elektronisch geregelter Ventilator mit verschiedenen Beatmungsmodi</td></tr>
+<tr><td>Gasmonitoring</td><td>Messung von O₂, CO₂ und Anästhesiegaskonzentrationen</td><td>Paramagnetische O₂-Messung, Infrarot-Gasmodul</td></tr>
+<tr><td>Regelungssoftware</td><td>Berechnung und Regelung von Gasabgabe und Beatmung</td><td>Zielwertsteuerung, Alarmalgorithmen, Selbsttest-Logik</td></tr>
+<tr><td>Display / GUI</td><td>Bedienung und Visualisierung von Gas- und Beatmungsdaten</td><td>Touchscreen, Trends, Kurven</td></tr>
+<tr><td>Alarmmanagement</td><td>Erkennung und Signalisierung sicherheitsrelevanter Zustände</td><td>Hypoxie, Diskonnektion, Vaporizer-Fehler, Atemkalk-Erschöpfung</td></tr>
+<tr><td>Datenkommunikation</td><td>Übertragung von Anästhesie- und Monitoringdaten</td><td>LAN/WLAN, HL7/IHE-Umgebungen, Anbindung an AIMS</td></tr>
+</tbody>
+</table>
+
+<h3>8. Monitoring und Kurven</h3>
+<table>
+<thead><tr><th>Hinweis</th><th>Erläuterung</th></tr></thead>
+<tbody>
+<tr><td>Bedeutung</td><td>Moderne Anästhesiegeräte stellen neben Beatmungskurven auch Gaskonzentrationsverläufe dar, um Narkosetiefe und Gasaustausch fortlaufend beurteilen zu können.</td></tr>
+</tbody>
+</table>
+<table>
+<thead><tr><th>Darstellung</th><th>Typische Information</th><th>Nutzen</th></tr></thead>
+<tbody>
+<tr><td>Kapnographie (CO₂-Kurve)</td><td>In- und exspiratorischer CO₂-Verlauf</td><td>Beurteilung von Beatmung, Rückatmung und Diskonnektion</td></tr>
+<tr><td>Anästhesiegas-Kurve</td><td>Verlauf der inspiratorischen/endtidalen Anästhetikakonzentration</td><td>Beurteilung der Narkosetiefe und Auswaschzeit</td></tr>
+<tr><td>Druck-Zeit-Kurve</td><td>Atemwegsdruck über der Zeit</td><td>Erkennung von Druckverlauf und Beatmungsmechanik</td></tr>
+<tr><td>Flow-Volumen-Loop</td><td>Zusammenhang von Flow und Volumen</td><td>Beurteilung von Atemwegswiderstand und Compliance</td></tr>
+<tr><td>Trends</td><td>Verlauf von Gaskonzentrationen und Beatmungsparametern über die OP-Dauer</td><td>Nachvollziehbarkeit des Anästhesieverlaufs</td></tr>
+</tbody>
+</table>
+
+<h3>9. Vernetzung und Medizininformatik</h3>
+<table>
+<thead><tr><th>Hinweis</th><th>Erläuterung</th></tr></thead>
+<tbody>
+<tr><td>Bedeutung</td><td>Für eine moderne OP-Umgebung ist die Anbindung des Anästhesiearbeitsplatzes an Dokumentations- und Informationssysteme ein wesentlicher Bestandteil der Patientensicherheit und der lückenlosen Dokumentation.</td></tr>
+</tbody>
+</table>
+<table>
+<thead><tr><th>Ebene</th><th>Beispiel</th><th>Medizininformatische Bedeutung</th></tr></thead>
+<tbody>
+<tr><td>Geräteebene</td><td>Anästhesiearbeitsplatz mit Gas- und Beatmungssensorik</td><td>Erfassung von Roh- und Therapiedaten während der Narkose</td></tr>
+<tr><td>OP-Arbeitsplatz</td><td>Anästhesiegerät + Patientenmonitor + Spritzenpumpen</td><td>Kombination von Vital-, Gas- und Infusionsdaten</td></tr>
+<tr><td>AIMS</td><td>Anästhesie-Informationsmanagementsystem</td><td>Automatische Dokumentation des Anästhesieverlaufs (elektronisches Narkoseprotokoll)</td></tr>
+<tr><td>PDMS / KIS</td><td>Patientendatenmanagement- bzw. Krankenhausinformationssystem</td><td>Übernahme ausgewählter Daten in die Patientenakte</td></tr>
+<tr><td>Integration</td><td>HL7 / IHE / Hersteller-Gateway</td><td>Standardisierte Übertragung von Geräte- und Anästhesiedaten</td></tr>
+</tbody>
+</table>
+
+<h3>10. Bekannte Hersteller und Anästhesiegeräte im deutschen Markt</h3>
+<table>
+<thead><tr><th>Hinweis</th><th>Erläuterung</th></tr></thead>
+<tbody>
+<tr><td>Marktkontext</td><td>Die folgende Tabelle zeigt etablierte Hersteller bzw. Plattformen, die im deutschen klinischen Umfeld verbreitet sind. Dräger ist ein deutscher Hersteller; weitere internationale Anbieter sind ebenfalls im deutschen Markt vertreten.</td></tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+  <th>Hersteller</th>
+  <th>Herkunft / Deutschlandbezug</th>
+  <th>Beispielgerät</th>
+  <th>Bereich</th>
+  <th>Technische Schwerpunkte</th>
+  <th>PDF / Hersteller-Dokumentation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Dräger</strong></td>
+  <td>Deutschland</td>
+  <td>Perseus® A500, Primus®</td>
+  <td>OP, ambulantes Operieren, Kinderanästhesie</td>
+  <td>APRV auch im Anästhesiegerät, Vapor View, Low-/Minimal-Flow-Optimierung, RFID-Zubehörerkennung</td>
+  <td><a href="https://www.draeger.com/de_de/Products/Perseus-A500" target="_blank" rel="noopener">Dräger – Perseus A500</a></td>
+</tr>
+<tr>
+  <td><strong>GE HealthCare (Datex-Ohmeda)</strong></td>
+  <td>USA; international / Deutschland</td>
+  <td>Aisys™ CS2</td>
+  <td>OP, komplexe Fälle</td>
+  <td>Endtidale Zielsteuerung (EtControl), automatisierte Systemprüfung, Rekrutierungsmanöver</td>
+  <td><a href="https://www.gehealthcare.com/de-de/products/aisys-cs2" target="_blank" rel="noopener">GE HealthCare – Aisys CS2</a></td>
+</tr>
+<tr>
+  <td><strong>Getinge (Maquet)</strong></td>
+  <td>Schweden; in Deutschland klinisch etabliert</td>
+  <td>Flow-c / Flow-e / Flow-i</td>
+  <td>OP, von kompakt bis intelligent skalierbar</td>
+  <td>Dynamische Narkosemittelabgabe, automatische Gaskontrolle (AGC) bei Flow-i, ITS-nahe Beatmungsleistung</td>
+  <td><a href="https://www.getinge.com/de/produkte-und-loesungen/operationssaal/anasthesie" target="_blank" rel="noopener">Getinge – Anästhesiesysteme</a></td>
+</tr>
+<tr>
+  <td><strong>Mindray</strong></td>
+  <td>China; Deutschland-Niederlassung / Marktpräsenz</td>
+  <td>A7 / A9</td>
+  <td>OP, breites Modiespektrum</td>
+  <td>AnaeSight-Integration von Gerät, Monitor und Pumpen, elektronische Frischgas-Optimierung</td>
+  <td><a href="https://www.mindray.com/de/products/anesthesia/a9" target="_blank" rel="noopener">Mindray – A9 Anästhesiegerät</a></td>
+</tr>
+</tbody>
+</table>
+
+<h3>11. Vergleich ausgewählter Plattformen</h3>
+<table>
+<thead><tr><th>System</th><th>TIVA-Integration</th><th>Endtidale Zielsteuerung</th><th>Automatische Gaskontrolle</th><th>Kinderanästhesie</th><th>Vernetzung / Daten</th></tr></thead>
+<tbody>
+<tr><td>Dräger Perseus A500</td><td>Modellabhängig</td><td>Modul-/Optionsabhängig</td><td>Low-/Minimal-Flow-Unterstützung</td><td>✓</td><td>✓, u. a. Datenexport, RFID</td></tr>
+<tr><td>GE Aisys CS2</td><td>Konfigurationsabhängig</td><td>✓, EtControl</td><td>✓, im Rahmen von EtControl</td><td>Je nach Konfiguration</td><td>✓</td></tr>
+<tr><td>Getinge Flow-i</td><td>Konfigurationsabhängig</td><td>Zielwertbasiert</td><td>✓, automatische Gaskontrolle (AGC)</td><td>✓</td><td>✓</td></tr>
+<tr><td>Getinge Flow-c/Flow-e</td><td>Konfigurationsabhängig</td><td>Modellabhängig</td><td>–, AGC nur bei Flow-i</td><td>✓</td><td>✓</td></tr>
+<tr><td>Mindray A7/A9</td><td>✓, AnaeSight-Integration</td><td>Modellabhängig</td><td>Elektronische Flow-Optimierung</td><td>✓</td><td>✓</td></tr>
+</tbody>
+</table>
+
+<h3>12. Technische Vergleichskriterien für eine Geräteauswahl</h3>
+<table>
+<thead><tr><th>Kategorie</th><th>Prüffrage</th><th>Warum relevant?</th></tr></thead>
+<tbody>
+<tr><td>Patientengruppe</td><td>Erwachsene, Pädiatrie, Neugeborene?</td><td>Bestimmt Mindestvolumina, Atemsystem und Sensorik.</td></tr>
+<tr><td>Anästhesieform</td><td>Balancierte Anästhesie, TIVA, oder beides gleichwertig?</td><td>Bestimmt Bedarf an integrierten Spritzenpumpen und TCI-Funktionen.</td></tr>
+<tr><td>Frischgasflow-Bereich</td><td>Ist Low- oder Minimal-Flow-Anästhesie unterstützt?</td><td>Relevant für Kosten, Umweltaspekte und Gasverbrauch.</td></tr>
+<tr><td>Zielsteuerung</td><td>Endtidale Zielsteuerung oder automatische Gaskontrolle vorhanden?</td><td>Reduziert manuellen Steuerungsaufwand und Schwankungen der Narkosetiefe.</td></tr>
+<tr><td>Beatmungsmodi</td><td>VCV, PCV, PSV, ggf. APRV verfügbar?</td><td>Bestimmt Einsatzmöglichkeiten bei speziellen Patientengruppen.</td></tr>
+<tr><td>Monitoring</td><td>Gas-, Druck-, Flow- und CO₂-Messung integriert?</td><td>Beeinflusst diagnostische Möglichkeiten während der Narkose.</td></tr>
+<tr><td>Sicherheitssysteme</td><td>Hypoxie-Schutz, Auto-Exclusion, Selbsttest vorhanden?</td><td>Zentral für die Patientensicherheit im OP.</td></tr>
+<tr><td>Vernetzung</td><td>Anbindung an AIMS, PDMS und KIS möglich?</td><td>Relevant für lückenlose Dokumentation und Datenintegration.</td></tr>
+<tr><td>Cybersecurity</td><td>Welche Authentifizierung, Updates und Netzwerkmechanismen?</td><td>Anästhesiegeräte sind sicherheitskritische vernetzte Systeme.</td></tr>
+<tr><td>Service</td><td>Kalibrierung, Wartung, Ersatzteile, Vaporizer-Kompatibilität?</td><td>Beeinflusst Verfügbarkeit und Lebenszykluskosten.</td></tr>
+</tbody>
+</table>
+
+<h3>13. Typische Alarme</h3>
+<table>
+<thead><tr><th>Alarm</th><th>Mögliche technische Ursache</th><th>Zu überwachende Größen</th></tr></thead>
+<tbody>
+<tr><td>Hypoxisches Gasgemisch</td><td>Zu niedriger Sauerstoffanteil im Frischgas</td><td>FiO₂, O₂-Flow</td></tr>
+<tr><td>Diskonnektion</td><td>Leck oder Trennung im Atemsystem</td><td>Beatmungsdruck, exspiratorisches Volumen</td></tr>
+<tr><td>Hoher Atemwegsdruck</td><td>Obstruktion, Sekret, geknicktes Schlauchsystem</td><td>Ppeak, Druckkurve</td></tr>
+<tr><td>Vaporizer-Fehler</td><td>Fehlbestückung, leerer Vaporizer, Fehlfunktion</td><td>Vol %-Einstellung, gemessene Gaskonzentration</td></tr>
+<tr><td>Atemkalk erschöpft</td><td>CO₂-Absorber verbraucht</td><td>Inspiratorisches CO₂, Farbindikator</td></tr>
+<tr><td>Gasversorgungsalarm</td><td>Ausfall von Sauerstoff-, Luft- oder Lachgasversorgung</td><td>Versorgungsdruck der Gasanschlüsse</td></tr>
+</tbody>
+</table>
+
+<h3>14. Wartung und Qualitätssicherung</h3>
+<table>
+<thead><tr><th>Aspekt</th><th>Beschreibung</th></tr></thead>
+<tbody>
+<tr><td>Rechtlicher Rahmen</td><td>Anästhesiegeräte müssen entsprechend Herstellerangaben, Betreiberpflichten und den geltenden Medizinproduktevorgaben betrieben und gewartet werden.</td></tr>
+<tr><td>Dichtigkeitsprüfung</td><td>Kontrolle des Atemsystems und der Gasanschlüsse auf Leckagen.</td></tr>
+<tr><td>Vaporizer-Wartung</td><td>Regelmäßige Kalibrierung und Prüfung der Verdampfereinheiten.</td></tr>
+<tr><td>Atemkalk-Wechsel</td><td>Turnusmäßiger Austausch des CO₂-Absorbers.</td></tr>
+<tr><td>Sensorprüfung</td><td>Kontrolle von O₂-, CO₂- und Gasmesssensorik.</td></tr>
+<tr><td>Reinigung/Aufbereitung</td><td>Hygienische Aufbereitung von Atemsystem und Zubehör gemäß Herstellervorgaben.</td></tr>
+<tr><td>Software-/Konfigurationsstand</td><td>Kontrolle der eingesetzten Software- und Konfigurationsversionen.</td></tr>
+</tbody>
+</table>
+
+<h3>15. Begriffe für die Medizininformatik</h3>
+<table>
+<thead><tr><th>Begriff</th><th>Bedeutung im Kontext Anästhesie</th></tr></thead>
+<tbody>
+<tr><td>AIMS</td><td>Anästhesie-Informationsmanagementsystem zur elektronischen Dokumentation des Narkoseverlaufs.</td></tr>
+<tr><td>MAC</td><td>Minimale alveoläre Konzentration; Referenzgröße für die Wirkstärke von Inhalationsanästhetika.</td></tr>
+<tr><td>TIVA</td><td>Totale intravenöse Anästhesie ohne volatile Anästhetika.</td></tr>
+<tr><td>TCI</td><td>Target Controlled Infusion; zielkonzentrationsgesteuerte intravenöse Applikation.</td></tr>
+<tr><td>EtAA / EtO₂</td><td>Endtidale Konzentration des Anästhetikums bzw. des Sauerstoffs.</td></tr>
+<tr><td>Low-Flow-Anästhesie</td><td>Anästhesieführung mit reduziertem Frischgasflow zur Einsparung von Gas und Kosten.</td></tr>
+<tr><td>PDMS</td><td>Patientendatenmanagementsystem zur Erfassung und Dokumentation klinischer Daten.</td></tr>
+<tr><td>HL7 / IHE</td><td>Standardfamilien bzw. Integrationsprofile für den Austausch medizinischer Informationen.</td></tr>
+<tr><td>Audit Trail</td><td>Nachvollziehbare Protokollierung von Ereignissen bzw. Änderungen, sofern vom System unterstützt.</td></tr>
+</tbody>
+</table>
+
+<h3>16. Hersteller-Dokumentation und weiterführende Quellen</h3>
+<table>
+<thead><tr><th>Hersteller</th><th>Quelle</th></tr></thead>
+<tbody>
+<tr><td>Dräger</td><td><a href="https://www.draeger.com/Content/Documents/Products/perseus-a500-pi-9066979-de.pdf" target="_blank" rel="noopener">PDF: Perseus A500 Produktinformation</a></td></tr>
+<tr><td>GE HealthCare</td><td><a href="https://www.gehealthcare.de/-/jssmedia/gehc/de/files/brochure-aisys-cs_de.pdf?rev=-1" target="_blank" rel="noopener">PDF: Aisys CS2 Broschüre</a></td></tr>
+<tr><td>Getinge</td><td><a href="https://www.getinge.com/dam/hospital/documents/german/flow-c-anaesthesiegeraet-broschuere-de-non_us.pdf" target="_blank" rel="noopener">PDF: Flow-c Narkosegerät Broschüre</a></td></tr>
+<tr><td>Getinge</td><td><a href="https://www.getinge.com/de/produkte/flow-i-narkosegerat/" target="_blank" rel="noopener">Getinge – Flow-i Narkosegerät</a></td></tr>
+<tr><td>Mindray</td><td><a href="https://www.mindray.com/de/products/anesthesia/a9" target="_blank" rel="noopener">Mindray – A9 Anästhesiegerät</a></td></tr>
+</tbody>
+</table>
+
+<div class="note">
+  <strong>Stand der Herstellerübersicht:</strong> September 2026.
+  Produktverfügbarkeit, Softwarestände, Optionen und PDF-Dokumente können sich
+  ändern. Für den praktischen Betrieb ist immer die zum konkreten Gerät
+  gehörende aktuelle Herstellerdokumentation maßgeblich.
+</div>
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
+</body>
+</html>
