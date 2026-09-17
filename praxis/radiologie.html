@@ -1,46 +1,16 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Radiologie – MedizinInformatik Wiki</title>
-<link rel="stylesheet" href="../assets/style.css">
-</head>
-<body>
-<header><div class="header-inner">
-<h1>MedizinInformatik Wiki</h1>
-<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
-</div></header>
-<nav><div class="nav-inner">
-<a href="../index.html">Startseite</a>
-<a href="../medizintechnik/index.html">Medizintechnik</a>
-<a href="../vernetzung/index.html">Vernetzung</a>
-<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
-<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
-<a href="../datenfluesse/index.html">Datenflüsse</a>
-<a href="../schnittstellen-standards/index.html">Standards</a>
-<a href="../server-backend/index.html">Server</a>
-<a href="../cybersecurity/index.html">Cybersecurity</a>
-<a href="../web-engineering/index.html">Web Engineering</a>
-<a href="../praxis/index.html">Praxis</a>
-</div></nav>
-<main>
-<div class="breadcrumb"><a href="../index.html">Startseite</a> / Praxis / Fallbeispiele / Radiologie</div>
-<div class="hero">
-
-<h2>Radiologie</h2>
-<p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Radiologie</strong> vorgesehen.</p>
-<div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
-<h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
-
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
-
-</div>
-</main>
-<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
-</body>
-</html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Radiologie – MedizinInformatik Wiki</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header><div class="header-inner"><h1>MedizinInformatik Wiki</h1><p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p></div></header><nav><div class="nav-inner"><a href="../index.html">Startseite</a><a href="../medizintechnik/index.html">Medizintechnik</a><a href="../vernetzung/index.html">Vernetzung</a><a href="../krankenhaus-it/index.html">Krankenhaus-IT</a><a href="../klinische-informationssysteme/index.html">KIS & Systeme</a><a href="../datenfluesse/index.html">Datenflüsse</a><a href="../schnittstellen-standards/index.html">Standards</a><a href="../server-backend/index.html">Server</a><a href="../cybersecurity/index.html">Cybersecurity</a><a href="../web-engineering/index.html">Web Engineering</a><a href="../praxis/index.html">Praxis</a></div></nav>
+<main><div class="breadcrumb"><a href="../index.html">Startseite</a> / Praxis / Fallbeispiele / Radiologie</div><div class="hero">
+<h2>Radiologie – Durchgängiger Datenfluss</h2><p>Die Radiologie ist ein anschauliches Beispiel für das Zusammenspiel von KIS, RIS, Modalität, DICOM, PACS/VNA, Befundarbeitsplatz und Archivierung.</p>
+<h3>1. Systeme</h3><ul><li><strong>KIS:</strong> Patient, Fall und klinische Stammdaten</li><li><strong>RIS:</strong> radiologischer Auftrag, Termin, Worklist und Befundprozess</li><li><strong>Modalität:</strong> z. B. Röntgen, CT oder MRT</li><li><strong>PACS/VNA:</strong> zentrale Verwaltung und Speicherung von Bilddaten</li><li><strong>Befundarbeitsplatz:</strong> Anzeige und Befundung der Untersuchung</li><li><strong>Archiv/Backup:</strong> Langzeitaufbewahrung und Wiederherstellung</li></ul>
+<h3>2. Auftrag und Worklist</h3><div class="flow">KIS → RIS → DICOM Modality Worklist → Modalität</div><p>Nach Anforderung einer Untersuchung werden relevante Auftrags- und Patientendaten im RIS verarbeitet. Die Modalität fragt eine DICOM Modality Worklist ab. Dadurch müssen Patientendaten möglichst nicht manuell am Gerät eingegeben werden.</p>
+<h3>3. Untersuchung und Bildübertragung</h3><div class="flow">Modalität → DICOM → PACS / VNA</div><p>Nach der Aufnahme erzeugt das Gerät DICOM-Objekte. Dazu gehören Bilddaten und technische bzw. patientenbezogene Metadaten. Die Übertragung erfolgt über DICOM an das konfigurierte Ziel, häufig einen PACS- oder VNA-Dienst.</p>
+<h3>4. Befundung</h3><div class="flow">PACS/VNA → Viewer → Radiologe → RIS/KIS</div><p>Der Viewer ruft die Untersuchung aus dem Bildarchiv ab. Der Radiologe erstellt den Befund. Der Befund wird im RIS verwaltet und je nach Klinikprozess an das KIS bzw. die klinische Dokumentation übergeben.</p>
+<h3>5. DICOM-Konfiguration</h3><table><tr><th>Parameter</th><th>Beispiel/Funktion</th></tr><tr><td>AE Title</td><td>Eindeutige DICOM-Anwendungskennung</td></tr><tr><td>IP/Hostname</td><td>Adresse des Kommunikationspartners</td></tr><tr><td>TCP-Port</td><td>DICOM-Kommunikationsport</td></tr><tr><td>Transfer Syntax</td><td>Festlegung der Kodierung/Kompression</td></tr></table>
+<h3>6. Speicherung und Archivierung</h3><p>Nach dem Eingang können Bilder zunächst auf einem schnellen Online-Speicher liegen. PACS/VNA verwalten Metadaten und Bildobjekte. Für längere Aufbewahrung können Bilder in ein Archiv bzw. einen kostengünstigeren Speicher überführt werden. Zusätzlich existieren Backups oder Replikate zur Wiederherstellung. Ein Backup ersetzt nicht automatisch die fachliche Archivierung.</p>
+<h3>7. Netzwerk und Sicherheit</h3><p>Modalitäten befinden sich typischerweise in einem kontrollierten Netzwerksegment. Firewallregeln erlauben nur erforderliche Verbindungen zu DICOM-, Worklist- und ggf. Managementdiensten. Verschlüsselung, Authentisierung, Rollenrechte und Protokollierung schützen Patientendaten.</p>
+<h3>8. Fehleranalyse</h3><ol><li>Ist die Modalität im richtigen VLAN und hat sie eine gültige IP?</li><li>Ist das Gateway bzw. Routing erreichbar?</li><li>Stimmen AE Title, Ziel-IP/Hostname und Port?</li><li>Ist die DICOM-Verbindung technisch möglich?</li><li>Kommt die Worklist-Abfrage am RIS/DICOM-Server an?</li><li>Wurde das Bild übertragen und im PACS/VNA angenommen?</li><li>Ist die Untersuchung im Viewer auffindbar?</li><li>Wurde der Befund korrekt an RIS/KIS übergeben?</li></ol>
+<h3>9. Gesamtfluss</h3><p><strong>KIS → RIS → Worklist → Modalität → DICOM → PACS/VNA → Viewer → Befund → RIS → KIS → Archiv/Backup</strong></p>
+</div></main><footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer></body></html>
