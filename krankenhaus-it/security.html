@@ -32,12 +32,56 @@
 <p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Security</strong> vorgesehen.</p>
 <div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
 <h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+<p>Diese Seite behandelt <strong>Security</strong> auf Ebene der Krankenhaus-IT-Infrastruktur – also den Schutz von Rechenzentrum, Servern und Virtualisierungsplattform selbst. Querschnittsthemen wie Netzwerksegmentierung, NAC, Firewall, IAM, Zertifikate und SIEM werden vertiefend im Kapitel <a href="../cybersecurity/index.html">Cybersecurity</a> behandelt; hier liegt der Fokus auf der konkreten Absicherung der in <a href="rechenzentrum.html">Rechenzentrum</a>, <a href="server.html">Server</a> und <a href="virtualisierung.html">Virtualisierung</a> beschriebenen Infrastruktur. Ziel ist der Schutz vor Ausfall, Datenverlust und unautorisiertem Zugriff auf die Systeme, auf denen letztlich alle klinischen Anwendungen laufen.</p>
 
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+<h3>Komponenten</h3>
+<ul>
+<li><strong>Patch- und Schwachstellenmanagement</strong> – systematisches Einspielen von Sicherheitsupdates für Betriebssysteme, Hypervisor und Firmware.</li>
+<li><strong>Backup-Infrastruktur</strong> – regelmäßige, getestete Datensicherung als Schutz vor Datenverlust und Ransomware.</li>
+<li><strong>Identity- und Access-Management (IAM) für Administration</strong> – personalisierte, rollenbasierte Zugänge zu Servern und Verwaltungsoberflächen.</li>
+<li><strong>Internes PKI/Zertifikatsmanagement</strong> – für verschlüsselte Kommunikation zwischen internen Diensten.</li>
+<li><strong>Logging/SIEM-Anbindung</strong> – zentrale Erfassung sicherheitsrelevanter Ereignisse aus Servern und Hypervisoren.</li>
+</ul>
+
+<h3>Technischer Zusammenhang</h3>
+<p>Infrastruktur-Sicherheit wirkt auf mehreren Ebenen zusammen: physische Absicherung des Rechenzentrums (siehe <a href="rechenzentrum.html">Rechenzentrum</a>) verhindert unautorisierten Hardwarezugriff, Härtung und Patchmanagement der Server reduzieren die Angriffsfläche auf Betriebssystemebene, Absicherung der Virtualisierungsplattform schützt vor Ausbruch aus einer VM in andere VMs oder den Host, und Backups stellen sicher, dass selbst bei erfolgreichem Angriff (z. B. Ransomware) eine Wiederherstellung möglich ist. Diese Ebenen ersetzen sich nicht gegenseitig, sondern bilden zusammen ein Verteidigungskonzept ("Defense in Depth").</p>
+
+<h3>Konfiguration</h3>
+<ul>
+<li>Regelmäßige, planbare Patch-Zyklen mit vorheriger Testumgebung, abgestimmt auf Wartungsfenster kritischer klinischer Systeme.</li>
+<li>Backup-Strategie nach dem 3-2-1-Prinzip (mind. drei Kopien, zwei verschiedene Medien, eine Kopie räumlich getrennt/offline), um auch gegen Ransomware wirksam zu sein, die vernetzte Backups mitverschlüsseln könnte.</li>
+<li>Administrative Zugänge mit Mehrfaktor-Authentifizierung absichern, insbesondere für Fernzugriffe.</li>
+<li>Konsequente Protokollierung sicherheitsrelevanter Ereignisse (Anmeldungen, Konfigurationsänderungen) mit ausreichender Aufbewahrungsfrist.</li>
+</ul>
+
+<h3>Datenfluss</h3>
+<p>Sicherheitsrelevante Ereignisse (fehlgeschlagene Anmeldungen, Konfigurationsänderungen, Alarme der Virtualisierungsplattform) werden von den einzelnen Servern/Hosts an eine zentrale Logging-/SIEM-Instanz gemeldet, dort korreliert und bei Auffälligkeiten an das zuständige Personal alarmiert – analog zum allgemeinen <a href="../vernetzung/monitoring.html">Monitoring</a>, jedoch mit Fokus auf sicherheitsrelevante statt rein betriebliche Ereignisse.</p>
+
+<h3>Schnittstellen</h3>
+<p>Relevante Schnittstellen: Syslog/SNMP für Sicherheitsereignisse, LDAP/Active Directory für zentrale Authentifizierung administrativer Zugänge, Backup-Software-APIs zur Anbindung an Storage-Systeme. Enge Verzahnung mit dem Kapitel <a href="../cybersecurity/index.html">Cybersecurity</a> für netzwerkseitige Schutzmaßnahmen.</p>
+
+<h3>Sicherheit</h3>
+<ul>
+<li><strong>Least Privilege:</strong> administrative Rechte nur im tatsächlich benötigten Umfang und Zeitraum vergeben, regelmäßige Überprüfung bestehender Berechtigungen.</li>
+<li><strong>Ransomware-Schutz:</strong> Backups isoliert bzw. unveränderlich (immutable) vorhalten, damit sie im Angriffsfall nicht mitverschlüsselt werden können.</li>
+<li><strong>Segmentierung der Management-Ebene:</strong> Verwaltungszugänge zu Servern und Hypervisoren nur aus einem dedizierten, abgesicherten Management-Netz erreichbar machen.</li>
+<li><strong>Regelmäßige Audits/Penetrationstests</strong> der Infrastruktur, insbesondere vor und nach größeren Änderungen.</li>
+</ul>
+
+<h3>Fehleranalyse</h3>
+<ul>
+<li><strong>Fehlgeschlagenes Backup:</strong> Logs der Backup-Software auf Fehlerursache prüfen (Speicherplatz, Erreichbarkeit des Zielsystems, Berechtigungen).</li>
+<li><strong>Ungewöhnliche Anmeldeversuche in den Logs:</strong> Quelle (intern/extern), betroffenes Konto und zeitliches Muster analysieren, ggf. Konto vorsorglich sperren.</li>
+<li><strong>Patch verursacht Dienstausfall:</strong> Testumgebung und Rollback-Verfahren (z. B. über zuvor erstellten VM-Snapshot) nutzen, um den vorherigen Zustand schnell wiederherzustellen.</li>
+<li><strong>SIEM meldet keine Ereignisse von einem bestimmten Server:</strong> Log-Weiterleitung (Syslog-Konfiguration, Netzwerkerreichbarkeit zur SIEM-Instanz) auf diesem Server prüfen.</li>
+</ul>
+
+<h3>Praxisbeispiele</h3>
+<ul>
+<li><strong>Ransomware-Vorfall auf einem Fileserver:</strong> Isolierung des betroffenen Servers vom Netzwerk, Wiederherstellung aus einem unveränderlichen Offline-Backup, anschließende Ursachenanalyse anhand der SIEM-Logs.</li>
+<li><strong>Jährlicher Patch-Tag:</strong> Sicherheitsupdates werden zunächst in der Testumgebung geprüft, danach gestaffelt über mehrere Wartungsfenster auf die Produktivserver eingespielt.</li>
+<li><strong>Einführung von Mehrfaktor-Authentifizierung für Administrationszugänge:</strong> deutliche Reduktion des Risikos durch gestohlene oder erratene Passwörter bei privilegierten Konten.</li>
+</ul>
 
 </div>
 </main>

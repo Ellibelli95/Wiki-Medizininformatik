@@ -32,12 +32,55 @@
 <p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Hochverfügbarkeit</strong> vorgesehen.</p>
 <div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
 <h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+<p><strong>Hochverfügbarkeit (High Availability, HA)</strong> bezeichnet Architekturprinzipien und Maßnahmen, die den Ausfall eines Systems trotz Fehlern einzelner Komponenten verhindern oder zumindest die Ausfallzeit auf ein Minimum reduzieren. Verfügbarkeit wird häufig in "Neunen" angegeben (z. B. 99,9 % = rund 8,7 Stunden Ausfall pro Jahr, 99,99 % = rund 53 Minuten). Im Krankenhaus sind viele Systeme (KIS, PDMS, Kommunikationsserver für Medizingeräte) patientenversorgungskritisch – ein Ausfall kann unmittelbare Auswirkungen auf die Behandlung haben, weshalb Hochverfügbarkeit hier keine reine Komfortfunktion, sondern häufig eine Grundanforderung ist.</p>
 
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+<h3>Komponenten</h3>
+<ul>
+<li><strong>Redundante Hardware</strong> – doppelt ausgelegte Netzteile, Netzwerkkarten, Festplatten (RAID) innerhalb eines Servers.</li>
+<li><strong>Cluster</strong> – mehrere Server/Hosts, die gemeinsam einen Dienst bereitstellen und bei Ausfall eines Knotens dessen Last übernehmen (siehe auch <a href="virtualisierung.html">Virtualisierung</a>).</li>
+<li><strong>Load Balancer</strong> – verteilt Anfragen auf mehrere gleichwertige Serverinstanzen und leitet bei Ausfall einer Instanz automatisch nur noch an die verbleibenden weiter.</li>
+<li><strong>Redundante Netzwerkpfade</strong> – doppelte Verkabelung/Switches, sodass ein einzelner Ausfall die Erreichbarkeit nicht unterbricht.</li>
+<li><strong>Backup- und Ausweich-Rechenzentrum</strong> – räumliche Redundanz für den Fall eines Totalausfalls eines Standorts (siehe <a href="rechenzentrum.html">Rechenzentrum</a>).</li>
+</ul>
+
+<h3>Technischer Zusammenhang</h3>
+<p>Hochverfügbarkeit setzt konsequent das Prinzip "keine Einzelkomponente darf zum Single Point of Failure werden" um – auf jeder Ebene: Hardware innerhalb eines Servers, mehrere Server im Cluster, mehrere Netzwerkpfade, mehrere Rechenzentrumsstandorte. Ein typisches Cluster-Setup besteht aus mindestens zwei aktiven Knoten (Active-Active, beide verarbeiten Last) oder einem aktiven und einem passiven Knoten (Active-Passive, der passive übernimmt erst bei Ausfall). Eine kontinuierliche Zustandsprüfung ("Heartbeat") zwischen den Knoten erkennt Ausfälle und löst automatisches Failover aus.</p>
+
+<h3>Konfiguration</h3>
+<ul>
+<li>Festlegung des benötigten Verfügbarkeitsgrads je System, abhängig von dessen klinischer Kritikalität – nicht jedes System benötigt denselben HA-Aufwand.</li>
+<li>Heartbeat- und Failover-Parameter (Erkennungszeit, Umschaltdauer) auf realistische Werte einstellen – zu aggressive Einstellungen können unnötige Failover bei kurzzeitigen Störungen auslösen.</li>
+<li>Regelmäßige Failover-Tests im Rahmen geplanter Wartungsfenster, um sicherzustellen, dass die Umschaltung im Ernstfall tatsächlich funktioniert.</li>
+<li>Dokumentation von Wiederherstellungszielen: Recovery Time Objective (RTO – maximal tolerierbare Ausfallzeit) und Recovery Point Objective (RPO – maximal tolerierbarer Datenverlust) je System.</li>
+</ul>
+
+<h3>Datenfluss</h3>
+<p>Im Normalbetrieb verarbeitet meist ein aktiver Knoten (oder mehrere im Lastverbund) die eingehenden Anfragen, während Zustandsdaten kontinuierlich mit dem/den redundanten Knoten synchronisiert werden. Fällt der aktive Knoten aus, übernimmt ein anderer Knoten nahtlos oder nach kurzer Umschaltzeit die Verarbeitung – idealerweise ohne dass die anfragenden Systeme (z. B. Gateways aus der Medizingerätevernetzung) dies bemerken.</p>
+
+<h3>Schnittstellen</h3>
+<p>Hochverfügbarkeitsmechanismen sind meist eng mit der jeweiligen Plattform verzahnt: Cluster-Dienste des Betriebssystems oder der Datenbank, HA-Funktionen der Virtualisierungsplattform, sowie Health-Check-Schnittstellen, über die Load Balancer den Zustand einzelner Instanzen prüfen. Enge Verzahnung mit <a href="server.html">Server</a>, <a href="virtualisierung.html">Virtualisierung</a> und <a href="../vernetzung/monitoring.html">Monitoring</a>.</p>
+
+<h3>Sicherheit</h3>
+<ul>
+<li>Hochverfügbarkeit schützt vor Ausfällen, nicht per se vor gezielten Angriffen – ergänzend sind eigenständige Sicherheitsmaßnahmen nötig (siehe <a href="security.html">Security</a>).</li>
+<li>Cluster-/Heartbeat-Kommunikation sollte auf einem abgesicherten, separaten Netzwerksegment laufen, da Manipulation dieser Kommunikation ungewollte Failover auslösen könnte.</li>
+<li>Redundanz erhöht die Angriffsfläche (mehr Systeme, mehr Kommunikationswege) – konsistente Absicherung aller redundanten Knoten ist notwendig, nicht nur des primären Systems.</li>
+</ul>
+
+<h3>Fehleranalyse</h3>
+<ul>
+<li><strong>Ungewollter Failover ohne erkennbaren Ausfall:</strong> Heartbeat-/Netzwerkverbindung zwischen den Cluster-Knoten auf kurzzeitige Störungen prüfen ("Split-Brain"-Risiko bei fehlerhafter Konfiguration).</li>
+<li><strong>Failover funktioniert nicht wie erwartet:</strong> Konfiguration der Cluster-Ressourcen und Abhängigkeiten zwischen Diensten prüfen; regelmäßige Tests hätten dies vorab aufgedeckt.</li>
+<li><strong>Datenverlust nach Failover:</strong> Replikationsstatus zwischen den Knoten zum Ausfallzeitpunkt prüfen – Hinweis auf zu große Replikationsverzögerung im Verhältnis zum definierten RPO.</li>
+<li><strong>Load Balancer leitet weiterhin an ausgefallene Instanz weiter:</strong> Konfiguration und Intervall der Health-Checks kontrollieren.</li>
+</ul>
+
+<h3>Praxisbeispiele</h3>
+<ul>
+<li><strong>Ausfall eines Datenbankservers:</strong> Cluster erkennt den Ausfall über Heartbeat, der passive Knoten übernimmt automatisch, klinische Anwendungen bleiben mit kurzer Unterbrechung verfügbar.</li>
+<li><strong>Geplantes Update eines Kommunikationsservers:</strong> vor der Wartung wird gezielt ein Failover auf den redundanten Knoten ausgelöst, sodass das Update unterbrechungsfrei für den laufenden Betrieb eingespielt werden kann.</li>
+<li><strong>Jährlicher Notfalltest:</strong> kompletter Ausfall des Hauptrechenzentrums wird simuliert, um zu prüfen, ob alle kritischen Systeme innerhalb der definierten RTO am Ausweichstandort verfügbar sind.</li>
+</ul>
 
 </div>
 </main>

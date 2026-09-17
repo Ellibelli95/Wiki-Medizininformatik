@@ -32,12 +32,55 @@
 <p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Virtualisierung</strong> vorgesehen.</p>
 <div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
 <h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+<p><strong>Virtualisierung</strong> ermöglicht es, mehrere logisch getrennte virtuelle Maschinen (VMs) auf einer gemeinsamen physischen Server-Hardware zu betreiben. Statt für jeden Dienst (KIS-Anwendungsserver, Datenbank, Kommunikationsserver) einen eigenen physischen Server vorzuhalten, teilen sich mehrere VMs die vorhandenen Ressourcen eines physischen Hosts. Im Krankenhausumfeld ist Virtualisierung heute Standard, da sie Hardware effizienter nutzt, Bereitstellung neuer Server stark beschleunigt und die Grundlage für viele <a href="hochverfuegbarkeit.html">Hochverfügbarkeits</a>-Mechanismen bildet (z. B. Live-Migration einer VM bei drohendem Hardwareausfall).</p>
 
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+<h3>Komponenten</h3>
+<ul>
+<li><strong>Hypervisor</strong> – Software-Schicht, die die physische Hardware abstrahiert und mehreren VMs gleichzeitig Zugriff darauf ermöglicht (z. B. VMware ESXi, Microsoft Hyper-V, KVM).</li>
+<li><strong>Virtuelle Maschinen (VMs)</strong> – logisch eigenständige Server mit eigenem Betriebssystem, isoliert von anderen VMs auf demselben Host.</li>
+<li><strong>Virtuelle Netzwerke/Switches</strong> – softwaredefinierte Netzwerkverbindungen zwischen VMs und zum physischen Netzwerk.</li>
+<li><strong>Shared Storage (SAN/NAS)</strong> – zentraler Speicher, auf den mehrere Hypervisor-Hosts zugreifen, Voraussetzung für Live-Migration von VMs zwischen Hosts.</li>
+<li><strong>Verwaltungsplattform</strong> – zentrale Konsole zur Steuerung aller Hosts und VMs (z. B. VMware vCenter).</li>
+</ul>
+
+<h3>Technische Funktionsweise</h3>
+<p>Der Hypervisor läuft entweder direkt auf der Hardware (Typ 1, "Bare-Metal", üblich in Rechenzentren) oder auf einem bestehenden Betriebssystem (Typ 2, eher für Einzelplatzsysteme). Er teilt physische Ressourcen (CPU-Kerne, Arbeitsspeicher, Netzwerk- und Storage-Zugriff) den einzelnen VMs zu und isoliert sie voneinander, sodass ein Problem in einer VM die anderen nicht direkt beeinträchtigt. Über Shared Storage und ein Cluster mehrerer Hypervisor-Hosts lässt sich eine VM im laufenden Betrieb ohne spürbare Unterbrechung von einem Host auf einen anderen verschieben (Live-Migration) – etwa vor einer geplanten Hardwarewartung.</p>
+
+<h3>Konfiguration</h3>
+<ul>
+<li>Ressourcenzuteilung je VM (vCPU, RAM, Storage) passend zum tatsächlichen Bedarf des jeweiligen Dienstes dimensionieren – Überprovisionierung kann bei Lastspitzen zu Engpässen führen.</li>
+<li>Cluster mehrerer Hosts mit Shared Storage einrichten, um Live-Migration und automatisches Failover bei Hostausfall zu ermöglichen.</li>
+<li>Snapshots vor risikobehafteten Änderungen (Updates, Konfigurationsänderungen) erstellen, um bei Problemen schnell zurückzurollen.</li>
+<li>Ressourcenreserven für Ausfallszenarien einplanen (N+1-Prinzip: genug freie Kapazität, damit bei Ausfall eines Hosts dessen VMs auf den verbleibenden Hosts weiterlaufen können).</li>
+</ul>
+
+<h3>Datenfluss</h3>
+<p>Netzwerkverkehr einer VM läuft über den virtuellen Switch des Hypervisors zum physischen Netzwerkadapter des Hosts und von dort ins reguläre Netzwerk – für andere Systeme ist eine VM im laufenden Betrieb nicht von einem physischen Server unterscheidbar. Speicherzugriffe erfolgen meist über das Shared Storage, unabhängig davon, auf welchem physischen Host die VM aktuell läuft.</p>
+
+<h3>Schnittstellen</h3>
+<p>Virtualisierungsplattformen bieten APIs zur Automatisierung (z. B. automatisches Bereitstellen neuer VMs), Schnittstellen zum Storage-System (z. B. iSCSI, Fibre Channel) sowie Integration mit dem zentralen <a href="../vernetzung/monitoring.html">Monitoring</a>, um Ressourcenauslastung und Hoststatus zu überwachen.</p>
+
+<h3>Sicherheit</h3>
+<ul>
+<li>Der Hypervisor selbst ist eine kritische Angriffsfläche: Zugriff auf die Verwaltungsplattform streng auf autorisiertes Administrationspersonal beschränken, idealerweise über ein separates Management-Netz.</li>
+<li>Isolation zwischen VMs ist grundsätzlich hoch, aber nicht absolut – bekannte Hypervisor-Schwachstellen ("VM Escape") erfordern konsequentes Patchen der Virtualisierungsplattform.</li>
+<li>Snapshots und VM-Images enthalten vollständige Systemzustände inkl. ggf. sensibler Daten – entsprechend geschützt und nicht unkontrolliert kopierbar aufbewahren.</li>
+</ul>
+
+<h3>Fehleranalyse</h3>
+<ul>
+<li><strong>VM reagiert langsam:</strong> Ressourcenauslastung der VM selbst sowie Gesamtauslastung des physischen Hosts prüfen (Ressourcenkonkurrenz mit anderen VMs möglich).</li>
+<li><strong>Live-Migration schlägt fehl:</strong> Kompatibilität der CPU-Features zwischen Quell- und Zielhost sowie Erreichbarkeit des Shared Storage von beiden Hosts kontrollieren.</li>
+<li><strong>VM startet nach Hostausfall nicht automatisch neu:</strong> Konfiguration der automatischen Failover-/HA-Funktion der Virtualisierungsplattform prüfen.</li>
+<li><strong>Speicherplatzprobleme trotz ausreichend zugewiesenem virtuellem Storage:</strong> tatsächliche Belegung auf dem zugrunde liegenden Shared Storage sowie angesammelte Snapshots prüfen.</li>
+</ul>
+
+<h3>Praxisbeispiele</h3>
+<ul>
+<li><strong>Geplante Hardwarewartung eines Hosts:</strong> alle darauf laufenden VMs werden per Live-Migration auf andere Hosts im Cluster verschoben, Wartung erfolgt ohne Unterbrechung der klinischen Anwendungen.</li>
+<li><strong>Testumgebung für ein KIS-Update:</strong> Snapshot des produktiven Anwendungsservers wird als isolierte Test-VM bereitgestellt, um das Update risikofrei zu prüfen, bevor es produktiv eingespielt wird.</li>
+<li><strong>Ausfall eines physischen Hosts:</strong> Cluster erkennt den Ausfall automatisch und startet die betroffenen VMs auf den verbleibenden Hosts neu, sodass Dienste nach kurzer Unterbrechung wieder verfügbar sind.</li>
+</ul>
 
 </div>
 </main>

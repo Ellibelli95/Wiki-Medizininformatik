@@ -32,12 +32,57 @@
 <p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Rechenzentrum</strong> vorgesehen.</p>
 <div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
 <h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+<p>Das <strong>Rechenzentrum (RZ)</strong> ist die zentrale bauliche und technische Infrastruktur, in der die IT-Systeme eines Krankenhauses betrieben werden – Server, Storage, Netzwerkkerntechnik und die zugehörige Gebäudetechnik (Strom, Kühlung, Brandschutz). Da hier Systeme wie KIS, PDMS, PACS und die Kommunikationsserver für die Medizingerätevernetzung laufen, hat ein RZ-Ausfall im Krankenhaus unmittelbare klinische Auswirkungen – anders als in vielen anderen Branchen lässt sich der Betrieb nicht einfach "pausieren". Deshalb gelten für Klinik-Rechenzentren besonders hohe Anforderungen an Redundanz und Ausfallsicherheit, häufig orientiert an Normen wie DIN EN 50600 oder dem BSI-Grundschutz.</p>
 
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+<h3>Komponenten</h3>
+<ul>
+<li><strong>Serverraum/-schränke (Racks)</strong> – physische Unterbringung von Servern, Storage und Netzwerkkomponenten.</li>
+<li><strong>Unterbrechungsfreie Stromversorgung (USV)</strong> – überbrückt kurzzeitige Stromausfälle und Schwankungen.</li>
+<li><strong>Netzersatzanlage (NEA/Diesel-Generator)</strong> – übernimmt die Versorgung bei länger andauerndem Stromausfall.</li>
+<li><strong>Klimatisierung/Kühlung</strong> – hält Temperatur und Luftfeuchtigkeit in engen Toleranzen, da Hardware bei Überhitzung ausfällt.</li>
+<li><strong>Brandfrüherkennung und Löschtechnik</strong> – meist Gaslöschanlagen, um Hardwareschäden durch klassisches Löschwasser zu vermeiden.</li>
+<li><strong>Zutrittskontrollsystem</strong> – physische Zugangsbeschränkung auf autorisiertes Personal.</li>
+</ul>
+
+<h3>Technischer Zusammenhang</h3>
+<p>Ein Rechenzentrum ist die physische Ebene, auf der die logischen Konzepte der Nachbarthemen aufsetzen: <a href="server.html">Server</a> und deren <a href="virtualisierung.html">Virtualisierung</a> laufen physisch in den RZ-Racks, <a href="hochverfuegbarkeit.html">Hochverfügbarkeit</a> wird unter anderem durch redundante RZ-Standorte realisiert, und <a href="security.html">Security</a>-Maßnahmen schützen sowohl den physischen Zugang als auch die darin betriebenen Systeme. Größere Häuser betreiben oft zwei räumlich getrennte RZ-Standorte (Hauptrechenzentrum und Ausweich-/Backup-Rechenzentrum), zwischen denen Daten gespiegelt werden, um auch bei Totalausfall eines Gebäudes (Brand, Wasserschaden) den Betrieb aufrechtzuerhalten.</p>
+
+<h3>Konfiguration</h3>
+<ul>
+<li>Redundanzgrad festlegen (häufig nach Tier-Klassifikation, z. B. Tier III mit redundanten, gleichzeitig wartbaren Versorgungspfaden für Strom und Kühlung).</li>
+<li>USV-Kapazität und Überbrückungszeit auf die Anlaufzeit der Netzersatzanlage abstimmen.</li>
+<li>Racks nach Kritikalität und Wärmeentwicklung planen (Warm-/Kaltgang-Prinzip zur effizienten Kühlung).</li>
+<li>Zutrittsprotokollierung und Vier-Augen-Prinzip für physischen Zugang zu besonders schützenswerten Bereichen.</li>
+</ul>
+
+<h3>Datenfluss</h3>
+<p>Im Rechenzentrum laufen die Datenströme aus der gesamten Klinik zusammen: Vitaldaten und Gerätemeldungen aus der Medizingerätevernetzung erreichen hier die zentralen Kommunikationsserver und Gateways, klinische Anwendungsserver (KIS, PDMS) verarbeiten sie weiter, und Datenbank-/Storage-Systeme sichern sie dauerhaft. Bei Betrieb mit zwei RZ-Standorten werden Daten kontinuierlich oder in kurzen Intervallen zwischen Haupt- und Ausweichstandort repliziert.</p>
+
+<h3>Schnittstellen</h3>
+<p>Das Rechenzentrum stellt die physische Grundlage für praktisch alle Server-, Datenbank- und Netzwerkschnittstellen der Klinik bereit. Enge Verzahnung mit <a href="../vernetzung/index.html">Vernetzung</a> (Anbindung der Medizingeräte an die im RZ betriebenen Server) und dem Kapitel <a href="../server-backend/index.html">Server &amp; Backend</a>.</p>
+
+<h3>Sicherheit</h3>
+<ul>
+<li><strong>Physische Sicherheit:</strong> Zutrittskontrolle, Videoüberwachung, Einbruchmeldeanlage – Grundlage, bevor jede logische IT-Sicherheitsmaßnahme greifen kann.</li>
+<li><strong>Redundanz als Sicherheitsprinzip:</strong> keine Einzelkomponente (Single Point of Failure) darf bei Ausfall den gesamten Betrieb gefährden – gilt für Strom, Kühlung, Netzwerkanbindung und Standort.</li>
+<li><strong>Umgebungsüberwachung:</strong> Sensorik für Temperatur, Feuchtigkeit, Wasser (Leckage) und Rauch, angebunden ans zentrale <a href="../vernetzung/monitoring.html">Monitoring</a>.</li>
+<li>Weitergehende logische Sicherheitsmaßnahmen (Firewalls, Segmentierung, IAM) siehe Detailseite <a href="security.html">Security</a>.</li>
+</ul>
+
+<h3>Fehleranalyse</h3>
+<ul>
+<li><strong>Temperaturalarm im Serverraum:</strong> Klimaanlage und Luftstromführung (Warm-/Kaltgang) prüfen, defekte Lüfter/Filter als häufige Ursache kontrollieren.</li>
+<li><strong>USV meldet Batteriewarnung:</strong> Batteriealter und letzte Wartungs-/Testzyklen prüfen – USV-Batterien altern unabhängig von der tatsächlichen Nutzung.</li>
+<li><strong>Stromausfall, NEA springt nicht an:</strong> Kraftstoffvorrat, Wartungsintervall und automatische Testläufe der Netzersatzanlage kontrollieren.</li>
+<li><strong>Zutrittssystem verweigert autorisiertem Personal Zugang:</strong> Berechtigungsgruppen und Synchronisation mit dem zentralen Identity-Management prüfen.</li>
+</ul>
+
+<h3>Praxisbeispiele</h3>
+<ul>
+<li><strong>Geplante Wartung der USV:</strong> Umschaltung auf redundanten Versorgungspfad, sodass Server und klinische Anwendungen während der Wartung unterbrechungsfrei weiterlaufen.</li>
+<li><strong>Wasserschaden im Hauptrechenzentrum:</strong> Betrieb wird auf das Ausweich-Rechenzentrum umgeschaltet, klinische Systeme bleiben dank vorheriger Datenreplikation verfügbar.</li>
+<li><strong>Kapazitätserweiterung:</strong> Vor Einbau neuer Server wird geprüft, ob Stromversorgung und Kühlleistung des betroffenen Rack-Bereichs ausreichen, um Überlastung zu vermeiden.</li>
+</ul>
 
 </div>
 </main>

@@ -32,12 +32,55 @@
 <p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Server</strong> vorgesehen.</p>
 <div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
 <h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+<p>Ein <strong>Server</strong> ist ein Rechnersystem, das Dienste (Anwendungen, Daten, Kommunikationsfunktionen) über das Netzwerk für andere Systeme oder Nutzende bereitstellt. In der Krankenhaus-IT laufen auf Servern u. a. das KIS, PDMS, PACS, Datenbanken, Kommunikations-/Interface-Server für die Medizingerätevernetzung sowie Basisdienste wie Verzeichnisdienst (Active Directory), DHCP/DNS und Monitoring. Server sind physisch im <a href="rechenzentrum.html">Rechenzentrum</a> untergebracht und laufen heute überwiegend als <a href="virtualisierung.html">virtualisierte</a> Instanzen statt auf dedizierter Einzelhardware.</p>
 
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+<h3>Komponenten</h3>
+<ul>
+<li><strong>Physische Serverhardware</strong> – Rackserver oder Blade-Systeme mit CPU, Arbeitsspeicher, lokalem oder angebundenem Storage, redundanten Netzteilen und Netzwerkkarten.</li>
+<li><strong>Betriebssystem</strong> – z. B. Windows Server oder Linux-Distributionen, Grundlage für die darauf laufenden Dienste.</li>
+<li><strong>Serverrollen/-dienste</strong> – Applikationsserver (z. B. KIS-Anwendungslogik), Datenbankserver, Kommunikations-/Interface-Server (HL7-Nachrichtenverarbeitung), Webserver, Verzeichnisdienst.</li>
+<li><strong>Management-/Out-of-Band-Zugang</strong> – z. B. iDRAC/iLO, ermöglicht Fernwartung auch bei nicht laufendem Betriebssystem.</li>
+</ul>
+
+<h3>Technische Funktionsweise</h3>
+<p>Server nehmen über das Netzwerk Anfragen entgegen (z. B. HL7-Nachrichten von einem Gateway, HTTP-Anfragen eines Web-Clients, Datenbankabfragen einer Anwendung), verarbeiten diese gemäß der installierten Dienste und liefern Ergebnisse zurück. Mehrere logische Dienste können auf einem physischen Server oder – heute Standard – auf virtuellen Maschinen (siehe <a href="virtualisierung.html">Virtualisierung</a>) gebündelt werden, was Auslastung und Verwaltung effizienter macht als ein physischer Server pro Dienst ("ein Server für alles" vs. "ein Server pro Anwendung" als klassischer Zielkonflikt, den Virtualisierung auflöst).</p>
+
+<h3>Konfiguration</h3>
+<ul>
+<li>Rollenverteilung planen: welche Dienste auf welchem (virtuellen) Server laufen, unter Berücksichtigung von Ressourcenbedarf und Abhängigkeiten.</li>
+<li>Patch- und Update-Management mit Wartungsfenstern, die auf den klinischen Betrieb abgestimmt sind (viele Systeme sind 24/7 im Einsatz).</li>
+<li>Ressourcenzuteilung (CPU, RAM, Storage-Performance) je nach Kritikalität und Lastprofil des jeweiligen Dienstes.</li>
+<li>Namens- und Adresskonventionen sowie zentrale Dokumentation (Inventar/CMDB) für alle produktiven Server.</li>
+</ul>
+
+<h3>Datenfluss</h3>
+<p>Ein Server empfängt Anfragen über seine Netzwerkschnittstelle, verarbeitet sie in der zuständigen Anwendungsschicht (z. B. Interface Engine, KIS-Kernanwendung) und greift dabei häufig auf eine Datenbank zu, bevor eine Antwort zurückgesendet wird. In der Gerätevernetzung endet der in den Vernetzungsseiten beschriebene Datenfluss (Gerät → Switch → Segment → Gateway) typischerweise genau an einem solchen Server.</p>
+
+<h3>Schnittstellen</h3>
+<p>Server stellen ihre Dienste über standardisierte Schnittstellen bereit: HL7/FHIR-Endpunkte für klinische Kommunikationsserver, SQL/ODBC für Datenbankzugriffe, HTTP(S)/REST für Webanwendungen, SMB/NFS für Dateifreigaben. Verwandte Themen: <a href="../schnittstellen-standards/index.html">Standards</a>, <a href="../klinische-informationssysteme/index.html">KIS &amp; Systeme</a>.</p>
+
+<h3>Sicherheit</h3>
+<ul>
+<li>Härtung des Betriebssystems (Deaktivierung nicht benötigter Dienste, restriktive lokale Firewall) reduziert die Angriffsfläche.</li>
+<li>Zugriff auf Serverbetriebssysteme und Management-Interfaces nur für berechtigtes Administrationspersonal, mit personalisierten Konten statt geteilter Zugänge.</li>
+<li>Regelmäßiges Patchen bekannter Schwachstellen – bei Servern mit hoher Verfügbarkeitsanforderung koordiniert mit Wartungsfenstern und ggf. vorheriger Testumgebung.</li>
+<li>Weiterführende, systemübergreifende Sicherheitsmaßnahmen siehe <a href="security.html">Security</a>.</li>
+</ul>
+
+<h3>Fehleranalyse</h3>
+<ul>
+<li><strong>Dienst auf Server nicht erreichbar:</strong> zunächst grundlegende Netzwerkerreichbarkeit (Ping) prüfen, dann Dienststatus auf dem Server selbst kontrollieren.</li>
+<li><strong>Hohe Antwortzeiten:</strong> CPU-/RAM-/Storage-Auslastung des Servers sowie Datenbank-Performance prüfen – oft über das zentrale <a href="../vernetzung/monitoring.html">Monitoring</a> ersichtlich.</li>
+<li><strong>Dienst startet nach Neustart nicht automatisch:</strong> Konfiguration des automatischen Dienststarts sowie Abhängigkeiten zu anderen Diensten (z. B. Datenbank muss vor Applikationsserver starten) prüfen.</li>
+<li><strong>Wiederkehrende Abstürze:</strong> Systemlogs auf Hardwarefehler, Speicherprobleme oder Softwarekonflikte auswerten.</li>
+</ul>
+
+<h3>Praxisbeispiele</h3>
+<ul>
+<li><strong>Kommunikationsserver für Patientenmonitore:</strong> nimmt HL7-Nachrichten der Gateways entgegen, reichert sie um Patientenkontext an und leitet sie ans PDMS weiter.</li>
+<li><strong>Konsolidierung mehrerer Altserver:</strong> mehrere bislang auf Einzelhardware betriebene Dienste werden als virtuelle Maschinen auf weniger physischen Servern zusammengeführt, um Wartungsaufwand und Energiebedarf zu senken.</li>
+<li><strong>Geplantes Wartungsfenster:</strong> Patcheinspielung auf einem Applikationsserver außerhalb der Kernbetriebszeiten, mit vorherigem Failover auf eine redundante Instanz (siehe <a href="hochverfuegbarkeit.html">Hochverfügbarkeit</a>).</li>
+</ul>
 
 </div>
 </main>
