@@ -1,46 +1,17 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Krankenhausweit – MedizinInformatik Wiki</title>
-<link rel="stylesheet" href="../assets/style.css">
-</head>
-<body>
-<header><div class="header-inner">
-<h1>MedizinInformatik Wiki</h1>
-<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
-</div></header>
-<nav><div class="nav-inner">
-<a href="../index.html">Startseite</a>
-<a href="../medizintechnik/index.html">Medizintechnik</a>
-<a href="../vernetzung/index.html">Vernetzung</a>
-<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
-<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
-<a href="../datenfluesse/index.html">Datenflüsse</a>
-<a href="../schnittstellen-standards/index.html">Standards</a>
-<a href="../server-backend/index.html">Server</a>
-<a href="../cybersecurity/index.html">Cybersecurity</a>
-<a href="../web-engineering/index.html">Web Engineering</a>
-<a href="../praxis/index.html">Praxis</a>
-</div></nav>
-<main>
-<div class="breadcrumb"><a href="../index.html">Startseite</a> / Praxis / Fallbeispiele / Krankenhausweit</div>
-<div class="hero">
-
-<h2>Krankenhausweit</h2>
-<p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Krankenhausweit</strong> vorgesehen.</p>
-<div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
-<h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
-
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
-
-</div>
-</main>
-<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
-</body>
-</html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Krankenhausweit – MedizinInformatik Wiki</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header><div class="header-inner"><h1>MedizinInformatik Wiki</h1><p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p></div></header><nav><div class="nav-inner"><a href="../index.html">Startseite</a><a href="../medizintechnik/index.html">Medizintechnik</a><a href="../vernetzung/index.html">Vernetzung</a><a href="../krankenhaus-it/index.html">Krankenhaus-IT</a><a href="../klinische-informationssysteme/index.html">KIS & Systeme</a><a href="../datenfluesse/index.html">Datenflüsse</a><a href="../schnittstellen-standards/index.html">Standards</a><a href="../server-backend/index.html">Server</a><a href="../cybersecurity/index.html">Cybersecurity</a><a href="../web-engineering/index.html">Web Engineering</a><a href="../praxis/index.html">Praxis</a></div></nav>
+<main><div class="breadcrumb"><a href="../index.html">Startseite</a> / Praxis / Fallbeispiele / Krankenhausweit</div><div class="hero">
+<h2>Krankenhausweit – Vernetzte Informationslandschaft</h2><p>Krankenhausweite Prozesse verbinden klinische, administrative und technische Systeme. Daten werden nicht nur zwischen zwei Anwendungen ausgetauscht, sondern über viele Systeme hinweg verarbeitet, gespeichert und wieder bereitgestellt.</p>
+<h3>1. Zentrale Systeme</h3><table><tr><th>System</th><th>Typische Aufgabe</th></tr><tr><td>KIS</td><td>Patienten-, Fall- und klinische Dokumentation</td></tr><tr><td>RIS</td><td>Radiologischer Workflow und Befunde</td></tr><tr><td>LIS</td><td>Laboraufträge und Laborergebnisse</td></tr><tr><td>PACS/VNA</td><td>Bilddatenverwaltung und Speicherung</td></tr><tr><td>Kommunikationsserver</td><td>Routing, Transformation und Überwachung</td></tr><tr><td>Identity-/Verzeichnisdienst</td><td>Benutzer- und Geräteidentitäten</td></tr></table>
+<h3>2. Beispiel Patientenaufnahme</h3><div class="flow">Aufnahme → KIS → Stationssysteme / RIS / LIS / Medizintechnik → Dokumentation → Archiv</div><ol><li>Ein Patient wird im KIS aufgenommen und erhält eine Patienten- bzw. Fallidentifikation.</li><li>Diese Identität wird in angeschlossene Systeme übernommen.</li><li>Fachabteilungen erzeugen Aufträge, Befunde, Messwerte oder Bilder.</li><li>Kommunikationsserver und Schnittstellen verteilen die Informationen an die jeweils benötigten Zielsysteme.</li><li>Die Ergebnisse werden im klinischen Kontext zusammengeführt und dokumentiert.</li></ol>
+<h3>3. Standards und Protokolle</h3><ul><li><strong>HL7 v2:</strong> häufig für Ereignisse und Nachrichten zwischen klinischen Systemen</li><li><strong>FHIR:</strong> moderne API-/Ressourcen-basierte Interoperabilität</li><li><strong>DICOM:</strong> Bilddaten und bildgebungsbezogene Dienste</li><li><strong>REST/HTTP(S):</strong> Web- und API-Kommunikation</li><li><strong>TCP/IP:</strong> technische Basis vieler Netzwerkverbindungen</li></ul>
+<h3>4. Identitäten und Datenzuordnung</h3><p>Entscheidend ist die korrekte Zuordnung von Patient, Fall, Auftrag und Untersuchung. In der Bildgebung kommen zusätzlich DICOM Study Instance UID, Series Instance UID und SOP Instance UID zum Einsatz. Unterschiedliche Systeme können eigene interne IDs verwenden; eine Integrationslösung muss die Zuordnung nachvollziehbar halten.</p>
+<h3>5. Netzwerkarchitektur</h3><p>Ein Krankenhausnetz besteht aus verschiedenen Segmenten und Zonen. Medizinische Geräte, Server, Clients und Managementsysteme können getrennt segmentiert werden. Routing, Firewalls und Zugriffsregeln steuern, welche Systeme miteinander kommunizieren dürfen.</p>
+<h3>6. Speicherung und Archivierung</h3><p>Operative Daten liegen beispielsweise in Datenbanken oder Anwendungsspeichern. Bilddaten werden typischerweise in PACS/VNA gespeichert. Für langfristige Aufbewahrung können Archivsysteme eingesetzt werden. Backups, Replikation und redundante Speicher unterstützen die Wiederherstellung und Verfügbarkeit. Archivierung und Backup verfolgen unterschiedliche Ziele.</p>
+<h3>7. Sicherheit</h3><ul><li>Netzwerksegmentierung und Least-Privilege-Zugriffe</li><li>Authentisierung und rollenbasierte Berechtigungen</li><li>Verschlüsselte Verbindungen, wo technisch und organisatorisch vorgesehen</li><li>Logging und Nachvollziehbarkeit von Zugriffen</li><li>Patch- und Konfigurationsmanagement</li><li>Backup- und Wiederherstellungsstrategien</li></ul>
+<h3>8. Fehleranalyse über Systemgrenzen</h3><p>Bei einem Fehler muss der komplette Pfad betrachtet werden: Quelle → Netzwerk → Firewall/Gateway → Kommunikationsserver → Schnittstelle → Applikation → Datenbank/Speicher → Zielsystem. Ein erfolgreicher Netzwerk-Ping beweist beispielsweise noch nicht, dass eine HL7- oder DICOM-Anwendungsschnittstelle funktioniert.</p>
+<h3>9. Beispiel: Radiologie im Krankenhausverbund</h3><p><strong>KIS → RIS → DICOM Worklist → Röntgen/CT/MRT → PACS/VNA → Viewer → Befund → RIS → KIS → Archiv/Backup.</strong> Gleichzeitig können Benutzerrechte, Netzwerksegmentierung, Monitoring und zentrale Verzeichnisdienste den gesamten Prozess beeinflussen.</p>
+<h3>10. Zielbild</h3><p>Eine gut dokumentierte Krankenhaus-IT beschreibt für jeden Datenfluss Quelle, Ziel, Protokoll, Port, Datenformat, Identifikatoren, Verantwortlichkeit, Speicherort, Aufbewahrung und Fehlerbehandlung. Dadurch lassen sich Schnittstellen systematisch betreiben und Störungen schneller eingrenzen.</p>
+</div></main><footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer></body></html>
