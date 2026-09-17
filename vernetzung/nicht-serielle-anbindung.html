@@ -32,12 +32,61 @@
 <p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Nicht-serielle Anbindung</strong> vorgesehen.</p>
 <div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
 <h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+<p><strong>Nicht-serielle Anbindung</strong> bezeichnet die Vernetzung von Medizingeräten über native Netzwerk- oder Funkschnittstellen (Ethernet, WLAN, Bluetooth) anstelle klassischer serieller Punkt-zu-Punkt-Verbindungen (z. B. RS-232). Im Gegensatz zur seriellen Anbindung, die meist einen zusätzlichen Protokollumsetzer benötigt, kommunizieren nicht-seriell angebundene Geräte direkt über Standard-Netzwerkprotokolle (TCP/IP), was Integration und Skalierung vereinfacht. Typischer Einsatz: moderne Patientenmonitore, vernetzte Infusionspumpen, mobile Diagnosegeräte, Wearables/Telemetrie.</p>
 
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+<h3>Komponenten</h3>
+<ul>
+<li><strong>Ethernet-Schnittstelle</strong> – kabelgebundene Anbindung, meist bevorzugt bei stationären Geräten wegen höherer Stabilität und einfacherer Absicherung.</li>
+<li><strong>WLAN-Modul</strong> – für mobile Geräte (Visitenwagen, tragbare Monitore); erfordert Anbindung an das klinische WLAN mit entsprechender Verschlüsselung.</li>
+<li><strong>Bluetooth/Low-Energy-Anbindung</strong> – kurze Distanzen, geringer Energieverbrauch, häufig bei Wearables oder Sensoren am Patienten, meist über ein Gateway-Gerät (z. B. Stations-Hub) ans Netzwerk gekoppelt.</li>
+<li><strong>Access Points</strong> – Infrastruktur für WLAN-Anbindung, im Klinikbetrieb mit Bedacht auf Abdeckung (auch in Betonwänden/Schutzräumen) und Kapazität geplant.</li>
+</ul>
+
+<h3>Technische Funktionsweise</h3>
+<p>Nicht-seriell angebundene Geräte verfügen über einen eigenen TCP/IP-Stack und kommunizieren direkt über Ethernet oder WLAN mit dem Netzwerk – ohne zwischengeschalteten Protokollumsetzer auf physikalischer Ebene. Bei WLAN-Geräten läuft zusätzlich ein Assoziations- und Authentifizierungsprozess mit dem Access Point ab (z. B. WPA2/WPA3-Enterprise mit 802.1X), bevor das Gerät eine IP-Adresse erhält und Daten senden kann. Bluetooth-Geräte koppeln sich meist mit einem lokalen Gateway/Hub, der die Daten sammelt und über dessen eigene Netzwerkanbindung ins Krankenhausnetz weiterleitet – die eigentliche "letzte Meile" zum Patienten bleibt dabei drahtlos, während der Hub die Netzwerkintegration übernimmt.</p>
+<div class="flow">Medizinisches Gerät → Switch → Netzwerksegment → Gateway/Server → Anwendung</div>
+<p>Bei WLAN ersetzt der Access Point in diesem Ablauf funktional den Switch als ersten Anbindungspunkt; bei Bluetooth-Sensoren tritt ein zusätzlicher lokaler Hub vor diesen Schritt.</p>
+
+<h3>Konfiguration</h3>
+<ul>
+<li>WLAN: dediziertes SSID/VLAN für Medizingeräte, getrennt vom Gäste- und Mitarbeiter-WLAN, mit WPA2/WPA3-Enterprise und möglichst 802.1X-Authentifizierung.</li>
+<li>Ethernet: analog zur allgemeinen <a href="netzwerkanschluss.html">Netzwerkanschluss</a>-Konfiguration (VLAN-Zuordnung, DHCP-Reservierung).</li>
+<li>Bluetooth-Hubs: Pairing-Verfahren möglichst mit Authentifizierung (nicht ungesichertes "Just Works"-Pairing), feste Zuordnung Hub ↔ Station/Bettplatz.</li>
+<li>Kapazitätsplanung bei WLAN: Anzahl gleichzeitig verbundener Geräte je Access Point, besonders bei Visitenwagen-Flotten oder Wearable-Flächendeckung, realistisch dimensionieren.</li>
+</ul>
+
+<h3>Datenfluss</h3>
+<p>Bei Ethernet-Anbindung entspricht der Datenfluss dem allgemeinen Schema über Switch, Netzwerksegment und Gateway/Server. Bei WLAN tritt der Access Point als drahtloser Zugangspunkt hinzu, leitet den Verkehr aber ins selbe kabelgebundene Netzwerk weiter. Bei Bluetooth-Sensorik sammelt zunächst ein lokaler Hub die Messdaten mehrerer Sensoren, bevor diese gebündelt über dessen Netzwerkanbindung (meist Ethernet oder WLAN) den Weg zum Gateway/Server antreten.</p>
+
+<h3>Schnittstellen</h3>
+<ul>
+<li><strong>TCP/IP-basierte Anwendungsprotokolle</strong> – HL7, DICOM, herstellerspezifische Netzwerkprotokolle, direkt über Ethernet/WLAN nutzbar ohne separaten Protokollumsetzer.</li>
+<li><strong>802.1X/EAP</strong> – für authentifizierten Netzwerkzugang, siehe auch <a href="nac.html">NAC</a>.</li>
+<li><strong>Bluetooth GATT-Profile</strong> – bei medizinischen Sensoren häufig genutzt zur Datenübertragung zwischen Sensor und Hub.</li>
+</ul>
+
+<h3>Sicherheit</h3>
+<ul>
+<li>WLAN-Verschlüsselung auf aktuellem Stand halten (WPA2-Enterprise als Minimum, WPA3 wo unterstützt); offene oder mit vorinstalliertem Pre-Shared-Key gesicherte Netze für Medizingeräte vermeiden.</li>
+<li>Bluetooth-Pairing möglichst mit Authentifizierung absichern, da unautorisiertes Koppeln fremder Geräte an einen Hub sonst leicht möglich wäre.</li>
+<li>Mobile, WLAN-fähige Geräte verlassen physische Sicherheitszonen (z. B. bei Standortwechsel) – Segmentierung und Zugriffskontrolle müssen dies berücksichtigen, unabhängig vom physischen Aufenthaltsort.</li>
+<li>Firmware-Updates von WLAN-/Bluetooth-Modulen regelmäßig einspielen, da hier bekannte Protokollschwachstellen (z. B. in älteren WLAN-Sicherheitsstandards) bestehen können.</li>
+</ul>
+
+<h3>Fehleranalyse</h3>
+<ul>
+<li><strong>WLAN-Gerät verliert regelmäßig Verbindung:</strong> Signalabdeckung, Roaming-Verhalten zwischen Access Points und Kanalüberlappung prüfen.</li>
+<li><strong>Bluetooth-Sensor überträgt keine Daten:</strong> Pairing-Status mit dem Hub sowie Batteriestatus des Sensors kontrollieren, bevor die Netzwerkebene des Hubs untersucht wird.</li>
+<li><strong>Hohe Latenz bei vielen gleichzeitig aktiven WLAN-Geräten:</strong> Hinweis auf Überlastung eines Access Points – Kapazitätsplanung und Kanalverteilung überprüfen.</li>
+<li><strong>Gerät verbindet sich nicht mit dediziertem Medizingeräte-WLAN:</strong> SSID-Konfiguration, Zertifikate/Zugangsdaten für 802.1X sowie unterstützte Verschlüsselungsstandards des Geräts abgleichen.</li>
+</ul>
+
+<h3>Praxisbeispiele</h3>
+<ul>
+<li><strong>Einführung mobiler Patientenmonitore auf Visitenwagen:</strong> Anbindung über dediziertes Medizingeräte-WLAN mit WPA2-Enterprise, Kapazitätsprüfung des zuständigen Access Points vor Rollout.</li>
+<li><strong>Wearable-Sensorik zur kontinuierlichen Vitaldatenerfassung:</strong> Sensoren koppeln sich per Bluetooth an einen stationären Hub am Bett, der die Daten gebündelt über Ethernet an den Gateway-Server weiterleitet.</li>
+<li><strong>Ablösung eines seriell angebundenen Altgeräts</strong> durch ein baugleiches, netzwerkfähiges Nachfolgemodell: Entfall des bisherigen Protokollumsetzers, direkte Ethernet-Anbindung an den vorhandenen Switch-Port.</li>
+</ul>
 
 </div>
 </main>
