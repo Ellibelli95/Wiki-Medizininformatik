@@ -32,12 +32,53 @@
 <p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Gerätevernetzung</strong> vorgesehen.</p>
 <div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
 <h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
+<p><strong>Gerätevernetzung</strong> ist der Oberbegriff für die Anbindung medizinischer Geräte an Kommunikationsinfrastrukturen, damit deren Daten (Vitalwerte, Messergebnisse, Gerätestatus) automatisiert in zentrale Systeme wie KIS, PDMS oder PACS gelangen, statt manuell übertragen zu werden. Sie bildet den thematischen Rahmen für die weiteren Detailseiten dieses Kapitels: <a href="netzwerkanschluss.html">Netzwerkanschluss</a>, <a href="gateways.html">Gateways</a>, <a href="routing.html">Routing</a>, <a href="nac.html">NAC</a>, <a href="monitoring.html">Monitoring</a> sowie <a href="nicht-serielle-anbindung.html">Nicht-serielle Anbindung</a> und die (serielle) Direktanbindung. Ziel der Gerätevernetzung ist es, Medienbrüche zu vermeiden, Übertragungsfehler zu reduzieren und Daten zeitnah verfügbar zu machen – klinisch relevant z. B. bei der lückenlosen Dokumentation von Vitalparametern.</p>
+
+<h3>Komponenten</h3>
+<ul>
+<li><strong>Medizingerät</strong> mit Kommunikationsschnittstelle (seriell, Ethernet, WLAN, Bluetooth, USB).</li>
+<li><strong>Physische Netzinfrastruktur</strong> – Verkabelung, Switches, WLAN-Access-Points (siehe <a href="netzwerkanschluss.html">Netzwerkanschluss</a>).</li>
+<li><strong>Zugriffskontrolle</strong> beim Verbindungsaufbau (siehe <a href="nac.html">NAC</a>).</li>
+<li><strong>Vermittlungsinstanzen</strong> – Gateways zur Protokoll-/Formatumsetzung (siehe <a href="gateways.html">Gateways</a>), Router zur Segmentkopplung (siehe <a href="routing.html">Routing</a>).</li>
+<li><strong>Zielsysteme</strong> – KIS, PDMS, PACS, Labor- und Abrechnungssysteme, die die aufbereiteten Daten letztlich konsumieren.</li>
+<li><strong>Überwachung</strong> der gesamten Kette durch Netzwerk-/Systemmonitoring (siehe <a href="monitoring.html">Monitoring</a>).</li>
+</ul>
+
 <h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+<p>Gerätevernetzung lässt sich grob in zwei Anbindungsarten unterteilen, die sich in Art der physikalischen Schnittstelle und Integrationsaufwand unterscheiden:</p>
+<ul>
+<li><strong>Serielle Anbindung</strong> – klassische Punkt-zu-Punkt-Verbindung (z. B. RS-232), historisch weit verbreitet bei älteren Medizingeräten, meist über einen Protokollumsetzer/Gateway an das Netzwerk angebunden.</li>
+<li><strong>Nicht-serielle Anbindung</strong> – native Netzwerkfähigkeit des Geräts (Ethernet, WLAN) oder andere Funktechnologien (Bluetooth, teils proprietäre Funkprotokolle); siehe Detailseite <a href="nicht-serielle-anbindung.html">Nicht-serielle Anbindung</a>.</li>
+</ul>
+<p>Unabhängig von der Anbindungsart durchlaufen die Daten anschließend denselben grundsätzlichen Weg zu den Zielsystemen:</p>
 <div class="flow">Medizinisches Gerät → Switch → Netzwerksegment → Gateway/Server → Anwendung</div>
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+
+<h3>Konfiguration</h3>
+<ul>
+<li>Auswahl der Anbindungsart je Gerätetyp anhand vorhandener Schnittstellen und Herstellervorgaben.</li>
+<li>Festlegung von Segmentzugehörigkeit (VLAN), Zugriffskontrolle (NAC) und ggf. benötigtem Gateway bereits bei der Beschaffungsplanung, nicht erst bei Inbetriebnahme.</li>
+<li>Einheitliche Namens-/Adresskonventionen für Geräte, um Inventarisierung und Fehlersuche systemübergreifend zu erleichtern.</li>
+<li>Abstimmung mit Medizintechnik/Herstellern bezüglich unterstützter Protokolle und Update-/Wartungsfähigkeit im laufenden Betrieb.</li>
+</ul>
+
+<h3>Datenfluss</h3>
+<p>Vom Gerät ausgehend werden Rohdaten über die physische Schnittstelle (seriell oder Netzwerk) übertragen, durchlaufen ggf. eine Zugriffskontrolle, werden über das zugewiesene Segment geroutet, bei Bedarf durch ein Gateway protokollseitig transformiert und schließlich vom Zielsystem verarbeitet. Diese Kette wird durchgehend überwacht, damit Störungen an jedem Glied erkennbar sind.</p>
+
+<h3>Schnittstellen</h3>
+<p>Je nach Anbindungsart kommen unterschiedliche physikalische und logische Schnittstellen zum Einsatz – von RS-232 bei serieller Anbindung bis zu Ethernet/WLAN mit HL7- oder DICOM-Nutzdaten bei nicht-serieller Anbindung. Verwandte Themen: <a href="../schnittstellen-standards/index.html">Standards</a>, <a href="../klinische-informationssysteme/index.html">KIS &amp; Systeme</a>.</p>
+
+<h3>Sicherheit</h3>
+<p>Da Gerätevernetzung den gesamten Pfad vom Medizingerät bis zum Zielsystem umfasst, ist Sicherheit hier eine Querschnittsaufgabe: physischer Zugriffsschutz, Netzwerksegmentierung, Zugriffskontrolle (NAC), Absicherung der Gateways sowie durchgängiges Monitoring greifen ineinander. Eine Schwachstelle an einer einzelnen Stelle der Kette kann die Schutzwirkung der übrigen Maßnahmen untergraben.</p>
+
+<h3>Fehleranalyse</h3>
+<p>Bei Störungen empfiehlt sich ein schichtweises Vorgehen entlang des Datenflusses: zunächst physische Anbindung und Zugriffskontrolle prüfen, dann Erreichbarkeit über das Netzwerksegment/Routing, anschließend Funktion des Gateways (Protokollumsetzung, Patientenzuordnung) und zuletzt die Verarbeitung im Zielsystem. Die jeweiligen Detailseiten enthalten die spezifischen Diagnoseschritte für die einzelne Ebene.</p>
+
+<h3>Praxisbeispiele</h3>
+<ul>
+<li><strong>Neubeschaffung eines Gerätetyps:</strong> Bereits vor Lieferung wird geklärt, ob serielle oder nicht-serielle Anbindung vorliegt, welches Segment/VLAN vorgesehen ist und ob ein Gateway zur Protokollumsetzung notwendig wird.</li>
+<li><strong>Modernisierung eines Altbestands:</strong> Schrittweiser Ersatz seriell angebundener Geräte durch netzwerkfähige Nachfolgemodelle, wodurch Protokollumsetzer entfallen und die Fehleranfälligkeit sinkt.</li>
+<li><strong>Stationsweite Störung:</strong> Systematische Prüfung entlang der Kette zeigt, dass nicht die Geräte selbst, sondern ein zentraler Gateway-Server die Ursache ist – möglich durch die einheitliche Betrachtung der gesamten Gerätevernetzung statt isolierter Einzelgeräteanalyse.</li>
+</ul>
 
 </div>
 </main>
