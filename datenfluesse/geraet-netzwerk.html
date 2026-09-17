@@ -29,15 +29,118 @@
 <div class="hero">
 
 <h2>Gerät → Netzwerk</h2>
-<p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Gerät → Netzwerk</strong> vorgesehen.</p>
-<div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
-<h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
-<div class="flow">Quelle → Netzwerk/Transport → Verarbeitung → Zielsystem → Speicherung</div>
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+<p>Medizinische Geräte sind heute Bestandteil der Krankenhaus-IT. Damit ein Gerät Daten an andere Systeme übertragen kann, müssen Netzwerkzugang, Adressierung, Segmentierung, Routing, Namensauflösung und die benötigten Kommunikationsdienste korrekt eingerichtet sein.</p>
+
+<div class="note"><strong>Wichtig:</strong> Eine MAC-Adresse wird nicht direkt in eine IP-Adresse „umgewandelt“. In vielen Netzwerken erhält ein Gerät seine IP-Adresse über DHCP. Dabei kann der DHCP-Server anhand der MAC-Adresse bzw. einer DHCP-Client-Identität eine Adresse aus einem definierten Netz vergeben. Alternativ kann eine statische IP-Adresse konfiguriert werden.</div>
+
+<h3>1. Vom Gerät zum Netzwerk</h3>
+<p>Der erste Schritt ist die physische oder drahtlose Anbindung des medizinischen Geräts. Typische Varianten sind:</p>
+<ul>
+<li><strong>Netzwerkdose / Ethernet:</strong> Das Gerät wird über ein Netzwerkkabel an einen Switch angeschlossen.</li>
+<li><strong>VLAN:</strong> Der Switch-Port bzw. die Netzwerkzugangskontrolle ordnet das Gerät einem vorgesehenen Netzwerksegment zu. VLANs werden zur Trennung von beispielsweise Medizintechnik, Clients, Servern und Management-Netzen eingesetzt.</li>
+<li><strong>WLAN:</strong> Das Gerät verbindet sich über einen Access Point und eine konfigurierte SSID. In klinischen Umgebungen können Authentifizierung und Netzwerksegmentierung vorgeschaltet sein.</li>
+</ul>
+
+<h3>2. MAC-Adresse, IP-Adresse und DHCP</h3>
+<p>Die <strong>MAC-Adresse</strong> identifiziert die Netzwerkschnittstelle auf der Sicherungsschicht. Die <strong>IP-Adresse</strong> wird für die Kommunikation auf der Netzwerkschicht verwendet. Beide Adressarten erfüllen daher unterschiedliche Aufgaben.</p>
+<ol>
+<li>Das Gerät aktiviert seine Netzwerkschnittstelle.</li>
+<li>Bei DHCP sendet es eine DHCP-Anfrage.</li>
+<li>Der DHCP-Server weist eine IP-Adresse sowie weitere Parameter zu, z. B. Subnetzmaske, Standard-Gateway und DNS-Server.</li>
+<li>Für medizinische Geräte werden häufig feste DHCP-Zuordnungen oder statische IP-Adressen verwendet, damit Kommunikationspartner das Gerät zuverlässig erreichen können.</li>
+<li>Switch, VLAN, Routing und Firewall-Regeln bestimmen anschließend, welche Systeme das Gerät erreichen darf.</li>
+</ol>
+
+<h3>3. Aufnahme in die Krankenhaus-Netzwerkinfrastruktur</h3>
+<p>Nach der Adressierung muss das Gerät technisch erreichbar sein. Dabei spielen mehrere Komponenten zusammen:</p>
+<div class="flow">Gerät → Switch / Access Point → VLAN → Routing / Firewall → Zielsystem</div>
+<ul>
+<li><strong>Switch:</strong> verbindet das Gerät mit dem lokalen Netzwerk.</li>
+<li><strong>VLAN:</strong> trennt Netzbereiche logisch voneinander.</li>
+<li><strong>Routing:</strong> ermöglicht die Kommunikation zwischen unterschiedlichen IP-Netzen.</li>
+<li><strong>Firewall / ACL:</strong> beschränkt die erlaubten Verbindungen auf notwendige Systeme und Ports.</li>
+<li><strong>DNS:</strong> ermöglicht die Auflösung von Hostnamen, sofern die Systeme per Namen angesprochen werden.</li>
+<li><strong>NTP:</strong> sorgt für eine möglichst einheitliche Systemzeit, was insbesondere für Protokollierung und Fehlersuche wichtig ist.</li>
+</ul>
+
+<h3>4. Welche Daten werden übertragen?</h3>
+<p>Ein medizinisches Gerät überträgt nicht einfach „Daten an den Server“. Je nach Anwendungsfall werden unterschiedliche technische Protokolle und Datenobjekte verwendet. Bei bildgebenden Verfahren ist <strong>DICOM</strong> zentral. Für Aufträge und Patienteninformationen können zusätzlich KIS-, RIS- oder Integrationssysteme beteiligt sein.</p>
+<table>
+<tr><th>Funktion</th><th>Typisches Verfahren</th><th>Beispiel</th></tr>
+<tr><td>Auftrags-/Patientendaten abrufen</td><td>DICOM Modality Worklist (MWL)</td><td>Röntgengerät fragt geplante Untersuchungen ab</td></tr>
+<tr><td>Bilder übertragen</td><td>DICOM</td><td>CT-/Röntgenbilder werden an PACS/VNA gesendet</td></tr>
+<tr><td>Befund übertragen</td><td>HL7 v2 oder FHIR, je nach Systemarchitektur</td><td>Befundstatus bzw. Befundtext zwischen Befundsystem und KIS</td></tr>
+<tr><td>Systemüberwachung</td><td>Hersteller-/IT-spezifische Verfahren</td><td>Gerätestatus, Logs, Monitoring</td></tr>
+</table>
+
+<h3>5. Praxisbeispiel: Röntgengerät</h3>
+<p>Ein typischer Datenfluss einer Röntgenuntersuchung kann wie folgt aussehen. Die konkrete Architektur unterscheidet sich je nach Krankenhaus, Hersteller und eingesetzten Systemen.</p>
+<div class="flow">KIS → RIS → Worklist-Dienst → Röntgengerät<br>Röntgengerät → DICOM → PACS / VNA<br>PACS Viewer → Befundarbeitsplatz → RIS → KIS</div>
+
+<h4>Schritt 1: Untersuchung wird angelegt</h4>
+<p>Die Untersuchung wird beispielsweise im KIS oder in einem angeschlossenen RIS geplant. Dabei entstehen unter anderem Patientenzuordnung, Untersuchungsart, Untersuchungszeitpunkt und eine Untersuchungs-/Auftragskennung.</p>
+
+<h4>Schritt 2: Röntgengerät erhält die Worklist</h4>
+<p>Das Röntgengerät ruft über <strong>DICOM Modality Worklist (MWL)</strong> geplante Untersuchungen ab. Dadurch müssen Patientenstammdaten nicht zwingend manuell am Gerät eingegeben werden. Das reduziert insbesondere das Risiko von Tippfehlern bei Name, Geburtsdatum oder Patienten-ID.</p>
+
+<h4>Schritt 3: Untersuchung und Bildentstehung</h4>
+<p>Der Bediener wählt die passende Untersuchung aus der Worklist. Die Aufnahme wird durchgeführt. Das Gerät erzeugt DICOM-Objekte, die neben den eigentlichen Bilddaten auch DICOM-Metadaten enthalten, z. B. Patienten- und Untersuchungsbezug, Study/Series-Informationen sowie Geräte- und Aufnahmeparameter.</p>
+
+<h4>Schritt 4: Übertragung an PACS / VNA</h4>
+<p>Die Bilder werden über DICOM an ein <strong>PACS</strong> oder – je nach Architektur – an ein <strong>VNA (Vendor Neutral Archive)</strong> übertragen. Häufig ist zusätzlich ein DICOM-Router bzw. Kommunikationsserver beteiligt, der Daten weiterleitet, prüft oder für mehrere Zielsysteme verteilt.</p>
+
+<h4>Schritt 5: Befundung</h4>
+<p>Der Arzt öffnet die Untersuchung in einem <strong>PACS Viewer</strong> bzw. einer integrierten Befundungsanwendung. Dort werden die Bilddaten aus dem PACS/VNA geladen. Der Befund kann anschließend im RIS oder in einem Befundsystem erstellt und signiert werden.</p>
+
+<h4>Schritt 6: Rückübertragung an das KIS</h4>
+<p>Nach der Befundung wird der Befund je nach Systemarchitektur über eine geeignete Integrationsschnittstelle, häufig HL7 v2 oder FHIR, an das KIS übermittelt. Das KIS stellt den Befund anschließend innerhalb der klinischen Patientenakte zur Verfügung. Der genaue Weg hängt von den eingesetzten Systemen ab.</p>
+
+<h3>6. Was passiert mit den Bildern nach der Übertragung?</h3>
+<p>Die Übertragung zum PACS ist nicht automatisch gleichbedeutend mit einer langfristigen Archivierung. In einer vollständigen Architektur müssen mindestens <strong>Primärspeicherung, Archivierung, Backup und Wiederherstellung</strong> getrennt betrachtet werden.</p>
+
+<h4>Primärspeicher / Online-Speicher</h4>
+<p>Nach dem Empfang werden die DICOM-Objekte in einem Speicher abgelegt, aus dem sie für die tägliche Befundung schnell abgerufen werden können. Das kann ein PACS-Speicher, ein VNA oder eine Kombination aus mehreren Speicherebenen sein.</p>
+
+<h4>Archivierung</h4>
+<p>Für die langfristige Aufbewahrung können Daten aus dem schnellen Online-Speicher in kostengünstigere bzw. für Langzeitaufbewahrung ausgelegte Speicherebenen verschoben oder zusätzlich dort repliziert werden. Dabei müssen Aufbewahrungsfristen, Integrität, Verfügbarkeit und die Anforderungen der jeweiligen Einrichtung berücksichtigt werden.</p>
+
+<h4>Backup</h4>
+<p>Ein Backup ist von der Archivierung zu unterscheiden. Ein Archiv dient dem kontrollierten langfristigen Vorhalten von Daten; ein Backup dient insbesondere der Wiederherstellung nach Datenverlust, Fehlbedienung, technischen Defekten oder Sicherheitsvorfällen. Backups sollten deshalb nach einem definierten Wiederherstellungskonzept geplant und regelmäßig getestet werden.</p>
+
+<h4>Redundanz und Replikation</h4>
+<p>Medizinische Bilddaten können zusätzlich auf getrennten Speichersystemen oder an einem zweiten Standort repliziert werden. Ziel ist eine höhere Verfügbarkeit und eine bessere Absicherung gegen Ausfälle einzelner Systeme oder Standorte.</p>
+
+<h4>Integrität und Wiederherstellung</h4>
+<p>Für gespeicherte Daten ist nicht nur die Verfügbarkeit relevant. Es muss auch nachvollziehbar sein, ob Daten vollständig und unverändert gespeichert wurden. Für den Betrieb gehören deshalb Überwachung, Fehlerprotokollierung, Speicherprüfungen und regelmäßige Wiederherstellungstests zum Gesamtkonzept.</p>
+
+<h3>7. Vereinfachte Gesamtarchitektur</h3>
+<div class="flow">Patient / Auftrag<br>↓<br>KIS / RIS<br>↓<br>DICOM Worklist (MWL)<br>↓<br>Röntgengerät<br>↓ DICOM<br>DICOM-Router / Kommunikationsserver (optional)<br>↓<br>PACS / VNA<br>↓<br>Online-Speicher → Langzeitarchiv / Archivspeicher<br>↓<br>Backup / Replikation / Notfallwiederherstellung<br><br>PACS Viewer / Befundsystem<br>↓ Befund<br>RIS / Integrationsplattform<br>↓ HL7 / FHIR (je nach Architektur)<br>KIS</div>
+
+<h3>8. Netzwerk- und Sicherheitsaspekte</h3>
+<ul>
+<li>Medizinische Geräte sollten nur in dafür vorgesehenen Netzwerksegmenten betrieben werden.</li>
+<li>Kommunikationsbeziehungen sollten auf die tatsächlich benötigten Systeme und Ports begrenzt werden.</li>
+<li>MAC-, IP-, VLAN- und Gerätekonfigurationen sollten dokumentiert und Änderungen nachvollziehbar sein.</li>
+<li>DICOM-Ziele sollten eindeutig konfiguriert werden, typischerweise über AE Title, IP-Adresse bzw. Hostname und Port.</li>
+<li>Administrationszugänge und Gerätekonfigurationen müssen gegen unbefugte Änderungen geschützt werden.</li>
+<li>Zeitquellen, Monitoring und zentrale Protokollierung erleichtern die Analyse von Übertragungs- und Verbindungsfehlern.</li>
+<li>Bei der Übertragung und Speicherung patientenbezogener Daten sind die geltenden Datenschutz-, Sicherheits- und Aufbewahrungsanforderungen der Einrichtung zu berücksichtigen.</li>
+</ul>
+
+<h3>9. Fehleranalyse: Wenn das Röntgengerät keine Daten übertragen kann</h3>
+<ol>
+<li><strong>Physische Verbindung prüfen:</strong> Kabel, Link-Status, Switch-Port oder WLAN-Verbindung.</li>
+<li><strong>Netzwerk prüfen:</strong> VLAN, IP-Adresse, Subnetzmaske, Gateway und ggf. DHCP-Zuordnung.</li>
+<li><strong>Erreichbarkeit prüfen:</strong> Routing und Firewall-Regeln zwischen Gerät und Zielsystem.</li>
+<li><strong>DICOM-Konfiguration prüfen:</strong> AE Title, Ziel-IP/Hostname und DICOM-Port.</li>
+<li><strong>Worklist prüfen:</strong> Ist der MWL-Dienst erreichbar und liefert er die erwarteten Untersuchungen?</li>
+<li><strong>PACS/Routing prüfen:</strong> Wurde das DICOM-Objekt angenommen, abgelehnt oder an ein anderes Ziel weitergeleitet?</li>
+<li><strong>Speicher prüfen:</strong> Ist das PACS/VNA erreichbar und steht ausreichend Speicher zur Verfügung?</li>
+<li><strong>Logs auswerten:</strong> Gerätemeldungen, DICOM-Logs, Kommunikationsserver-Logs, Firewall-Logs und Server-Logs zeitlich miteinander vergleichen.</li>
+</ol>
+
+<h3>10. Merksatz</h3>
+<p><strong>Netzwerkzugang → IP/VLAN → Erreichbarkeit → Dienst/Schnittstelle → Datenübertragung → Verarbeitung → Primärspeicherung → Archivierung/Backup → Befund → KIS.</strong></p>
 
 </div>
 </main>
