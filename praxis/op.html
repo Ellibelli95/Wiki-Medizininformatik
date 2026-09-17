@@ -1,46 +1,15 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OP – MedizinInformatik Wiki</title>
-<link rel="stylesheet" href="../assets/style.css">
-</head>
-<body>
-<header><div class="header-inner">
-<h1>MedizinInformatik Wiki</h1>
-<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
-</div></header>
-<nav><div class="nav-inner">
-<a href="../index.html">Startseite</a>
-<a href="../medizintechnik/index.html">Medizintechnik</a>
-<a href="../vernetzung/index.html">Vernetzung</a>
-<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
-<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
-<a href="../datenfluesse/index.html">Datenflüsse</a>
-<a href="../schnittstellen-standards/index.html">Standards</a>
-<a href="../server-backend/index.html">Server</a>
-<a href="../cybersecurity/index.html">Cybersecurity</a>
-<a href="../web-engineering/index.html">Web Engineering</a>
-<a href="../praxis/index.html">Praxis</a>
-</div></nav>
-<main>
-<div class="breadcrumb"><a href="../index.html">Startseite</a> / Praxis / Fallbeispiele / OP</div>
-<div class="hero">
-
-<h2>OP</h2>
-<p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>OP</strong> vorgesehen.</p>
-<div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
-<h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
-
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
-
-</div>
-</main>
-<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
-</body>
-</html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>OP – MedizinInformatik Wiki</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header><div class="header-inner"><h1>MedizinInformatik Wiki</h1><p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p></div></header><nav><div class="nav-inner"><a href="../index.html">Startseite</a><a href="../medizintechnik/index.html">Medizintechnik</a><a href="../vernetzung/index.html">Vernetzung</a><a href="../krankenhaus-it/index.html">Krankenhaus-IT</a><a href="../klinische-informationssysteme/index.html">KIS & Systeme</a><a href="../datenfluesse/index.html">Datenflüsse</a><a href="../schnittstellen-standards/index.html">Standards</a><a href="../server-backend/index.html">Server</a><a href="../cybersecurity/index.html">Cybersecurity</a><a href="../web-engineering/index.html">Web Engineering</a><a href="../praxis/index.html">Praxis</a></div></nav>
+<main><div class="breadcrumb"><a href="../index.html">Startseite</a> / Praxis / Fallbeispiele / OP</div><div class="hero">
+<h2>OP – Digitaler Datenfluss im Operationssaal</h2><p>Der Operationssaal verbindet Medizintechnik, klinische Informationssysteme, Bildgebung, Dokumentation und teilweise Echtzeitdaten. Ziel ist ein nachvollziehbarer Datenfluss vom Patienten und Auftrag bis zur Dokumentation im Krankenhausinformationssystem.</p>
+<h3>1. Typische Komponenten</h3><ul><li>KIS für Patientendaten, Fall und administrative Informationen</li><li>OP-Management bzw. OP-Planung</li><li>Anästhesie- und Patientendatenmanagement</li><li>Medizingeräte wie Anästhesiegerät, Monitor, OP-Tisch und Endoskopiesystem</li><li>Bildgebende Systeme und Video-/Dokumentationssysteme</li><li>Kommunikationsserver bzw. Integrationsplattform</li><li>Datenbanken, Bildspeicher und Langzeitarchiv</li></ul>
+<h3>2. Beispielhafter Ablauf</h3><div class="flow">KIS → OP-Planung → OP-Arbeitsplatz → Medizingeräte → Kommunikationsserver → KIS / Dokumentation → Archiv</div><ol><li>Der Patient wird im KIS aufgenommen und erhält einen Fall bzw. Auftrag.</li><li>Die geplante Operation wird im OP-Management erfasst.</li><li>Patienten- und Auftragsdaten werden an die beteiligten Systeme übergeben.</li><li>Medizingeräte werden für den Eingriff vorbereitet und über das Kliniknetz angebunden.</li><li>Messwerte und Dokumentationsdaten können während des Eingriffs an ein Patientendaten- oder Dokumentationssystem übertragen werden.</li><li>Bilder oder Videos werden abhängig vom System lokal oder zentral gespeichert.</li><li>Nach dem Eingriff werden relevante Informationen in der klinischen Dokumentation zusammengeführt.</li></ol>
+<h3>3. Schnittstellen</h3><table><tr><th>Bereich</th><th>Mögliche Technologie</th></tr><tr><td>Patienten-/Auftragsdaten</td><td>HL7 v2, FHIR oder herstellerspezifische Schnittstelle</td></tr><tr><td>Bilddaten</td><td>DICOM</td></tr><tr><td>Gerätedaten</td><td>Herstellerspezifisch, IEEE-/Integrationsstandards je nach System</td></tr><tr><td>Dokumentation</td><td>KIS-/Integrationsschnittstelle</td></tr></table>
+<h3>4. Netzwerk</h3><p>OP-Geräte werden häufig in getrennten Netzwerksegmenten betrieben. VLANs, Firewalls und Zugriffskontrollen begrenzen die Kommunikation auf notwendige Ziele. Ein Gerät kann über Ethernet oder WLAN angebunden sein. Für die Fehlersuche sind IP-Adresse, VLAN, Gateway, DNS, Zieladresse und Ports zu prüfen.</p>
+<h3>5. Speicherung und Archivierung</h3><p>Während des Betriebs können Daten zunächst in einem lokalen Gerätespeicher oder einem zentralen System zwischengespeichert werden. Relevante klinische Dokumente und Bilder werden anschließend in zentralen Systemen gespeichert. Für Langzeitaufbewahrung können Archivsysteme bzw. VNA eingesetzt werden. Backups dienen zusätzlich der Wiederherstellung nach Datenverlust und sind nicht mit einer fachlichen Archivierung gleichzusetzen.</p>
+<h3>6. Sicherheit</h3><ul><li>Netzwerksegmentierung und restriktive Firewallregeln</li><li>Individuelle Benutzerkonten und rollenbasierte Zugriffe</li><li>Protokollierung von Zugriffen und Übertragungen</li><li>Schutz von Patientendaten während Übertragung und Speicherung</li><li>Regelmäßige Sicherung und Wiederherstellungstests</li><li>Dokumentation von Geräte- und Schnittstellenkonfigurationen</li></ul>
+<h3>7. Fehleranalyse</h3><p>Bei fehlenden Daten wird der Weg von der Quelle zum Ziel geprüft: Gerät → Netzwerk → Gateway → Kommunikationsserver → Schnittstelle → Applikation → Datenbank/Speicher. Logs des Geräts und der Integrationskomponenten helfen dabei, Übertragungsfehler einzugrenzen.</p>
+<h3>8. Praxisbeispiel</h3><p>Bei einer endoskopischen Operation kann das Endoskopiesystem Bild- oder Videodaten erzeugen. Patient und Fall werden über das klinische System zugeordnet. Die Dokumentation wird nach dem Eingriff mit dem richtigen Patientenfall verknüpft und entsprechend den lokalen Aufbewahrungsregeln gespeichert.</p>
+</div></main><footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer></body></html>
