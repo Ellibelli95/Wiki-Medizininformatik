@@ -1,46 +1,33 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kommunikationsserver → Applikation – MedizinInformatik Wiki</title>
-<link rel="stylesheet" href="../assets/style.css">
-</head>
-<body>
-<header><div class="header-inner">
-<h1>MedizinInformatik Wiki</h1>
-<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
-</div></header>
-<nav><div class="nav-inner">
-<a href="../index.html">Startseite</a>
-<a href="../medizintechnik/index.html">Medizintechnik</a>
-<a href="../vernetzung/index.html">Vernetzung</a>
-<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
-<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
-<a href="../datenfluesse/index.html">Datenflüsse</a>
-<a href="../schnittstellen-standards/index.html">Standards</a>
-<a href="../server-backend/index.html">Server</a>
-<a href="../cybersecurity/index.html">Cybersecurity</a>
-<a href="../web-engineering/index.html">Web Engineering</a>
-<a href="../praxis/index.html">Praxis</a>
-</div></nav>
-<main>
-<div class="breadcrumb"><a href="../index.html">Startseite</a> / Datenflüsse / Kommunikationsserver → Applikation</div>
-<div class="hero">
-
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Kommunikationsserver → Applikation – MedizinInformatik Wiki</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header><div class="header-inner"><h1>MedizinInformatik Wiki</h1><p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p></div></header>
+<nav><div class="nav-inner"><a href="../index.html">Startseite</a><a href="../medizintechnik/index.html">Medizintechnik</a><a href="../vernetzung/index.html">Vernetzung</a><a href="../krankenhaus-it/index.html">Krankenhaus-IT</a><a href="../klinische-informationssysteme/index.html">KIS & Systeme</a><a href="../datenfluesse/index.html">Datenflüsse</a><a href="../schnittstellen-standards/index.html">Standards</a><a href="../server-backend/index.html">Server</a><a href="../cybersecurity/index.html">Cybersecurity</a><a href="../web-engineering/index.html">Web Engineering</a><a href="../praxis/index.html">Praxis</a></div></nav>
+<main><div class="breadcrumb"><a href="../index.html">Startseite</a> / Datenflüsse / Kommunikationsserver → Applikation</div><div class="hero">
 <h2>Kommunikationsserver → Applikation</h2>
-<p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Kommunikationsserver → Applikation</strong> vorgesehen.</p>
-<div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
-<h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
-<div class="flow">Quelle → Netzwerk/Transport → Verarbeitung → Zielsystem → Speicherung</div>
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
-
-</div>
-</main>
-<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
-</body>
-</html>
+<p>Die Applikation ist die Ebene, auf der die empfangenen medizinischen Informationen fachlich genutzt werden. Der Kommunikationsserver stellt dabei die technische Verbindung her; die Applikation verarbeitet die Daten entsprechend ihrer klinischen Aufgabe.</p>
+<h3>1. Vom Server zur Anwendung</h3>
+<div class="flow">Kommunikationsserver → Schnittstelle → Applikation → Verarbeitung → Datenhaltung</div>
+<p>Die Übergabe kann beispielsweise über HL7 v2, FHIR, DICOM, REST-APIs oder andere produktspezifische Schnittstellen erfolgen. Welche Schnittstelle eingesetzt wird, hängt von der Anwendung und der Systemarchitektur ab.</p>
+<h3>2. Was macht die Applikation?</h3>
+<ul><li>Sie nimmt strukturierte Informationen entgegen.</li><li>Sie prüft fachliche Pflichtfelder und Plausibilität.</li><li>Sie ordnet Informationen einem Patienten, Fall oder Auftrag zu.</li><li>Sie stellt Daten für Benutzer oder Folgeprozesse bereit.</li><li>Sie speichert relevante Informationen in Datenbanken oder angebundenen Speichern.</li><li>Sie erzeugt bei Bedarf neue Nachrichten oder Befunde.</li></ul>
+<h3>3. Beispiel: RIS</h3>
+<p>Das Radiologieinformationssystem (RIS) verarbeitet unter anderem Untersuchungsaufträge, Termin- und Statusinformationen sowie Befunde. Ein Kommunikationsserver kann HL7-Nachrichten an das RIS übergeben.</p>
+<div class="flow">KIS → HL7 → Kommunikationsserver → RIS</div>
+<p>Nach der Verarbeitung kann das RIS beispielsweise einen Untersuchungsstatus zurückmelden oder einen Befund an ein anderes System übergeben.</p>
+<h3>4. Beispiel: PACS</h3>
+<p>Bei Bilddaten ist die Applikation häufig das PACS bzw. ein daran angebundener Dienst. Das Röntgengerät sendet DICOM-Objekte an einen DICOM-Router oder direkt an das PACS. Das PACS prüft die Objekte, ordnet sie der Untersuchung zu und speichert sie im vorgesehenen Bildspeicher.</p>
+<div class="flow">Röntgengerät → DICOM → DICOM-Router → PACS → Bildspeicher</div>
+<h3>5. Datenbank und Bildspeicher unterscheiden</h3>
+<p>Eine klinische Applikation kann Metadaten in einer relationalen Datenbank speichern, während große medizinische Dateien in einem separaten Objekt-, Datei- oder spezialisierten Bildspeicher liegen. Bei einem PACS können beispielsweise Patienten-, Studien- und Serieninformationen in Datenbankstrukturen verwaltet werden, während die eigentlichen DICOM-Objekte im Bildspeicher liegen.</p>
+<h3>6. Befundfluss</h3>
+<div class="flow">Bild → PACS Viewer → Befundapplikation / RIS → signierter Befund → Kommunikationsschnittstelle → KIS</div>
+<p>Der Befund wird in der dafür vorgesehenen Anwendung erstellt und nach der Freigabe über die konfigurierte Integrationsschnittstelle an das KIS übertragen. Je nach Architektur kann dabei HL7 v2, FHIR oder eine andere Schnittstelle eingesetzt werden.</p>
+<h3>7. Speicherung, Archivierung und Backup</h3>
+<table><tr><th>Ebene</th><th>Zweck</th></tr><tr><td>Applikationsdatenbank</td><td>Strukturierte Daten und Metadaten für die Anwendung</td></tr><tr><td>Online-/Primärspeicher</td><td>Schneller Zugriff auf aktuelle Daten und Bilder</td></tr><tr><td>Langzeitarchiv</td><td>Langfristige Aufbewahrung entsprechend organisatorischer und rechtlicher Vorgaben</td></tr><tr><td>Backup</td><td>Wiederherstellung nach Datenverlust oder technischen Ausfällen</td></tr><tr><td>Replikation</td><td>Zusätzliche Kopie auf einem getrennten System oder Standort</td></tr></table>
+<p>Backup und Archivierung erfüllen unterschiedliche Aufgaben. Ein Backup dient primär der Wiederherstellung; ein Archiv ist für die langfristige Verfügbarkeit und Aufbewahrung vorgesehen.</p>
+<h3>8. Monitoring und Fehleranalyse</h3>
+<ol><li>Prüfen, ob der Kommunikationsserver die Nachricht angenommen hat.</li><li>Prüfen, ob die Nachricht korrekt geroutet wurde.</li><li>Applikationslogs und Schnittstellenstatus kontrollieren.</li><li>Patienten-/Auftragszuordnung prüfen.</li><li>Datenbank- und Speicherstatus prüfen.</li><li>Bei Befunden zusätzlich Freigabe- und Übertragungsstatus prüfen.</li></ol>
+<h3>9. Gesamtzusammenhang</h3>
+<div class="flow">Gerät → Netzwerk → Gateway → Kommunikationsserver → Applikation → Datenbank / Bildspeicher → Archiv / Backup</div>
+</div></main><footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer></body></html>
