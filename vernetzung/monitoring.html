@@ -32,12 +32,62 @@
 <p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Monitoring</strong> vorgesehen.</p>
 <div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
 <h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+<p>Im Kontext der Vernetzung von Medizingeräten bezeichnet <strong>Monitoring</strong> primär die <em>IT-seitige Netzwerk- und Systemüberwachung</em> der Infrastruktur (Switches, Server, Gateways, Verbindungen) – zu unterscheiden vom klinischen "Monitoring" der Vitalparameter am Patientenbett. Ziel ist es, Ausfälle, Fehlkonfigurationen und Kapazitätsengpässe in der vernetzten Medizintechnik frühzeitig zu erkennen, bevor sie die Patientenversorgung beeinträchtigen. Da viele Medizingeräte 24/7 betrieben werden und Ausfälle unmittelbare klinische Relevanz haben, ist proaktives Monitoring hier besonders wichtig.</p>
+
+<h3>Komponenten</h3>
+<ul>
+<li><strong>Monitoring-Server/-Plattform</strong> – zentrale Sammlung und Auswertung von Zustands- und Leistungsdaten (z. B. Nagios, Zabbix, PRTG, herstellerspezifische Systeme wie z. B. GE CARESCAPE-Netzwerküberwachung).</li>
+<li><strong>SNMP-Agenten</strong> – auf Switches, Servern und vielen netzwerkfähigen Medizingeräten, liefern Status- und Leistungsdaten auf Anfrage oder als Trap bei Ereignissen.</li>
+<li><strong>Syslog-Sammlung</strong> – zentrale Erfassung von Log-Meldungen aktiver Netzkomponenten.</li>
+<li><strong>Dashboards/Alarmierung</strong> – visuelle Aufbereitung sowie automatisierte Benachrichtigung (E-Mail, Ticket, Pager) bei Schwellenwertüberschreitung oder Ausfall.</li>
+<li><strong>Gerätespezifisches Monitoring</strong> – z. B. Verbindungsstatus von Patientenmonitoren zum zentralen Überwachungsserver, oft Teil der Herstellerlösung selbst.</li>
+</ul>
+
+<h3>Technische Funktionsweise</h3>
+<p>Monitoring-Systeme arbeiten überwiegend nach zwei Prinzipien: <u>Polling</u> (aktives, regelmäßiges Abfragen von Zustandswerten, z. B. per SNMP GET oder ICMP-Ping) und <u>Event-getrieben</u> (das überwachte System meldet selbstständig Ereignisse, z. B. per SNMP-Trap oder Syslog-Meldung bei Statuswechsel). Für Netzwerkkomponenten werden typischerweise Erreichbarkeit (Ping), Schnittstellenauslastung, Fehlerzähler und CPU-/Speicherauslastung erfasst; bei Gateways/Servern zusätzlich Dienststatus und Nachrichtendurchsatz. Schwellenwerte definieren, ab wann ein Zustand als "Warnung" oder "Kritisch" gilt.</p>
 <div class="flow">Medizinisches Gerät → Switch → Netzwerksegment → Gateway/Server → Anwendung</div>
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+<p>Das Monitoring-System selbst beobachtet primär die Komponenten <em>Switch</em>, <em>Netzwerksegment/Verbindung</em> und <em>Gateway/Server</em> in diesem Datenfluss – bei Ausfall eines dieser Glieder wird die Kette unterbrochen und alarmiert.</p>
+
+<h3>Konfiguration</h3>
+<ul>
+<li>Festlegung der zu überwachenden Objekte (Switches, Server, kritische Gateways) und relevanter Kennzahlen je Objekttyp.</li>
+<li>SNMP-Community-Strings bzw. SNMPv3-Zugangsdaten sicher hinterlegen; wo möglich SNMPv3 (mit Authentifizierung/Verschlüsselung) statt unverschlüsseltem SNMPv1/v2c verwenden.</li>
+<li>Schwellenwerte je Kennzahl (z. B. Portauslastung, Antwortzeit, Fehlerpaketrate) auf den klinischen Kontext abstimmen – zu enge Schwellen erzeugen Alarmmüdigkeit, zu weite verzögern Reaktionen.</li>
+<li>Eskalationsstufen und Zuständigkeiten (Erstreaktion IT-Support, Eskalation an Medizintechnik/Hersteller) definieren.</li>
+</ul>
+
+<h3>Datenfluss</h3>
+<p>Überwachte Komponenten senden Zustandsdaten (per Polling-Antwort oder Trap/Syslog) an den Monitoring-Server. Dieser wertet die Daten aus, aktualisiert Dashboards und löst bei Schwellenwertüberschreitung eine Alarmierung an das zuständige Personal aus. Historische Daten werden meist in einer Zeitreihendatenbank abgelegt, um Trends (z. B. schleichende Auslastungssteigerung) sichtbar zu machen.</p>
+
+<h3>Schnittstellen</h3>
+<ul>
+<li><strong>SNMP</strong> – Standardprotokoll zur Abfrage/Alarmierung bei Netzwerkkomponenten.</li>
+<li><strong>Syslog</strong> – textbasierte Protokollmeldungen, häufig zusätzlich zur SNMP-Überwachung genutzt.</li>
+<li><strong>Ticket-/ITSM-Systeme</strong> – automatische Ticketerstellung bei kritischen Alarmen zur Nachverfolgung.</li>
+<li><strong>Herstellerspezifische APIs</strong> – manche Medizingerätehersteller bieten eigene Statusschnittstellen, die zusätzlich zum allgemeinen Netzwerkmonitoring ausgewertet werden können.</li>
+</ul>
+
+<h3>Sicherheit</h3>
+<ul>
+<li>Monitoring-Zugänge (SNMP-Strings, Dashboard-Logins) sind selbst schützenswert, da sie detaillierte Informationen über die Infrastruktur liefern – Zugriff nur für berechtigtes Personal.</li>
+<li>Monitoring-Traffic nach Möglichkeit auf einem separaten Management-VLAN führen, getrennt vom eigentlichen Datenverkehr der Medizingeräte.</li>
+<li>Das Monitoring-System ist zugleich ein sinnvolles Werkzeug zur <em>Erkennung</em> sicherheitsrelevanter Auffälligkeiten (z. B. unerwartete neue Geräte im Netz, ungewöhnlicher Traffic) – Verzahnung mit NAC/WAF-Logs sinnvoll.</li>
+</ul>
+
+<h3>Fehleranalyse</h3>
+<ul>
+<li><strong>Fehlalarme ("Flapping"):</strong> häufig durch zu enge Schwellenwerte oder instabile Verbindungen (z. B. WLAN) verursacht – Hysterese/Bestätigungsintervalle prüfen.</li>
+<li><strong>Kein Alarm trotz tatsächlichem Ausfall:</strong> Prüfen, ob das Monitoring selbst noch funktionsfähig ist ("Wer überwacht den Überwacher?") und ob die betroffene Komponente korrekt eingebunden war.</li>
+<li><strong>SNMP-Abfragen schlagen fehl:</strong> Community-String/Zugangsdaten, ACLs auf dem Zielgerät und Erreichbarkeit über das Management-VLAN prüfen.</li>
+<li><strong>Verzögerte Alarmierung:</strong> Polling-Intervalle und Eskalationsregeln (Wartezeit vor Benachrichtigung) kontrollieren.</li>
+</ul>
+
+<h3>Praxisbeispiele</h3>
+<ul>
+<li><strong>Ausfall eines Stations-Switches:</strong> Monitoring erkennt Nichterreichbarkeit mehrerer angeschlossener Patientenmonitore gleichzeitig, korreliert dies mit dem Switch-Status und alarmiert gezielt die IT statt einzelne Gerätemeldungen isoliert zu behandeln.</li>
+<li><strong>Kapazitätsplanung:</strong> Langfristige Auswertung der Portauslastung zeigt, dass ein Verteilerswitch an seine Grenzen kommt, bevor es zu Engpässen im klinischen Betrieb kommt.</li>
+<li><strong>Anbindung eines neuen Gateways:</strong> Direkt nach Inbetriebnahme wird das Gateway ins Monitoring aufgenommen, um Fehlfunktionen ab dem ersten Tag zuverlässig zu erkennen.</li>
+</ul>
 
 </div>
 </main>

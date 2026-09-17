@@ -32,12 +32,56 @@
 <p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Routing</strong> vorgesehen.</p>
 <div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
 <h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+<p><strong>Routing</strong> bezeichnet die Wegewahl für Datenpakete zwischen unterschiedlichen Netzwerksegmenten (Subnetzen/VLANs). Während ein Switch innerhalb eines Segments vermittelt, ermöglicht Routing die Kommunikation zwischen getrennten Segmenten – z. B. zwischen dem Medizingeräte-VLAN einer Station und dem zentralen Server-Segment mit KIS/PDMS. In der Medizin-IT ist durchdachtes Routing eng mit der Segmentierungsstrategie verknüpft: Segmente trennen aus Sicherheits- und Stabilitätsgründen, Routing verbindet sie kontrolliert dort, wo Kommunikation tatsächlich notwendig ist.</p>
+
+<h3>Komponenten</h3>
+<ul>
+<li><strong>Layer-3-Switch / Router</strong> – aktive Komponente, die anhand von Routing-Tabellen Pakete zwischen Subnetzen weiterleitet.</li>
+<li><strong>Routing-Tabelle</strong> – Zuordnung von Zielnetzen zu Ausgangsschnittstellen/Next-Hops, statisch gepflegt oder dynamisch per Routing-Protokoll gelernt.</li>
+<li><strong>Access Control Lists (ACLs)</strong> – regelbasierte Filterung, welche Kommunikation zwischen Segmenten überhaupt erlaubt ist (oft in Kombination mit oder statt einer dedizierten Firewall).</li>
+<li><strong>Default Gateway</strong> – vom Endgerät konfigurierte Adresse, an die alle Pakete außerhalb des eigenen Subnetzes zunächst gesendet werden.</li>
+</ul>
+
+<h3>Technische Funktionsweise</h3>
+<p>Möchte ein Medizingerät mit einem Zielsystem in einem anderen Subnetz kommunizieren, sendet es das Paket an sein konfiguriertes Default Gateway. Der Router/Layer-3-Switch prüft anhand seiner Routing-Tabelle, über welche Schnittstelle das Zielnetz erreichbar ist, wendet ggf. konfigurierte ACLs an (Erlauben/Verwerfen basierend auf Quelle, Ziel, Port/Protokoll) und leitet das Paket entsprechend weiter. In größeren Häusern erfolgt dies oft über mehrere Routing-Hops mit dynamischen Routing-Protokollen (z. B. OSPF) zwischen den Kernnetzkomponenten, während an den Rändern (Stationsebene) meist statisches Routing mit einfachen Default-Routen genügt.</p>
 <div class="flow">Medizinisches Gerät → Switch → Netzwerksegment → Gateway/Server → Anwendung</div>
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+<p>Der im Diagramm dargestellte Schritt <em>Netzwerksegment → Gateway/Server</em> ist in der Praxis häufig genau der Punkt, an dem Routing (inkl. ACL-Prüfung) stattfindet.</p>
+
+<h3>Konfiguration</h3>
+<ul>
+<li>Statische Routen für klar abgegrenzte, selten wechselnde Zielnetze (z. B. Medizingeräte-VLAN → Server-Segment).</li>
+<li>Dynamisches Routing (z. B. OSPF) im Kernnetz größerer Standorte, um Ausfallsicherheit und automatische Umwege bei Verbindungsausfällen zu ermöglichen.</li>
+<li>ACLs so restriktiv wie möglich gestalten ("Deny by Default"): nur explizit benötigte Ziel-Ports/-Protokolle zwischen Medizingeräte- und Serversegmenten freigeben.</li>
+<li>Dokumentation der Segmentierungs- und Routingtopologie, da diese direkte Auswirkung auf Erreichbarkeit und Fehlerbilder hat.</li>
+</ul>
+
+<h3>Datenfluss</h3>
+<p>Routing wirkt auf Schicht 3 zwischen den in der Netzwerktopologie getrennten Segmenten. Ein typischer Fluss: Medizingerät (Segment A) → Default Gateway/Router → Prüfung gegen Routing-Tabelle und ACL → Weiterleitung ins Zielsegment B, in dem sich z. B. der Gateway-Server oder das KIS befindet. Antwortpakete durchlaufen denselben Pfad in umgekehrter Richtung.</p>
+
+<h3>Schnittstellen</h3>
+<p>Routing selbst ist protokollunabhängig (Schicht 3, IP), betrifft aber mittelbar alle darüberliegenden Anwendungsprotokolle (HL7, DICOM, HTTPS). Enge Verzahnung mit den Themen <a href="netzwerkanschluss.html">Netzwerkanschluss</a> (Segmentzugehörigkeit des Geräts), <a href="gateways.html">Gateways</a> (typisches Routing-Ziel) sowie <a href="../cybersecurity/index.html">Cybersecurity</a> (ACL-/Firewall-Regeln).</p>
+
+<h3>Sicherheit</h3>
+<ul>
+<li>Segmentierung ohne konsequente ACL-Filterung bietet kaum Schutz – Routing zwischen Segmenten sollte immer mit expliziten, restriktiven Regeln kombiniert werden.</li>
+<li>Medizingeräte-Segmente sollten möglichst keinen direkten Routing-Pfad ins Internet haben; falls Internetzugriff (z. B. für Fernwartung) nötig ist, über kontrollierte Gateways/VPN führen.</li>
+<li>Änderungen an Routing-Tabellen/ACLs sind änderungskontrollpflichtig, da Fehlkonfigurationen unmittelbar die Erreichbarkeit kritischer Systeme beeinträchtigen können.</li>
+</ul>
+
+<h3>Fehleranalyse</h3>
+<ul>
+<li><strong>Gerät im eigenen Segment erreichbar, aber nicht segmentübergreifend:</strong> Default-Gateway-Konfiguration am Gerät sowie Routing-Tabelle/ACLs am zuständigen Router prüfen.</li>
+<li><strong>Traceroute bricht an bestimmtem Hop ab:</strong> deutet auf fehlende Route oder blockierende ACL an dieser Stelle hin.</li>
+<li><strong>Intermittierende Erreichbarkeit bei dynamischem Routing:</strong> Instabilität von Routing-Nachbarschaften (z. B. OSPF-Adjacency) als mögliche Ursache prüfen.</li>
+<li><strong>Asymmetrisches Routing:</strong> Hin- und Rückweg nutzen unterschiedliche Pfade, was insbesondere bei zustandsbehafteten Firewalls zu Verbindungsabbrüchen führen kann.</li>
+</ul>
+
+<h3>Praxisbeispiele</h3>
+<ul>
+<li><strong>Anbindung eines neuen Stationsgebäudes:</strong> neues Medizingeräte-VLAN wird angelegt, Routing zum bestehenden Server-Segment sowie passende ACLs (nur Kommunikation mit definierten Gateway-Servern) eingerichtet.</li>
+<li><strong>Trennung von Test- und Produktivumgebung:</strong> separates Testsegment ohne Routing-Verbindung zum Produktivnetz, um versehentliche Datenübertragung von Testgeräten in produktive Systeme auszuschließen.</li>
+<li><strong>Fehlersuche bei "Gerät sendet, KIS empfängt nichts":</strong> systematische Prüfung entlang des Pfads – zunächst Erreichbarkeit im eigenen Segment, dann Routing-Hop für Hop bis zum Zielsystem.</li>
+</ul>
 
 </div>
 </main>

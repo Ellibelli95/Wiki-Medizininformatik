@@ -32,12 +32,56 @@
 <p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>NAC</strong> vorgesehen.</p>
 <div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
 <h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+<p><strong>Network Access Control (NAC)</strong> bezeichnet Verfahren und Systeme, mit denen kontrolliert wird, welche Geräte sich überhaupt am Netzwerk anmelden dürfen und welchem Segment sie dabei zugeordnet werden. Im Krankenhaus ist NAC besonders relevant, weil sich am Netz eine sehr heterogene Gerätelandschaft befindet – von aktuellen Arbeitsplatzrechnern über Jahre alte Medizingeräte bis zu mobilen Endgeräten des Personals – und weil unautorisierte Geräte im Netz ein erhebliches Sicherheitsrisiko darstellen (z. B. mitgebrachte Laptops, manipulierte Geräte an offenen Dosen).</p>
+
+<h3>Komponenten</h3>
+<ul>
+<li><strong>NAC-Server/-Policy-Engine</strong> – zentrale Instanz, die Zugriffsentscheidungen anhand definierter Regeln trifft (z. B. Cisco ISE, Aruba ClearPass, FortiNAC).</li>
+<li><strong>Switches mit 802.1X-Unterstützung</strong> – setzen die Zugriffsentscheidung am jeweiligen Port um.</li>
+<li><strong>RADIUS-Server</strong> – häufig genutztes Protokoll zur Authentifizierung von Geräten/Nutzenden gegenüber der NAC-Lösung.</li>
+<li><strong>Geräteprofilierung ("Fingerprinting")</strong> – erkennt Gerätetyp anhand von Merkmalen wie MAC-Adresse, DHCP-Anfragen oder Netzwerkverhalten, wichtig für Medizingeräte ohne 802.1X-Unterstützung.</li>
+</ul>
+
+<h3>Technische Funktionsweise</h3>
+<p>Beim Anschluss eines Geräts an einen NAC-fähigen Port prüft der Switch zunächst, ob eine 802.1X-Authentifizierung möglich ist (Gerät/Nutzer weist sich über Zertifikat oder Zugangsdaten aus). Viele ältere Medizingeräte unterstützen kein 802.1X – hier greift meist <strong>MAC Authentication Bypass (MAB)</strong>: Das Gerät wird anhand seiner MAC-Adresse gegen eine Positivliste geprüft und bei Übereinstimmung dem passenden VLAN zugeordnet, ergänzt um Profiling-Informationen zur Plausibilisierung. Erst nach erfolgreicher Prüfung schaltet der Switch den Port für regulären Datenverkehr frei; bei fehlgeschlagener Prüfung erfolgt keine oder nur eine eingeschränkte Freischaltung (z. B. Gäste-/Quarantäne-VLAN).</p>
 <div class="flow">Medizinisches Gerät → Switch → Netzwerksegment → Gateway/Server → Anwendung</div>
-<h3> </h3>
-<p>Dieses Thema wird in der Cybersicherheit genauer erläutert.</p
+<p>NAC wirkt damit ganz am Anfang dieser Kette – bereits bevor ein Gerät überhaupt einem Netzwerksegment zugeordnet wird.</p>
+
+<h3>Konfiguration</h3>
+<ul>
+<li>Pflege einer Positivliste (MAC-Adressen bzw. Zertifikate) bekannter, autorisierter Medizingeräte inkl. Zielsegment/VLAN.</li>
+<li>Definition von Profiling-Regeln zur automatischen Erkennung von Gerätetypen, um Verwaltungsaufwand bei großen Gerätemengen zu reduzieren.</li>
+<li>Festlegung des Verhaltens bei unbekannten/nicht autorisierten Geräten (i. d. R. Quarantäne-VLAN ohne oder mit stark eingeschränktem Zugriff statt vollständiger Sperre, um Fehlalarme handhabbar zu machen).</li>
+<li>Prozess für Onboarding neuer Geräte (Aufnahme in die Positivliste vor Inbetriebnahme, Abstimmung mit Medizintechnik/Beschaffung).</li>
+</ul>
+
+<h3>Datenfluss</h3>
+<p>Bei jedem Verbindungsaufbau läuft ein Authentifizierungsdialog zwischen Endgerät bzw. Switch und dem NAC-/RADIUS-Server ab, bevor Nutzdatenverkehr überhaupt möglich ist. Die Entscheidung des NAC-Servers (Zulassen, Segment X, Quarantäne, Ablehnen) wird an den Switch zurückgemeldet, der den Port entsprechend konfiguriert. Erst danach beginnt der eigentliche Anwendungsdatenfluss zum Gateway/Server.</p>
+
+<h3>Schnittstellen</h3>
+<p>NAC nutzt vor allem <strong>802.1X (EAP)</strong> zwischen Endgerät und Switch sowie <strong>RADIUS</strong> zwischen Switch und NAC-Server. Enge Verzahnung mit den Themen <a href="netzwerkanschluss.html">Netzwerkanschluss</a> (physischer Anschlusspunkt) und <a href="../cybersecurity/index.html">Cybersecurity</a> (Zugriffskontrolle als zentrale Schutzmaßnahme).</p>
+
+<h3>Sicherheit</h3>
+<ul>
+<li>NAC ist eine zentrale Maßnahme gegen unautorisierten physischen Netzzugriff – ohne NAC genügt oft das bloße Einstecken eines Geräts an einer freien Dose für Netzzugang.</li>
+<li>MAC-basierte Verfahren (MAB) sind grundsätzlich durch MAC-Spoofing angreifbar; Kombination mit Geräteprofiling und physischer Zugriffskontrolle (siehe <a href="netzwerkanschluss.html">Netzwerkanschluss</a>) reduziert dieses Risiko.</li>
+<li>Quarantäne-VLANs sollten so ausgelegt sein, dass sie keinen Zugriff auf schützenswerte Segmente erlauben, aber grundlegende Dienste (z. B. Zugriff auf ein Registrierungsportal) noch ermöglichen.</li>
+</ul>
+
+<h3>Fehleranalyse</h3>
+<ul>
+<li><strong>Bekanntes Gerät landet im Quarantäne-VLAN:</strong> MAC-Adresse/Zertifikat in der Positivliste sowie Profiling-Regeln prüfen; ggf. hat sich die MAC-Adresse durch Netzwerkkartentausch geändert.</li>
+<li><strong>802.1X-Authentifizierung schlägt fehl:</strong> Zertifikatsgültigkeit, Uhrzeitabweichung und RADIUS-Erreichbarkeit vom Switch aus prüfen.</li>
+<li><strong>Gerät erhält falsches VLAN:</strong> Zuordnungsregel im NAC-Server (Policy) sowie zurückgemeldete VLAN-Information am Switch kontrollieren.</li>
+<li><strong>Verzögerter Verbindungsaufbau nach Neustart vieler Geräte gleichzeitig:</strong> Hinweis auf Überlastung des RADIUS-/NAC-Servers bei Massen-Reconnects (z. B. nach Stromausfall).</li>
+</ul>
+
+<h3>Praxisbeispiele</h3>
+<ul>
+<li><strong>Inbetriebnahme eines neuen Infusionspumpen-Typs:</strong> MAC-Adressbereich des Herstellers wird vorab in die NAC-Positivliste aufgenommen und dem korrekten Medizingeräte-VLAN zugeordnet.</li>
+<li><strong>Unbekanntes Gerät an Stations-Dose:</strong> NAC weist das Gerät automatisch dem Quarantäne-VLAN zu; IT wird benachrichtigt und kann klären, ob es sich um ein legitimes, noch nicht registriertes Gerät oder einen Fremdzugriff handelt.</li>
+<li><strong>Jährliche Bereinigung der Positivliste:</strong> Abgleich der NAC-Geräteliste mit dem tatsächlichen Medizingeräteinventar, um ausgemusterte Geräte zu entfernen und Sicherheitslücken durch veraltete Einträge zu vermeiden.</li>
+</ul>
 
 </div>
 </main>

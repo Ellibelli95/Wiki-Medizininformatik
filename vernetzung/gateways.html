@@ -32,12 +32,60 @@
 <p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Gateways</strong> vorgesehen.</p>
 <div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
 <h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+<p>Ein <strong>Gateway</strong> ist im Kontext der Medizingerätevernetzung eine vermittelnde Instanz zwischen einem Medizingerät (oder Gerätenetzwerk) und den zentralen IT-Systemen (KIS, PDMS, PACS). Gateways übersetzen zwischen unterschiedlichen Protokollen, Datenformaten und teils auch Netzwerkebenen – notwendig, weil Medizingeräte oft proprietäre oder ältere Protokolle sprechen, während zentrale Systeme standardisierte Formate (z. B. HL7, FHIR, DICOM) erwarten. Typischer Einsatz: Anbindung von Patientenmonitoren, Beatmungsgeräten oder Laborgeräten ohne native Standardschnittstelle.</p>
+
+<h3>Komponenten</h3>
+<ul>
+<li><strong>Protokoll-/Datenkonverter</strong> – Kernfunktion des Gateways, setzt geräteseitige Formate in Zielformate um (z. B. proprietäres Monitor-Protokoll → HL7 ORU).</li>
+<li><strong>Pufferspeicher/Warteschlange</strong> – zwischenspeichert Nachrichten bei kurzzeitiger Nichterreichbarkeit des Zielsystems, um Datenverlust zu vermeiden.</li>
+<li><strong>Mapping-/Regelwerk</strong> – Konfiguration, welche Datenfelder wie abgebildet werden (z. B. Zuordnung von Geräte-IDs zu Patienten-/Bettplatz-Kontext).</li>
+<li><strong>Managementoberfläche</strong> – zur Konfiguration, Statusüberwachung und Fehlersuche, oft webbasiert.</li>
+<li><strong>Redundante Instanzen</strong> – bei kritischen Gateways häufig als Failover-Cluster ausgelegt.</li>
+</ul>
+
+<h3>Technische Funktionsweise</h3>
+<p>Ein Gateway nimmt eingehende Nachrichten des Medizingeräts entgegen (z. B. über eine serielle Schnittstelle, ein proprietäres Netzwerkprotokoll oder eine Herstellerschnittstelle), parst die enthaltenen Daten, wendet das konfigurierte Mapping an und erzeugt daraus eine Nachricht im Zielformat, die an das Empfängersystem weitergeleitet wird. Bei bidirektionaler Kommunikation (z. B. Bestätigungen, Konfigurationsbefehle) läuft dieser Prozess auch in umgekehrter Richtung. Viele Gateways führen zusätzlich eine Kontext-Zuordnung durch (Patient-Device-Binding), damit Messwerte korrekt dem jeweiligen Patienten zugeordnet werden.</p>
 <div class="flow">Medizinisches Gerät → Switch → Netzwerksegment → Gateway/Server → Anwendung</div>
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+
+<h3>Konfiguration</h3>
+<ul>
+<li>Definition der unterstützten Quell- und Zielprotokolle sowie der jeweiligen Mapping-Regeln (Datenfeld-Zuordnung, Einheitenumrechnung).</li>
+<li>Konfiguration der Patient-Device-Zuordnung (manuell am Bett, automatisch über Bettplatz-ID oder Barcode-Scan).</li>
+<li>Fehlerbehandlung: Verhalten bei nicht zuordenbaren Nachrichten (verwerfen, in Fehlerwarteschlange ablegen, manuell nachbearbeiten) festlegen.</li>
+<li>Kapazitäts- und Timeout-Parameter (Warteschlangengröße, Wiederholversuche bei Zielsystem-Ausfall).</li>
+</ul>
+
+<h3>Datenfluss</h3>
+<p>Das Gateway steht als vermittelnde Instanz im Zentrum des Datenflusses: eingehende Rohdaten vom Gerät werden geparst, kontextualisiert (Patientenbezug) und in ein Zielformat transformiert, bevor sie an KIS/PDMS/PACS weitergereicht werden. Bei Nichterreichbarkeit des Zielsystems übernimmt die Pufferung die vorübergehende Speicherung, um Datenverluste zu vermeiden; nach Wiederherstellung der Verbindung erfolgt eine Nachlieferung der aufgestauten Nachrichten.</p>
+
+<h3>Schnittstellen</h3>
+<ul>
+<li><strong>Geräteseitig:</strong> proprietäre Herstellerprotokolle, seriell (RS-232) mit Protokollumsetzer, oder herstellerspezifische Netzwerkprotokolle.</li>
+<li><strong>Zielsystemseitig:</strong> HL7 v2.x (häufigster Standard für Vitaldaten/Ergebnisse), zunehmend HL7 FHIR, DICOM bei Bildgebungsgeräten.</li>
+<li><strong>Verwandte Themen:</strong> <a href="../klinische-informationssysteme/index.html">KIS &amp; Systeme</a>, <a href="../schnittstellen-standards/index.html">Standards</a>, <a href="routing.html">Routing</a>.</li>
+</ul>
+
+<h3>Sicherheit</h3>
+<ul>
+<li>Gateways sind aufgrund ihrer zentralen Vermittlerrolle attraktive Angriffsziele – Zugriff auf Management-Oberflächen sollte streng auf autorisiertes Personal beschränkt und wo möglich per VPN/Management-VLAN abgesichert sein.</li>
+<li>Ältere Gateways unterstützen teils nur unverschlüsselte Protokolle zum Zielsystem – Absicherung durch Netzwerksegmentierung, wo Verschlüsselung auf Anwendungsebene fehlt.</li>
+<li>Konsistente Patientenzuordnung ist auch ein Sicherheits-/Patientensicherheitsthema: Fehlzuordnungen (falscher Patient zu Messwert) müssen durch Validierungsmechanismen im Gateway minimiert werden.</li>
+</ul>
+
+<h3>Fehleranalyse</h3>
+<ul>
+<li><strong>Daten kommen im KIS nicht an:</strong> Gateway-Logs prüfen – Unterscheidung zwischen "Nachricht nicht empfangen" (Netzwerk-/Geräteproblem) und "Nachricht empfangen, aber Transformation/Zuordnung fehlgeschlagen".</li>
+<li><strong>Falsche Patientenzuordnung:</strong> Konfiguration der Patient-Device-Bindung sowie Bettplatz-/ID-Zuordnung im Gateway kontrollieren.</li>
+<li><strong>Wachsende Warteschlange/steigende Verzögerung:</strong> Hinweis auf Erreichbarkeitsprobleme des Zielsystems oder Kapazitätsengpass am Gateway.</li>
+<li><strong>Mapping-Fehler bei neuen Gerätetypen:</strong> nach Firmware-Updates am Medizingerät kann sich das Nachrichtenformat ändern – Mapping-Regeln entsprechend prüfen und anpassen.</li>
+</ul>
+
+<h3>Praxisbeispiele</h3>
+<ul>
+<li><strong>Anbindung eines Patientenmonitors ohne native HL7-Schnittstelle</strong> über ein Gateway, das das proprietäre Herstellerprotokoll in HL7-ORU-Nachrichten für das PDMS umwandelt.</li>
+<li><strong>Migration/Ablösung eines Gateway-Herstellers:</strong> Prüfung, ob alle bestehenden Mapping-Regeln und Patientenzuordnungslogiken im neuen System nachgebildet werden können, bevor der alte Gateway abgeschaltet wird.</li>
+<li><strong>Kurzzeitiger Ausfall des KIS:</strong> Gateway puffert eingehende Messwerte mehrerer Stunden und liefert sie nach Wiederherstellung vollständig nach, ohne dass Daten verloren gehen.</li>
+</ul>
 
 </div>
 </main>

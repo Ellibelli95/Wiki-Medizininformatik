@@ -32,12 +32,58 @@
 <p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Netzwerkanschluss</strong> vorgesehen.</p>
 <div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
 <h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+<p>Der <strong>Netzwerkanschluss</strong> eines Medizingeräts ist die physische und logische Anbindung an das Krankenhausnetzwerk – Voraussetzung dafür, dass Vitaldaten, Bilddaten oder Gerätestatus überhaupt in KIS, PDMS oder PACS ankommen. Anders als in der klassischen Büro-IT gelten hier verschärfte Anforderungen: Medizingeräte sind oft über Jahre im Betrieb, laufen mit veralteten Betriebssystemen/Firmware und dürfen aus Zulassungsgründen (MDR/IEC 62304) häufig nicht beliebig verändert oder gepatcht werden. Der Netzwerkanschluss muss diese Geräte trotzdem sicher und zuverlässig einbinden.</p>
+<p>Typische Einsatzumgebungen: Patientenmonitore, Infusionspumpen mit Netzwerkanbindung, Beatmungsgeräte, Labor- und Bildgebungsgeräte, mobile Visitenwagen (WLAN).</p>
+
+<h3>Komponenten</h3>
+<ul>
+<li><strong>Netzwerkschnittstelle am Gerät</strong> – meist Ethernet (RJ45), zunehmend auch WLAN oder seltener seriell mit Protokollumsetzer.</li>
+<li><strong>Patchfeld / Dosen</strong> – strukturierte Verkabelung im Gebäude, oft nach Etagen/Stationen organisiert.</li>
+<li><strong>Access Switch</strong> – erster aktiver Netzwerkknoten, an den das Gerät angeschlossen wird.</li>
+<li><strong>VLAN-Zuordnung</strong> – logische Trennung, damit Medizingeräte nicht im selben Broadcast-Domain wie Büro-PCs oder Gäste-WLAN laufen.</li>
+<li><strong>Power over Ethernet (PoE)</strong> – bei manchen Geräten (z. B. IP-Kameras, manche Monitore) Stromversorgung über das Datenkabel.</li>
+</ul>
+
+<h3>Technische Funktionsweise</h3>
+<p>Beim Anschluss eines Geräts läuft üblicherweise folgender Ablauf ab: Link-Erkennung auf physikalischer Ebene (Autonegotiation von Geschwindigkeit/Duplex) → Zuordnung des Switch-Ports zu einem VLAN (statisch per Port-Konfiguration oder dynamisch per 802.1X, siehe NAC) → Bezug einer IP-Adresse per DHCP (mit fester Reservierung anhand der MAC-Adresse, da viele Medizingeräte feste IPs benötigen) oder statische Konfiguration am Gerät selbst → Erreichbarkeit von Zielsystemen abhängig von Routing und Firewall-/ACL-Regeln zwischen den Segmenten.</p>
 <div class="flow">Medizinisches Gerät → Switch → Netzwerksegment → Gateway/Server → Anwendung</div>
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+
+<h3>Konfiguration</h3>
+<ul>
+<li>Port-Konfiguration am Switch: VLAN-Zuweisung, ggf. Port-Security (Begrenzung auf bekannte MAC-Adressen), Deaktivierung ungenutzter Ports.</li>
+<li>IP-Vergabe: DHCP mit MAC-Reservierung ist Standard, da Geräteaustausch/Reparatur ohne manuelle Neukonfiguration möglich bleibt; rein statische Konfiguration nur bei Geräten ohne DHCP-Unterstützung.</li>
+<li>Dokumentation: Zuordnung Geräte-ID ↔ MAC-Adresse ↔ Switch-Port ↔ VLAN sollte im Inventar/CMDB gepflegt werden – zentral für Fehlersuche und Austauschprozesse.</li>
+<li>Redundanz: bei kritischen Geräten (z. B. zentrale Monitoring-Server) doppelte Anbindung über getrennte Switches (Link Aggregation/Redundanzprotokolle).</li>
+</ul>
+
+<h3>Datenfluss</h3>
+<p>Nach erfolgreichem Netzwerkanschluss sendet das Gerät Daten (z. B. Vitalwerte, Statusmeldungen) über sein zugewiesenes VLAN an einen Gateway- oder Applikationsserver, der die geräteseitigen Protokolle (z. B. HL7, proprietäre Herstellerprotokolle) in Zielformate umsetzt und an KIS/PDMS weiterreicht. Rückkanäle (z. B. Konfigurationsänderungen, Fernwartung) laufen in der Regel über denselben Pfad, oft zusätzlich abgesichert.</p>
+
+<h3>Schnittstellen</h3>
+<p>Der Netzwerkanschluss selbst ist die Voraussetzung für alle darüberliegenden Schnittstellen (HL7, DICOM, proprietäre Herstellerprotokolle) – ohne funktionierende Schicht-1/2/3-Anbindung ist keine Anwendungskommunikation möglich. Relevante Nachbarthemen: <a href="gateways.html">Gateways</a>, <a href="routing.html">Routing</a>, <a href="nac.html">NAC</a>.</p>
+
+<h3>Sicherheit</h3>
+<ul>
+<li><strong>Netzwerksegmentierung:</strong> eigenes VLAN/Subnetz für Medizingeräte, getrennt von Büro- und Gästenetz, mit restriktiven Firewall-Regeln zwischen den Segmenten.</li>
+<li><strong>Port-Security/NAC:</strong> Verhindert, dass Fremdgeräte einfach in eine freie Dose gesteckt werden und Zugriff auf das Medizingerätenetz erhalten.</li>
+<li><strong>Physischer Zugriffsschutz:</strong> Patchfelder und Switche in verschlossenen Verteilerräumen, da physischer Zugriff oft den einfachsten Angriffsweg darstellt.</li>
+<li><strong>Monitoring der Portauslastung/Statusänderungen:</strong> unerwartetes Auf-/Abstecken von Geräten kann auf Manipulation oder Defekt hinweisen.</li>
+</ul>
+
+<h3>Fehleranalyse</h3>
+<ul>
+<li><strong>Kein Link am Switch-Port:</strong> Kabel/Dose prüfen, Autonegotiation-Einstellungen vergleichen, Port-Status am Switch auslesen.</li>
+<li><strong>Gerät bekommt keine IP-Adresse:</strong> DHCP-Scope und Reservierung prüfen, VLAN-Zuordnung des Ports kontrollieren, ggf. 802.1X-Authentifizierung als Ursache ausschließen.</li>
+<li><strong>Gerät erreichbar, aber Anwendung meldet keine Daten:</strong> Hinweis auf Problem oberhalb der Netzwerkebene (Applikationsprotokoll, Gateway) – Netzwerkebene per Ping/Traceroute isoliert testen.</li>
+<li><strong>Sporadische Verbindungsabbrüche:</strong> Duplex-Mismatch, defekte Kabel/SFP-Module oder WLAN-Störungen (bei mobilen Geräten) als häufige Ursachen prüfen.</li>
+</ul>
+
+<h3>Praxisbeispiele</h3>
+<ul>
+<li><strong>Neuaufstellung eines Patientenmonitors auf Station:</strong> Anschluss an vorhandene Dose, Prüfung der VLAN-Zuordnung des Ports, DHCP-Reservierung anhand der Geräte-MAC, Funktionstest der Datenübertragung zum zentralen Monitoring-Server.</li>
+<li><strong>Umzug einer Station:</strong> Dokumentierte Zuordnung Geräte-ID/Port erleichtert die Neuverkabelung ohne erneute Ersteinrichtung jedes Geräts.</li>
+<li><strong>Austausch eines defekten Geräts:</strong> Neues Gerät erhält dieselbe DHCP-Reservierung wie das alte (MAC-Adresse anpassen), sodass es ohne weitere Konfiguration in bestehende Abläufe eingebunden ist.</li>
+</ul>
 
 </div>
 </main>
