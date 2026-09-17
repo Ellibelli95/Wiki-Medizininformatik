@@ -27,18 +27,62 @@
 <main>
 <div class="breadcrumb"><a href="../index.html">Startseite</a> / Datenflüsse / Gerät → Gateway</div>
 <div class="hero">
-
 <h2>Gerät → Gateway</h2>
-<p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Gerät → Gateway</strong> vorgesehen.</p>
-<div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
-<h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
-<div class="flow">Quelle → Netzwerk/Transport → Verarbeitung → Zielsystem → Speicherung</div>
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+<p>Ein Gateway bildet eine Übergangsstelle zwischen einem medizinischen Gerät bzw. einem Gerätesegment und einem nachgelagerten Netzwerk- oder Anwendungssystem. Es kann dabei Netzwerkverkehr weiterleiten, Protokolle vermitteln oder als technische Integrationskomponente dienen.</p>
+<div class="note"><strong>Wichtig:</strong> Gateway ist kein einheitlich definierter Produkttyp. Je nach Architektur kann damit ein Router, ein Sicherheitsgateway, ein DICOM-Router oder eine Integrationskomponente gemeint sein. Die konkrete Funktion muss in der jeweiligen Umgebung dokumentiert werden.</div>
 
+<h3>1. Weg vom Gerät zum Gateway</h3>
+<p>Das medizinische Gerät ist zunächst über Ethernet oder WLAN an das Krankenhausnetz angebunden. Über Switch, Access Point und VLAN wird festgelegt, in welchem Netzsegment sich das Gerät befindet. Das Gerät besitzt eine IP-Adresse, entweder statisch oder über DHCP.</p>
+<div class="flow">Medizinisches Gerät → Switch / Access Point → VLAN → Routing / Gateway → Zielnetz</div>
+<p>Wenn das Zielsystem in einem anderen IP-Netz liegt, wird der Datenverkehr normalerweise an das konfigurierte Standardgateway des Geräts gesendet. Router oder Layer-3-Switch übernehmen anschließend die Weiterleitung zwischen Netzen. Firewalls oder ACLs können die Verbindung zusätzlich begrenzen.</p>
+
+<h3>2. Rolle eines Gateways in der Medizin-IT</h3>
+<ul>
+<li><strong>Routing:</strong> Weiterleitung von IP-Paketen zwischen unterschiedlichen Netzsegmenten.</li>
+<li><strong>Segmentierung:</strong> Trennung von Medizingeräten, Arbeitsplatzrechnern, Servern und Managementsystemen.</li>
+<li><strong>Sicherheit:</strong> Einschränkung erlaubter Verbindungen über Firewall-Regeln oder ACLs.</li>
+<li><strong>Protokollvermittlung:</strong> In speziellen Integrationslösungen kann ein Gateway Daten zwischen unterschiedlichen technischen Protokollen vermitteln.</li>
+<li><strong>Datenrouting:</strong> Ein DICOM-Router kann medizinische Bilddaten abhängig von Regeln an PACS, VNA oder weitere Systeme verteilen.</li>
+</ul>
+
+<h3>3. Beispiel: Röntgengerät</h3>
+<p>Ein Röntgengerät steht beispielsweise in einem separaten Medizin-VLAN. Die Netzwerkkonfiguration enthält IP-Adresse, Subnetzmaske, Standardgateway und gegebenenfalls DNS-Server. Das Gerät kann einen DICOM-Dienst eines PACS oder DICOM-Routers erreichen, sofern Routing und Firewall die Verbindung erlauben.</p>
+<div class="flow">Röntgengerät → Medizin-VLAN → Firewall / Routing → DICOM-Router → PACS / VNA</div>
+<p>Für DICOM wird auf der Zielseite typischerweise eine Kombination aus AE Title, IP-Adresse bzw. Hostname und TCP-Port konfiguriert. Diese Parameter müssen auf beiden Seiten zusammenpassen.</p>
+
+<h3>4. Gateway und DICOM</h3>
+<p>Ein DICOM-Router kann als vermittelnde Instanz zwischen Modalitäten und Bildarchiven eingesetzt werden. Das Gerät sendet die Studie an den Router. Der Router nimmt die DICOM-Verbindung an, prüft bzw. verarbeitet die Nachricht und leitet sie entsprechend seiner Routingregeln weiter.</p>
+<p>Dadurch kann beispielsweise verhindert werden, dass jede Modalität direkt mit mehreren PACS-Systemen kommunizieren muss. Gleichzeitig lassen sich Routingregeln, Protokollierung und Weiterleitungen zentral verwalten.</p>
+
+<h3>5. Konfiguration</h3>
+<table>
+<tr><th>Parameter</th><th>Beispiel / Bedeutung</th></tr>
+<tr><td>IP-Adresse</td><td>Adresse des Geräts im Medizin-VLAN</td></tr>
+<tr><td>Subnetz</td><td>Definiert das lokale IP-Netz</td></tr>
+<tr><td>Standardgateway</td><td>Router für Ziele außerhalb des lokalen Netzes</td></tr>
+<tr><td>DNS</td><td>Auflösung von Hostnamen, sofern verwendet</td></tr>
+<tr><td>DICOM AE Title</td><td>Logischer DICOM-Name einer Anwendung</td></tr>
+<tr><td>Ziel-IP / Hostname</td><td>Adresse des DICOM-Routers oder PACS</td></tr>
+<tr><td>TCP-Port</td><td>Port des jeweiligen DICOM-Dienstes</td></tr>
+</table>
+
+<h3>6. Sicherheit</h3>
+<p>Medizinische Geräte sollten nur die Netzwerkverbindungen erhalten, die für ihren Betrieb notwendig sind. Typische Maßnahmen sind getrennte VLANs, restriktive Firewallregeln, kontrollierter Administrationszugriff, Protokollierung und Überwachung. Änderungen an IP-, VLAN-, Gateway- und DICOM-Konfigurationen sollten nachvollziehbar dokumentiert werden.</p>
+
+<h3>7. Fehleranalyse</h3>
+<ol>
+<li>Physische Verbindung bzw. WLAN-Verbindung prüfen.</li>
+<li>IP-Adresse, Subnetz und Standardgateway prüfen.</li>
+<li>VLAN-Zuordnung und Routing prüfen.</li>
+<li>Firewall-/ACL-Regeln und benötigte TCP-Ports prüfen.</li>
+<li>DICOM AE Title und Zieladresse kontrollieren.</li>
+<li>Erreichbarkeit des Gateways bzw. Zielsystems testen.</li>
+<li>DICOM-Logs auf Association-, Transfer- und Fehlermeldungen prüfen.</li>
+</ol>
+
+<h3>8. Einordnung im gesamten Datenfluss</h3>
+<div class="flow">Gerät → Netzwerk → Gateway / DICOM-Router → Kommunikationsserver → Applikation → Datenbank / PACS / VNA → Archiv / Backup</div>
+<p>Das Gateway ist damit eine mögliche technische Übergangsstelle. Es ersetzt nicht automatisch den Kommunikationsserver oder die Anwendungsschicht.</p>
 </div>
 </main>
 <footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
