@@ -32,12 +32,58 @@
 <p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Netzwerk</strong> vorgesehen.</p>
 <div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
 <h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
+<p>Diese Seite behandelt das <strong>Netzwerk</strong> als übergreifende Infrastrukturebene der Krankenhaus-IT – also die klinikweite LAN/WAN-Architektur, die alle Standorte, Gebäude und Stationen verbindet. Während das Kapitel <a href="../vernetzung/index.html">Vernetzung der Medizingeräte</a> die Anbindung einzelner Geräte an dieses Netzwerk beschreibt, geht es hier um dessen strukturellen Aufbau: Wie sind Backbone, Gebäude und Stationen miteinander verbunden, wie ist das Netz redundant ausgelegt, und wie werden Außenstandorte (z. B. MVZ, weitere Klinikstandorte) angebunden.</p>
 
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
+<h3>Komponenten</h3>
+<ul>
+<li><strong>Core-Layer</strong> – leistungsstarke Kernswitches/-router, verbinden alle Gebäude/Bereiche des Campus miteinander, meist redundant ausgelegt.</li>
+<li><strong>Distribution-Layer</strong> – vermittelt zwischen Core und den einzelnen Gebäude-/Stockwerksbereichen, hier liegen häufig Routing- und ACL-Funktionen (siehe <a href="../vernetzung/routing.html">Routing</a>).</li>
+<li><strong>Access-Layer</strong> – Switches auf Stationsebene, an die Endgeräte und Medizingeräte direkt angeschlossen werden (siehe <a href="../vernetzung/netzwerkanschluss.html">Netzwerkanschluss</a>).</li>
+<li><strong>Backbone-Verkabelung</strong> – meist Glasfaser zwischen Gebäuden/Etagenverteilern, wegen höherer Bandbreite und Reichweite gegenüber Kupferverkabelung.</li>
+<li><strong>WAN-Anbindung</strong> – Standortkopplung (z. B. zwischen Hauptklinikum und Außenstandorten) über gemietete Standleitungen, MPLS oder VPN-Tunnel.</li>
+<li><strong>Redundanzprotokolle</strong> – z. B. Spanning Tree (verhindert Schleifen bei redundanter Verkabelung), VRRP/HSRP (redundantes Default Gateway).</li>
+</ul>
+
+<h3>Technische Funktionsweise</h3>
+<p>Das Netzwerk ist klassisch in einer dreistufigen Hierarchie aufgebaut (Core – Distribution – Access), die Skalierbarkeit und strukturierte Fehlersuche ermöglicht: Endgeräte hängen am Access-Layer, dessen Switches über den Distribution-Layer gebündelt und geroutet werden, bevor der Verkehr bei Bedarf über den redundanten Core zu anderen Gebäuden oder zum Rechenzentrum gelangt. Redundante physische Pfade (z. B. zwei Glasfaserverbindungen zwischen zwei Gebäuden) würden ohne Gegenmaßnahme zu Schleifen und Broadcast-Stürmen führen – das Spanning-Tree-Protokoll (bzw. modernere Alternativen wie MSTP oder Layer-3-Redundanz) verhindert dies, indem es einen Pfad aktiv hält und den anderen im Standby vorhält, bis er im Fehlerfall automatisch aktiviert wird.</p>
+<div class="flow">Access-Layer (Station) → Distribution-Layer (Gebäude) → Core-Layer (Campus) → Rechenzentrum / WAN</div>
+
+<h3>Konfiguration</h3>
+<ul>
+<li>Redundante physische Verbindungen zwischen den Ebenen einplanen (mind. zwei unabhängige Pfade zwischen Core und jedem Gebäude).</li>
+<li>Spanning-Tree- bzw. Layer-3-Redundanzprotokolle konsistent über das gesamte Netz konfigurieren, um Schleifen zu vermeiden und definierte Failover-Zeiten zu erreichen.</li>
+<li>VLAN-Konzept klinikweit einheitlich dokumentieren (z. B. eigene VLANs je Stationstyp, Medizingeräte, Büro-IT, Gäste-WLAN), damit Segmentierung nachvollziehbar bleibt.</li>
+<li>Bandbreitenplanung für Backbone und WAN-Anbindung anhand tatsächlicher Lastprofile (z. B. Bildübertragung aus der Radiologie), nicht nur nach Anzahl angeschlossener Geräte.</li>
+</ul>
+
+<h3>Datenfluss</h3>
+<p>Datenverkehr eines Endgeräts oder Medizingeräts durchläuft zunächst den Access-Switch der Station, wird über den Distribution-Layer des Gebäudes gebündelt und – sofern das Ziel außerhalb des eigenen Gebäudes liegt (z. B. zentrale Server im Rechenzentrum oder ein anderer Klinikstandort) – über den redundanten Core geleitet. Bei Ausfall eines Pfads übernimmt automatisch der redundante Pfad, im Idealfall ohne spürbare Unterbrechung für laufende Verbindungen.</p>
+
+<h3>Schnittstellen</h3>
+<p>Das Netzwerk bildet die gemeinsame Transportebene für alle darüberliegenden Themen dieses Wikis: <a href="../vernetzung/index.html">Vernetzung der Medizingeräte</a>, <a href="server.html">Server</a> im Rechenzentrum, sowie alle Anwendungsprotokolle (HL7, DICOM, HTTP). WAN-seitig kommen häufig Standleitungs- oder VPN-Protokolle (z. B. IPsec, MPLS) zum Einsatz, um Außenstandorte sicher anzubinden.</p>
+
+<h3>Sicherheit</h3>
+<ul>
+<li>Physische Redundanz allein ersetzt keine Segmentierung – Core- und Distribution-Layer sollten dieselbe VLAN-/ACL-Logik konsequent durchsetzen wie am Access-Layer.</li>
+<li>WAN-Verbindungen zwischen Standorten verschlüsseln (z. B. IPsec-VPN), da diese Strecken häufig über nicht selbst kontrollierte Netze (Provider-Infrastruktur) laufen.</li>
+<li>Zugriff auf Core-/Distribution-Switches (Management-Ebene) besonders schützen, da eine Kompromittierung hier Auswirkungen auf das gesamte Netz hätte.</li>
+<li>Redundanzprotokolle selbst absichern (z. B. gegen unautorisierte Switches, die sich als Root Bridge im Spanning Tree ausgeben und Verkehr umleiten könnten).</li>
+</ul>
+
+<h3>Fehleranalyse</h3>
+<ul>
+<li><strong>Kompletter Ausfall eines Gebäudes/Bereichs:</strong> Status der Verbindung zwischen Distribution- und Core-Layer sowie Funktion der Redundanzprotokolle für diesen Pfad prüfen.</li>
+<li><strong>Netzwerkschleifen-Symptome (extreme Verlangsamung, Broadcast-Sturm):</strong> Spanning-Tree-Status und kürzlich vorgenommene Verkabelungsänderungen kontrollieren.</li>
+<li><strong>Langsame Verbindung zu einem Außenstandort:</strong> Auslastung und Qualität der WAN-Anbindung (Bandbreite, Paketverlust, Latenz) separat von der internen Netzwerkperformance prüfen.</li>
+<li><strong>Redundanter Pfad übernimmt bei Ausfall nicht:</strong> Konfiguration von VRRP/HSRP bzw. der genutzten Layer-3-Redundanz sowie tatsächliche physische Verfügbarkeit des Ausweichpfads prüfen.</li>
+</ul>
+
+<h3>Praxisbeispiele</h3>
+<ul>
+<li><strong>Ausfall einer Backbone-Glasfaserverbindung</strong> zwischen zwei Gebäuden: Redundanzprotokoll aktiviert automatisch den zweiten physischen Pfad, betroffene Stationen bleiben ohne manuellen Eingriff erreichbar.</li>
+<li><strong>Anbindung eines neuen Außenstandorts (MVZ):</strong> Einrichtung einer verschlüsselten WAN-Verbindung mit eigenem, ins klinikweite VLAN-Konzept eingebundenem Adressraum.</li>
+<li><strong>Kapazitätsengpass durch steigenden Bilddatenverkehr aus der Radiologie:</strong> gezielte Erweiterung der Backbone-Bandbreite zwischen dem betroffenen Gebäude und dem Rechenzentrum, statt einer pauschalen Erhöhung im gesamten Netz.</li>
+</ul>
 
 </div>
 </main>
