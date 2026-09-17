@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suche – MedizinInformatik Wiki</title>
+<style>
+:root{--navy:#07335f;--navy-dark:#05284b;--blue:#0b6ebc;--line:#dfe6ec;--text:#18232d;--muted:#5f6b75;--bg:#fff}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:var(--bg);line-height:1.55}
+a{color:inherit;text-decoration:none}
+.header{background:linear-gradient(135deg,#062a4f,#0a3e70);color:#fff}
+.header-inner{max-width:1400px;margin:auto;display:flex;align-items:center;gap:22px;padding:18px 24px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:44px;height:44px;border:3px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700}
+.logo-title{font-size:18px;font-weight:800;line-height:1.05}
+.logo-subtitle{font-size:11px;opacity:.8;margin-top:4px}
+main{max-width:900px;margin:auto;padding:28px 24px 60px}
+.search-box{display:flex;gap:8px;background:#fff;padding:8px;border:1px solid var(--line);border-radius:12px;box-shadow:0 3px 12px rgba(5,40,75,.06);margin-bottom:22px}
+.search-box input{flex:1;min-width:0;border:none;outline:none;padding:12px 14px;font-size:16px;color:var(--text);background:transparent}
+.search-box button{border:none;border-radius:8px;padding:12px 20px;background:var(--navy);color:#fff;font-size:14px;font-weight:700;cursor:pointer}
+.search-box button:hover{background:var(--blue)}
+.result-count{color:var(--muted);font-size:14px;margin-bottom:18px}
+.result{border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin-bottom:14px;display:block;transition:.15s}
+.result:hover{border-color:#b8ccdc;box-shadow:0 4px 14px rgba(5,40,75,.08)}
+.result-breadcrumb{font-size:12px;color:var(--muted);margin-bottom:4px}
+.result h2{font-size:17px;color:var(--navy);margin:0 0 6px}
+.result p{font-size:14px;color:#3f484f;margin:0}
+.result mark{background:#fff3b0;color:inherit;padding:0 1px;border-radius:2px}
+.empty{color:var(--muted);font-size:15px;padding:20px 0}
+.back-link{display:inline-block;margin-bottom:18px;font-size:13px;color:var(--blue)}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="index.html" aria-label="MedizinInformatik Wiki Startseite">
+      <span class="logo-mark">+</span>
+      <span><span class="logo-title">MedizinInformatik<br>WIKI</span><span class="logo-subtitle">Technische Dokumentation</span></span>
+    </a>
+  </div>
+</header>
+
+<main>
+  <a class="back-link" href="index.html">← Zurück zur Startseite</a>
+
+  <form class="search-box" onsubmit="runSearch(event)">
+    <input type="search" id="searchInput" placeholder="Wiki durchsuchen, z. B. HL7, PACS, VLAN ..." aria-label="Wiki durchsuchen">
+    <button type="submit">🔍 Suchen</button>
+  </form>
+
+  <div id="resultCount" class="result-count"></div>
+  <div id="results"></div>
+</main>
+
+<!-- Automatisch generierter Suchindex (siehe build-search-index.py) -->
+<script src="assets/search-index.js"></script>
+<script>
+function escapeRegExp(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function buildSnippet(text, term) {
+  const lower = text.toLowerCase();
+  const idx = lower.indexOf(term.toLowerCase());
+  if (idx === -1) return text.slice(0, 160) + (text.length > 160 ? "…" : "");
+
+  const radius = 90;
+  const start = Math.max(0, idx - radius);
+  const end = Math.min(text.length, idx + term.length + radius);
+  let snippet = text.slice(start, end);
+  if (start > 0) snippet = "…" + snippet;
+  if (end < text.length) snippet = snippet + "…";
+
+  const re = new RegExp("(" + escapeRegExp(term) + ")", "ig");
+  return snippet.replace(re, "<mark>$1</mark>");
+}
+
+function runSearch(event) {
+  if (event) event.preventDefault();
+
+  const term = document.getElementById("searchInput").value.trim();
+  const resultsEl = document.getElementById("results");
+  const countEl = document.getElementById("resultCount");
+  resultsEl.innerHTML = "";
+
+  if (!term) {
+    countEl.textContent = "";
+    return;
+  }
+
+  // URL aktualisieren, damit der Suchbegriff im Link/Bookmark erhalten bleibt
+  const newUrl = window.location.pathname + "?q=" + encodeURIComponent(term);
+  window.history.replaceState(null, "", newUrl);
+
+  if (typeof searchIndex === "undefined") {
+    countEl.textContent = "Suchindex nicht gefunden – bitte assets/search-index.js erzeugen (siehe build-search-index.py).";
+    return;
+  }
+
+  const lowerTerm = term.toLowerCase();
+
+  const scored = searchIndex
+    .map(page => {
+      const titleMatch = page.title.toLowerCase().includes(lowerTerm);
+      const textMatches = (page.text.toLowerCase().match(new RegExp(escapeRegExp(lowerTerm), "g")) || []).length;
+      const score = (titleMatch ? 100 : 0) + textMatches;
+      return { page, score, titleMatch, textMatches };
+    })
+    .filter(r => r.score > 0)
+    .sort((a, b) => b.score - a.score);
+
+  countEl.textContent = scored.length === 0
+    ? `Keine Treffer für „${term}“.`
+    : `${scored.length} Treffer für „${term}“:`;
+
+  if (scored.length === 0) {
+    resultsEl.innerHTML = `<div class="empty">Versuche einen anderen Suchbegriff oder prüfe die Schreibweise.</div>`;
+    return;
+  }
+
+  resultsEl.innerHTML = scored.map(({ page, textMatches }) => {
+    const snippet = textMatches > 0 ? buildSnippet(page.text, term) : "";
+    return `
+      <a class="result" href="${page.url}">
+        ${page.breadcrumb ? `<div class="result-breadcrumb">${page.breadcrumb}</div>` : ""}
+        <h2>${page.title}</h2>
+        ${snippet ? `<p>${snippet}</p>` : ""}
+      </a>`;
+  }).join("");
+}
+
+// Beim Laden: Suchbegriff aus der URL (?q=...) übernehmen, z. B. von der Startseite kommend
+window.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const q = params.get("q");
+  if (q) {
+    document.getElementById("searchInput").value = q;
+    runSearch();
+  }
+});
+</script>
+</body>
+</html>
