@@ -1,240 +1,46 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EMR und ePA</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 1000px;
-            margin: auto;
-            padding: 20px;
-            line-height: 1.6;
-        }
-
-        h1, h2, h3 {
-            color: #005c99;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #f0f7ff;
-        }
-
-        .note {
-            background: #eef6ff;
-            padding: 10px;
-            border-left: 4px solid #005c99;
-            margin: 15px 0;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMR / ePA – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
+<header><div class="header-inner">
+<h1>MedizinInformatik Wiki</h1>
+<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="../index.html">Startseite</a>
+<a href="../medizintechnik/index.html">Medizintechnik</a>
+<a href="../vernetzung/index.html">Vernetzung</a>
+<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
+<a href="../datenfluesse/index.html">Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html">Standards</a>
+<a href="../server-backend/index.html">Server</a>
+<a href="../cybersecurity/index.html">Cybersecurity</a>
+<a href="../web-engineering/index.html">Web Engineering</a>
+<a href="../praxis/index.html">Praxis</a>
+</div></nav>
+<main>
+<div class="breadcrumb"><a href="../index.html">Startseite</a> / Klinische Informationssysteme / EMR / ePA</div>
+<div class="hero">
 
-<h1>EMR (Electronic Medical Record) und ePA (elektronische Patientenakte)</h1>
+<h2>EMR / ePA</h2>
+<p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>EMR / ePA</strong> vorgesehen.</p>
+<div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
+<h3>Grundlagen</h3>
+<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
+<h3>Technischer Zusammenhang</h3>
+<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
 
-<h2>Grundlagen</h2>
+<h3>Praxis und Fehleranalyse</h3>
+<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
 
-<p>
-Die <strong>EMR (Electronic Medical Record)</strong> ist die elektronische Patientenakte innerhalb einer Einrichtung,
-beispielsweise eines Krankenhauses oder einer Arztpraxis.
-</p>
-
-<p>
-Die <strong>ePA (elektronische Patientenakte)</strong> ermöglicht den einrichtungsübergreifenden Austausch
-medizinischer Informationen zwischen Leistungserbringern.
-</p>
-
-<div class="note">
-<strong>Merke:</strong><br>
-EMR = lokale Akte im Krankenhaus oder in der Praxis.<br>
-ePA = patientengeführte Akte über Einrichtungsgrenzen hinweg.
 </div>
-
-<h2>Vergleich EMR und ePA</h2>
-
-<table>
-<tr>
-<th>Merkmal</th>
-<th>EMR</th>
-<th>ePA</th>
-</tr>
-
-<tr>
-<td>Verantwortung</td>
-<td>Krankenhaus / Praxis</td>
-<td>Patient</td>
-</tr>
-
-<tr>
-<td>Nutzung</td>
-<td>Einrichtungsintern</td>
-<td>Einrichtungsübergreifend</td>
-</tr>
-
-<tr>
-<td>Speicherung</td>
-<td>KIS</td>
-<td>Telematikinfrastruktur</td>
-</tr>
-
-<tr>
-<td>Zugriff</td>
-<td>Behandelnde Einrichtung</td>
-<td>Patient entscheidet</td>
-</tr>
-
-</table>
-
-<h2>Bestandteile der EMR</h2>
-
-<ul>
-<li>Patientenstammdaten</li>
-<li>Diagnosen (ICD)</li>
-<li>Prozeduren (OPS)</li>
-<li>Radiologiebefunde</li>
-<li>Laborwerte</li>
-<li>Vitalparameter</li>
-<li>Pflegedokumentation</li>
-<li>Medikationsplan</li>
-<li>Arztbriefe</li>
-<li>DICOM-Bilddaten</li>
-</ul>
-
-<h2>Bestandteile der ePA</h2>
-
-<ul>
-<li>Arztbriefe</li>
-<li>Entlassberichte</li>
-<li>Laborbefunde</li>
-<li>Impfpass</li>
-<li>Notfalldaten</li>
-<li>Medikationsplan</li>
-<li>Diagnosen</li>
-<li>Befunde</li>
-</ul>
-
-<h2>Technische Architektur</h2>
-
-<p>
-Die EMR ist in der Regel Bestandteil des Krankenhausinformationssystems (KIS).
-</p>
-
-<ul>
-<li>Dedalus ORBIS</li>
-<li>CGM Medico</li>
-<li>i.s.h.med</li>
-<li>Meierhofer M-KIS</li>
-</ul>
-
-<p>
-Die ePA nutzt die Telematikinfrastruktur (TI) und standardisierte Schnittstellen.
-</p>
-
-<h2>Schnittstellen und Standards</h2>
-
-<ul>
-<li>HL7</li>
-<li>FHIR</li>
-<li>DICOM</li>
-<li>IHE XDS</li>
-<li>KIM</li>
-<li>SNOMED CT</li>
-<li>LOINC</li>
-<li>UCUM</li>
-</ul>
-
-<h2>Datenfluss Krankenhaus → ePA</h2>
-
-<ol>
-<li>Patient wird im KIS aufgenommen.</li>
-<li>Diagnosen und Befunde werden dokumentiert.</li>
-<li>Arztbrief wird erstellt.</li>
-<li>Dokument wird über die TI bereitgestellt.</li>
-<li>Dokument erscheint in der ePA.</li>
-<li>Freigegebene Behandler können darauf zugreifen.</li>
-</ol>
-
-<h2>Zusammenhang zu KIS, RIS und PACS</h2>
-
-<ul>
-<li>KIS = Krankenhausinformationssystem</li>
-<li>RIS = Radiologieinformationssystem</li>
-<li>PACS = Bildarchivierung</li>
-<li>LIS = Laborinformationssystem</li>
-<li>PDMS = Intensivdokumentation</li>
-</ul>
-
-<h3>Praxisbeispiel Radiologie</h3>
-
-<p>
-Der Patient wird im KIS aufgenommen. Das RIS erzeugt einen Untersuchungsauftrag.
-Das Röntgengerät ruft die Daten über die DICOM-Worklist ab.
-Die Bilder werden als DICOM-Dateien an das PACS übertragen.
-Der Radiologe erstellt den Befund.
-Der Befund wird anschließend im KIS gespeichert und Bestandteil der EMR.
-</p>
-
-<h2>Sicherheit und Datenschutz</h2>
-
-<ul>
-<li>DSGVO-Konformität</li>
-<li>Verschlüsselung</li>
-<li>Rollen- und Rechtekonzepte</li>
-<li>Mehrfaktor-Authentifizierung</li>
-<li>Audit-Trail</li>
-<li>Zugriffsprotokollierung</li>
-</ul>
-
-<h2>Praxisbeispiel Schlaganfallpatient</h2>
-
-<p>
-Ein Patient wird mit Verdacht auf Schlaganfall aufgenommen.
-Nach der Registrierung im KIS erfolgt eine CT-Untersuchung.
-Die Bilder werden im PACS gespeichert.
-Der Radiologe erstellt den Befund.
-Befund und Bilder werden in der EMR dokumentiert.
-Nach Entlassung wird der Arztbrief in die ePA übertragen.
-</p>
-
-<h2>Häufige Fehlerquellen</h2>
-
-<ul>
-<li>Fehlende Patientenfreigaben</li>
-<li>FHIR-Schnittstelle nicht erreichbar</li>
-<li>KIM-Kommunikationsfehler</li>
-<li>Fehlende Berechtigungen</li>
-<li>Dubletten bei Patientenidentitäten</li>
-<li>Unvollständige Metadaten</li>
-</ul>
-
-<h2>Prüfungsrelevante Begriffe</h2>
-
-<ul>
-<li>EMR</li>
-<li>EHR</li>
-<li>ePA</li>
-<li>KIS</li>
-<li>FHIR</li>
-<li>HL7</li>
-<li>DICOM</li>
-<li>PACS</li>
-<li>IHE XDS</li>
-<li>Telematikinfrastruktur</li>
-<li>KIM</li>
-<li>Interoperabilität</li>
-</ul>
-
+</main>
+<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
 </body>
 </html>
