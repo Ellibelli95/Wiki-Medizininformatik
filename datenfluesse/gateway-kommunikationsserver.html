@@ -12,35 +12,35 @@
 <p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
 </div></header>
 <nav><div class="nav-inner">
-<a href="../index.html">Startseite</a>
-<a href="../medizintechnik/index.html">Medizintechnik</a>
-<a href="../vernetzung/index.html">Vernetzung</a>
-<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
-<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
-<a href="../datenfluesse/index.html">Datenflüsse</a>
-<a href="../schnittstellen-standards/index.html">Standards</a>
-<a href="../server-backend/index.html">Server</a>
-<a href="../cybersecurity/index.html">Cybersecurity</a>
-<a href="../web-engineering/index.html">Web Engineering</a>
-<a href="../praxis/index.html">Praxis</a>
+<a href="../index.html">Startseite</a><a href="../medizintechnik/index.html">Medizintechnik</a><a href="../vernetzung/index.html">Vernetzung</a><a href="../krankenhaus-it/index.html">Krankenhaus-IT</a><a href="../klinische-informationssysteme/index.html">KIS & Systeme</a><a href="../datenfluesse/index.html">Datenflüsse</a><a href="../schnittstellen-standards/index.html">Standards</a><a href="../server-backend/index.html">Server</a><a href="../cybersecurity/index.html">Cybersecurity</a><a href="../web-engineering/index.html">Web Engineering</a><a href="../praxis/index.html">Praxis</a>
 </div></nav>
-<main>
-<div class="breadcrumb"><a href="../index.html">Startseite</a> / Datenflüsse / Gateway → Kommunikationsserver</div>
-<div class="hero">
-
+<main><div class="breadcrumb"><a href="../index.html">Startseite</a> / Datenflüsse / Gateway → Kommunikationsserver</div><div class="hero">
 <h2>Gateway → Kommunikationsserver</h2>
-<p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Gateway → Kommunikationsserver</strong> vorgesehen.</p>
-<div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
-<h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
-<div class="flow">Quelle → Netzwerk/Transport → Verarbeitung → Zielsystem → Speicherung</div>
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
-
-</div>
-</main>
+<p>Nach der Netzwerk- und Gateway-Ebene können Daten an einen Kommunikationsserver übergeben werden. Der Kommunikationsserver ist eine zentrale Integrationskomponente, die Nachrichten zwischen medizinischen Systemen annimmt, verarbeitet, protokolliert und an definierte Zielsysteme weiterleitet.</p>
+<div class="note"><strong>Abgrenzung:</strong> Ein Router/Gateway stellt primär Netzwerk- oder Transportverbindungen her. Ein Kommunikationsserver arbeitet zusätzlich auf der Ebene von Nachrichten, Schnittstellen und Integrationsregeln.</div>
+<h3>1. Typischer Ablauf</h3>
+<div class="flow">Gerät → Gateway / Routing → Kommunikationsserver → Zielapplikation</div>
+<ol><li>Das Gerät baut eine Netzwerkverbindung zum konfigurierten Ziel auf.</li><li>Routing und Firewall ermöglichen den Datenverkehr.</li><li>Der Kommunikationsserver nimmt die Nachricht bzw. das Protokoll entgegen.</li><li>Die Nachricht wird anhand ihrer Schnittstelle und Routingregeln verarbeitet.</li><li>Das Zielsystem erhält die Daten über die vorgesehene Schnittstelle.</li></ol>
+<h3>2. Aufgaben des Kommunikationsservers</h3>
+<ul><li>Annahme eingehender Nachrichten</li><li>Routing anhand von Absender, Empfänger, Nachrichtentyp oder Inhalt</li><li>Protokoll- und Formatvermittlung</li><li>Zwischenspeicherung bei temporären Störungen</li><li>Quittierungen und Fehlerbehandlung</li><li>Logging und Überwachung des Nachrichtenflusses</li><li>Wiederholung fehlgeschlagener Übertragungen, sofern vorgesehen</li></ul>
+<h3>3. Typische medizinische Schnittstellen</h3>
+<table><tr><th>Daten</th><th>Typische Technologie</th><th>Beispiel</th></tr><tr><td>Bilddaten</td><td>DICOM</td><td>Röntgen → PACS</td></tr><tr><td>Auftrags-/Patientendaten</td><td>HL7 v2, DICOM MWL</td><td>RIS → Modalität</td></tr><tr><td>Klinische Daten</td><td>HL7 v2 / FHIR</td><td>Applikation → KIS</td></tr><tr><td>Dateibasierte Übergaben</td><td>z. B. SFTP / definierte Importmechanismen</td><td>Systemintegration nach lokaler Architektur</td></tr></table>
+<h3>4. Beispiel Röntgen</h3>
+<p>Ein Röntgengerät kann seine Bilddaten an einen DICOM-Router senden. Dieser übernimmt das Routing zum PACS. Für andere Nachrichten kann zusätzlich ein Kommunikationsserver eingesetzt werden.</p>
+<div class="flow">KIS / RIS → Worklist → Röntgengerät → DICOM → Gateway / DICOM-Router → PACS</div>
+<p>Der Kommunikationsserver kann parallel oder nachgelagert für HL7-Nachrichten eingesetzt werden, beispielsweise für Auftrags-, Status- oder Befundinformationen.</p>
+<h3>5. Nachrichtenverarbeitung</h3>
+<p>Eine Nachricht durchläuft typischerweise mehrere Schritte:</p>
+<div class="flow">Empfang → Validierung → Routing → Transformation (falls nötig) → Zielverbindung → Quittierung → Logging</div>
+<p>Eine Transformation ist nur dann erforderlich, wenn unterschiedliche Systeme verschiedene Formate oder Nachrichtenstrukturen benötigen. Jede Transformation sollte nachvollziehbar dokumentiert werden.</p>
+<h3>6. Zuverlässigkeit und Ausfallsicherheit</h3>
+<p>Kommunikationsserver können Nachrichten zeitweise puffern, wenn ein Zielsystem nicht erreichbar ist. Je nach Produkt und Konfiguration sind Wiederholungsmechanismen, Fehlerqueues, Hochverfügbarkeit und Monitoring möglich. Eine Queue ersetzt jedoch keine dauerhafte Archivierung.</p>
+<h3>7. Sicherheit</h3>
+<p>Die Kommunikation sollte auf notwendige Systeme, Ports und Protokolle begrenzt werden. Zugriffe auf Administrationsoberflächen müssen geschützt werden. Logs können personenbezogene oder medizinische Informationen enthalten und müssen entsprechend geschützt und aufbewahrt werden.</p>
+<h3>8. Fehleranalyse</h3>
+<ol><li>Gateway und Routing prüfen.</li><li>Firewall und TCP-Port prüfen.</li><li>Erreichbarkeit des Kommunikationsservers prüfen.</li><li>Schnittstellenkonfiguration und Endpunkte kontrollieren.</li><li>Nachrichten- und Verbindungslogs prüfen.</li><li>Fehlerqueue bzw. Retry-Status kontrollieren.</li><li>Zielapplikation und deren Schnittstelle prüfen.</li></ol>
+<h3>9. Einordnung</h3>
+<div class="flow">Gerät → Netzwerk → Gateway → Kommunikationsserver → Applikation → Datenbank / PACS / VNA → Archiv / Backup</div>
+</div></main>
 <footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
-</body>
-</html>
+</body></html>
