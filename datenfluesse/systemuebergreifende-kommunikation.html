@@ -1,46 +1,36 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Systemübergreifende Kommunikation – MedizinInformatik Wiki</title>
-<link rel="stylesheet" href="../assets/style.css">
-</head>
-<body>
-<header><div class="header-inner">
-<h1>MedizinInformatik Wiki</h1>
-<p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p>
-</div></header>
-<nav><div class="nav-inner">
-<a href="../index.html">Startseite</a>
-<a href="../medizintechnik/index.html">Medizintechnik</a>
-<a href="../vernetzung/index.html">Vernetzung</a>
-<a href="../krankenhaus-it/index.html">Krankenhaus-IT</a>
-<a href="../klinische-informationssysteme/index.html">KIS & Systeme</a>
-<a href="../datenfluesse/index.html">Datenflüsse</a>
-<a href="../schnittstellen-standards/index.html">Standards</a>
-<a href="../server-backend/index.html">Server</a>
-<a href="../cybersecurity/index.html">Cybersecurity</a>
-<a href="../web-engineering/index.html">Web Engineering</a>
-<a href="../praxis/index.html">Praxis</a>
-</div></nav>
-<main>
-<div class="breadcrumb"><a href="../index.html">Startseite</a> / Datenflüsse / Systemübergreifende Kommunikation</div>
-<div class="hero">
-
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Systemübergreifende Kommunikation – MedizinInformatik Wiki</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><header><div class="header-inner"><h1>MedizinInformatik Wiki</h1><p>Technisches Nachschlagewerk für Medizininformatik, Medizin-IT und Web Engineering</p></div></header>
+<nav><div class="nav-inner"><a href="../index.html">Startseite</a><a href="../medizintechnik/index.html">Medizintechnik</a><a href="../vernetzung/index.html">Vernetzung</a><a href="../krankenhaus-it/index.html">Krankenhaus-IT</a><a href="../klinische-informationssysteme/index.html">KIS & Systeme</a><a href="../datenfluesse/index.html">Datenflüsse</a><a href="../schnittstellen-standards/index.html">Standards</a><a href="../server-backend/index.html">Server</a><a href="../cybersecurity/index.html">Cybersecurity</a><a href="../web-engineering/index.html">Web Engineering</a><a href="../praxis/index.html">Praxis</a></div></nav>
+<main><div class="breadcrumb"><a href="../index.html">Startseite</a> / Datenflüsse / Systemübergreifende Kommunikation</div><div class="hero">
 <h2>Systemübergreifende Kommunikation</h2>
-<p>Dieser Wiki-Artikel ist als technische Wissensseite für <strong>Systemübergreifende Kommunikation</strong> vorgesehen.</p>
-<div class="note"><strong>Dokumentationsstruktur:</strong> Grundlagen · Komponenten · technische Funktionsweise · Konfiguration · Datenfluss · Schnittstellen · Sicherheit · Fehleranalyse · Praxisbeispiele.</div>
-<h3>Grundlagen</h3>
-<p>Hier werden Begriff, Zweck, typische Einsatzumgebung und die Rolle innerhalb der medizinischen IT-Infrastruktur beschrieben.</p>
-<h3>Technischer Zusammenhang</h3>
-<p>Die Seite wird schrittweise um Architektur, Protokolle, Datenformate, Netzwerkwege, Serverrollen und Integrationsbeispiele erweitert.</p>
-
-<h3>Praxis und Fehleranalyse</h3>
-<p>Geplant sind typische Szenarien, Diagnosewege, Logs, häufige Fehlerursachen und Lösungsansätze.</p>
-
-</div>
-</main>
-<footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
-</body>
-</html>
+<p>In einem Krankenhaus kommunizieren zahlreiche Systeme miteinander: KIS, RIS, LIS, PACS, VNA, Medizingeräte, Befundsysteme, Termin- und Dokumentationssysteme. Systemübergreifende Kommunikation sorgt dafür, dass Informationen zwischen diesen Anwendungen automatisiert ausgetauscht werden können.</p>
+<div class="note"><strong>Grundprinzip:</strong> Systeme sollten nicht nur technisch erreichbar sein, sondern auch ein gemeinsames Verständnis von Nachrichten, Identifikatoren, Patienten, Fällen, Aufträgen und Untersuchungen besitzen.</div>
+<h3>1. Gesamtübersicht</h3>
+<div class="flow">Gerät → Netzwerk → Gateway → Kommunikationsserver → Applikation → Datenbank / PACS / VNA → Archiv</div>
+<p>Parallel dazu laufen Informationsflüsse in beide Richtungen, beispielsweise Auftrag vom KIS zum RIS, Worklist zur Modalität, Bilder zum PACS und Befund zurück zum KIS.</p>
+<h3>2. Typische Standards</h3>
+<table><tr><th>Standard / Technologie</th><th>Typische Verwendung</th></tr><tr><td>DICOM</td><td>Medizinische Bilder, Bildmetadaten, Worklist und bildbezogene Dienste</td></tr><tr><td>HL7 v2</td><td>Patienten-, Auftrags-, Status- und Befundnachrichten</td></tr><tr><td>FHIR</td><td>Moderne API-basierte Bereitstellung klinischer Ressourcen</td></tr><tr><td>REST / HTTP(S)</td><td>Web- und API-basierte Systemintegration</td></tr><tr><td>TCP/IP</td><td>Netzwerk- und Transportebene</td></tr></table>
+<h3>3. Beispiel: Radiologie</h3>
+<div class="flow">KIS → RIS → DICOM MWL → Röntgengerät → DICOM → PACS / VNA → Viewer → Befund → RIS → KIS</div>
+<ol><li>Im KIS bzw. RIS wird der Untersuchungsauftrag angelegt.</li><li>Die Modalität ruft die DICOM Modality Worklist ab.</li><li>Der Auftrag erscheint am Röntgengerät.</li><li>Die Untersuchung wird durchgeführt.</li><li>Die erzeugten DICOM-Bilder werden an PACS/VNA übertragen.</li><li>Der Arzt öffnet die Untersuchung im Viewer.</li><li>Der Befund wird im Befundsystem bzw. RIS erstellt und freigegeben.</li><li>Der Befund wird über die Integrationsschnittstelle an das KIS übertragen.</li></ol>
+<h3>4. Identitäten und Zuordnung</h3>
+<p>Ein zentraler Punkt der Systemintegration ist die eindeutige Zuordnung von Patient, Fall, Auftrag und Untersuchung. Je nach System werden dafür unterschiedliche Identifikatoren verwendet. Bei DICOM spielen beispielsweise Patient ID, Study Instance UID, Series Instance UID und SOP Instance UID eine wichtige Rolle. Bei HL7-Nachrichten werden unter anderem Patienten- und Fallinformationen übertragen.</p>
+<p>Fehlerhafte oder uneinheitliche Identifikatoren können dazu führen, dass Daten nicht automatisch zusammengeführt werden. Deshalb sind Stammdaten, Identifier-Regeln und Matching-Verfahren wichtige Bestandteile einer Integrationsarchitektur.</p>
+<h3>5. Synchron und asynchron</h3>
+<p>Eine synchrone Kommunikation erwartet typischerweise unmittelbar eine Antwort. Bei asynchronen Nachrichten wird eine Nachricht übermittelt und später verarbeitet. Medizinische Integrationsplattformen nutzen häufig asynchrone Verfahren, weil Zielsysteme zeitweise nicht verfügbar sein können und Nachrichten dann gepuffert bzw. erneut verarbeitet werden können.</p>
+<h3>6. Quittierung und Fehlerbehandlung</h3>
+<p>Viele Schnittstellen besitzen technische oder fachliche Quittierungen. Ein erfolgreiches technisches Senden bedeutet nicht automatisch, dass die Fachanwendung die Information korrekt verarbeitet hat. Deshalb müssen Übertragung, Annahme, Verarbeitung und fachlicher Status getrennt betrachtet werden.</p>
+<div class="flow">Senden → technische Quittierung → Verarbeitung → fachliche Prüfung → Ergebnis</div>
+<h3>7. Sicherheit</h3>
+<ul><li>Netzwerksegmentierung und restriktive Firewallregeln</li><li>Verschlüsselte Verbindungen, wenn von der Schnittstelle unterstützt bzw. erforderlich</li><li>Authentifizierung und rollenbasierte Zugriffe</li><li>Protokollierung von Schnittstellenereignissen</li><li>Schutz von Patienten- und Gesundheitsdaten</li><li>Kontrollierte Änderungen an Schnittstellenkonfigurationen</li></ul>
+<h3>8. Speicherung und Archivierung</h3>
+<p>Nach der Übertragung endet der Datenfluss nicht. Klinische Informationen werden in den zuständigen Applikationsdatenbanken gespeichert. Bilddaten können in PACS/VNA- oder anderen Bildspeichern liegen. Für langfristige Aufbewahrung können Archivspeicher eingesetzt werden. Zusätzlich sind Backup und gegebenenfalls Replikation erforderlich, um die Wiederherstellung und Verfügbarkeit abzusichern.</p>
+<h3>9. Fehleranalyse über mehrere Systeme</h3>
+<ol><li>Ist das Quellsystem verfügbar?</li><li>Ist das Zielsystem erreichbar?</li><li>Funktionieren DNS, Routing und Firewall?</li><li>Wird die Schnittstellenverbindung aufgebaut?</li><li>Wurde die Nachricht angenommen?</li><li>Ist die Nachricht fachlich korrekt?</li><li>Wurde sie verarbeitet und dem richtigen Patienten/Fall zugeordnet?</li><li>Wurde das Ergebnis gespeichert?</li><li>Wurde die Folgekommunikation ausgelöst?</li></ol>
+<h3>10. Dokumentation einer Schnittstelle</h3>
+<table><tr><th>Dokumentationspunkt</th><th>Beispiele</th></tr><tr><td>Quelle / Ziel</td><td>RIS → KIS</td></tr><tr><td>Protokoll</td><td>HL7 v2, FHIR, DICOM, HTTPS</td></tr><tr><td>Endpunkt</td><td>Hostname / IP und Port</td></tr><tr><td>Dateninhalt</td><td>Auftrag, Patient, Bild, Befund, Status</td></tr><tr><td>Identifier</td><td>Patient ID, Fallnummer, DICOM UID</td></tr><tr><td>Quittierung</td><td>Technische und/oder fachliche Bestätigung</td></tr><tr><td>Fehlerweg</td><td>Log, Queue, Retry, manuelle Nachbearbeitung</td></tr></table>
+<h3>11. Merksatz</h3>
+<p>Systemübergreifende Kommunikation bedeutet nicht nur, Daten von A nach B zu senden. Die komplette Kette umfasst Netzwerk, Protokoll, Schnittstelle, Identifikation, Routing, Verarbeitung, Speicherung, Quittierung, Monitoring und gegebenenfalls Archivierung.</p>
+</div></main><footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer></body></html>
