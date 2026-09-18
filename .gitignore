@@ -1,0 +1,2 @@
+# Local PHP database configuration - never commit credentials
+/config.php
