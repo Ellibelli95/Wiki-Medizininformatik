@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de" data-public="true">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Anmeldung am MedizinInformatik Wiki – Zugang für Admin und Listener.">
+<title>Anmeldung – MedizinInformatik Wiki</title>
+<script src="assets/auth.js"></script>
+<style>
+:root{--navy:#07335f;--navy-dark:#05284b;--blue:#0b6ebc;--line:#dfe6ec;--text:#18232d;--muted:#5f6b75;--bg:#f4f7fa}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:linear-gradient(165deg,#062a4f 0%,#0a3e70 42%,#f4f7fa 42%);line-height:1.55}
+a{color:var(--blue)}
+.wrap{max-width:980px;margin:0 auto;padding:36px 20px 48px}
+.brand{display:flex;align-items:center;gap:12px;color:#fff;margin-bottom:28px}
+.logo-mark{width:44px;height:44px;border:3px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700}
+.logo-title{font-size:18px;font-weight:800;line-height:1.05}
+.logo-subtitle{font-size:12px;opacity:.8;margin-top:4px}
+h1{margin:0 0 8px;color:#fff;font-size:32px}
+.lead{color:#d7e6f3;margin:0 0 28px;max-width:640px}
+.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:start}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;box-shadow:0 12px 32px rgba(5,40,75,.12)}
+.card h2{margin:0 0 6px;color:var(--navy);font-size:20px}
+.hint{color:var(--muted);font-size:14px;margin:0 0 18px}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.role{border:1px solid var(--line);border-radius:12px;padding:12px;text-align:left;background:#f8fbfd;cursor:pointer;font:inherit;color:inherit}
+.role:hover,.role.active{border-color:var(--blue);background:#eef6fc}
+.role strong{display:block;color:var(--navy);margin-bottom:4px}
+.role span{font-size:12px;color:var(--muted)}
+label{display:block;font-weight:700;font-size:13px;margin:12px 0 6px;color:var(--navy)}
+input[type=text],input[type=password]{width:100%;padding:12px 14px;border:1px solid #cfd8e0;border-radius:10px;font-size:16px}
+input:focus{outline:2px solid #19a9ff;border-color:#19a9ff}
+.actions{margin-top:18px}
+button[type=submit]{width:100%;border:0;border-radius:10px;padding:13px 16px;background:var(--navy);color:#fff;font-size:15px;font-weight:800;cursor:pointer}
+button[type=submit]:hover{background:var(--blue)}
+.error{display:none;margin:12px 0 0;padding:10px 12px;border-radius:8px;background:#fde8e8;color:#8a1f1f;font-size:14px}
+.accounts{margin:0;padding:0;list-style:none}
+.accounts li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.accounts code{background:#eef3f7;padding:2px 6px;border-radius:4px}
+.note{margin-top:16px;font-size:13px;color:var(--muted)}
+.rights{margin:16px 0 0;padding:0;list-style:none;font-size:14px}
+.rights li{padding:8px 0;border-bottom:1px solid var(--line)}
+footer{margin-top:28px;color:#5f6b75;font-size:13px;text-align:center}
+@media(max-width:820px){.layout,.roles{grid-template-columns:1fr}h1{font-size:26px}.wrap{padding-top:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <span class="logo-mark">+</span>
+    <span>
+      <span class="logo-title">MedizinInformatik<br>WIKI</span>
+      <span class="logo-subtitle">Technische Dokumentation</span>
+    </span>
+  </div>
+  <h1>Anmelden</h1>
+  <p class="lead">Bitte mit Admin- oder Listener-Zugang anmelden. Ohne gültige Sitzung bleibt das Wiki gesperrt.</p>
+
+  <div class="layout">
+    <section class="card">
+      <h2>Zugang wählen</h2>
+      <p class="hint">Rolle antippen, um die Demodaten zu übernehmen – oder eigene Zugangsdaten eingeben.</p>
+      <div class="roles">
+        <button type="button" class="role" data-user="admin" data-pass="Admin2026">
+          <strong>Admin</strong>
+          <span>Verwaltung, Nutzer und interne Bereiche</span>
+        </button>
+        <button type="button" class="role" data-user="listener" data-pass="Listener2026">
+          <strong>Listener</strong>
+          <span>Lesender Wiki-Zugang für das Team</span>
+        </button>
+      </div>
+      <form id="login-form" autocomplete="on">
+        <label for="username">Benutzername</label>
+        <input id="username" name="username" type="text" required autofocus>
+        <label for="password">Passwort</label>
+        <input id="password" name="password" type="password" required>
+        <div class="actions">
+          <button type="submit">Anmelden</button>
+        </div>
+        <div id="login-error" class="error" role="alert"></div>
+      </form>
+    </section>
+
+    <aside class="card">
+      <h2>Demo-Zugänge</h2>
+      <p class="hint">Zum Testen der Rollen im Wiki.</p>
+      <ul class="accounts">
+        <li><span>Admin</span><span><code>admin</code> / <code>Admin2026</code></span></li>
+        <li><span>Listener</span><span><code>listener</code> / <code>Listener2026</code></span></li>
+      </ul>
+      <ul class="rights">
+        <li><strong>Admin:</strong> voller Wiki-Zugriff, Nutzerverwaltung, interne Hinweise</li>
+        <li><strong>Listener:</strong> alle Fachartikel lesen, keine Verwaltungsfunktionen</li>
+      </ul>
+      <p class="note">Die Anmeldung läuft im Browser (ohne Server). Für den Produktivbetrieb sollte später eine echte Benutzerverwaltung ergänzt werden.</p>
+    </aside>
+  </div>
+  <footer>© 2026 MedizinInformatik Wiki – Technische Dokumentation</footer>
+</div>
+<script>
+(function () {
+  var form = document.getElementById("login-form");
+  var errorBox = document.getElementById("login-error");
+  var userInput = document.getElementById("username");
+  var passInput = document.getElementById("password");
+  var roles = document.querySelectorAll(".role");
+
+  roles.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      roles.forEach(function (b) { b.classList.remove("active"); });
+      btn.classList.add("active");
+      userInput.value = btn.getAttribute("data-user");
+      passInput.value = btn.getAttribute("data-pass");
+      passInput.focus();
+    });
+  });
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    errorBox.style.display = "none";
+    var submit = form.querySelector('button[type="submit"]');
+    submit.disabled = true;
+    submit.textContent = "Anmeldung …";
+    MIWAuth.login(userInput.value, passInput.value).then(function (result) {
+      if (!result.ok) {
+        errorBox.textContent = result.error;
+        errorBox.style.display = "block";
+        submit.disabled = false;
+        submit.textContent = "Anmelden";
+        return;
+      }
+      var next = "";
+      try { next = new URLSearchParams(location.search).get("next") || ""; } catch (e) {}
+      if (next && next.charAt(0) === "/" && next.indexOf("//") === -1) {
+        location.replace(next);
+      } else {
+        location.replace("index.html");
+      }
+    }).catch(function () {
+      errorBox.textContent = "Anmeldung fehlgeschlagen. Bitte erneut versuchen.";
+      errorBox.style.display = "block";
+      submit.disabled = false;
+      submit.textContent = "Anmelden";
+    });
+  });
+})();
+</script>
+</body>
+</html>

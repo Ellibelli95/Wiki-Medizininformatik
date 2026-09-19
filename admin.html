@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de" data-admin="true">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Admin-Bereich des MedizinInformatik Wiki – Nutzerverwaltung für Admin und Listener.">
+<title>Verwaltung – MedizinInformatik Wiki</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/auth.js"></script>
+<style>
+.admin-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:22px}
+.panel{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 3px 12px rgba(16,42,67,.05)}
+.panel h3{margin:0 0 8px;color:var(--blue-700)}
+.panel p{margin-top:0;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.stat{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px}
+.stat strong{display:block;font-size:22px;color:var(--blue-900)}
+.stat span{color:var(--muted);font-size:13px}
+label{display:block;font-weight:700;margin:12px 0 6px;color:var(--blue-900)}
+input,select{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font:inherit}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button{border:0;border-radius:8px;padding:10px 14px;background:var(--blue-700);color:#fff;font-weight:700;cursor:pointer}
+button:hover{background:var(--blue-900)}
+button.danger{background:#9b2c2c}
+.msg{display:none;margin-top:12px;padding:10px 12px;border-radius:8px;font-size:14px}
+.msg.ok{background:#e6f6ea;color:#1e5a32}
+.msg.err{background:#fde8e8;color:#8a1f1f}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--border);vertical-align:middle}
+.badge{display:inline-block;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:800}
+.badge.admin{background:#d6efff;color:#07335f}
+.badge.listener{background:#eef3f7;color:#334}
+.rights li{margin:8px 0}
+@media(max-width:800px){.admin-grid,.row,.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <h1>Verwaltung</h1>
+    <p>Admin-Bereich für Zugänge, Rollen und interne Steuerung des Wikis</p>
+  </div>
+</header>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html">Startseite</a>
+    <a href="admin.html">Verwaltung</a>
+    <a href="medizintechnik/index.html">Medizintechnik</a>
+    <a href="vernetzung/index.html">Vernetzung</a>
+    <a href="ueber-mich/index.html">Über mich</a>
+  </div>
+</nav>
+<main>
+  <div class="breadcrumb"><a href="index.html">Startseite</a> / Verwaltung</div>
+  <div class="hero">
+    <h2>Admin-Zugang</h2>
+    <p>Dieser Bereich ist nur für Administratorinnen und Administratoren sichtbar. Listener können das Wiki lesen, aber keine Nutzer anlegen oder interne Verwaltung nutzen.</p>
+    <div class="stats" id="stats"></div>
+  </div>
+
+  <div class="admin-grid">
+    <section class="panel">
+      <h3>Neuen Zugang anlegen</h3>
+      <p>Zusätzliche Admin- oder Listener-Konten werden lokal im Browser gespeichert.</p>
+      <form id="create-form">
+        <div class="row">
+          <div>
+            <label for="new-user">Benutzername</label>
+            <input id="new-user" required minlength="3" maxlength="32" placeholder="z. B. mara.k">
+          </div>
+          <div>
+            <label for="new-name">Anzeigename</label>
+            <input id="new-name" placeholder="z. B. Mara K.">
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="new-role">Rolle</label>
+            <select id="new-role">
+              <option value="listener">Listener (Lesen)</option>
+              <option value="admin">Admin (Verwaltung)</option>
+            </select>
+          </div>
+          <div>
+            <label for="new-pass">Passwort</label>
+            <input id="new-pass" type="password" required minlength="8" placeholder="mindestens 8 Zeichen">
+          </div>
+        </div>
+        <p><button type="submit">Zugang speichern</button></p>
+        <div id="create-msg" class="msg"></div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h3>Rechte im Überblick</h3>
+      <ul class="rights">
+        <li><strong>Admin:</strong> Wiki, Verwaltung, Nutzer anlegen, interne Hinweise (z. B. SharePoint)</li>
+        <li><strong>Listener:</strong> gesamtes Wiki lesen, Suche nutzen, kein Zugriff auf diese Seite</li>
+      </ul>
+      <p>Standardkonten <code>admin</code> und <code>listener</code> bleiben erhalten und können nicht gelöscht werden.</p>
+    </section>
+  </div>
+
+  <section class="panel" style="margin-top:18px">
+    <h3>Vorhandene Zugänge</h3>
+    <div id="user-table"></div>
+  </section>
+</main>
+<footer>MedizinInformatik Wiki · Nur für Admin-Zugang</footer>
+<script>
+function showMsg(ok, text) {
+  var box = document.getElementById("create-msg");
+  box.className = "msg " + (ok ? "ok" : "err");
+  box.textContent = text;
+  box.style.display = "block";
+}
+
+function render() {
+  var users = MIWAuth.getAllUsers();
+  var admins = users.filter(function (u) { return u.role === "admin"; }).length;
+  var listeners = users.filter(function (u) { return u.role === "listener"; }).length;
+  var session = MIWAuth.getSession() || {};
+  document.getElementById("stats").innerHTML =
+    '<div class="stat"><strong>' + users.length + '</strong><span>Zugänge gesamt</span></div>' +
+    '<div class="stat"><strong>' + admins + '</strong><span>Admin</span></div>' +
+    '<div class="stat"><strong>' + listeners + '</strong><span>Listener</span></div>';
+
+  var locked = { admin: true, listener: true };
+  var rows = users.map(function (u) {
+    var canDelete = !locked[u.username];
+    return "<tr><td>" + u.username + "</td><td>" + (u.displayName || "") + "</td><td><span class='badge " + u.role + "'>" + (MIWAuth.roleLabels[u.role] || u.role) + "</span></td><td>" +
+      (canDelete ? "<button class='danger' data-del='" + u.username + "'>Löschen</button>" : "Standardkonto") +
+      "</td></tr>";
+  }).join("");
+  document.getElementById("user-table").innerHTML =
+    "<table><thead><tr><th>Benutzer</th><th>Name</th><th>Rolle</th><th></th></tr></thead><tbody>" + rows + "</tbody></table>";
+
+  document.querySelectorAll("[data-del]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      if (!confirm("Zugang „" + btn.getAttribute("data-del") + "“ wirklich löschen?")) return;
+      var result = MIWAuth.deleteUser(btn.getAttribute("data-del"));
+      showMsg(result.ok, result.ok ? "Zugang gelöscht." : result.error);
+      render();
+    });
+  });
+}
+
+document.getElementById("create-form").addEventListener("submit", function (event) {
+  event.preventDefault();
+  MIWAuth.createUser({
+    username: document.getElementById("new-user").value,
+    displayName: document.getElementById("new-name").value,
+    role: document.getElementById("new-role").value,
+    password: document.getElementById("new-pass").value
+  }).then(function (result) {
+    showMsg(result.ok, result.ok ? "Zugang wurde angelegt." : result.error);
+    if (result.ok) {
+      document.getElementById("create-form").reset();
+      render();
+    }
+  });
+});
+
+render();
+</script>
+</body>
+</html>
