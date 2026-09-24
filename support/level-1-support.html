@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1. Level Support – MedizinInformatik Wiki</title>
+<style>
+:root{
+  --navy:#07335f;--navy-dark:#05284b;--blue:#0b6ebc;
+  --line:#dfe6ec;--text:#18232d;--muted:#5f6b75;--bg:#fff;
+  --ok:#287a45;--warn:#9a6500;--light:#f4f8fb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);
+background:var(--bg);line-height:1.55}
+a{color:inherit;text-decoration:none}
+.header{background:linear-gradient(135deg,#062a4f,#0a3e70);color:#fff}
+.header-inner{max-width:1400px;margin:auto;padding:18px 24px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:44px;height:44px;border:3px solid #fff;border-radius:50%;
+display:grid;place-items:center;font-size:28px;font-weight:700}
+.logo-title{font-size:18px;font-weight:800;line-height:1.05}
+.logo-subtitle{font-size:11px;opacity:.8;margin-top:4px}
+.nav{position:sticky;top:0;z-index:20;background:#062b50;
+box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.nav-inner{max-width:1400px;margin:auto;display:flex;overflow-x:auto}
+.nav a{color:#fff;font-size:12px;font-weight:700;padding:13px 11px 12px;
+text-align:center;border-bottom:3px solid transparent;white-space:nowrap}
+.nav a:hover,.nav a.active{background:#0b477b;border-bottom-color:#19a9ff}
+.nav-icon{display:block;font-size:18px;line-height:1;margin-bottom:5px}
+main{max-width:1200px;margin:auto;padding:28px 24px 50px}
+.breadcrumb{font-size:13px;color:var(--muted);margin-bottom:20px}
+.breadcrumb a{color:var(--blue)}
+.hero{text-align:center;padding:10px 0 24px}
+.hero h1{color:var(--navy);font-size:32px;margin:0 0 10px}
+.hero p{max-width:850px;margin:auto;color:#404a53}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:25px}
+.card{border:1px solid var(--line);border-radius:8px;padding:24px 20px;
+background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.card:hover{box-shadow:0 7px 20px rgba(5,40,75,.10);border-color:#b8ccdc}
+.card h2{font-size:19px;color:var(--navy);margin:5px 0 10px}
+.card p{font-size:14px;color:#3f484f}
+.btn{display:inline-block;margin-top:10px;background:var(--navy);color:#fff;
+padding:8px 14px;border-radius:2px;font-size:12px;font-weight:700}
+.btn:hover{background:var(--blue)}
+.article{border:1px solid var(--line);border-radius:8px;background:#fff;padding:28px;
+box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.article h2{color:var(--navy);border-bottom:1px solid var(--line);padding-bottom:8px}
+.article h3{color:var(--navy);margin-top:28px}
+.info{padding:14px 18px;border-left:4px solid var(--blue);background:var(--light);
+margin:18px 0;font-size:14px}
+.warning{padding:14px 18px;border-left:4px solid #d59b2b;background:#fff8e8;
+margin:18px 0;font-size:14px}
+.status{display:inline-block;padding:5px 10px;border-radius:12px;font-size:12px;
+font-weight:700;background:#fff3d6;color:var(--warn)}
+.steps{counter-reset:step;list-style:none;padding:0}
+.steps li{counter-increment:step;margin:12px 0;padding:12px 14px 12px 48px;
+background:#f7f9fb;border:1px solid var(--line);border-radius:6px;position:relative}
+.steps li:before{content:counter(step);position:absolute;left:14px;top:11px;
+width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;
+display:grid;place-items:center;font-weight:700;font-size:12px}
+.screenshot{width:100%;max-width:980px;display:block;margin:18px auto;border:1px solid #cfd7de}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.meta div{border:1px solid var(--line);border-radius:6px;padding:12px;background:#fafbfc}
+.meta strong{display:block;color:var(--navy);font-size:12px;margin-bottom:4px}
+.meta span{font-size:14px}
+.footer{background:linear-gradient(135deg,#062a4f,#083966);color:#fff;
+text-align:center;padding:18px 20px;font-size:13px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.meta{grid-template-columns:1fr}}
+</style></head><body>
+<header class="header"><div class="header-inner">
+<a class="logo" href="../index.html">
+<span class="logo-mark">+</span>
+<span><span class="logo-title">MedizinInformatik<br>WIKI</span>
+<span class="logo-subtitle">Technische Dokumentation</span></span>
+</a></div></header>
+<nav class="nav"><div class="nav-inner">
+<a href="../index.html"><span class="nav-icon">⌂</span>Startseite</a>
+<a href="../medizintechnik/index.html"><span class="nav-icon">♧</span>Medizintechnik</a>
+<a href="../vernetzung/index.html"><span class="nav-icon">⌘</span>Vernetzung</a>
+<a href="../krankenhaus-it/index.html"><span class="nav-icon">▦</span>Krankenhaus-IT</a>
+<a href="../klinische-informationssysteme/index.html"><span class="nav-icon">▣</span>KIS &amp; Systeme</a>
+<a href="../datenfluesse/index.html"><span class="nav-icon">⇄</span>Datenflüsse</a>
+<a href="../schnittstellen-standards/index.html"><span class="nav-icon">⇋</span>Standards</a>
+<a href="../server-backend/index.html"><span class="nav-icon">▤</span>Server &amp; Backend</a>
+<a href="../cybersecurity/index.html"><span class="nav-icon">♙</span>Cybersecurity</a>
+<a href="../web-engineering/index.html"><span class="nav-icon">&lt;/&gt;</span>Web Engineering</a>
+<a href="../praxis/index.html"><span class="nav-icon">✚</span>Praxis</a>
+<a class="active" href="index.html"><span class="nav-icon">🛠</span>Support</a>
+<a href="../ueber-mich/index.html"><span class="nav-icon">👤</span>Über mich</a>
+</div></nav>
+
+<main>
+<div class="breadcrumb"><a href="../index.html">Startseite</a> / <a href="index.html">Support</a> / 1. Level Support</div>
+<section class="hero"><h1>1. Level Support</h1>
+<p>Standardisierte Erstaufnahme und Bearbeitung typischer Anwender- und Systemfehler.</p></section>
+
+<article class="article">
+<h2>EKG-Export-Fehler</h2>
+<div class="meta">
+<div><strong>Kategorie</strong><span>EKG / Export</span></div>
+<div><strong>Support-Level</strong><span>1. Level Support</span></div>
+<div><strong>Status</strong><span class="status">Bekannter Fehler in Version 5.8.13</span></div>
+</div>
+
+<h3>Fehlerbild</h3>
+<p>Beim Versuch, eine EKG-Auswertung bzw. einen EKG-Export anzuzeigen,
+erscheint die Meldung:</p>
+<p><strong>„Fehler in Datei – Die gewählte Auswertung kann nicht angezeigt werden!“</strong></p>
+<p>Das abgebildete Beispiel zeigt den Fehlerdialog der Anwendung.</p>
+
+<img class="screenshot" src="assets/EKG-Export-fehler.jpeg"
+alt="Screenshot des EKG-Export-Fehlers: Die gewählte Auswertung kann nicht angezeigt werden.">
+
+<h3>Fehlerbeschreibung</h3>
+<p>Der Fehler tritt laut vorliegender Fehlerbeschreibung sporadisch bei der
+Softwareversion <strong>5.8.13</strong> auf. Die ausgewählte EKG-Auswertung
+kann in diesem Fall nicht dargestellt bzw. exportiert werden.</p>
+
+<div class="warning"><strong>Wichtig:</strong> Der Fehler wird hier als bekannter
+Versionsfehler dokumentiert. Es sollte nicht ohne Prüfung angenommen werden,
+dass jede identische Fehlermeldung dieselbe Ursache hat.</div>
+
+<h3>First-Level-Lösung / Vorgehen</h3>
+<ol class="steps">
+<li>Fehlermeldung dokumentieren und prüfen, ob tatsächlich die Version
+<strong>5.8.13</strong> eingesetzt wird.</li>
+<li>Prüfen, ob der Fehler nur bei einer einzelnen EKG-Auswertung oder bei
+mehreren Untersuchungen auftritt.</li>
+<li>Anwendung bzw. den betroffenen Arbeitsplatz nach den internen
+Supportvorgaben neu starten und den Export erneut durchführen.</li>
+<li>Wenn der Fehler erneut auftritt, Patient/Untersuchung, Zeitpunkt,
+Arbeitsplatz und Softwareversion dokumentieren.</li>
+<li>Für Version 5.8.13 den vorgesehenen <strong>Software-Updatepfad</strong>
+prüfen. Laut vorliegender Information soll der Fehler mit einem neueren
+Update behoben werden.</li>
+<li>Kann der Fehler nach dem Update weiterhin reproduziert werden, den Fall
+mit den gesammelten Informationen an den <strong>2. Level Support</strong>
+eskalieren.</li>
+</ol>
+
+<h3>Was muss beim Ticket dokumentiert werden?</h3>
+<ul>
+<li>Datum und Uhrzeit des Auftretens</li>
+<li>betroffener Arbeitsplatz / System</li>
+<li>Softwareversion</li>
+<li>betroffene Untersuchung bzw. EKG-Auswertung</li>
+<li>genaue Fehlermeldung</li>
+<li>Screenshot, sofern zulässig</li>
+<li>bereits durchgeführte Maßnahmen</li>
+<li>Ergebnis nach erneutem Versuch bzw. nach Update</li>
+</ul>
+
+<h3>Weitere klassische First-Level-Fälle – Beispiele</h3>
+<div class="grid">
+<article class="card"><h2>Anmeldung nicht möglich</h2>
+<p><strong>Fehlerbild:</strong> Benutzer kann sich nicht anmelden.</p>
+<p><strong>Erstprüfung:</strong> Benutzername, Passwort, Kontostatus,
+Tastatur/Netzwerkverbindung und ggf. Sperrstatus nach interner Vorgabe prüfen.</p>
+<a class="btn" href="#">Dokumentation ergänzen →</a></article>
+
+<article class="card"><h2>Drucker / Etikettendruck</h2>
+<p><strong>Fehlerbild:</strong> Auftrag wird nicht oder am falschen Drucker ausgegeben.</p>
+<p><strong>Erstprüfung:</strong> Gerätestatus, ausgewählten Drucker,
+Verbindung und Testdruck prüfen. Bei Bedarf nach interner Checkliste weiter vorgehen.</p>
+<a class="btn" href="#">Dokumentation ergänzen →</a></article>
+
+<article class="card"><h2>Patient nicht sichtbar</h2>
+<p><strong>Fehlerbild:</strong> Erwarteter Patient erscheint nicht in der Liste.</p>
+<p><strong>Erstprüfung:</strong> Suchkriterien, Zeitraum, Station/Bereich und
+aktualisierten Datenbestand prüfen. Bei weiter bestehendem Problem eskalieren.</p>
+<a class="btn" href="#">Dokumentation ergänzen →</a></article>
+</div>
+</article>
+</main>
+<footer class="footer">© 2026 MedizinInformatik Wiki – 1. Level Support</footer>
+</body></html>
