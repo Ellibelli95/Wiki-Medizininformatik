@@ -1,2 +1,8 @@
 # Local PHP database configuration - never commit credentials
 /config.php
+
+# Hochgeladene PDFs bleiben lokal
+/uploads/pdf/*
+!/uploads/pdf/.htaccess
+!/uploads/pdf/.gitkeep
+!/uploads/pdf/index.html

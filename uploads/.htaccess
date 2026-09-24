@@ -1,0 +1,5 @@
+Options -Indexes -ExecCGI -FollowSymLinks
+
+<FilesMatch "\.(php|phtml|php3|php4|php5|phar|cgi|pl|py|asp|aspx|sh)$">
+    Require all denied
+</FilesMatch>

@@ -21,7 +21,9 @@ function require_login(): void
     start_secure_session();
 
     if (empty($_SESSION['user_id'])) {
-        header('Location: login.php');
+        $script = str_replace('\\', '/', (string)($_SERVER['SCRIPT_NAME'] ?? ''));
+        $inSubdir = preg_match('#/(admin|api)(/|$)#', $script) === 1;
+        header('Location: ' . ($inSubdir ? '../login.php' : 'login.php'));
         exit;
     }
 }
