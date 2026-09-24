@@ -7,7 +7,7 @@
 <title>Über mich &amp; Meilensteine – MedizinInformatik Wiki</title>
 <link rel="stylesheet" href="../assets/style.css">
 <style>
-.timeline{display:grid;gap:18px;margin-top:25px}.step-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 3px 12px rgba(16,42,67,.05)}.step-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}.year{display:inline-block;background:var(--blue-700);color:#fff;border-radius:8px;padding:5px 10px;font-weight:700}.step-card h3{margin:0;color:var(--blue-700)}.step-card ul{margin-bottom:0}.goal,.security{background:var(--blue-100);border-left:4px solid var(--blue-500);padding:15px 18px;border-radius:8px}.section{margin-top:30px}.section h2{margin-bottom:12px}.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}.info-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:0 3px 12px rgba(16,42,67,.05)}.info-card strong{display:block;color:var(--blue-700);margin-bottom:7px}.info-card span{color:var(--muted)}.btn{display:inline-block;background:var(--blue-700);color:#fff;text-decoration:none;padding:9px 14px;border-radius:8px;font-weight:700}.btn:hover{background:var(--blue-900)}.back{margin-top:22px}@media(max-width:600px){.step-head{align-items:flex-start;flex-direction:column}}
+.timeline{display:grid;gap:18px;margin-top:25px}.step-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 3px 12px rgba(16,42,67,.05)}.step-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}.year{display:inline-block;background:var(--blue-700);color:#fff;border-radius:8px;padding:5px 10px;font-weight:700}.step-card h3{margin:0;color:var(--blue-700)}.step-card ul{margin-bottom:0}.goal,.security{background:var(--blue-100);border-left:4px solid var(--blue-500);padding:15px 18px;border-radius:8px}.section{margin-top:30px}.section h2{margin-bottom:12px}.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}.info-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:0 3px 12px rgba(16,42,67,.05)}.info-card strong{display:block;color:var(--blue-700);margin-bottom:7px}.info-card span{color:var(--muted)}.btn{display:inline-block;background:var(--blue-700);color:#fff;text-decoration:none;padding:9px 14px;border-radius:8px;font-weight:700}.btn:hover{background:var(--blue-900)}.back{margin-top:22px}.map-box{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 3px 12px rgba(16,42,67,.05)}.map-frame{position:relative;width:100%;height:450px;background:var(--blue-100)}.map-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.map-consent{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;text-align:center}.map-consent p{max-width:520px;margin:0;color:var(--muted);font-size:.95rem}.map-consent button.btn{border:0;cursor:pointer;font:inherit;font-weight:700}.map-links{display:flex;flex-wrap:wrap;gap:12px;padding:16px 18px}@media(max-width:600px){.step-head{align-items:flex-start;flex-direction:column}.map-frame{height:360px}}
 </style>
 </head>
 <body>
@@ -46,8 +46,37 @@
 <section class="section"><h2>🔐 Hinweis zu internen Informationen</h2><div class="security"><p>Dieses Wiki dient als ergänzende Wissensbasis und ersetzt nicht die bestehenden Unternehmenssysteme. Vertrauliche und unternehmensinterne Informationen werden weiterhin über die dafür vorgesehenen Systeme, insbesondere <strong>SharePoint</strong>, bereitgestellt.</p><p>Der Zugriff auf interne Unternehmensinformationen wird über die entsprechenden Berechtigungen für die Mitarbeiterinnen und Mitarbeiter des Teams <strong>Medizintechnik und IT</strong> geregelt.</p><p><a class="btn" href="https://bzob.sharepoint.com/sites/Medizintechnik-Wiki?e=1%3A33d09857c9c94f769618306f358577c1" target="_blank" rel="noopener">📚 Internes SharePoint-Wiki öffnen</a></p></div></section>
 
 <section class="section"><h2>🚀 Ein Wiki, das mit dem Team wächst</h2><div class="goal"><p>Mein Anspruch ist nicht, von Anfang an alles abzubilden. Die Inhalte sollen Schritt für Schritt wachsen: aus Projekten, Erfahrungen, wiederkehrenden Fragen und dem technischen Alltag. So entsteht eine praktische Wissensbasis für Medizintechnik und Krankenhaus-IT.</p><p><strong>Von der Medizintechnik über die Medizinische Informatik bis zur vernetzten Krankenhaus-IT.</strong></p></div><div class="back"><a class="btn" href="../index.html">← Zurück zur Startseite</a></div></section>
+
+<section class="section"><h2>📍 Unser Klinikum kbo in Oberbayern</h2>
+<p>Die kbo-Kliniken sind an vielen Standorten in ganz Oberbayern vertreten. Die Karte zeigt die Standorte auf einen Blick.</p>
+<div class="map-box">
+<div class="map-frame" id="map-frame">
+<div class="map-consent" id="map-consent">
+<p>Beim Laden der Karte werden Daten an Google übertragen (z. B. Ihre IP-Adresse). Weitere Informationen finden Sie in der Datenschutzerklärung.</p>
+<button type="button" class="btn" id="map-load">🗺️ Google Maps laden</button>
+</div>
+</div>
+<div class="map-links">
+<a class="btn" href="https://kbo-iak.de/kontakt" target="_blank" rel="noopener">📞 Kontakt – kbo-Klinikum</a>
+<a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=kbo+Klinikum+Oberbayern" target="_blank" rel="noopener">Größere Karte in Google Maps öffnen</a>
+</div>
+</div>
+</section>
 </div>
 </main>
+<script>
+document.getElementById('map-load').addEventListener('click', function () {
+  var frame = document.getElementById('map-frame');
+  var iframe = document.createElement('iframe');
+  iframe.src = 'https://www.google.com/maps?q=' + encodeURIComponent('kbo Klinikum Oberbayern') + '&hl=de&z=8&output=embed';
+  iframe.title = 'Karte der kbo-Klinikum-Standorte in Oberbayern';
+  iframe.loading = 'lazy';
+  iframe.referrerPolicy = 'no-referrer-when-downgrade';
+  iframe.setAttribute('allowfullscreen', '');
+  frame.appendChild(iframe);
+  document.getElementById('map-consent').remove();
+});
+</script>
 <footer>MedizinInformatik Wiki · Technische Dokumentation · Ausbau als Wiki</footer>
 </body>
 </html>
