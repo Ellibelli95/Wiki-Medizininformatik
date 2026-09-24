@@ -1,0 +1,7 @@
+# PDFs ausliefern, Verzeichnislisting und Skriptausführung unterbinden.
+Options -Indexes -ExecCGI -FollowSymLinks
+AddType application/pdf .pdf
+
+<FilesMatch "\.(php|phtml|php3|php4|php5|phar|cgi|pl|py|asp|aspx|sh)$">
+    Require all denied
+</FilesMatch>

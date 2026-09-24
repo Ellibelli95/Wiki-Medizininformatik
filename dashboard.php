@@ -24,6 +24,7 @@ body{margin:0;background:#f5f8fb;color:#18232d;font-family:Arial,Helvetica,sans-
 <h1>Willkommen, <?= $username ?>!</h1>
 <p class="muted">Angemeldet als <strong><?= htmlspecialchars($roleLabel, ENT_QUOTES, 'UTF-8') ?></strong>.</p>
 <a class="btn" href="index.html">Wiki öffnen</a>
+<a class="btn" href="dokumente.php">PDF-Dokumente</a>
 <?php if ($role === 'admin'): ?><a class="btn" href="admin/index.php">Admin-Bereich</a><?php endif; ?>
 </section></main>
 </body>
